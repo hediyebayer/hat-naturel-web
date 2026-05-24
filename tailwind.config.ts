@@ -47,11 +47,11 @@ const config: Config = {
           800: '#292524',
           900: '#1c1917',
         },
-        // Accent: lacivert tonu (altın kaldırıldı, marka rengi ile tek düzen)
+        // Accent: gold (premium / lacivert ile kısas)
         accent: {
-          DEFAULT: '#1d3370',
-          light: '#4b66a4',
-          dark: '#101c44',
+          DEFAULT: '#d4af37',
+          light: '#f0d875',
+          dark: '#b8941f',
         },
         // Forest: doğa vurguları için (badge, ikon, doğa temalı bölüm)
         forest: {
@@ -121,10 +121,10 @@ const config: Config = {
         },
         'led-pulse': {
           '0%, 100%': {
-            boxShadow: '0 0 0 0 rgba(29,51,112,0.4)',
+            boxShadow: '0 0 0 0 rgba(212,175,55,0.4)',
           },
           '50%': {
-            boxShadow: '0 0 40px 8px rgba(29,51,112,0.15)',
+            boxShadow: '0 0 40px 8px rgba(212,175,55,0.15)',
           },
         },
       },
