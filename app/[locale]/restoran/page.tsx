@@ -5,38 +5,39 @@ import { unstable_setRequestLocale } from 'next-intl/server';
 import {
   UtensilsCrossed,
   Coffee,
-  Flame,
-  Leaf,
-  Cake,
   Clock,
   Phone,
   MessageCircle,
   ArrowRight,
+  Sun,
+  Infinity as InfinityIcon,
 } from 'lucide-react';
 import { Container } from '@/components/ui/container';
 import { Heading } from '@/components/ui/heading';
 import { Text } from '@/components/ui/text';
 import { buildWhatsAppUrl } from '@/lib/utils/whatsapp';
+import { BreakfastMenu, TeaHighlight } from '@/components/restoran/breakfast-menu';
 
 interface RestoranPageProps {
   params: { locale: string };
 }
 
 export const metadata: Metadata = {
-  title: 'Restoran · Hat Naturel Resort Sapanca',
+  title: 'Kahvaltı · Hat Naturel Resort Sapanca',
   description:
-    "Sapanca'nın yerel ürünleriyle hazırlanan kahvaltı, öğle ve akşam menüleri. Aile dostu, doğa içinde açık restoran.",
+    "Doğanın içinde, sınırsız çay eşliğinde köy kahvaltısı. Patates kızartması, sigara böreği, omlet, peynir tabağı, zeytin söğüş, bal-tereyağ, reçel ve daha fazlası.",
 };
 
 /**
- * Restoran sayfası — Hat Naturel Mutfağı.
+ * Restoran sayfası — sadece kahvaltı.
  *
  * Bölümler:
- *  1. Hero (lacivert gradient + altın badge)
+ *  1. Hero (sabah teması, güneş animasyonlu, lacivert→altın gradient)
  *  2. Intro paragrafı
- *  3. Mutfak imzası (4 özellik kartı)
- *  4. Servis saatleri (kahvaltı / öğle / akşam)
- *  5. CTA (WhatsApp + iletişim)
+ *  3. Kahvaltı menüsü (12 tabak, sıralı animasyon, hover lift)
+ *  4. Sınırsız çay vurgusu (gold accent)
+ *  5. Kahvaltı saatleri (büyük tek kart)
+ *  6. CTA (WhatsApp + iletişim)
  */
 export default function RestoranPage({
   params,
@@ -45,12 +46,12 @@ export default function RestoranPage({
   const t = useTranslations('restaurant');
 
   const whatsappUrl = buildWhatsAppUrl({
-    message: 'Merhaba, restoran rezervasyonu yapmak istiyorum.',
+    message: 'Merhaba, kahvaltı rezervasyonu yapmak istiyorum.',
   });
 
   return (
     <>
-      <RestoranHero locale={params.locale} />
+      <RestoranHero />
 
       {/* INTRO */}
       <section className="bg-white py-20 md:py-28">
@@ -69,60 +70,86 @@ export default function RestoranPage({
         </Container>
       </section>
 
-      {/* MUTFAK İMZASI — 4 ÖZELLİK */}
-      <section className="bg-neutral-50 py-20 md:py-28">
+      {/* KAHVALTI MENÜSÜ — 12 tabak animasyonlu */}
+      <section className="relative overflow-hidden bg-gradient-to-b from-amber-50 via-white to-amber-50 py-20 md:py-28">
+        {/* Decorative top divider */}
+        <div
+          aria-hidden
+          className="mx-auto mb-12 h-px w-32 bg-gradient-to-r from-transparent via-accent to-transparent"
+        />
+
+        {/* Background sun — sağ üst, çok soft */}
+        <div
+          aria-hidden
+          className="absolute -right-32 -top-32 h-96 w-96 rounded-full blur-3xl"
+          style={{
+            background:
+              'radial-gradient(circle, rgba(252,211,77,0.2) 0%, rgba(253,224,71,0.1) 50%, transparent 100%)',
+          }}
+        />
+
         <Container size="xl">
           <div className="text-center mb-14">
-            <span className="text-xs font-semibold uppercase tracking-[0.25em] text-primary-600">
-              {t('badge')}
+            <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.25em] text-amber-700">
+              <Sun size={14} className="animate-pulse" />
+              {t('menuBadge')}
             </span>
             <Heading level={2} className="mt-3">
-              {t('featuresTitle')}
+              {t('menuTitle')}
             </Heading>
-          </div>
-
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            <FeatureCard
-              icon={<Coffee size={28} strokeWidth={1.5} />}
-              title={t('feat1Title')}
-              text={t('feat1Text')}
-            />
-            <FeatureCard
-              icon={<Flame size={28} strokeWidth={1.5} />}
-              title={t('feat2Title')}
-              text={t('feat2Text')}
-            />
-            <FeatureCard
-              icon={<Leaf size={28} strokeWidth={1.5} />}
-              title={t('feat3Title')}
-              text={t('feat3Text')}
-            />
-            <FeatureCard
-              icon={<Cake size={28} strokeWidth={1.5} />}
-              title={t('feat4Title')}
-              text={t('feat4Text')}
-            />
-          </div>
-        </Container>
-      </section>
-
-      {/* SERVİS SAATLERİ */}
-      <section className="bg-primary-900 py-20 text-white md:py-28">
-        <Container size="lg">
-          <div className="mx-auto max-w-3xl text-center">
-            <Clock className="mx-auto text-accent" size={40} strokeWidth={1.4} />
-            <Heading level={2} className="!text-white mt-5">
-              {t('hoursTitle')}
-            </Heading>
-            <Text variant="lead" className="mt-3 !text-neutral-300">
-              {t('hoursNote')}
+            <Text variant="lead" muted className="mt-4 mx-auto max-w-2xl">
+              {t('menuSubtitle')}
             </Text>
           </div>
 
-          <div className="mx-auto mt-12 grid max-w-4xl gap-5 sm:grid-cols-3">
-            <ServiceTime label={t('breakfast')} hours={t('breakfastHours')} />
-            <ServiceTime label={t('lunch')} hours={t('lunchHours')} />
-            <ServiceTime label={t('dinner')} hours={t('dinnerHours')} />
+          <BreakfastMenu />
+        </Container>
+      </section>
+
+      {/* SINIRSIZ ÇAY VURGUSU */}
+      <section className="bg-primary-900 py-20 text-white md:py-28">
+        <Container size="lg">
+          <TeaHighlight />
+        </Container>
+      </section>
+
+      {/* KAHVALTI SAATLERİ — büyük tek kart */}
+      <section className="bg-gradient-to-b from-white to-amber-50 py-20 md:py-28">
+        <Container size="lg">
+          <div className="mx-auto max-w-2xl">
+            <div className="relative overflow-hidden rounded-3xl border border-amber-200/60 bg-white p-10 text-center shadow-[0_20px_60px_-20px_rgba(212,175,55,0.3)] md:p-14">
+              {/* Decorative gold corner */}
+              <span
+                aria-hidden
+                className="absolute -right-16 -top-16 h-40 w-40 rounded-full bg-accent/15 blur-3xl"
+              />
+              <span
+                aria-hidden
+                className="absolute -bottom-16 -left-16 h-40 w-40 rounded-full bg-amber-300/20 blur-3xl"
+              />
+
+              <div className="relative">
+                <span className="inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-primary-900 to-primary-700 text-accent shadow-medium">
+                  <Clock size={32} strokeWidth={1.5} />
+                </span>
+                <Heading level={2} className="mt-6">
+                  {t('hoursTitle')}
+                </Heading>
+                <p className="mt-3 text-sm text-neutral-600">
+                  {t('hoursNote')}
+                </p>
+
+                {/* Saat */}
+                <div className="mt-8 inline-flex flex-col items-center gap-1 rounded-2xl bg-gradient-to-br from-amber-50 to-white px-10 py-6 ring-1 ring-amber-200/60">
+                  <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-amber-700">
+                    {t('breakfast')}
+                  </span>
+                  <span className="font-serif text-4xl font-light text-primary-900 md:text-5xl">
+                    {t('breakfastHours')}
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
         </Container>
       </section>
@@ -130,37 +157,45 @@ export default function RestoranPage({
       {/* CTA */}
       <section className="bg-white py-20 md:py-28">
         <Container size="lg">
-          <div className="rounded-3xl border border-neutral-200 bg-gradient-to-br from-primary-900 to-primary-800 p-10 text-center text-white shadow-strong md:p-16">
-            <UtensilsCrossed
-              className="mx-auto text-accent"
-              size={48}
-              strokeWidth={1.4}
+          <div className="relative overflow-hidden rounded-3xl border border-neutral-200 bg-gradient-to-br from-primary-900 to-primary-800 p-10 text-center text-white shadow-strong md:p-16">
+            {/* Decorative blob */}
+            <span
+              aria-hidden
+              className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-accent/15 blur-3xl"
             />
-            <Heading level={2} className="!text-white mt-6">
-              {t('ctaTitle')}
-            </Heading>
-            <Text className="mx-auto mt-4 max-w-xl !text-neutral-300">
-              {t('ctaText')}
-            </Text>
 
-            <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <a
-                href={whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full bg-[#25D366] px-7 py-3.5 text-sm font-semibold text-white shadow-medium transition-transform hover:scale-[1.02]"
-              >
-                <MessageCircle size={18} />
-                {t('ctaButton')}
-              </a>
-              <Link
-                href={`/${params.locale}/iletisim`}
-                className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/5 px-7 py-3.5 text-sm font-medium text-white backdrop-blur-sm transition-colors hover:bg-white hover:text-primary-900"
-              >
-                <Phone size={16} />
-                {t('contactButton')}
-                <ArrowRight size={16} />
-              </Link>
+            <div className="relative">
+              <UtensilsCrossed
+                className="mx-auto text-accent"
+                size={48}
+                strokeWidth={1.4}
+              />
+              <Heading level={2} className="!text-white mt-6">
+                {t('ctaTitle')}
+              </Heading>
+              <Text className="mx-auto mt-4 max-w-xl !text-neutral-300">
+                {t('ctaText')}
+              </Text>
+
+              <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+                <a
+                  href={whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full bg-[#25D366] px-7 py-3.5 text-sm font-semibold text-white shadow-medium transition-transform hover:scale-[1.02]"
+                >
+                  <MessageCircle size={18} />
+                  {t('ctaButton')}
+                </a>
+                <Link
+                  href={`/${params.locale}/iletisim`}
+                  className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/5 px-7 py-3.5 text-sm font-medium text-white backdrop-blur-sm transition-colors hover:bg-white hover:text-primary-900"
+                >
+                  <Phone size={16} />
+                  {t('contactButton')}
+                  <ArrowRight size={16} />
+                </Link>
+              </div>
             </div>
           </div>
         </Container>
@@ -170,28 +205,53 @@ export default function RestoranPage({
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// HERO
+// HERO — sabah teması
 // ─────────────────────────────────────────────────────────────────────────────
 
-function RestoranHero({ locale: _locale }: { locale: string }): React.ReactElement {
+function RestoranHero(): React.ReactElement {
   const t = useTranslations('restaurant');
 
   return (
-    <section className="relative isolate overflow-hidden bg-primary-900 pb-20 pt-40 text-white md:pb-28 md:pt-48">
-      {/* Lacivert gradient + subtle radial */}
+    <section className="relative isolate overflow-hidden bg-primary-900 pb-20 pt-32 text-white md:pb-28 md:pt-40">
+      {/* Layer 1: lacivert gradient base */}
       <div
         aria-hidden
-        className="absolute inset-0 -z-0"
+        className="absolute inset-0 -z-10"
         style={{
           background:
-            'radial-gradient(ellipse at center, rgba(212,175,55,0.10) 0%, transparent 60%), linear-gradient(180deg, #07091a 0%, #0a1330 100%)',
+            'linear-gradient(135deg, #07091a 0%, #0a1330 40%, #2a1a3e 100%)',
         }}
+      />
+      {/* Layer 2: sunrise glow — bottom amber */}
+      <div
+        aria-hidden
+        className="absolute inset-x-0 bottom-0 -z-10 h-1/2 bg-gradient-to-t from-amber-500/15 via-amber-300/5 to-transparent"
+      />
+      {/* Layer 3: pulsing sun — sağ üst */}
+      <div
+        aria-hidden
+        className="absolute -right-20 top-20 -z-10 h-64 w-64 animate-pulse rounded-full blur-3xl"
+        style={{
+          background:
+            'radial-gradient(circle, rgba(251,191,36,0.3) 0%, rgba(252,211,77,0.1) 50%, transparent 100%)',
+          animationDuration: '4s',
+        }}
+      />
+      {/* Layer 4: dot pattern */}
+      <div
+        aria-hidden
+        className="absolute inset-0 -z-10 opacity-20 [background-image:radial-gradient(rgba(255,255,255,0.15)_1px,transparent_1px)] [background-size:32px_32px]"
+      />
+      {/* Layer 5: vinyet */}
+      <div
+        aria-hidden
+        className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,transparent_30%,rgba(7,9,26,0.6)_100%)]"
       />
 
       <Container>
         <div className="mx-auto max-w-3xl text-center">
           <span className="inline-flex items-center gap-2 rounded-full border border-accent/40 bg-accent/10 px-5 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-accent backdrop-blur-md">
-            <UtensilsCrossed size={14} />
+            <Coffee size={14} />
             {t('badge')}
           </span>
 
@@ -205,65 +265,14 @@ function RestoranHero({ locale: _locale }: { locale: string }): React.ReactEleme
           <p className="mx-auto mt-10 max-w-2xl font-sans text-base text-white/85 leading-relaxed tracking-[0.02em] md:text-lg">
             {t('lead')}
           </p>
+
+          {/* Sınırsız çay rozeti */}
+          <div className="mt-10 inline-flex items-center gap-2 rounded-full bg-white/5 px-5 py-2.5 text-sm text-white/90 backdrop-blur-md ring-1 ring-amber-300/30">
+            <InfinityIcon size={14} className="text-accent" />
+            <span>{t('teaPromise')}</span>
+          </div>
         </div>
       </Container>
     </section>
-  );
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// FeatureCard — 4 mutfak özelliği için
-// ─────────────────────────────────────────────────────────────────────────────
-
-function FeatureCard({
-  icon,
-  title,
-  text,
-}: {
-  icon: React.ReactNode;
-  title: string;
-  text: string;
-}): React.ReactElement {
-  return (
-    <div className="group relative overflow-hidden rounded-2xl border border-neutral-200 bg-white p-7 shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-medium">
-      {/* Üst LED corner glow — altın */}
-      <span
-        aria-hidden
-        className="pointer-events-none absolute -right-12 -top-12 h-32 w-32 rounded-full bg-accent/20 blur-2xl transition-opacity duration-500 group-hover:opacity-100 opacity-0"
-      />
-
-      <div className="relative">
-        <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-primary-900 text-accent shadow-sm">
-          {icon}
-        </div>
-        <h3 className="mt-5 font-serif text-xl font-semibold text-neutral-900">
-          {title}
-        </h3>
-        <p className="mt-3 text-sm leading-relaxed text-neutral-600">{text}</p>
-      </div>
-    </div>
-  );
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// ServiceTime — kahvaltı / öğle / akşam kartı
-// ─────────────────────────────────────────────────────────────────────────────
-
-function ServiceTime({
-  label,
-  hours,
-}: {
-  label: string;
-  hours: string;
-}): React.ReactElement {
-  return (
-    <div className="rounded-2xl border border-white/15 bg-white/5 p-6 text-center backdrop-blur-sm transition-colors hover:border-accent/40 hover:bg-white/10">
-      <span className="text-xs font-semibold uppercase tracking-[0.25em] text-accent">
-        {label}
-      </span>
-      <p className="mt-3 font-serif text-2xl font-light text-white md:text-3xl">
-        {hours}
-      </p>
-    </div>
   );
 }
