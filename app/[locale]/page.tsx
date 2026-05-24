@@ -29,7 +29,7 @@ export default function HomePage({
       <AboutSection />
 
       {/* Featured rooms — beyaz zemin, lacivert text */}
-      <section className="bg-white py-20">
+      <section className="bg-white pt-8 pb-20">
         <Container size="xl">
           <div className="text-center">
             <span className="text-xs font-semibold uppercase tracking-[0.2em] text-primary-600">

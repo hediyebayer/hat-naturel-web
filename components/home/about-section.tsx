@@ -31,7 +31,7 @@ export function AboutSection() {
   ];
 
   return (
-    <section className="relative overflow-hidden bg-white py-24 md:py-32">
+    <section className="relative overflow-hidden bg-white pt-24 pb-12 md:pt-32 md:pb-16">
       {/* Subtle background pattern */}
       <div className="pointer-events-none absolute inset-0 opacity-[0.04] [background-image:radial-gradient(circle_at_1px_1px,#0a1330_1px,transparent_0)] [background-size:32px_32px]" />
 
