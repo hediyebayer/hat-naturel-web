@@ -243,9 +243,15 @@ export const ROOMS: Room[] = [
       'Hat Naturel Resort Sapanca tesisimizin 1+1 standart köşklerinden Bej Köşk, 85 m² genişliğinde salon ve oda yapısıyla size evinizdeki konforu sunar. Doğa manzaralı müstakil yapısı, modern iç tasarımı ve sıcak atmosferiyle çiftler ve küçük aileler için ideal bir kaçamak. Bu köşkümüz havuzsuzdur; ancak tesisin ortak alanlarındaki sosyal imkânlardan tam olarak faydalanabilirsiniz.',
     specs: { area: 85, guests: 2, extraGuests: 3, bedrooms: 1, bathrooms: 1 },
     amenities: KOSK_1_1_AMENITIES,
-    images: ['01.jpg', '02.jpg', '03.jpg', '04.jpg', '05.jpg', '06.jpg'].map(
-      (n) => `/images/rooms/bej/${n}`,
-    ),
+    images: [
+      '01.jpg',
+      '02.jpg',
+      '03.jpg',
+      '04.jpg',
+      '05.jpg',
+      '06.jpg',
+      '07.jpg',
+    ].map((n) => `/images/rooms/bej/${n}`),
     accentColor: 'from-amber-200/40 via-amber-100/20 to-transparent',
     theme: 'beige',
     featured: true,
