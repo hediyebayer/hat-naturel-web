@@ -1,9 +1,6 @@
-'use client';
-
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
-import { motion } from 'framer-motion';
-import { Compass, ArrowRight, Camera, Eye, Aperture, Move3d } from 'lucide-react';
+import { Compass, ArrowRight } from 'lucide-react';
 import { Container } from '@/components/ui/container';
 import { Heading } from '@/components/ui/heading';
 import { Text } from '@/components/ui/text';
@@ -17,7 +14,7 @@ interface VirtualTourSectionProps {
 
 /**
  * 360° Sanal Tur bölümü. Google Street View embed.
- * `preview=true` → anasayfa teaser (animasyonlu lacivert arka plan)
+ * `preview=true` → anasayfa teaser
  * `preview=false` → /sanal-tur sayfası (tam ekran iframe)
  */
 export function VirtualTourSection({
@@ -29,16 +26,10 @@ export function VirtualTourSection({
 
   return (
     <section
-      className={
-        preview
-          ? 'relative isolate overflow-hidden bg-primary-900 py-20 text-white'
-          : 'pt-32 pb-16'
-      }
+      className={preview ? 'bg-primary-900 py-20 text-white' : 'pt-32 pb-16'}
       aria-labelledby="virtual-tour-heading"
     >
-      {preview && <AnimatedBackground />}
-
-      <Container className="relative z-10">
+      <Container>
         {preview ? (
           <div className="grid items-center gap-10 lg:grid-cols-2">
             <div>
@@ -57,7 +48,7 @@ export function VirtualTourSection({
               </Text>
               <Link
                 href={`/${locale}/sanal-tur`}
-                className="mt-8 inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/5 px-6 py-3 text-sm font-medium text-white backdrop-blur-sm transition-colors hover:bg-white hover:text-neutral-900"
+                className="mt-8 inline-flex items-center gap-2 rounded-full border border-white/30 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-white hover:text-neutral-900"
               >
                 {tCommon('seeDetails')}
                 <ArrowRight size={16} />
@@ -99,119 +90,5 @@ export function VirtualTourSection({
         )}
       </Container>
     </section>
-  );
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Animasyonlu Arka Plan (sadece preview için, içerik arkasında)
-// ─────────────────────────────────────────────────────────────────────────────
-
-/**
- * 5 katmanlı animasyon:
- * 1. Conic dönen ışın (10s)
- * 2. Pulse radial glow (4s nefes)
- * 3. Floating ikon parçacıkları (compass/kamera, 8-15s yukarı süzülür)
- * 4. Grid pattern (subtle, derinlik)
- * 5. Vinyet (kenarları karart)
- *
- * Tüm katmanlar pointer-events-none, content z-index üstünde.
- * motion-reduce ile a11y desteği.
- */
-function AnimatedBackground(): React.ReactElement {
-  return (
-    <div aria-hidden className="pointer-events-none absolute inset-0 -z-0">
-      {/* 1. Conic dönen ışın */}
-      <motion.div
-        className="absolute left-1/2 top-1/2 h-[180%] w-[180%] -translate-x-1/2 -translate-y-1/2 motion-reduce:hidden"
-        style={{
-          background:
-            'conic-gradient(from 0deg, transparent 0deg, rgba(212,175,55,0.13) 60deg, transparent 120deg, transparent 240deg, rgba(212,175,55,0.10) 300deg, transparent 360deg)',
-        }}
-        animate={{ rotate: 360 }}
-        transition={{ duration: 22, repeat: Infinity, ease: 'linear' }}
-      />
-
-      {/* 2. Pulse radial glow */}
-      <motion.div
-        className="absolute left-1/2 top-1/2 h-[700px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full motion-reduce:hidden"
-        style={{
-          background:
-            'radial-gradient(circle, rgba(212,175,55,0.14) 0%, rgba(212,175,55,0.04) 50%, transparent 75%)',
-        }}
-        animate={{
-          scale: [1, 1.18, 1],
-          opacity: [0.65, 0.95, 0.65],
-        }}
-        transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}
-      />
-
-      {/* 3. Floating ikon parçacıkları */}
-      <FloatingIcons />
-
-      {/* 4. Dot grid pattern */}
-      <div
-        className="absolute inset-0 opacity-50"
-        style={{
-          backgroundImage:
-            'radial-gradient(circle, rgba(255,255,255,0.14) 1.3px, transparent 1.3px)',
-          backgroundSize: '38px 38px',
-        }}
-      />
-
-      {/* 5. Vinyet — kenarları karart */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,rgba(10,19,48,0.7)_100%)]" />
-    </div>
-  );
-}
-
-/**
- * Yukarı doğru süzülen şeffaf ikonlar (compass/kamera/eye/aperture).
- * Her ikon farklı pozisyon, hız, gecikme ile.
- */
-function FloatingIcons(): React.ReactElement {
-  const icons = [
-    // — Sol bölge (zenginleştirildi)
-    { Icon: Compass, x: '4%', y: '12%', size: 48, dur: 12, delay: 0 },
-    { Icon: Aperture, x: '2%', y: '45%', size: 42, dur: 13, delay: 2.5 },
-    { Icon: Eye, x: '12%', y: '60%', size: 44, dur: 12, delay: 4 },
-    { Icon: Move3d, x: '6%', y: '82%', size: 38, dur: 14, delay: 1 },
-    { Icon: Camera, x: '22%', y: '28%', size: 36, dur: 11, delay: 5.5 },
-    { Icon: Compass, x: '18%', y: '92%', size: 32, dur: 12, delay: 3.5 },
-    { Icon: Aperture, x: '26%', y: '68%', size: 28, dur: 13, delay: 6.5 },
-    // — Orta
-    { Icon: Move3d, x: '50%', y: '55%', size: 34, dur: 11, delay: 2 },
-    { Icon: Camera, x: '38%', y: '40%', size: 30, dur: 12, delay: 4.5 },
-    { Icon: Compass, x: '45%', y: '85%', size: 38, dur: 13, delay: 6 },
-    // — Sağ bölge
-    { Icon: Aperture, x: '78%', y: '15%', size: 50, dur: 14, delay: 0.8 },
-    { Icon: Camera, x: '85%', y: '70%', size: 38, dur: 13, delay: 1.5 },
-    { Icon: Eye, x: '92%', y: '40%', size: 30, dur: 11, delay: 7 },
-    { Icon: Aperture, x: '65%', y: '50%', size: 32, dur: 12, delay: 5 },
-  ];
-
-  return (
-    <>
-      {icons.map(({ Icon, x, y, size, dur, delay }, i) => (
-        <motion.div
-          key={i}
-          className="absolute text-accent/30 motion-reduce:hidden"
-          style={{ left: x, top: y, filter: 'drop-shadow(0 0 6px rgba(212,175,55,0.2))' }}
-          initial={{ opacity: 0, y: 30, rotate: 0 }}
-          animate={{
-            opacity: [0, 0.7, 0.7, 0],
-            y: [-25, -120],
-            rotate: [0, 360],
-          }}
-          transition={{
-            duration: dur,
-            delay,
-            repeat: Infinity,
-            ease: 'linear',
-          }}
-        >
-          <Icon size={size} strokeWidth={1.4} />
-        </motion.div>
-      ))}
-    </>
   );
 }
