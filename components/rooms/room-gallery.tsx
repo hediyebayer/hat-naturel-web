@@ -164,7 +164,7 @@ export function RoomGallery({ images, alt }: RoomGalleryProps) {
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ duration: 0.3 }}
               className="relative h-[85vh] w-[90vw] max-w-6xl"
-              onClick={(e) => e.stopPropagation()}
+              onClick={(e: React.MouseEvent) => e.stopPropagation()}
             >
               <Image
                 src={images[active]}
