@@ -290,7 +290,7 @@ export const ROOMS: Room[] = [
     description:
       'Tesisin en popüler yapılarından — özel ısıtmalı havuz, sauna ve ikonik üçgen tasarım. Tesisimizde 6 adet bulunur.',
     longDescription:
-      '1+1 Üçgen Bungalov’larımız tesisimizin en çok tercih edilen yapılarındandır ve toplam 6 adet bulunur. İkonik üçgen mimarisi ve sıcak ahşap dokularıyla doğanın içinde benzersiz bir atmosfer sunar. **Bungalov içi özel ısıtmalı havuz, jakuzi, sauna** ve havuz başı şezlong + çift kişilik yataklı salıncak ile yıl boyu spa keyfi yaşarsınız. **Yatak düzeni:** Asma katta çift kişilik yatak + ortak alanda çift kişilik çekyat ve tek kişilik çekyat ile maksimum 5 kişi konaklayabilir. Çiftler ve küçük aileler için ideal, hem fiyat hem konfor olarak avantajlı bir seçim.',
+      '1+1 Üçgen Bungalov’larımız tesisimizin en çok tercih edilen yapılarındandır ve toplam 6 adet bulunur. İkonik üçgen mimarisi ve sıcak ahşap dokularıyla doğanın içinde benzersiz bir atmosfer sunar. Bungalov içi özel ısıtmalı havuz, jakuzi, sauna ve havuz başı şezlong + çift kişilik yataklı salıncak ile yıl boyu spa keyfi yaşarsınız. Asma katta çift kişilik yatak + ortak alanda çift kişilik çekyat ve tek kişilik çekyat ile maksimum 5 kişi konaklayabilir. Çiftler ve küçük aileler için ideal, hem fiyat hem konfor olarak avantajlı bir seçim.',
     specs: { area: 85, guests: 2, extraGuests: 3, bedrooms: 1, bathrooms: 1 },
     amenities: TRIANGLE_BUNGALOW_AMENITIES,
     images: [
@@ -319,7 +319,7 @@ export const ROOMS: Room[] = [
     description:
       '95 m² genişlikte, 2+1 tasarımıyla ferah ortam — özel yaz havuzlu aile köşkü.',
     longDescription:
-      'Tesisin en dikkat çeken köşklerinden Mor Köşk, 2+1 yapısı ve 95 m² genişliğiyle ferah bir ortam sağlar. Yaz sezonunda kullanıma açılan **özel serinleme havuzu**, havuz başı şezlong ve çift kişilik yataklı büyük salıncağı sayesinde sıcak günlerde ailecek serinleme keyfini bahçenizde yaşayabilirsiniz. Şömine konforu ile kış aylarında da aynı sıcak atmosfer; doğanın sessizliği eşliğinde ailecek huzurlu bir tatil deneyimi için ideal tercih.',
+      'Tesisin en dikkat çeken köşklerinden Mor Köşk, 2+1 yapısı ve 95 m² genişliğiyle ferah bir ortam sağlar. Yaz sezonunda kullanıma açılan özel serinleme havuzu, havuz başı şezlong ve çift kişilik yataklı büyük salıncağı sayesinde sıcak günlerde ailecek serinleme keyfini bahçenizde yaşayabilirsiniz. Şömine konforu ile kış aylarında da aynı sıcak atmosfer; doğanın sessizliği eşliğinde ailecek huzurlu bir tatil deneyimi için ideal tercih.',
     specs: { area: 95, guests: 4, extraGuests: 3, bedrooms: 2, bathrooms: 2 },
     amenities: MOR_KOSK_AMENITIES,
     images: ['01.jpg', '02.jpg', '03.jpg', '04.jpg', '05.jpg', '06.jpg'].map(
@@ -372,7 +372,7 @@ export const ROOMS: Room[] = [
     description:
       '95 m² genişliğinde üçgen mimari 2+1 — özel ısıtmalı havuz, sauna ve geniş aileye rahat yaşam alanı. Tesisimizde 3 adet bulunur.',
     longDescription:
-      'Hat Naturel Resort Sapanca\'da 2+1 Üçgen Bungalov’larımız geniş aile yapısı için tasarlanmıştır ve tesiste toplam 3 adet bulunur. 95 m² büyüklüğünde tam bir aileye rahatça yaşam alanı sunan bungalovlarımız doğa manzaralıdır. **Bungalov içi özel ısıtmalı havuz, jakuzi, sauna**, havuz başı şezlong ve çift kişilik yataklı salıncak ile her mevsim spa keyfi yaşanır. İkonik üçgen mimarisi ile fotoğraflık bir atmosfer yaratır; her biri benzer iç tasarım ve donanıma sahiptir.',
+      'Hat Naturel Resort Sapanca\'da 2+1 Üçgen Bungalov’larımız geniş aile yapısı için tasarlanmıştır ve tesiste toplam 3 adet bulunur. 95 m² büyüklüğünde tam bir aileye rahatça yaşam alanı sunan bungalovlarımız doğa manzaralıdır. Bungalov içi özel ısıtmalı havuz, jakuzi, sauna, havuz başı şezlong ve çift kişilik yataklı salıncak ile her mevsim spa keyfi yaşanır. İkonik üçgen mimarisi ile fotoğraflık bir atmosfer yaratır; her biri benzer iç tasarım ve donanıma sahiptir.',
     specs: { area: 95, guests: 4, extraGuests: 3, bedrooms: 2, bathrooms: 1 },
     amenities: TRIANGLE_BUNGALOW_AMENITIES,
     images: ['01.jpg', '02.jpg', '03.jpg', '04.jpg', '05.jpg'].map(
