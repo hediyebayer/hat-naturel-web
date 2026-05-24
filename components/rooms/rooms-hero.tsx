@@ -68,15 +68,15 @@ export function RoomsHero() {
           Hat Naturel Resort · Sapanca
         </motion.span>
 
-        {/* ANA BAŞLIK — 'Doğaya açılan küçük bir kapı' */}
+        {/* ANA BAŞLIK — iki satır: 'Doğaya Açılan' / 'Küçük Bir Kapı' */}
         <motion.h1
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.15, ease: [0.25, 1, 0.5, 1] }}
-          className="mt-10 font-serif text-4xl font-light leading-[1.2] tracking-tight text-white drop-shadow-[0_4px_30px_rgba(0,0,0,0.5)] md:text-6xl lg:text-[5.5rem]"
+          className="mt-10 font-serif text-4xl leading-[1.2] tracking-tight text-white drop-shadow-[0_4px_30px_rgba(0,0,0,0.5)] md:text-6xl lg:text-[5.5rem]"
         >
-          Doğaya açılan{' '}
-          <span className="italic font-medium">küçük bir kapı</span>
+          <span className="block pb-2 font-light">Doğaya Açılan</span>
+          <span className="mt-2 block pb-2 font-medium italic">Küçük Bir Kapı</span>
         </motion.h1>
 
         {/* Subtitle — mahremiyet + aile vurgulu, şık */}
