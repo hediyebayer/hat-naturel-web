@@ -113,7 +113,7 @@ export default function HomePage({
               variant="outline"
               size="lg"
             >
-              Tüm Köşkleri Gör →
+Tüm Bungalov & Köşkleri Gör →
             </ButtonLink>
           </div>
         </Container>

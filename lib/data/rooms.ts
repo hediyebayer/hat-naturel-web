@@ -25,6 +25,16 @@ export type Amenity =
   | 'towels'
   | 'generator';
 
+/**
+ * Oda kategorisi — tipler. Aynı kategoride birden fazla oda olabilir;
+ * adet (count) sahası kategori başlığında göstermek için kullanılır.
+ */
+export type RoomCategory =
+  | 'ucgen-2-1'
+  | 'ucgen-1-1'
+  | 'kosk-1-1-havuzsuz'
+  | 'kosk-2-1-havuzlu';
+
 export interface Room {
   slug: string;
   name: string;
@@ -32,6 +42,9 @@ export interface Room {
   tagline: string;
   description: string;
   longDescription: string;
+  category: RoomCategory;
+  /** Bu odadan kaç adet var (aynı tipte birden fazlaysa). Default 1. */
+  count?: number;
   specs: {
     area: number;        // m²
     guests: number;      // standart kapasite
@@ -46,6 +59,57 @@ export interface Room {
   featured?: boolean;
 }
 
+/**
+ * Kategori meta verisi — başlık, açıklama, görüntülenecek toplam adet.
+ * Anasayfa ve /odalar sayfasında üst gruplama için.
+ */
+export interface CategoryMeta {
+  id: RoomCategory;
+  title: string;
+  titleEn: string;
+  subtitle: string;
+  /** Toplam fiziksel ev adedi (Hediye'nin verdiği). */
+  totalCount: number;
+  hasPool: boolean;
+  poolNote?: string;
+}
+
+export const CATEGORIES: CategoryMeta[] = [
+  {
+    id: 'ucgen-2-1',
+    title: '2+1 Üçgen Bungalov',
+    titleEn: '2+1 Triangle Bungalow',
+    subtitle: 'Geniş aileler için ikonik üçgen mimarili 2 yatak odalı evler',
+    totalCount: 3,
+    hasPool: false,
+  },
+  {
+    id: 'ucgen-1-1',
+    title: '1+1 Üçgen Bungalov',
+    titleEn: '1+1 Triangle Bungalow',
+    subtitle: 'Çiftler için ikonik üçgen mimari, sıcak ahşap dokular',
+    totalCount: 1,
+    hasPool: false,
+  },
+  {
+    id: 'kosk-1-1-havuzsuz',
+    title: '1+1 Köşk (Havuzsuz)',
+    titleEn: '1+1 Lodge (No Pool)',
+    subtitle: 'Bej ve Turkuaz — 85 m² ferah çift bungalovları',
+    totalCount: 2,
+    hasPool: false,
+  },
+  {
+    id: 'kosk-2-1-havuzlu',
+    title: '2+1 Köşk (Yaz Havuzlu)',
+    titleEn: '2+1 Lodge (Summer Pool)',
+    subtitle: 'Sarı ve Mor — yaz aylarında özel havuzlu aile köşkleri',
+    totalCount: 2,
+    hasPool: true,
+    poolNote: 'Yaz sezonunda kullanıma açıktır',
+  },
+];
+
 const COMMON_AMENITIES: Amenity[] = [
   'bbq', 'swing', 'ac', 'wifi', 'smartTv', 'kitchen', 'toiletries',
   'waterTank', 'fireExtinguisher', 'security', 'firePit', 'gardenFurniture',
@@ -58,12 +122,13 @@ export const ROOMS: Room[] = [
     name: 'Bej Köşk 1+1',
     shortName: 'Bej 1+1',
     tagline: 'Zarif sadelik, doğa manzarası',
+    category: 'kosk-1-1-havuzsuz',
     description:
-      'Standart 1+1 evimiz; 85 m² ferah yaşam alanı, doğa manzaralı müstakil bungalov.',
+      'Standart 1+1 köşkümüz; 85 m² ferah yaşam alanı, doğa manzaralı müstakil bungalov. (Havuzsuz)',
     longDescription:
-      'Hat Naturel Resort Sapanca tesisimizin 1+1 standart bungalovlarından Bej Köşk, 85 m² genişliğinde salon ve oda yapısıyla size evinizdeki konforu sunar. Doğa manzaralı müstakil yapısı, modern iç tasarımı ve sıcak atmosferiyle çiftler ve küçük aileler için ideal bir kaçamak.',
+      'Hat Naturel Resort Sapanca tesisimizin 1+1 standart köşklerinden Bej Köşk, 85 m² genişliğinde salon ve oda yapısıyla size evinizdeki konforu sunar. Doğa manzaralı müstakil yapısı, modern iç tasarımı ve sıcak atmosferiyle çiftler ve küçük aileler için ideal bir kaçamak. Bu köşkümüz havuzsuzdur; ancak tesisin ortak alanlarındaki sosyal imkânlardan tam olarak faydalanabilirsiniz.',
     specs: { area: 85, guests: 2, extraGuests: 3, bedrooms: 1, bathrooms: 1 },
-    amenities: ['pool', ...COMMON_AMENITIES],
+    amenities: COMMON_AMENITIES,
     images: ['01.jpg', '02.jpg', '03.jpg', '04.jpg', '05.jpg', '06.jpg'].map(
       (n) => `/images/rooms/bej/${n}`,
     ),
@@ -73,15 +138,16 @@ export const ROOMS: Room[] = [
   },
   {
     slug: 'turkuaz',
-    name: 'Turkuaz 1+1',
+    name: 'Turkuaz Köşk 1+1',
     shortName: 'Turkuaz 1+1',
-    tagline: 'Iki banyolu konfor, çiftler için',
+    tagline: 'İki banyolu konfor, çiftler için',
+    category: 'kosk-1-1-havuzsuz',
     description:
-      '85 m² genişliğinde, çift banyolu ferah 1+1 bungalov — pratik konfor arayanlara.',
+      '85 m² genişliğinde, çift banyolu ferah 1+1 köşk — pratik konfor arayanlara. (Havuzsuz)',
     longDescription:
-      'Turkuaz 1+1 evimiz 85 m² genişliğe ve 2 ayrı banyoya sahiptir; bu sayede çiftlere ve yakın arkadaşlara rahat bir tatil deneyimi sunar. Doğanın içinde, modern donanımıyla ev konforu hissini koruyan ideal bir konaklama seçeneği.',
+      'Turkuaz Köşk 1+1 evimiz 85 m² genişliğe ve 2 ayrı banyoya sahiptir; bu sayede çiftlere ve yakın arkadaşlara rahat bir tatil deneyimi sunar. Doğanın içinde, modern donanımıyla ev konforu hissini koruyan ideal bir konaklama seçeneği. Köşkümüz havuzsuzdur; tesisin ortak sosyal alanlarından faydalanabilirsiniz.',
     specs: { area: 85, guests: 2, extraGuests: 3, bedrooms: 1, bathrooms: 2 },
-    amenities: ['pool', ...COMMON_AMENITIES],
+    amenities: COMMON_AMENITIES,
     images: ['01.jpg', '02.jpg', '03.jpg', '04.jpg', '05.jpg'].map(
       (n) => `/images/rooms/turkuaz/${n}`,
     ),
@@ -92,7 +158,8 @@ export const ROOMS: Room[] = [
     slug: 'ucgen-1-1',
     name: '1+1 Üçgen Bungalov',
     shortName: '1+1 Üçgen',
-    tagline: 'Ikonik üçgen tasarım, sıcak ahşap',
+    tagline: 'İkonik üçgen tasarım, sıcak ahşap',
+    category: 'ucgen-1-1',
     description:
       'En çok tercih edilen 1+1 üçgen bungalov — aileler için geniş ve konforlu.',
     longDescription:
@@ -110,33 +177,17 @@ export const ROOMS: Room[] = [
     featured: true,
   },
   {
-    slug: 'mavi',
-    name: 'Mavi Köşk 2+1',
-    shortName: 'Mavi 2+1',
-    tagline: 'Görkemli aile köşkü, geniş bahçe',
-    description:
-      '90 m² genişliğinde, 2 yatak odalı ve 2 banyolu görkemli aile köşkü.',
-    longDescription:
-      'Hat Naturel Resort\'un gözde evlerinden Mavi Köşk, görkemli yapısı ile size doğa manzarası eşliğinde farklı bir atmosfer sunar. 90 m² genişliğindeki köşk, 2 yatak odası ve 2 banyosuyla geniş aileler için ideal.',
-    specs: { area: 90, guests: 4, extraGuests: 3, bedrooms: 2, bathrooms: 2 },
-    amenities: COMMON_AMENITIES,
-    images: ['01.jpg', '02.jpg', '03.jpg', '04.jpg', '05.jpg'].map(
-      (n) => `/images/rooms/mavi/${n}`,
-    ),
-    accentColor: 'from-sky-300/40 via-blue-200/20 to-transparent',
-    theme: 'blue',
-  },
-  {
     slug: 'mor',
     name: 'Mor Köşk 2+1',
     shortName: 'Mor 2+1',
-    tagline: 'Dikkat çeken köşk, sessizliğin keyfi',
+    tagline: 'Yaz havuzlu, dikkat çeken köşk',
+    category: 'kosk-2-1-havuzlu',
     description:
-      '95 m² genişlikte, 2+1 tasarımıyla ferah ortam — ailelere özel.',
+      '95 m² genişlikte, 2+1 tasarımıyla ferah ortam — özel yaz havuzlu aile köşkü.',
     longDescription:
-      'Tesisin en dikkat çeken evlerinden Mor Köşk, 2+1 yapısı ve 95 m² genişliğiyle ferah bir ortam sağlar. Doğanın sessizliği ile ailecek huzurlu bir tatil deneyimi arıyorsanız doğru tercih.',
+      'Tesisin en dikkat çeken köşklerinden Mor Köşk, 2+1 yapısı ve 95 m² genişliğiyle ferah bir ortam sağlar. Yaz sezonunda kullanıma açılan özel havuzu sayesinde sıcak günlerde ailecek serinleme keyfini bahçenizde yaşayabilirsiniz. Doğanın sessizliği ile ailecek huzurlu bir tatil deneyimi arıyorsanız doğru tercih.',
     specs: { area: 95, guests: 4, extraGuests: 3, bedrooms: 2, bathrooms: 2 },
-    amenities: COMMON_AMENITIES,
+    amenities: ['pool', ...COMMON_AMENITIES],
     images: ['01.jpg', '02.jpg', '03.jpg', '04.jpg', '05.jpg', '06.jpg'].map(
       (n) => `/images/rooms/mor/${n}`,
     ),
@@ -148,37 +199,56 @@ export const ROOMS: Room[] = [
     slug: 'sari',
     name: 'Sarı Köşk 2+1',
     shortName: 'Sarı 2+1',
-    tagline: 'Özel tasarım, müstakil keyif',
+    tagline: 'Yaz havuzlu, özel tasarım köşk',
+    category: 'kosk-2-1-havuzlu',
     description:
-      'Özel tasarım 95 m² 2+1 köşk; ferahlık ve yaşamsal genişlikle dikkat çeker.',
+      'Özel tasarım 95 m² 2+1 köşk; özel yaz havuzu, ferahlık ve yaşamsal genişlikle dikkat çeker.',
     longDescription:
-      'Sarı Köşk 2+1 evimiz özel dizayn olarak tasarlanmıştır. Odaların ferahlığı ve yaşamsal genişliğiyle öne çıkan köşkümüz, müstakil bir yapıda doğa manzarası eşliğinde sizleri ağırlar.',
+      'Sarı Köşk 2+1 evimiz özel dizayn olarak tasarlanmıştır. Odaların ferahlığı ve yaşamsal genişliğiyle öne çıkan köşkümüz, yaz aylarında kullanıma açılan özel havuzuyla müstakil bir tatil keyfi sunar. Doğa manzaralı geniş bahçesinde ailecek unutulmaz anlar yaşayabilirsiniz.',
     specs: { area: 95, guests: 4, extraGuests: 3, bedrooms: 2, bathrooms: 2 },
-    amenities: COMMON_AMENITIES,
+    amenities: ['pool', ...COMMON_AMENITIES],
     images: ['01.jpg', '02.jpg', '03.jpg', '04.jpg', '05.jpg'].map(
       (n) => `/images/rooms/sari/${n}`,
     ),
     accentColor: 'from-yellow-300/40 via-amber-200/20 to-transparent',
     theme: 'yellow',
+    featured: true,
   },
   {
     slug: 'ucgen-2-1',
-    name: 'Üçgen 2+1',
+    name: 'Üçgen Bungalov 2+1',
     shortName: 'Üçgen 2+1',
     tagline: 'Geniş aile, ikonik üçgen mimari',
+    category: 'ucgen-2-1',
+    count: 3,
     description:
-      '95 m² genişliğinde üçgen mimari 2+1 — tam bir aileye rahatça yaşam alanı.',
+      '95 m² genişliğinde üçgen mimari 2+1 — tam bir aileye rahatça yaşam alanı. Tesisimizde 3 adet bulunur.',
     longDescription:
-      'Hat Naturel Resort Sapanca\'da Üçgen 2+1 evlerimiz standart yapılarımızdandır. 95 m² büyüklüğünde tam bir aileye rahatça yaşam alanı sunan evimiz doğa manzaralıdır. İkonik üçgen mimarisi ile fotoğraflık bir atmosfer yaratır.',
+      'Hat Naturel Resort Sapanca\'da Üçgen 2+1 bungalovlarımız standart yapılarımızdandır ve tesiste toplam 3 adet bulunur. 95 m² büyüklüğünde tam bir aileye rahatça yaşam alanı sunan bungalovlarımız doğa manzaralıdır. İkonik üçgen mimarisi ile fotoğraflık bir atmosfer yaratır; her biri benzer iç tasarım ve donanıma sahiptir.',
     specs: { area: 95, guests: 4, extraGuests: 3, bedrooms: 2, bathrooms: 1 },
-    amenities: ['pool', ...COMMON_AMENITIES],
+    amenities: COMMON_AMENITIES,
     images: ['01.jpg', '02.jpg', '03.jpg', '04.jpg', '05.jpg'].map(
       (n) => `/images/rooms/ucgen-2-1/${n}`,
     ),
     accentColor: 'from-emerald-300/40 via-green-200/20 to-transparent',
     theme: 'green',
+    featured: true,
   },
 ];
+
+/** Toplam fiziksel ev adedi (kategorilerdeki count toplamı = 8) */
+export const TOTAL_HOUSE_COUNT = CATEGORIES.reduce(
+  (acc, c) => acc + c.totalCount,
+  0,
+);
+
+/** Kategori sayısı (5 demiştik ama 4 kategori var, count'larla 8 ev) */
+export const CATEGORY_COUNT = CATEGORIES.length;
+
+/** Bir kategoriye ait odaları getir */
+export function getRoomsByCategory(category: RoomCategory): Room[] {
+  return ROOMS.filter((r) => r.category === category);
+}
 
 export function getRoomBySlug(slug: string): Room | undefined {
   return ROOMS.find((r) => r.slug === slug);

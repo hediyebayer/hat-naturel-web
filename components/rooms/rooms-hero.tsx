@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { ROOMS } from '@/lib/data/rooms';
+import { ROOMS, TOTAL_HOUSE_COUNT, CATEGORIES } from '@/lib/data/rooms';
 
 interface RoomsHeroProps {
   title: string;
@@ -10,11 +10,11 @@ interface RoomsHeroProps {
 }
 
 export function RoomsHero({ title, subtitle }: RoomsHeroProps) {
-  // En öne çıkan 3 görseli arka plan kolajı için kullan
+  // En öne çıkan 3 görseli arka plan kolajı için kullan (mavi kaldırıldı)
   const collage = [
     ROOMS.find((r) => r.slug === 'mor')?.images[0],
-    ROOMS.find((r) => r.slug === 'ucgen-1-1')?.images[0],
-    ROOMS.find((r) => r.slug === 'bej')?.images[0],
+    ROOMS.find((r) => r.slug === 'ucgen-2-1')?.images[0],
+    ROOMS.find((r) => r.slug === 'sari')?.images[0],
   ].filter(Boolean) as string[];
 
   return (
@@ -89,9 +89,9 @@ export function RoomsHero({ title, subtitle }: RoomsHeroProps) {
           transition={{ duration: 0.8, delay: 0.8 }}
           className="mx-auto mt-10 grid max-w-2xl grid-cols-3 divide-x divide-white/15 rounded-2xl border border-white/15 bg-white/5 py-4 backdrop-blur"
         >
-          <Stat value={`${ROOMS.length}`} label="Farklı Bungalov" />
+          <Stat value={`${TOTAL_HOUSE_COUNT}`} label="Müstakil Ev" />
+          <Stat value={`${CATEGORIES.length}`} label="Farklı Konsept" />
           <Stat value="85–95" label="m² Yaşam Alanı" />
-          <Stat value="7/24" label="Güvenlik" />
         </motion.div>
       </div>
 
