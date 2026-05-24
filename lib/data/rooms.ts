@@ -23,7 +23,9 @@ export type Amenity =
   | 'fridge'
   | 'wardrobe'
   | 'towels'
-  | 'generator';
+  | 'generator'
+  | 'heatedPool'
+  | 'sauna';
 
 /**
  * Oda kategorisi — tipler. Aynı kategoride birden fazla oda olabilir;
@@ -79,17 +81,19 @@ export const CATEGORIES: CategoryMeta[] = [
     id: 'ucgen-2-1',
     title: '2+1 Üçgen Bungalov',
     titleEn: '2+1 Triangle Bungalow',
-    subtitle: 'Geniş aileler için ikonik üçgen mimarili 2 yatak odalı evler',
+    subtitle: 'Geniş aileler için ikonik üçgen mimari — özel ısıtmalı havuz ve sauna',
     totalCount: 3,
-    hasPool: false,
+    hasPool: true,
+    poolNote: 'Isıtmalı havuz + sauna her mevsim açık',
   },
   {
     id: 'ucgen-1-1',
     title: '1+1 Üçgen Bungalov',
     titleEn: '1+1 Triangle Bungalow',
-    subtitle: 'Çiftler için ikonik üçgen mimari, sıcak ahşap dokular',
-    totalCount: 1,
-    hasPool: false,
+    subtitle: 'İkonik üçgen mimari — özel ısıtmalı havuz ve sauna ile yıl boyu spa keyfi',
+    totalCount: 6,
+    hasPool: true,
+    poolNote: 'Isıtmalı havuz + sauna her mevsim açık',
   },
   {
     id: 'kosk-1-1-havuzsuz',
@@ -158,14 +162,15 @@ export const ROOMS: Room[] = [
     slug: 'ucgen-1-1',
     name: '1+1 Üçgen Bungalov',
     shortName: '1+1 Üçgen',
-    tagline: 'İkonik üçgen tasarım, sıcak ahşap',
+    tagline: 'Isıtmalı havuz + sauna, ikonik üçgen mimari',
     category: 'ucgen-1-1',
+    count: 6,
     description:
-      'En çok tercih edilen 1+1 üçgen bungalov — aileler için geniş ve konforlu.',
+      'Tesisin en popüler yapılarından — özel ısıtmalı havuz, sauna ve ikonik üçgen tasarım. Tesisimizde 6 adet bulunur.',
     longDescription:
-      '1+1 Üçgen Bungalov’larımız tesisin en çok tercih edilen yapılarındandır. İkonik üçgen mimarisi, sıcak ahşap dokuları ve şömineli oda sobasıyla doğanın içinde benzersiz bir atmosfer sunar. 5 kişiye kadar konaklama imkanı ile aileler ve arkadaş grupları için ideal, hem fiyat hem konfor olarak avantajlı bir seçim.',
+      '1+1 Üçgen Bungalov’larımız tesisimizin en çok tercih edilen yapılarındandır ve toplam 6 adet bulunur. İkonik üçgen mimarisi, sıcak ahşap dokuları ve şömineli oda sobasıyla doğanın içinde benzersiz bir atmosfer sunar. **Özel ısıtmalı havuzu ve saunası** sayesinde mevsim fark etmeksizin yıl boyu spa keyfi yaşarsınız. 5 kişiye kadar konaklama imkanı ile aileler ve arkadaş grupları için ideal, hem fiyat hem konfor olarak avantajlı bir seçim.',
     specs: { area: 85, guests: 5, extraGuests: 3, bedrooms: 1, bathrooms: 1 },
-    amenities: COMMON_AMENITIES,
+    amenities: ['heatedPool', 'sauna', ...COMMON_AMENITIES],
     images: [
       '01.jpg', '02.jpg', '03.jpg', '04.jpg', '05.jpg',
       '06.jpg', '07.jpg', '08.jpg', '09.jpg', '10.jpg', '11.jpg',
@@ -216,17 +221,17 @@ export const ROOMS: Room[] = [
   },
   {
     slug: 'ucgen-2-1',
-    name: 'Üçgen Bungalov 2+1',
+    name: '2+1 Üçgen Bungalov',
     shortName: 'Üçgen 2+1',
-    tagline: 'Geniş aile, ikonik üçgen mimari',
+    tagline: 'Isıtmalı havuz + sauna, geniş aile için',
     category: 'ucgen-2-1',
     count: 3,
     description:
-      '95 m² genişliğinde üçgen mimari 2+1 — tam bir aileye rahatça yaşam alanı. Tesisimizde 3 adet bulunur.',
+      '95 m² genişliğinde üçgen mimari 2+1 — özel ısıtmalı havuz, sauna ve geniş aileye rahat yaşam alanı. Tesisimizde 3 adet bulunur.',
     longDescription:
-      'Hat Naturel Resort Sapanca\'da Üçgen 2+1 bungalovlarımız standart yapılarımızdandır ve tesiste toplam 3 adet bulunur. 95 m² büyüklüğünde tam bir aileye rahatça yaşam alanı sunan bungalovlarımız doğa manzaralıdır. İkonik üçgen mimarisi ile fotoğraflık bir atmosfer yaratır; her biri benzer iç tasarım ve donanıma sahiptir.',
+      'Hat Naturel Resort Sapanca\'da 2+1 Üçgen Bungalov’larımız geniş aile yapısı için tasarlanmıştır ve tesiste toplam 3 adet bulunur. 95 m² büyüklüğünde tam bir aileye rahatça yaşam alanı sunan bungalovlarımız doğa manzaralıdır. **Özel ısıtmalı havuz ve sauna** ile her mevsim spa keyfi yaşanır. İkonik üçgen mimarisi ile fotoğraflık bir atmosfer yaratır; her biri benzer iç tasarım ve donanıma sahiptir.',
     specs: { area: 95, guests: 4, extraGuests: 3, bedrooms: 2, bathrooms: 1 },
-    amenities: COMMON_AMENITIES,
+    amenities: ['heatedPool', 'sauna', ...COMMON_AMENITIES],
     images: ['01.jpg', '02.jpg', '03.jpg', '04.jpg', '05.jpg'].map(
       (n) => `/images/rooms/ucgen-2-1/${n}`,
     ),
@@ -263,7 +268,9 @@ export const AMENITY_META: Record<
   Amenity,
   { label: string; labelEn: string; icon: string }
 > = {
-  pool:             { label: 'Havuz (sezonluk)',     labelEn: 'Pool (seasonal)',  icon: 'Waves' },
+  pool:             { label: 'Havuz (yaz sezonu)',   labelEn: 'Pool (summer)',    icon: 'Waves' },
+  heatedPool:       { label: 'Isıtmalı Havuz',         labelEn: 'Heated Pool',      icon: 'Waves' },
+  sauna:            { label: 'Sauna',                  labelEn: 'Sauna',            icon: 'Flame' },
   bbq:              { label: 'Barbekü Mangal',       labelEn: 'BBQ Grill',        icon: 'Flame' },
   swing:            { label: 'Salıncak',              labelEn: 'Swing',            icon: 'Baby' },
   ac:               { label: 'Klima',                 labelEn: 'Air Conditioning', icon: 'Wind' },

@@ -3,13 +3,13 @@ import { unstable_setRequestLocale } from 'next-intl/server';
 import { Container } from '@/components/ui/container';
 import { TOTAL_HOUSE_COUNT } from '@/lib/data/rooms';
 import { RoomsHero } from '@/components/rooms/rooms-hero';
-import { CategorySection } from '@/components/rooms/category-section';
+import { RoomGridDisplay } from '@/components/rooms/room-grid-display';
 import { ButtonLink } from '@/components/ui/button';
 import { RESERVATION_HREF } from '@/lib/constants';
 
 export const metadata: Metadata = {
   title: 'Bungalov & Köşklerimiz — Hat Naturel Resort Sapanca',
-  description: `Sapanca'da doğanın içinde ${TOTAL_HOUSE_COUNT} müstakil bungalov ve köşk. 3 Üçgen 2+1, 1 Üçgen 1+1, 2 Köşk 1+1 (havuzsuz), 2 Köşk 2+1 (yaz havuzlu).`,
+  description: `Sapanca'da doğanın içinde ${TOTAL_HOUSE_COUNT} müstakil bungalov ve köşk. Isıtmalı havuz + sauna içeren üçgen bungalovlar, yaz havuzlu köşkler.`,
 };
 
 interface RoomsPageProps {
@@ -20,19 +20,19 @@ export default function RoomsPage({ params }: RoomsPageProps) {
   unstable_setRequestLocale(params.locale);
 
   return (
-    // Kırık beyaz arka plan (warm ivory, Aman Resorts paleti)
-    <main className="min-h-screen bg-[#FAF8F3] text-neutral-900 selection:bg-accent/30">
+    // Tam beyaz arka plan
+    <main className="min-h-screen bg-white text-neutral-900 selection:bg-accent/30">
       <RoomsHero />
 
-      {/* Kategoriler — tek sıra yan yana 4 kart */}
-      <section className="relative bg-[#FAF8F3] py-20 md:py-28">
+      {/* Odalar grid — her oda/kategori bir kart, köşelerden LED ışık */}
+      <section className="relative bg-white py-20 md:py-28">
         <Container size="xl" className="relative">
-          <CategorySection locale={params.locale} />
+          <RoomGridDisplay locale={params.locale} />
         </Container>
       </section>
 
-      {/* CTA strip — kırık beyaz tema */}
-      <section className="relative overflow-hidden border-t border-neutral-200/60 bg-gradient-to-b from-[#FAF8F3] to-[#F2EDE3] py-20 text-neutral-900">
+      {/* CTA strip — beyaz tema */}
+      <section className="relative overflow-hidden border-t border-neutral-200 bg-gradient-to-b from-white to-neutral-50 py-20 text-neutral-900">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(212,175,55,0.08),transparent_50%)]" />
         <Container className="relative text-center">
           <h2 className="font-serif text-3xl font-bold text-neutral-900 md:text-5xl">

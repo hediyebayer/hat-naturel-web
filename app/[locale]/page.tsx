@@ -5,6 +5,7 @@ import { Heading } from '@/components/ui/heading';
 import { Text } from '@/components/ui/text';
 import { ButtonLink } from '@/components/ui/button';
 import { HeroSection } from '@/components/home/hero-section';
+import { AboutSection } from '@/components/home/about-section';
 import { MapSection } from '@/components/home/map-section';
 import { VirtualTourSection } from '@/components/home/virtual-tour-section';
 import { ROOMS } from '@/lib/data/rooms';
@@ -24,20 +25,8 @@ export default function HomePage({
       {/* Hero — drone manzarası + slow zoom + parallax + stagger fade-in */}
       <HeroSection locale={params.locale} />
 
-      {/* About teaser */}
-      <section className="py-20">
-        <Container size="lg">
-          <div className="text-center">
-            <Heading level={2}>{t('aboutTitle')}</Heading>
-            <Text variant="lead" muted className="mt-4 max-w-2xl mx-auto">
-              {t('aboutLead')}
-            </Text>
-            <Text className="mt-6 max-w-3xl mx-auto" muted>
-              {t('aboutBody')}
-            </Text>
-          </div>
-        </Container>
-      </section>
+      {/* About / Neden Hat Naturel — 'Doğanın Yanı Başında Bir Mola' */}
+      <AboutSection />
 
       {/* Featured rooms */}
       <section className="bg-neutral-50 py-20">
