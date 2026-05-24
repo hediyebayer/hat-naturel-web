@@ -1,21 +1,10 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { unstable_setRequestLocale } from 'next-intl/server';
-import {
-  UtensilsCrossed,
-  Coffee,
-  Clock,
-  Phone,
-  MessageCircle,
-  ArrowRight,
-  Sun,
-  Infinity as InfinityIcon,
-} from 'lucide-react';
+import { Coffee, Clock, Sun, Infinity as InfinityIcon } from 'lucide-react';
 import { Container } from '@/components/ui/container';
 import { Heading } from '@/components/ui/heading';
 import { Text } from '@/components/ui/text';
-import { buildWhatsAppUrl } from '@/lib/utils/whatsapp';
 import { BreakfastMenu, TeaHighlight } from '@/components/restoran/breakfast-menu';
 
 interface RestoranPageProps {
@@ -44,10 +33,6 @@ export default function RestoranPage({
 }: RestoranPageProps): React.ReactElement {
   unstable_setRequestLocale(params.locale);
   const t = useTranslations('restaurant');
-
-  const whatsappUrl = buildWhatsAppUrl({
-    message: 'Merhaba, kahvaltı rezervasyonu yapmak istiyorum.',
-  });
 
   return (
     <>
@@ -154,52 +139,6 @@ export default function RestoranPage({
         </Container>
       </section>
 
-      {/* CTA */}
-      <section className="bg-white py-20 md:py-28">
-        <Container size="lg">
-          <div className="relative overflow-hidden rounded-3xl border border-neutral-200 bg-gradient-to-br from-primary-900 to-primary-800 p-10 text-center text-white shadow-strong md:p-16">
-            {/* Decorative blob */}
-            <span
-              aria-hidden
-              className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-accent/15 blur-3xl"
-            />
-
-            <div className="relative">
-              <UtensilsCrossed
-                className="mx-auto text-accent"
-                size={48}
-                strokeWidth={1.4}
-              />
-              <Heading level={2} className="!text-white mt-6">
-                {t('ctaTitle')}
-              </Heading>
-              <Text className="mx-auto mt-4 max-w-xl !text-neutral-300">
-                {t('ctaText')}
-              </Text>
-
-              <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-                <a
-                  href={whatsappUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full bg-[#25D366] px-7 py-3.5 text-sm font-semibold text-white shadow-medium transition-transform hover:scale-[1.02]"
-                >
-                  <MessageCircle size={18} />
-                  {t('ctaButton')}
-                </a>
-                <Link
-                  href={`/${params.locale}/iletisim`}
-                  className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/5 px-7 py-3.5 text-sm font-medium text-white backdrop-blur-sm transition-colors hover:bg-white hover:text-primary-900"
-                >
-                  <Phone size={16} />
-                  {t('contactButton')}
-                  <ArrowRight size={16} />
-                </Link>
-              </div>
-            </div>
-          </div>
-        </Container>
-      </section>
     </>
   );
 }

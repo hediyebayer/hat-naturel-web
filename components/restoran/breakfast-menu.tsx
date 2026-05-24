@@ -157,7 +157,6 @@ export function TeaHighlight(): React.ReactElement {
         <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
           <StatPill icon={<InfinityIcon size={16} />} label={t('teaStat1')} />
           <StatPill emoji="🍵" label={t('teaStat2')} />
-          <StatPill emoji="🌿" label={t('teaStat3')} />
         </div>
       </div>
     </motion.div>
