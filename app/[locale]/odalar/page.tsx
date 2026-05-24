@@ -1,16 +1,11 @@
 import type { Metadata } from 'next';
 import { unstable_setRequestLocale } from 'next-intl/server';
 import { Container } from '@/components/ui/container';
-import {
-  CATEGORIES,
-  TOTAL_HOUSE_COUNT,
-  getRoomsByCategory,
-} from '@/lib/data/rooms';
-import { RoomCard } from '@/components/rooms/room-card';
+import { TOTAL_HOUSE_COUNT } from '@/lib/data/rooms';
 import { RoomsHero } from '@/components/rooms/rooms-hero';
+import { CategorySection } from '@/components/rooms/category-section';
 import { ButtonLink } from '@/components/ui/button';
 import { RESERVATION_HREF } from '@/lib/constants';
-import { Waves, Sparkles } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Bungalov & Köşklerimiz — Hat Naturel Resort Sapanca',
@@ -25,126 +20,61 @@ export default function RoomsPage({ params }: RoomsPageProps) {
   unstable_setRequestLocale(params.locale);
 
   return (
-    <>
-      <RoomsHero
-        title="Bungalov & Köşklerimiz"
-        subtitle={`Her biri farklı konseptle tasarlanmış ${TOTAL_HOUSE_COUNT} müstakil ev — 4 farklı tipte. Çift, küçük aile ya da kalabalık grup için Sapanca'da size en uygun kaçamağı bulun.`}
-      />
+    <main className="min-h-screen bg-[#0B132B] text-white selection:bg-accent/30">
+      <RoomsHero />
 
-      <section className="bg-neutral-50 py-16 md:py-24">
-        <Container size="xl">
-          {/* Kategori özeti */}
-          <div className="mb-14 flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
+      {/* Main Content Section */}
+      <section className="relative bg-[#0B132B] py-16 md:py-24 z-10">
+        <Container size="xl" className="relative">
+          {/* Reservation Banner / Header */}
+          <div className="mb-16 flex flex-col items-start justify-between gap-6 md:flex-row md:items-end rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur-md shadow-[0_0_40px_rgba(0,0,0,0.5)]">
             <div>
-              <span className="text-xs font-semibold uppercase tracking-[0.2em] text-primary-600">
-                Konaklama Tipleri
+              <span className="text-xs font-semibold uppercase tracking-[0.2em] text-[#7FE5F5]">
+                Konaklama Deneyimi
               </span>
-              <h2 className="mt-2 font-serif text-3xl font-bold text-neutral-900 md:text-4xl">
-                {TOTAL_HOUSE_COUNT} Ev, {CATEGORIES.length} Farklı Konsept
+              <h2 className="mt-3 font-serif text-3xl font-bold text-white md:text-4xl">
+                Doğanın İçinde Konfor
               </h2>
-              <p className="mt-3 max-w-xl text-neutral-600">
-                Tesisimizde toplam {TOTAL_HOUSE_COUNT} müstakil ev bulunmakta:{' '}
-                {CATEGORIES.map((c, i) => (
-                  <span key={c.id}>
-                    <strong className="font-semibold text-neutral-800">
-                      {c.totalCount} adet {c.title}
-                    </strong>
-                    {i < CATEGORIES.length - 1 ? ', ' : '.'}
-                  </span>
-                ))}
+              <p className="mt-3 max-w-xl text-white/70 font-sans tracking-wide">
+                Sapanca&apos;nın huzur veren atmosferinde, size özel tasarlanmış {TOTAL_HOUSE_COUNT} farklı evimizden birini seçerek tatilinizi unutulmaz kılın.
               </p>
             </div>
-            <ButtonLink href={`/${params.locale}${RESERVATION_HREF}`} size="lg">
+            <ButtonLink href={`/${params.locale}${RESERVATION_HREF}`} size="lg" className="bg-accent text-[#0B132B] hover:bg-accent-light border-none shadow-[0_0_20px_rgba(212,175,55,0.4)]">
               Hemen Rezervasyon Yap
             </ButtonLink>
           </div>
 
-          {/* Kategori başına gruplanmış grid */}
-          <div className="space-y-20">
-            {CATEGORIES.map((category) => {
-              const rooms = getRoomsByCategory(category.id);
-              if (rooms.length === 0) return null;
-
-              return (
-                <div key={category.id} className="scroll-mt-24" id={category.id}>
-                  {/* Kategori başlığı */}
-                  <div className="mb-8 flex flex-col gap-3 border-l-4 border-primary-500 pl-5 md:flex-row md:items-end md:justify-between">
-                    <div>
-                      <div className="flex flex-wrap items-center gap-3">
-                        <h3 className="font-serif text-2xl font-bold text-neutral-900 md:text-3xl">
-                          {category.title}
-                        </h3>
-                        <span className="inline-flex items-center rounded-full bg-primary-100 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-primary-700">
-                          {category.totalCount} adet
-                        </span>
-                        {category.hasPool && (
-                          <span className="inline-flex items-center gap-1 rounded-full bg-cyan-100 px-3 py-1 text-xs font-semibold text-cyan-800">
-                            <Waves className="h-3 w-3" />
-                            Yaz Havuzlu
-                          </span>
-                        )}
-                        {!category.hasPool && (
-                          <span className="inline-flex items-center gap-1 rounded-full bg-neutral-200 px-3 py-1 text-xs font-medium text-neutral-700">
-                            Havuzsuz
-                          </span>
-                        )}
-                      </div>
-                      <p className="mt-2 max-w-2xl text-neutral-600">
-                        {category.subtitle}
-                      </p>
-                      {category.poolNote && (
-                        <p className="mt-1 inline-flex items-center gap-1 text-xs text-cyan-700">
-                          <Sparkles className="h-3 w-3" />
-                          {category.poolNote}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Bu kategoriye ait kartlar */}
-                  <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-                    {rooms.map((room, i) => (
-                      <RoomCard
-                        key={room.slug}
-                        room={room}
-                        locale={params.locale}
-                        index={i}
-                      />
-                    ))}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+          {/* Categories & Rooms */}
+          <CategorySection locale={params.locale} />
         </Container>
       </section>
 
       {/* CTA strip */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-primary-900 via-primary-800 to-secondary-800 py-16 text-white">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(255,255,255,0.1),transparent_55%)]" />
+      <section className="relative overflow-hidden border-t border-white/10 bg-gradient-to-b from-[#0B132B] to-[#0A1128] py-20 text-white z-10">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(212,175,55,0.05),transparent_50%)]" />
         <Container className="relative text-center">
-          <h2 className="font-serif text-3xl font-bold md:text-4xl">
+          <h2 className="font-serif text-3xl font-bold md:text-5xl text-white">
             Karar veremediniz mi?
           </h2>
-          <p className="mx-auto mt-3 max-w-2xl text-white/85">
+          <p className="mx-auto mt-6 max-w-2xl text-white/70 text-lg">
             Size en uygun bungalovu birlikte seçelim. Bir mesaj atın, telefonla
             arayalım — tüm sorularınızı yanıtlayalım.
           </p>
-          <div className="mt-8 flex flex-wrap justify-center gap-3">
+          <div className="mt-10 flex flex-wrap justify-center gap-4">
             <ButtonLink
               href={`/${params.locale}/iletisim`}
               variant="outline"
               size="lg"
-              className="!border-white !text-white hover:!bg-white/10"
+              className="!border-white/20 !text-white hover:!bg-white/5"
             >
               Bize Ulaşın
             </ButtonLink>
-            <ButtonLink href={`/${params.locale}${RESERVATION_HREF}`} size="lg">
+            <ButtonLink href={`/${params.locale}${RESERVATION_HREF}`} size="lg" className="bg-accent text-[#0B132B] hover:bg-accent-light border-none shadow-[0_0_15px_rgba(212,175,55,0.3)]">
               Rezervasyon Yap
             </ButtonLink>
           </div>
         </Container>
       </section>
-    </>
+    </main>
   );
 }

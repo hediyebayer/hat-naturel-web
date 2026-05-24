@@ -102,6 +102,37 @@ const config: Config = {
         padding: { DEFAULT: '1rem', sm: '1.5rem', lg: '2rem' },
         screens: { sm: '640px', md: '768px', lg: '1024px', xl: '1200px' },
       },
+      keyframes: {
+        twinkle: {
+          '0%, 100%': { opacity: '0.2', transform: 'scale(1)' },
+          '50%': { opacity: '0.9', transform: 'scale(1.15)' },
+        },
+        meteor: {
+          '0%': {
+            transform: 'translate3d(0, 0, 0) rotate(-22deg)',
+            opacity: '0',
+          },
+          '5%': { opacity: '1' },
+          '90%': { opacity: '1' },
+          '100%': {
+            transform: 'translate3d(140vw, 60vh, 0) rotate(-22deg)',
+            opacity: '0',
+          },
+        },
+        'led-pulse': {
+          '0%, 100%': {
+            boxShadow: '0 0 0 0 rgba(212,175,55,0.4)',
+          },
+          '50%': {
+            boxShadow: '0 0 40px 8px rgba(212,175,55,0.15)',
+          },
+        },
+      },
+      animation: {
+        twinkle: 'twinkle 3s ease-in-out infinite',
+        meteor: 'meteor 4s linear infinite',
+        'led-pulse': 'led-pulse 3s ease-in-out infinite',
+      },
     },
   },
   plugins: [
