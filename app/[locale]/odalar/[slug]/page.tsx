@@ -171,7 +171,7 @@ export default function RoomDetailPage({ params }: PageProps) {
                 Olanaklar
               </span>
               <h2 className="mt-2 font-serif text-3xl font-bold text-neutral-900 md:text-4xl">
-                Bu köşkte sizi neler bekliyor?
+                Bu bungalovda sizi neler bekliyor?
               </h2>
               <div className="mt-6">
                 <AmenityList amenities={room.amenities} />

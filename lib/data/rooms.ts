@@ -22,7 +22,8 @@ export type Amenity =
   | 'hairDryer'
   | 'fridge'
   | 'wardrobe'
-  | 'towels';
+  | 'towels'
+  | 'generator';
 
 export interface Room {
   slug: string;
@@ -48,7 +49,7 @@ export interface Room {
 const COMMON_AMENITIES: Amenity[] = [
   'bbq', 'swing', 'ac', 'wifi', 'smartTv', 'kitchen', 'toiletries',
   'waterTank', 'fireExtinguisher', 'security', 'firePit', 'gardenFurniture',
-  'fireplace', 'hairDryer', 'fridge', 'wardrobe', 'towels',
+  'fireplace', 'hairDryer', 'fridge', 'wardrobe', 'towels', 'generator',
 ];
 
 export const ROOMS: Room[] = [
@@ -89,14 +90,14 @@ export const ROOMS: Room[] = [
   },
   {
     slug: 'ucgen-1-1',
-    name: 'Üçgen 1+1',
-    shortName: 'Üçgen 1+1',
+    name: '1+1 Üçgen Bungalov',
+    shortName: '1+1 Üçgen',
     tagline: 'Ikonik üçgen tasarım, sıcak ahşap',
     description:
-      'En çok tercih edilen 1+1 üçgen bungalov — çiftler ve küçük aileler için cazip.',
+      'En çok tercih edilen 1+1 üçgen bungalov — aileler için geniş ve konforlu.',
     longDescription:
-      'Üçgen 1+1 evlerimiz tesisin en çok tercih edilen yapılarındandır. Ikonik üçgen mimarisi, sıcak ahşap dokuları ve şömineli oda sobasıyla doğanın içinde benzersiz bir atmosfer sunar. Küçük aile yapısına uygun, hem fiyat hem konfor olarak avantajlı bir seçim.',
-    specs: { area: 85, guests: 2, extraGuests: 3, bedrooms: 1, bathrooms: 1 },
+      '1+1 Üçgen Bungalov’larımız tesisin en çok tercih edilen yapılarındandır. İkonik üçgen mimarisi, sıcak ahşap dokuları ve şömineli oda sobasıyla doğanın içinde benzersiz bir atmosfer sunar. 5 kişiye kadar konaklama imkanı ile aileler ve arkadaş grupları için ideal, hem fiyat hem konfor olarak avantajlı bir seçim.',
+    specs: { area: 85, guests: 5, extraGuests: 0, bedrooms: 1, bathrooms: 1 },
     amenities: COMMON_AMENITIES,
     images: [
       '01.jpg', '02.jpg', '03.jpg', '04.jpg', '05.jpg',
@@ -195,7 +196,7 @@ export const AMENITY_META: Record<
   pool:             { label: 'Havuz (sezonluk)',     labelEn: 'Pool (seasonal)',  icon: 'Waves' },
   bbq:              { label: 'Barbekü Mangal',       labelEn: 'BBQ Grill',        icon: 'Flame' },
   swing:            { label: 'Salıncak',              labelEn: 'Swing',            icon: 'Baby' },
-  ac:               { label: 'Klima (Altlı-Üstlü)',  labelEn: 'Air Conditioning', icon: 'Wind' },
+  ac:               { label: 'Klima',                 labelEn: 'Air Conditioning', icon: 'Wind' },
   wifi:             { label: 'Ücretsiz WiFi',         labelEn: 'Free WiFi',        icon: 'Wifi' },
   smartTv:          { label: 'Akıllı TV',             labelEn: 'Smart TV',         icon: 'Tv' },
   kitchen:          { label: 'Tam Donanımlı Mutfak',  labelEn: 'Full Kitchen',     icon: 'ChefHat' },
@@ -210,4 +211,5 @@ export const AMENITY_META: Record<
   fridge:           { label: 'Buzdolabı',             labelEn: 'Refrigerator',     icon: 'Refrigerator' },
   wardrobe:         { label: 'Elbise Dolabı',         labelEn: 'Wardrobe',         icon: 'Shirt' },
   towels:           { label: 'Banyo Havlusu',         labelEn: 'Bath Towels',      icon: 'Bath' },
+  generator:        { label: 'Jeneratör',              labelEn: 'Generator',        icon: 'Zap' },
 };
