@@ -1,0 +1,131 @@
+{
+  "meta": {
+    "brand": "Hat Naturel Resort",
+    "defaultTitle": "Hat Naturel Resort Sapanca — Doğayla İç İçe Bungalov Tatili",
+    "defaultDescription": "Sapanca'da huzurlu bir kaçamak. Doğa manzaralı, premium bungalov evlerde unutulmaz tatil deneyimi."
+  },
+  "common": {
+    "brand": "Hat Naturel Resort",
+    "reservation": "Rezervasyon Yap",
+    "contact": "İletişim",
+    "readMore": "Devamını Oku",
+    "seeDetails": "Detayları Gör",
+    "seeAll": "Tümünü Gör",
+    "loading": "Yükleniyor...",
+    "error": "Bir hata oluştu",
+    "send": "Gönder",
+    "bookNow": "Şimdi Rezerve Et"
+  },
+  "nav": {
+    "home": "Anasayfa",
+    "rooms": "Odalar",
+    "gallery": "Galeri",
+    "blog": "Blog",
+    "restaurant": "Restoran",
+    "virtualTour": "Sanal Tur",
+    "contact": "İletişim",
+    "reservation": "Rezervasyon"
+  },
+  "home": {
+    "heroTitle": "Sapanca'da Huzurun Adresi",
+    "heroSubtitle": "Doğayla iç içe, premium bungalov evlerde unutulmaz bir tatil sizi bekliyor.",
+    "heroCta": "Rezervasyon Yap",
+    "aboutTitle": "Hakkımızda",
+    "aboutLead": "Sapanca'nın eşsiz doğasında, modern konfor ile doğal yaşamı buluşturan butik bir resort.",
+    "aboutBody": "Geniş arazimizde çocuk oyun parkı, ücretsiz otopark ve 7/24 güvenlik ile huzurlu bir tatil deneyimi sunuyoruz. Her bungalovumuz farklı bir konseptle tasarlandı; siz hangisini seçerseniz seçin doğanın içinde özel bir alana kavuşacaksınız.",
+    "roomsTitle": "Bungalov Evlerimiz",
+    "roomsSubtitle": "Her zevke uygun, ayrıcalıklı konaklama seçenekleri",
+    "offersTitle": "Güncel Fırsatlar",
+    "galleryTitle": "Galeri",
+    "gallerySubtitle": "Tesisimizden kareler",
+    "locationTitle": "Konum",
+    "locationSubtitle": "Sapanca'nın kalbinde, doğanın içinde"
+  },
+  "rooms": {
+    "title": "Bungalov Evlerimiz",
+    "subtitle": "Doğanın içinde, modern konforla buluşan benzersiz konaklama seçenekleri",
+    "capacity": "Kapasite",
+    "guests": "{count, plural, =1 {# misafir} other {# misafir}}",
+    "amenities": "Olanaklar",
+    "perNight": "/ gece",
+    "from": "başlangıç fiyatı"
+  },
+  "reservation": {
+    "title": "Rezervasyon Yap",
+    "subtitle": "Tarihinizi seçin, biz hazırlığı yapalım.",
+    "checkIn": "Giriş Tarihi",
+    "checkOut": "Çıkış Tarihi",
+    "guests": "Misafir Sayısı",
+    "adults": "Yetişkin",
+    "children": "Çocuk",
+    "selectRoom": "Bungalov Seçin",
+    "guestName": "Adınız Soyadınız",
+    "guestEmail": "E-posta",
+    "guestPhone": "Telefon",
+    "specialRequests": "Özel İstekler (opsiyonel)",
+    "submit": "Rezervasyon Talebi Gönder",
+    "submitting": "Gönderiliyor...",
+    "success": "Rezervasyon talebiniz alındı! En kısa sürede sizinle iletişime geçeceğiz.",
+    "error": "Bir hata oluştu, lütfen tekrar deneyin."
+  },
+  "contact": {
+    "title": "İletişim",
+    "subtitle": "Sorularınız için bize ulaşın",
+    "formTitle": "Bize Yazın",
+    "name": "Adınız Soyadınız",
+    "email": "E-posta",
+    "phone": "Telefon",
+    "message": "Mesajınız",
+    "submit": "Mesajı Gönder",
+    "submitting": "Gönderiliyor...",
+    "success": "Mesajınız başarıyla iletildi!",
+    "error": "Gönderim başarısız oldu, lütfen tekrar deneyin.",
+    "addressLabel": "Adres",
+    "phoneLabel": "Telefon",
+    "emailLabel": "E-posta",
+    "hoursLabel": "Çalışma Saatleri",
+    "followUs": "Bizi Takip Edin"
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Sapanca ve tesisimizden haberler",
+    "readingTime": "{min} dk okuma",
+    "publishedAt": "Yayın tarihi",
+    "noPosts": "Henüz blog yazısı yok."
+  },
+  "restaurant": {
+    "title": "Restoran",
+    "subtitle": "Yöresel lezzetler, taze malzemeler",
+    "lead": "Sapanca'nın bereketli topraklarından sofranıza."
+  },
+  "gallery": {
+    "title": "Galeri",
+    "subtitle": "Tesisimizden ve odalarımızdan kareler",
+    "all": "Tümü"
+  },
+  "virtualTour": {
+    "title": "360° Sanal Tur",
+    "subtitle": "Tesisimizi yerinde keşfedin"
+  },
+  "footer": {
+    "tagline": "Sapanca'da doğayla iç içe, premium tatil deneyimi.",
+    "sitemap": "Site Haritası",
+    "contact": "İletişim",
+    "followUs": "Bizi Takip Edin",
+    "copyright": "© {year} Hat Naturel Resort. Tüm hakları saklıdır.",
+    "rightsReserved": "Tüm hakları saklıdır."
+  },
+  "cookie": {
+    "message": "Bu site, deneyiminizi iyileştirmek için çerezler kullanır.",
+    "accept": "Kabul Et",
+    "decline": "Reddet",
+    "learnMore": "Daha Fazla Bilgi"
+  },
+  "errors": {
+    "required": "Bu alan zorunludur",
+    "invalidEmail": "Geçerli bir e-posta adresi girin",
+    "invalidPhone": "Geçerli bir telefon numarası girin",
+    "minLength": "En az {min} karakter olmalı",
+    "checkOutAfterCheckIn": "Çıkış tarihi giriş tarihinden sonra olmalı"
+  }
+}
