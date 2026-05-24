@@ -21,11 +21,19 @@ export default function HomePage({
     <>
       {/* Hero (placeholder — gerçek görsel sonra) */}
       <section
-        className="relative flex min-h-[80vh] items-center justify-center overflow-hidden bg-gradient-to-br from-primary-900 via-primary-800 to-secondary-800"
+        className="relative flex min-h-[85vh] items-center justify-center overflow-hidden bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700"
         aria-label="Hero"
       >
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_30%,rgba(255,255,255,0.15),transparent_60%)]" />
+        {/* Doku katmanı — lacivert kumaş hissi */}
+        <div className="absolute inset-0 opacity-30 [background-image:radial-gradient(rgba(255,255,255,0.18)_1px,transparent_1px)] [background-size:3px_3px]" />
+        {/* Vinyet ışık — ortadan dışa */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_30%,rgba(212,175,55,0.15),transparent_60%)]" />
         <Container className="relative z-10 text-center text-white">
+          {/* Altın üst çizgi — boutique vurgu */}
+          <span className="mx-auto block h-px w-16 bg-accent" aria-hidden />
+          <span className="mt-4 inline-block text-xs uppercase tracking-[0.3em] text-accent-light">
+            Sapanca Bungalov
+          </span>
           <Heading
             level={1}
             className="!text-white drop-shadow-lg max-w-3xl mx-auto"
@@ -42,6 +50,7 @@ export default function HomePage({
             <ButtonLink
               href={`/${params.locale}${RESERVATION_HREF}`}
               size="lg"
+              className="!bg-accent !text-primary-900 hover:!bg-accent-light"
             >
               {t('heroCta')}
             </ButtonLink>
@@ -49,7 +58,7 @@ export default function HomePage({
               href={`/${params.locale}/odalar`}
               variant="outline"
               size="lg"
-              className="!border-white !text-white hover:!bg-white/10"
+              className="!border-white/60 !text-white hover:!bg-white/10"
             >
               {t('roomsTitle')}
             </ButtonLink>

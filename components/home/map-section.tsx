@@ -41,7 +41,7 @@ export function MapSection(): React.ReactElement {
           <aside className="lg:col-span-2 flex flex-col justify-between rounded-2xl bg-neutral-50 p-8 shadow-soft">
             <div className="space-y-6">
               <div className="flex items-start gap-3">
-                <span className="mt-1 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-primary-100 text-primary-700">
+                <span className="mt-1 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-accent/15 text-accent-dark">
                   <MapPin size={18} />
                 </span>
                 <div>
@@ -53,7 +53,7 @@ export function MapSection(): React.ReactElement {
               </div>
 
               <div className="flex items-start gap-3">
-                <span className="mt-1 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-primary-100 text-primary-700">
+                <span className="mt-1 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-accent/15 text-accent-dark">
                   <Phone size={18} />
                 </span>
                 <div>

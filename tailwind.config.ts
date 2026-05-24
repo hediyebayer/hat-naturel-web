@@ -9,18 +9,20 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        // Primary: logo lacivert (royal navy) — marka rengi
         primary: {
-          50: '#f0f9f4',
-          100: '#dcf2e4',
-          200: '#bce5cd',
-          300: '#8dd3ab',
-          400: '#5ab880',
-          500: '#369e5f',
-          600: '#277e4a',
-          700: '#20653c',
-          800: '#1c5132',
-          900: '#18432a',
+          50: '#eef1f8',
+          100: '#d6deec',
+          200: '#aebdda',
+          300: '#7a8fc1',
+          400: '#4b66a4',
+          500: '#2a4685',
+          600: '#1d3370',
+          700: '#162659',
+          800: '#101c44',
+          900: '#0a1330',
         },
+        // Secondary: krem/kahve (lacivert ile kontrast için sıcak yan)
         secondary: {
           50: '#faf8f5',
           100: '#f2ede3',
@@ -45,23 +47,24 @@ const config: Config = {
           800: '#292524',
           900: '#1c1917',
         },
+        // Accent: gold (premium / lacivert ile kısas)
         accent: {
           DEFAULT: '#d4af37',
           light: '#f0d875',
           dark: '#b8941f',
         },
-        // Logo arka plan tonu (kraliyet mavisi)
-        brand: {
-          50: '#eef1f8',
-          100: '#d6deec',
-          200: '#aebdda',
-          300: '#7a8fc1',
-          400: '#4b66a4',
-          500: '#2a4685',
-          600: '#1d3370',
-          700: '#162659',
-          800: '#101c44',
-          900: '#0a1330',
+        // Forest: doğa vurguları için (badge, ikon, doğa temalı bölüm)
+        forest: {
+          50: '#f0f9f4',
+          100: '#dcf2e4',
+          200: '#bce5cd',
+          300: '#8dd3ab',
+          400: '#5ab880',
+          500: '#369e5f',
+          600: '#277e4a',
+          700: '#20653c',
+          800: '#1c5132',
+          900: '#18432a',
         },
       },
       fontFamily: {

@@ -16,7 +16,7 @@ export function Footer({ locale }: FooterProps): React.ReactElement {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="mt-24 bg-neutral-900 text-neutral-300">
+    <footer className="mt-24 bg-primary-900 text-primary-100/80">
       <Container size="xl" className="py-16">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
@@ -109,7 +109,7 @@ export function Footer({ locale }: FooterProps): React.ReactElement {
           </div>
         </div>
 
-        <div className="mt-12 border-t border-neutral-800 pt-6 text-center text-xs text-neutral-500">
+        <div className="mt-12 border-t border-primary-700/40 pt-6 text-center text-xs text-primary-200/60">
           {tFooter('copyright', { year })}
         </div>
       </Container>

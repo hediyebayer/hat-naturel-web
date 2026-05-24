@@ -26,14 +26,14 @@ export function VirtualTourSection({
 
   return (
     <section
-      className={preview ? 'bg-neutral-900 py-20 text-white' : 'py-12'}
+      className={preview ? 'bg-primary-900 py-20 text-white' : 'py-12'}
       aria-labelledby="virtual-tour-heading"
     >
       <Container>
         {preview ? (
           <div className="grid items-center gap-10 lg:grid-cols-2">
             <div>
-              <span className="inline-flex items-center gap-2 rounded-full bg-primary-600/20 px-4 py-1.5 text-sm font-medium text-primary-300">
+              <span className="inline-flex items-center gap-2 rounded-full bg-accent/15 px-4 py-1.5 text-sm font-medium text-accent-light">
                 <Compass size={14} /> 360°
               </span>
               <Heading
