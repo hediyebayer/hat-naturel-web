@@ -39,9 +39,7 @@ export async function generateMetadata({
         },
       ],
     },
-    icons: {
-      icon: '/images/brand/logo-sm.jpg',
-    },
+
   };
 }
 
