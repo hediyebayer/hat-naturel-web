@@ -84,7 +84,7 @@ function RoomDisplayCard({
 
       <Link
         href={`/${locale}/odalar/${room.slug}`}
-        className="relative flex h-full flex-col overflow-hidden rounded-2xl border border-neutral-200 bg-white transition-all duration-500 hover:-translate-y-1 hover:border-accent/60 hover:shadow-[0_25px_60px_-15px_rgba(212,175,55,0.3)]"
+        className="relative flex h-full flex-col overflow-hidden rounded-2xl border border-neutral-200 bg-white transition-all duration-500 hover:-translate-y-1 hover:border-neutral-300 hover:shadow-[0_25px_60px_-15px_rgba(255,255,255,0.9),0_15px_40px_-10px_rgba(0,0,0,0.15)]"
       >
         {/* Görsel */}
         <div className="relative aspect-[4/3] overflow-hidden bg-neutral-100">

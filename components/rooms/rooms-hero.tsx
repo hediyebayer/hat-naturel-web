@@ -57,7 +57,7 @@ export function RoomsHero() {
 
       {/* Hero text content */}
       <div className="relative z-20 mx-auto max-w-5xl px-4 text-center sm:px-6">
-        {/* Üst etiket — 13 özel bungalov vurgusu */}
+        {/* Üst etiket */}
         <motion.span
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
@@ -68,7 +68,7 @@ export function RoomsHero() {
           Hat Naturel Resort · Sapanca
         </motion.span>
 
-        {/* ANA BAŞLIK — büyük, çekici, premium */}
+        {/* ANA BAŞLIK — Aileye Özel + Sade Lüks */}
         <motion.h1
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
@@ -76,23 +76,24 @@ export function RoomsHero() {
           className="mt-10 font-serif text-4xl font-bold leading-[1.05] tracking-tight md:text-6xl lg:text-[5.5rem]"
         >
           <span className="block bg-gradient-to-r from-accent-light via-accent to-accent-light bg-clip-text font-bold italic text-transparent drop-shadow-[0_4px_30px_rgba(212,175,55,0.4)]">
-            13 Özel Bungalov
+            Aileye Özel,
           </span>
           <span className="mt-3 block font-light text-white/95 drop-shadow-[0_2px_20px_rgba(0,0,0,0.5)]">
-            Doğanın Sessizliği,{' '}
-            <span className="italic">Size Ait Bir Alan</span>
+            Doğaya{' '}
+            <span className="italic">Yakın</span>
           </span>
         </motion.h1>
 
-        {/* Senin verdiğin cümle — ana açıklama */}
+        {/* Subtitle — mahremiyet + aile vurgulu, şık */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.5 }}
           className="mx-auto mt-10 max-w-2xl font-sans text-base text-white/85 tracking-[0.02em] md:text-lg leading-relaxed"
         >
-          Her biri özenle konumlandırılmış 13 özel bungalovumuzda doğanın
-          sessizliğini, konforu ve size ait özel alanın keyfini yaşayın.
+          Her biri özenle konumlandırılmış müstakil bungalovlarımızda; ailenize
+          ait özel bir alanda, doğanın sessizliğiyle baş başa unutulmaz bir
+          tatil yaşayın.
         </motion.p>
 
         {/* Scroll indicator */}
