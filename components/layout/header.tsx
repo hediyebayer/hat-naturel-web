@@ -55,9 +55,9 @@ export function Header({ locale }: HeaderProps): React.ReactElement {
             className="relative inline-block transition-all duration-500 drop-shadow-[0_6px_20px_rgba(0,0,0,0.35)]"
             style={{ perspective: '1000px' }}
           >
-            {/* Periodik 360 dönüş — parlamayı da içeride tutan wrapper */}
+            {/* Periodik 360 dönüş — parlama PNG opak piksellerine maskelenir */}
             <motion.span
-              className="relative block overflow-hidden motion-reduce:!transform-none"
+              className="relative block motion-reduce:!transform-none"
               animate={{ rotateY: [0, 360] }}
               transition={{
                 duration: 1.8,
@@ -79,10 +79,18 @@ export function Header({ locale }: HeaderProps): React.ReactElement {
                 )}
               />
 
-              {/* Hover parlama — SADECE logo içinde, beyaz ışıltı */}
+              {/* Hover parlama — PNG opak alanlarına maskelenir (oval içi) */}
               <span
                 aria-hidden
-                className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/50 to-transparent skew-x-12 transition-transform duration-1000 ease-out group-hover:translate-x-full"
+                className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/60 to-transparent skew-x-12 transition-transform duration-1000 ease-out group-hover:translate-x-full"
+                style={{
+                  WebkitMaskImage: "url('/images/brand/logo-header.png')",
+                  WebkitMaskRepeat: 'no-repeat',
+                  WebkitMaskSize: '100% 100%',
+                  maskImage: "url('/images/brand/logo-header.png')",
+                  maskRepeat: 'no-repeat',
+                  maskSize: '100% 100%',
+                }}
               />
             </motion.span>
           </motion.span>
