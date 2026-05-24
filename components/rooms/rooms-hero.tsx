@@ -86,8 +86,8 @@ export function RoomsHero() {
           transition={{ duration: 0.8, delay: 0.5 }}
           className="mx-auto mt-10 max-w-2xl font-sans text-base text-white/85 tracking-[0.02em] md:text-lg leading-relaxed"
         >
-          Doğa ve manzara eşliğinde, size özel müstakil bungalovlarımızda
-          huzur dolu tatil ve unutulmaz anlar sizi bekliyor.
+          Doğa ve manzara eşliğinde, size özel muhafazakar müstakil
+          bungalovlarımızda huzur dolu tatil ve unutulmaz anlar sizi bekliyor.
         </motion.p>
 
         {/* Scroll indicator */}
