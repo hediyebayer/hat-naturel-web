@@ -309,6 +309,13 @@ export const ROOMS: Room[] = [
     shortName: 'Mor 2+1',
     tagline: 'Yaz havuzlu, dikkat çeken köşk',
     category: 'kosk-2-1-havuzlu',
+    bedConfig: [
+      '🛏️ Ebeveyn odasında 1 adet çift kişilik yatak',
+      '🛏️ 2. yatak odasında 1 adet çift kişilik yatak',
+      '🛋️ Ortak alanda çift kişilik çekyat',
+      '🛋️ Ortak alanda tek kişilik çekyat',
+      '👪 Maksimum 7 kişi konaklayabilir',
+    ],
     description:
       '95 m² genişlikte, 2+1 tasarımıyla ferah ortam — özel yaz havuzlu aile köşkü.',
     longDescription:
@@ -328,6 +335,13 @@ export const ROOMS: Room[] = [
     shortName: 'Sarı 2+1',
     tagline: 'Özel tasarım, geniş aile köşkü',
     category: 'kosk-1-1-havuzsuz',
+    bedConfig: [
+      '🛏️ Ebeveyn odasında 1 adet çift kişilik yatak',
+      '🛏️ 2. yatak odasında 1 adet çift kişilik yatak',
+      '🛋️ Ortak alanda çift kişilik çekyat',
+      '🛋️ Ortak alanda tek kişilik çekyat',
+      '👪 Maksimum 7 kişi konaklayabilir',
+    ],
     description:
       'Özel tasarım 95 m² 2+1 köşk; ferahlık ve yaşamsal genişlikle dikkat çeker. (Havuzsuz)',
     longDescription:
