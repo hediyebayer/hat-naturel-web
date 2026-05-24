@@ -38,20 +38,32 @@ export function Header({ locale }: HeaderProps): React.ReactElement {
       )}
     >
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        {/* Logo */}
+        {/* Logo — daire içinde amblem + yanda marka adı */}
         <Link
           href={`/${locale}`}
           aria-label="Hat Naturel Sapanca Bungalov — Anasayfa"
-          className="flex items-center"
+          className="group flex items-center gap-3"
         >
-          <Image
-            src="/images/brand/logo-header.jpg"
-            alt="Hat Naturel Sapanca Bungalov"
-            width={180}
-            height={150}
-            priority
-            className="h-12 w-auto rounded-md sm:h-14"
-          />
+          {/* Dairesel amblem */}
+          <span className="relative flex h-12 w-12 flex-shrink-0 items-center justify-center overflow-hidden rounded-full ring-1 ring-primary-200 shadow-soft transition-transform duration-300 group-hover:scale-105 sm:h-14 sm:w-14">
+            <Image
+              src="/images/brand/logo-circle.jpg"
+              alt="Hat Naturel amblem"
+              width={200}
+              height={200}
+              priority
+              className="h-full w-full object-cover"
+            />
+          </span>
+          {/* Marka adı */}
+          <span className="hidden flex-col leading-none xs:flex">
+            <span className="font-serif text-base font-semibold tracking-wide text-primary-900 sm:text-lg">
+              Hat Naturel
+            </span>
+            <span className="mt-1 text-[10px] font-medium uppercase tracking-[0.2em] text-neutral-500 sm:text-[11px]">
+              Sapanca · Bungalov
+            </span>
+          </span>
         </Link>
 
         {/* Desktop nav */}

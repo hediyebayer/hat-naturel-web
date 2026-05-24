@@ -63,13 +63,25 @@ export function MobileMenu({
         )}
       >
         <div className="flex items-center justify-between border-b border-neutral-200 px-6 py-4">
-          <Image
-            src="/images/brand/logo-sm.jpg"
-            alt="Hat Naturel Sapanca Bungalov"
-            width={240}
-            height={200}
-            className="h-10 w-auto rounded-md"
-          />
+          <div className="flex items-center gap-2.5">
+            <span className="relative flex h-10 w-10 flex-shrink-0 overflow-hidden rounded-full ring-1 ring-primary-200 shadow-soft">
+              <Image
+                src="/images/brand/logo-circle.jpg"
+                alt="Hat Naturel amblem"
+                width={200}
+                height={200}
+                className="h-full w-full object-cover"
+              />
+            </span>
+            <span className="flex flex-col leading-none">
+              <span className="font-serif text-sm font-semibold tracking-wide text-primary-900">
+                Hat Naturel
+              </span>
+              <span className="mt-0.5 text-[9px] font-medium uppercase tracking-[0.2em] text-neutral-500">
+                Sapanca · Bungalov
+              </span>
+            </span>
+          </div>
           <button
             type="button"
             onClick={onClose}
