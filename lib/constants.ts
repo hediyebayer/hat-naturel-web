@@ -27,7 +27,8 @@ export const SITE_CONFIG = {
       'https://www.google.com/maps/embed?pb=!4v1751282567227!6m8!1m7!1sCAoSLEFGMVFpcE82UzVqbkV1aHZzQWs0SzNKRDJlLTJ3R0VYYWJGQlpDZDZjMDhF!2m2!1d40.66864244965133!2d30.26540175088224!3f151.9861990905399!4f8.733223319116348!5f0.7820865974627469',
   },
   socialMedia: {
-    instagram: 'https://www.instagram.com/hatnaturelresort',
+    instagram: 'https://www.instagram.com/hatnaturelsapanca',
+    instagramHandle: '@hatnaturelsapanca',
     facebook: 'https://www.facebook.com/hatnaturelresort',
   },
 } as const;
