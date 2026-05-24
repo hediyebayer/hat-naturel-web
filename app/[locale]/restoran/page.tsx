@@ -152,7 +152,7 @@ function RestoranHero(): React.ReactElement {
   const t = useTranslations('restaurant');
 
   return (
-    <section className="relative isolate overflow-hidden bg-primary-900 pb-20 pt-32 text-white md:pb-28 md:pt-40">
+    <section className="relative isolate flex h-[100svh] min-h-[640px] w-full items-center overflow-hidden bg-primary-900 pt-32 text-white md:pt-40">
       {/* Layer 0: Background kahvaltı fotoğrafı — yavaş Ken Burns zoom */}
       <Image
         src="/images/restoran/hero-kahvalti.jpg"

@@ -34,7 +34,7 @@ export function RoomsHero() {
   return (
     <section
       ref={sectionRef}
-      className="relative isolate flex min-h-[88vh] items-center justify-center overflow-hidden bg-[#0a1330] pt-32 pb-24 text-white md:pt-40 md:pb-32"
+      className="relative isolate flex h-[100svh] min-h-[640px] items-center justify-center overflow-hidden bg-[#0a1330] pt-32 text-white md:pt-40"
     >
       {/* Real aerial night photo with mouse parallax */}
       <motion.div
