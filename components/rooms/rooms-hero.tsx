@@ -68,17 +68,18 @@ export function RoomsHero() {
           Hat Naturel Resort · Sapanca
         </motion.span>
 
-        {/* ANA BAŞLIK — Aileye Özel + Sade Lüks */}
+        {/* ANA BAŞLIK — Aileye Özel + Sade Lüks
+            FIX: leading-[1.2] + pb-2 in spans — italic 'y' descender clipping önlendi */}
         <motion.h1
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.15, ease: [0.25, 1, 0.5, 1] }}
-          className="mt-10 font-serif text-4xl font-bold leading-[1.05] tracking-tight md:text-6xl lg:text-[5.5rem]"
+          className="mt-10 font-serif text-4xl font-bold leading-[1.2] tracking-tight md:text-6xl lg:text-[5.5rem]"
         >
-          <span className="block bg-gradient-to-r from-accent-light via-accent to-accent-light bg-clip-text font-bold italic text-transparent drop-shadow-[0_4px_30px_rgba(212,175,55,0.4)]">
+          <span className="block bg-gradient-to-r from-accent-light via-accent to-accent-light bg-clip-text pb-2 font-bold italic text-transparent drop-shadow-[0_4px_30px_rgba(212,175,55,0.4)]">
             Aileye Özel,
           </span>
-          <span className="mt-3 block font-light text-white/95 drop-shadow-[0_2px_20px_rgba(0,0,0,0.5)]">
+          <span className="mt-3 block pb-2 font-light text-white/95 drop-shadow-[0_2px_20px_rgba(0,0,0,0.5)]">
             Doğaya{' '}
             <span className="italic">Yakın</span>
           </span>
