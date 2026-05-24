@@ -2,12 +2,21 @@
 
 import { useRef } from 'react';
 import Image from 'next/image';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useMotionValue,
+  useSpring,
+} from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import { ChevronDown } from 'lucide-react';
 import { Container } from '@/components/ui/container';
 import { ButtonLink } from '@/components/ui/button';
 import { RESERVATION_HREF } from '@/lib/constants';
+
+// Mouse parallax şiddeti (max kayma px). Yükseltirsen daha belirgin.
+const MOUSE_PARALLAX_STRENGTH = 24;
 
 interface HeroSectionProps {
   locale: string;
@@ -28,37 +37,75 @@ export function HeroSection({ locale }: HeroSectionProps): React.ReactElement {
   const t = useTranslations('home');
   const ref = useRef<HTMLElement>(null);
 
-  // Parallax: section ekran içindeyken görseli yukarı kaydır
+  // Scroll parallax: section ekran içindeyken görseli yukarı kaydır
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ['start start', 'end start'],
   });
-  const imageY = useTransform(scrollYProgress, [0, 1], ['0%', '25%']);
+  const scrollY = useTransform(scrollYProgress, [0, 1], ['0%', '25%']);
   const contentOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
+
+  // Mouse parallax: fare nereye giderse görsel ters yönde kayar (depth)
+  // Spring ile yumuşatılmış, takip eden ama yumuşak hareket.
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const springX = useSpring(mouseX, { stiffness: 60, damping: 18, mass: 0.6 });
+  const springY = useSpring(mouseY, { stiffness: 60, damping: 18, mass: 0.6 });
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLElement>): void => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    // Normalize -1..1 (orta = 0, sol/üst = -1, sağ/alt = 1)
+    const nx = (e.clientX - rect.left) / rect.width - 0.5;
+    const ny = (e.clientY - rect.top) / rect.height - 0.5;
+    // Ters yönde kaydır (mouse sağa → görsel sola)
+    mouseX.set(-nx * MOUSE_PARALLAX_STRENGTH * 2);
+    mouseY.set(-ny * MOUSE_PARALLAX_STRENGTH * 2);
+  };
+
+  const handleMouseLeave = (): void => {
+    mouseX.set(0);
+    mouseY.set(0);
+  };
 
   return (
     <section
       ref={ref}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
       className="relative h-[100svh] min-h-[640px] w-full overflow-hidden bg-primary-900"
       aria-label="Hero — Hat Naturel Sapanca"
     >
-      {/* Arkaplan görseli — slow zoom + parallax */}
+      {/* Arkaplan görseli — slow zoom + scroll parallax + mouse parallax */}
       <motion.div
         className="absolute inset-0 will-change-transform"
-        style={{ y: imageY }}
-        initial={{ scale: 1.12 }}
-        animate={{ scale: 1 }}
-        transition={{ duration: 8, ease: [0.16, 1, 0.3, 1] }}
+        // -%4 -%4 büyütülüyor ki mouse kaydırırken kenarda boşluk olmasın
+        style={{
+          y: scrollY,
+          x: springX,
+          top: -MOUSE_PARALLAX_STRENGTH,
+          bottom: -MOUSE_PARALLAX_STRENGTH,
+          left: -MOUSE_PARALLAX_STRENGTH,
+          right: -MOUSE_PARALLAX_STRENGTH,
+        }}
       >
-        <Image
-          src="/images/home/hero-sapanca.jpg"
-          alt="Hat Naturel Sapanca — drone manzarası, üçgen bungalov tesisi ve Sapanca gölü"
-          fill
-          priority
-          quality={85}
-          sizes="100vw"
-          className="object-cover"
-        />
+        {/* Içteki y-shift (mouse Y) ayrı katmanda çünkü dış div'in y'si scroll'a ait */}
+        <motion.div
+          className="absolute inset-0"
+          style={{ y: springY }}
+          initial={{ scale: 1.12 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 8, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <Image
+            src="/images/home/hero-sapanca.jpg"
+            alt="Hat Naturel Sapanca — drone manzarası, üçgen bungalov tesisi ve Sapanca gölü"
+            fill
+            priority
+            quality={85}
+            sizes="100vw"
+            className="object-cover"
+          />
+        </motion.div>
         {/* Lacivert overlay — okunabilirlik */}
         <div
           aria-hidden
