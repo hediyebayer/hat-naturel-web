@@ -68,6 +68,7 @@ export default async function LocaleLayout({
           <main id="main" className="flex-1">
             {children}
           </main>
+          {/* main padding-top: ana sayfada hero zaten 100svh, diğerleri kendi pt-24 ekler */}
           <Footer locale={params.locale} />
           <WhatsAppFab />
         </NextIntlClientProvider>

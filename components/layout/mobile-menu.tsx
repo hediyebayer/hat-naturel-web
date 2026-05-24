@@ -63,25 +63,13 @@ export function MobileMenu({
         )}
       >
         <div className="flex items-center justify-between border-b border-neutral-200 px-6 py-4">
-          <div className="flex items-center gap-2.5">
-            <span className="relative flex h-10 w-10 flex-shrink-0 overflow-hidden rounded-full ring-1 ring-primary-200 shadow-soft">
-              <Image
-                src="/images/brand/logo-circle.jpg"
-                alt="Hat Naturel amblem"
-                width={200}
-                height={200}
-                className="h-full w-full object-cover"
-              />
-            </span>
-            <span className="flex flex-col leading-none">
-              <span className="font-serif text-sm font-semibold tracking-wide text-primary-900">
-                Hat Naturel
-              </span>
-              <span className="mt-0.5 text-[9px] font-medium uppercase tracking-[0.2em] text-neutral-500">
-                Sapanca · Bungalov
-              </span>
-            </span>
-          </div>
+          <Image
+            src="/images/brand/logo-header.jpg"
+            alt="Hat Naturel Sapanca Bungalov"
+            width={240}
+            height={200}
+            className="h-12 w-auto rounded-md"
+          />
           <button
             type="button"
             onClick={onClose}
@@ -98,8 +86,12 @@ export function MobileMenu({
               key={key}
               href={`/${locale}${href === '/' ? '' : href}`}
               onClick={onClose}
-              className="rounded-lg px-4 py-3 text-base font-medium text-neutral-800 transition-colors hover:bg-primary-50 hover:text-primary-700"
+              className="group relative flex items-center rounded-lg px-4 py-3 text-base font-medium text-neutral-800 transition-all duration-200 hover:bg-primary-50 hover:pl-6 hover:text-primary-700"
             >
+              <span
+                aria-hidden
+                className="absolute left-2 h-1 w-1 -translate-x-2 rounded-full bg-accent opacity-0 transition-all duration-200 group-hover:translate-x-0 group-hover:opacity-100"
+              />
               {t(key)}
             </Link>
           ))}
@@ -114,7 +106,7 @@ export function MobileMenu({
             {tCommon('reservation')}
           </ButtonLink>
           <div className="flex justify-center">
-            <LanguageSwitcher currentLocale={locale} />
+            <LanguageSwitcher currentLocale={locale} variant="dark" />
           </div>
         </div>
       </aside>

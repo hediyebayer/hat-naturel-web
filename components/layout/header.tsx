@@ -3,7 +3,9 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Menu } from 'lucide-react';
 import { NAVIGATION, RESERVATION_HREF } from '@/lib/constants';
 import { ButtonLink } from '@/components/ui/button';
@@ -18,11 +20,12 @@ interface HeaderProps {
 export function Header({ locale }: HeaderProps): React.ReactElement {
   const t = useTranslations('nav');
   const tCommon = useTranslations('common');
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = (): void => setScrolled(window.scrollY > 16);
+    const onScroll = (): void => setScrolled(window.scrollY > 24);
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
@@ -31,55 +34,79 @@ export function Header({ locale }: HeaderProps): React.ReactElement {
   return (
     <header
       className={cn(
-        'sticky top-0 z-40 w-full bg-white transition-shadow duration-300',
+        'fixed top-0 left-0 right-0 z-40 w-full transition-all duration-500',
         scrolled
-          ? 'shadow-soft border-b border-neutral-200'
-          : 'border-b border-neutral-100',
+          ? 'bg-primary-900/85 shadow-medium backdrop-blur-xl py-2'
+          : 'bg-gradient-to-b from-primary-900/60 via-primary-900/30 to-transparent py-4',
       )}
     >
-      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        {/* Logo — daire içinde amblem + yanda marka adı */}
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+        {/* Logo — animated shine */}
         <Link
           href={`/${locale}`}
           aria-label="Hat Naturel Sapanca Bungalov — Anasayfa"
-          className="group flex items-center gap-3"
+          className="group relative flex items-center gap-3"
         >
-          {/* Dairesel amblem */}
-          <span className="relative flex h-12 w-12 flex-shrink-0 items-center justify-center overflow-hidden rounded-full ring-1 ring-primary-200 shadow-soft transition-transform duration-300 group-hover:scale-105 sm:h-14 sm:w-14">
+          <span className="relative block overflow-hidden rounded-xl">
             <Image
-              src="/images/brand/logo-circle.jpg"
-              alt="Hat Naturel amblem"
-              width={200}
+              src="/images/brand/logo-header.jpg"
+              alt="Hat Naturel Sapanca Bungalov"
+              width={240}
               height={200}
               priority
-              className="h-full w-full object-cover"
+              className={cn(
+                'block w-auto transition-all duration-500',
+                scrolled ? 'h-10' : 'h-12 sm:h-14',
+              )}
             />
-          </span>
-          {/* Marka adı */}
-          <span className="hidden flex-col leading-none xs:flex">
-            <span className="font-serif text-base font-semibold tracking-wide text-primary-900 sm:text-lg">
-              Hat Naturel
-            </span>
-            <span className="mt-1 text-[10px] font-medium uppercase tracking-[0.2em] text-neutral-500 sm:text-[11px]">
-              Sapanca · Bungalov
-            </span>
+            {/* Shine effect — hover'da soldan sağa parlama */}
+            <span
+              aria-hidden
+              className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-1000 ease-out group-hover:translate-x-full"
+            />
           </span>
         </Link>
 
-        {/* Desktop nav */}
+        {/* Desktop nav — animated underline */}
         <nav
           className="hidden items-center gap-1 lg:flex"
           aria-label="Ana navigasyon"
         >
-          {NAVIGATION.map(({ key, href }) => (
-            <Link
-              key={key}
-              href={`/${locale}${href === '/' ? '' : href}`}
-              className="rounded-full px-4 py-2 text-sm font-medium text-neutral-700 transition-colors hover:text-primary-700"
-            >
-              {t(key)}
-            </Link>
-          ))}
+          {NAVIGATION.map(({ key, href }) => {
+            const fullHref = `/${locale}${href === '/' ? '' : href}`;
+            const isActive =
+              href === '/'
+                ? pathname === `/${locale}` || pathname === `/${locale}/`
+                : pathname.startsWith(fullHref);
+            return (
+              <Link
+                key={key}
+                href={fullHref}
+                aria-current={isActive ? 'page' : undefined}
+                className="group relative px-4 py-2 text-sm font-medium text-white/90 transition-colors hover:text-white"
+              >
+                <span className="relative z-10">{t(key)}</span>
+                {/* Animated underline */}
+                <span
+                  aria-hidden
+                  className={cn(
+                    'absolute bottom-0 left-1/2 h-px -translate-x-1/2 bg-accent transition-all duration-300',
+                    isActive ? 'w-8' : 'w-0 group-hover:w-8',
+                  )}
+                />
+                {/* Hover halo */}
+                <AnimatePresence>
+                  {isActive && (
+                    <motion.span
+                      layoutId="nav-active-bg"
+                      className="absolute inset-0 -z-0 rounded-full bg-white/10"
+                      transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                    />
+                  )}
+                </AnimatePresence>
+              </Link>
+            );
+          })}
         </nav>
 
         {/* Right actions */}
@@ -88,7 +115,7 @@ export function Header({ locale }: HeaderProps): React.ReactElement {
           <ButtonLink
             href={`/${locale}${RESERVATION_HREF}`}
             size="sm"
-            className="hidden md:inline-flex"
+            className="hidden md:inline-flex !bg-white !text-primary-900 hover:!bg-accent hover:!text-primary-900"
           >
             {tCommon('reservation')}
           </ButtonLink>
@@ -97,7 +124,7 @@ export function Header({ locale }: HeaderProps): React.ReactElement {
             aria-label="Menüyü aç"
             aria-expanded={mobileOpen}
             onClick={() => setMobileOpen(true)}
-            className="rounded-full p-2 text-neutral-700 hover:bg-neutral-100 lg:hidden"
+            className="rounded-full p-2 text-white hover:bg-white/10 lg:hidden"
           >
             <Menu size={22} />
           </button>

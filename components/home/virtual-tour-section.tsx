@@ -26,7 +26,7 @@ export function VirtualTourSection({
 
   return (
     <section
-      className={preview ? 'bg-primary-900 py-20 text-white' : 'py-12'}
+      className={preview ? 'bg-primary-900 py-20 text-white' : 'pt-32 pb-16'}
       aria-labelledby="virtual-tour-heading"
     >
       <Container>

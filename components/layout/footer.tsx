@@ -21,28 +21,14 @@ export function Footer({ locale }: FooterProps): React.ReactElement {
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
           <div>
-            <Link
-              href={`/${locale}`}
-              aria-label="Hat Naturel Sapanca Bungalov"
-              className="flex items-center gap-3"
-            >
-              <span className="relative flex h-14 w-14 flex-shrink-0 items-center justify-center overflow-hidden rounded-full ring-1 ring-white/30 shadow-soft">
-                <Image
-                  src="/images/brand/logo-circle.jpg"
-                  alt="Hat Naturel amblem"
-                  width={200}
-                  height={200}
-                  className="h-full w-full object-cover"
-                />
-              </span>
-              <span className="flex flex-col leading-none">
-                <span className="font-serif text-lg font-semibold tracking-wide text-white">
-                  Hat Naturel
-                </span>
-                <span className="mt-1 text-[10px] font-medium uppercase tracking-[0.2em] text-primary-200/70">
-                  Sapanca · Bungalov
-                </span>
-              </span>
+            <Link href={`/${locale}`} aria-label="Hat Naturel Sapanca Bungalov">
+              <Image
+                src="/images/brand/logo-header.jpg"
+                alt="Hat Naturel Sapanca Bungalov"
+                width={240}
+                height={200}
+                className="h-16 w-auto rounded-md"
+              />
             </Link>
             <p className="mt-4 text-sm leading-6 text-primary-100/80">
               {tFooter('tagline')}
