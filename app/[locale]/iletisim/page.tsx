@@ -247,7 +247,7 @@ export default async function ContactPage({
               <ContactCard
                 icon={<Clock size={20} />}
                 title={t('hoursLabel')}
-                lines={['7/24 Resepsiyon', 'Check-in 14:00 • Check-out 12:00']}
+                lines={['7/24 Resepsiyon', 'Check-in 14:30 • Check-out 11:30']}
               />
 
               {/* Sosyal medya premium kartı */}
