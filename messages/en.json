@@ -82,6 +82,8 @@
     "error": "Sending failed, please try again.",
     "addressLabel": "Address",
     "phoneLabel": "Phone",
+    "videoCallNote": "You can make video calls to this number",
+    "videoCallShort": "Video calls available",
     "emailLabel": "Email",
     "hoursLabel": "Hours",
     "followUs": "Follow Us"

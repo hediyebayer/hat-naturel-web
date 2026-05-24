@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import { Instagram, Facebook, Mail, Phone, MapPin } from 'lucide-react';
+import { Instagram, Facebook, Mail, Phone, MapPin, Video } from 'lucide-react';
 import { NAVIGATION, SITE_CONFIG } from '@/lib/constants';
 import { Container } from '@/components/ui/container';
 
@@ -30,7 +30,7 @@ export function Footer({ locale }: FooterProps): React.ReactElement {
                 className="h-20 w-auto rounded-md"
               />
             </Link>
-            <p className="mt-4 text-sm leading-6 text-neutral-400">
+            <p className="mt-4 text-sm leading-6 text-primary-100/80">
               {tFooter('tagline')}
             </p>
           </div>
@@ -43,7 +43,7 @@ export function Footer({ locale }: FooterProps): React.ReactElement {
                 <li key={key}>
                   <Link
                     href={`/${locale}${href === '/' ? '' : href}`}
-                    className="text-neutral-400 transition-colors hover:text-white"
+                    className="text-primary-100/80 transition-colors hover:text-white"
                   >
                     {t(key)}
                   </Link>
@@ -57,23 +57,29 @@ export function Footer({ locale }: FooterProps): React.ReactElement {
             <h3 className="font-serif text-lg text-white">{tFooter('contact')}</h3>
             <ul className="mt-4 space-y-3 text-sm">
               <li className="flex items-start gap-2">
-                <MapPin size={16} className="mt-0.5 flex-shrink-0 text-primary-400" />
-                <span className="text-neutral-400">{SITE_CONFIG.contact.address}</span>
+                <MapPin size={16} className="mt-0.5 flex-shrink-0 text-accent" />
+                <span className="text-primary-100/80">{SITE_CONFIG.contact.address}</span>
               </li>
               <li className="flex items-center gap-2">
-                <Phone size={16} className="flex-shrink-0 text-primary-400" />
+                <Phone size={16} className="flex-shrink-0 text-accent" />
                 <a
                   href={`tel:${SITE_CONFIG.contact.phoneRaw}`}
-                  className="text-neutral-400 hover:text-white"
+                  className="text-primary-100/80 hover:text-white"
                 >
                   {SITE_CONFIG.contact.phone}
                 </a>
               </li>
+              <li className="flex items-center gap-2 pl-6">
+                <Video size={13} className="flex-shrink-0 text-accent-light" />
+                <span className="text-xs text-primary-200/70">
+                  Görüntülü arama yapılabilir
+                </span>
+              </li>
               <li className="flex items-center gap-2">
-                <Mail size={16} className="flex-shrink-0 text-primary-400" />
+                <Mail size={16} className="flex-shrink-0 text-accent" />
                 <a
                   href={`mailto:${SITE_CONFIG.contact.email}`}
-                  className="text-neutral-400 hover:text-white"
+                  className="text-primary-100/80 hover:text-white"
                 >
                   {SITE_CONFIG.contact.email}
                 </a>
@@ -92,7 +98,7 @@ export function Footer({ locale }: FooterProps): React.ReactElement {
                 aria-label="Instagram"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="rounded-full bg-neutral-800 p-2.5 text-neutral-300 transition-colors hover:bg-primary-600 hover:text-white"
+                className="rounded-full bg-primary-800 p-2.5 text-primary-100 transition-colors hover:bg-accent hover:text-primary-900"
               >
                 <Instagram size={18} />
               </a>
@@ -101,7 +107,7 @@ export function Footer({ locale }: FooterProps): React.ReactElement {
                 aria-label="Facebook"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="rounded-full bg-neutral-800 p-2.5 text-neutral-300 transition-colors hover:bg-primary-600 hover:text-white"
+                className="rounded-full bg-primary-800 p-2.5 text-primary-100 transition-colors hover:bg-accent hover:text-primary-900"
               >
                 <Facebook size={18} />
               </a>

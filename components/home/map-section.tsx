@@ -1,5 +1,5 @@
 import { useTranslations } from 'next-intl';
-import { MapPin, Phone, Navigation } from 'lucide-react';
+import { MapPin, Phone, Navigation, Video } from 'lucide-react';
 import { Container } from '@/components/ui/container';
 import { Heading } from '@/components/ui/heading';
 import { Text } from '@/components/ui/text';
@@ -64,6 +64,10 @@ export function MapSection(): React.ReactElement {
                   >
                     {SITE_CONFIG.contact.phone}
                   </a>
+                  <span className="mt-2 inline-flex items-center gap-1.5 rounded-full bg-primary-50 px-2.5 py-1 text-xs font-medium text-primary-700">
+                    <Video size={12} />
+                    Görüntülü arama yapılabilir
+                  </span>
                 </div>
               </div>
             </div>

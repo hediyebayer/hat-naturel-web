@@ -82,6 +82,8 @@
     "error": "Gönderim başarısız oldu, lütfen tekrar deneyin.",
     "addressLabel": "Adres",
     "phoneLabel": "Telefon",
+    "videoCallNote": "Bu numaradan görüntülü arama yapabilirsiniz",
+    "videoCallShort": "Görüntülü arama yapılabilir",
     "emailLabel": "E-posta",
     "hoursLabel": "Çalışma Saatleri",
     "followUs": "Bizi Takip Edin"
