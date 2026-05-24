@@ -43,14 +43,9 @@ export function RoomCard({ room, locale, index = 0 }: RoomCardProps) {
             {/* Görsel altı gradient — beyaz başlık okunabilirliği */}
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-primary-900/90 via-primary-900/20 to-transparent" />
 
-            {/* TOP BADGES — görsel üstü beyaz */}
+            {/* TOP BADGES — sadece 1+1/2+1, lacivert bg + beyaz text */}
             <div className="absolute left-4 top-4 flex flex-wrap gap-2">
-              {room.featured && (
-                <span className="rounded-full bg-accent/95 px-3 py-1 text-xs font-semibold text-primary-900 shadow-md backdrop-blur">
-                  ⭐ Öne Çıkan
-                </span>
-              )}
-              <span className="rounded-full bg-white/10 border border-white/20 px-3 py-1 text-xs font-semibold text-white shadow-md backdrop-blur-md">
+              <span className="rounded-full bg-primary-900/90 px-3 py-1 text-xs font-semibold text-white shadow-md backdrop-blur-md">
                 {room.specs.bedrooms === 1 ? '1+1' : '2+1'}
               </span>
             </div>
@@ -62,7 +57,7 @@ export function RoomCard({ room, locale, index = 0 }: RoomCardProps) {
 
             {/* Görsel üzerine başlık — beyaz */}
             <div className="absolute inset-x-0 bottom-0 p-6 text-white">
-              <h3 className="font-serif text-2xl font-semibold leading-tight drop-shadow-lg text-white group-hover:text-accent transition-colors duration-300">
+              <h3 className="font-serif text-2xl font-semibold leading-tight drop-shadow-lg text-white transition-colors duration-300">
                 {room.name}
               </h3>
               <p className="mt-1 text-sm text-white/85 line-clamp-1 font-sans tracking-wide">
@@ -104,7 +99,7 @@ export function RoomCard({ room, locale, index = 0 }: RoomCardProps) {
 function SpecChip({ icon, value }: { icon: React.ReactNode; value: string }) {
   return (
     <li className="flex flex-col items-center gap-1">
-      <span className="text-accent">{icon}</span>
+      <span className="text-white">{icon}</span>
       <span className="font-semibold text-white/90">{value}</span>
     </li>
   );
