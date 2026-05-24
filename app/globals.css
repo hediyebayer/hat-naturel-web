@@ -294,3 +294,19 @@
     transform: rotate(360deg);
   }
 }
+
+/* ============================================
+   TOUR BG KEN BURNS (anasayfa sanal tur arka plan)
+   - Bungalov aerial fotoğrafı yavaş zoom + pan
+   ============================================ */
+@keyframes tour-bg-zoom {
+  0% {
+    transform: scale(1.08) translate(0, 0);
+  }
+  50% {
+    transform: scale(1.15) translate(-1%, -2%);
+  }
+  100% {
+    transform: scale(1.1) translate(1%, -1%);
+  }
+}

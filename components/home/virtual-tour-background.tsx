@@ -1,123 +1,84 @@
 'use client';
 
-import React, { useMemo } from 'react';
+import Image from 'next/image';
+import { useMemo } from 'react';
 
 /**
- * Sanal tur 3D arka plan teması.
- * - Perspective grid (3D zemin hissi)
- * - Floating orbit lines (3 ring, ters dönen)
- * - Aurora gradient mesh (lacivert + altın)
- * - Floating particles
- *
- * Tümü subtle (opacity 0.05-0.2), iframe'den dikkat çalmaz.
+ * Anasayfa Sanal Tur bölümü — Bungalov otel temalı arka plan.
+ * - Aerial bungalov fotoğrafı (zoom-in slow Ken Burns efekti)
+ * - Lacivert overlay gradient (premium derinlik)
+ * - Vignette (kenar koyulaşma)
+ * - Subtle altın particle (10 nokta)
+ * - Aurora glow blob (altın + lacivert)
  */
 export function VirtualTourBackground() {
-  const particles = useMemo(() => {
-    return Array.from({ length: 20 }).map((_, i) => ({
-      id: i,
-      left: `${(i * 13) % 100}%`,
-      top: `${(i * 17) % 100}%`,
-      size: ((i * 7) % 3) + 1,
-      delay: (i * 11) % 5,
-    }));
-  }, []);
+  const particles = useMemo(
+    () =>
+      Array.from({ length: 12 }).map((_, i) => ({
+        id: i,
+        left: `${(i * 19) % 95 + 2}%`,
+        top: `${(i * 31) % 90 + 5}%`,
+        size: ((i * 5) % 3) + 1,
+        delay: (i * 7) % 6,
+      })),
+    [],
+  );
 
   return (
     <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden bg-primary-900">
-      {/* Layer 1: Aurora gradient mesh (subtle altın + lacivert) */}
+      {/* Layer 1: BUNGALOV AERIAL — Ken Burns slow zoom */}
       <div
-        className="absolute inset-0 opacity-20 will-change-transform"
+        className="absolute inset-0 will-change-transform"
+        style={{
+          animation: 'tour-bg-zoom 24s ease-in-out infinite alternate',
+        }}
+      >
+        <Image
+          src="/images/hero/aerial-night.jpg"
+          alt=""
+          fill
+          sizes="100vw"
+          quality={85}
+          priority={false}
+          className="object-cover"
+          style={{
+            objectPosition: 'center 40%',
+          }}
+        />
+      </div>
+
+      {/* Layer 2: Premium karanlık gradient overlay (lacivert → koyu) */}
+      <div
+        className="absolute inset-0"
         style={{
           background:
-            'radial-gradient(circle at 50% 50%, rgba(212,175,55,0.4) 0%, transparent 60%)',
-          animation: 'aurora-drift 25s ease-in-out infinite alternate',
+            'linear-gradient(135deg, rgba(10,19,48,0.92) 0%, rgba(10,19,48,0.78) 30%, rgba(10,19,48,0.55) 60%, rgba(10,19,48,0.85) 100%)',
+        }}
+      />
+
+      {/* Layer 3: Altın aurora glow blob (üst sol) */}
+      <div
+        className="absolute -left-32 top-0 h-[36rem] w-[36rem] rounded-full will-change-transform"
+        style={{
+          background:
+            'radial-gradient(circle, rgba(212,175,55,0.25) 0%, transparent 65%)',
           filter: 'blur(60px)',
-          width: '150%',
-          height: '150%',
-          top: '-25%',
-          left: '-25%',
+          animation: 'aurora-drift 22s ease-in-out infinite alternate',
         }}
       />
+
+      {/* Layer 4: Lacivert aurora glow (sağ alt) */}
       <div
-        className="absolute inset-0 opacity-15 will-change-transform"
+        className="absolute -right-24 bottom-0 h-[32rem] w-[32rem] rounded-full will-change-transform"
         style={{
           background:
-            'radial-gradient(circle at 30% 70%, rgba(22,38,89,0.8) 0%, transparent 50%)',
-          animation: 'aurora-drift 30s ease-in-out infinite alternate-reverse',
-          filter: 'blur(50px)',
-          width: '120%',
-          height: '120%',
-          top: '-10%',
-          left: '-10%',
+            'radial-gradient(circle, rgba(29,51,112,0.4) 0%, transparent 60%)',
+          filter: 'blur(70px)',
+          animation: 'aurora-drift 28s ease-in-out infinite alternate-reverse',
         }}
       />
 
-      {/* Layer 2: 3D Perspective Grid (zemin) */}
-      <div
-        className="absolute inset-0 opacity-[0.12]"
-        style={{
-          perspective: '600px',
-          perspectiveOrigin: 'center 30%',
-        }}
-      >
-        <div
-          className="absolute bottom-0 left-1/2 h-[120%] w-[200%] -translate-x-1/2"
-          style={{
-            backgroundImage:
-              'linear-gradient(rgba(212,175,55,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(212,175,55,0.5) 1px, transparent 1px)',
-            backgroundSize: '60px 60px',
-            transform: 'rotateX(60deg) translateY(20%)',
-            transformOrigin: 'center top',
-            maskImage:
-              'linear-gradient(to top, black 0%, transparent 80%)',
-            WebkitMaskImage:
-              'linear-gradient(to top, black 0%, transparent 80%)',
-            animation: 'grid-scroll 20s linear infinite',
-          }}
-        />
-      </div>
-
-      {/* Layer 3: 3D Floating Orbit Rings (uzayda dönen halkalar) */}
-      <div
-        className="absolute left-1/2 top-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 opacity-[0.18]"
-        style={{ perspective: '800px' }}
-      >
-        {/* Ring 1 - yatay (X ekseni rotation) */}
-        <div
-          className="absolute inset-0 rounded-full border border-accent/40"
-          style={{
-            transform: 'rotateX(70deg)',
-            animation: 'spin-y 40s linear infinite',
-            boxShadow: '0 0 30px rgba(212,175,55,0.2)',
-          }}
-        />
-        {/* Ring 2 - 45 derece yatık */}
-        <div
-          className="absolute inset-4 rounded-full border border-accent/30"
-          style={{
-            transform: 'rotateX(70deg) rotateZ(45deg)',
-            animation: 'spin-y 55s linear infinite reverse',
-          }}
-        />
-        {/* Ring 3 - 90 derece (dik) */}
-        <div
-          className="absolute inset-8 rounded-full border border-accent/25"
-          style={{
-            transform: 'rotateX(70deg) rotateZ(90deg)',
-            animation: 'spin-y 70s linear infinite',
-          }}
-        />
-        {/* Center pulse dot (Sapanca lokasyon) */}
-        <div
-          className="absolute left-1/2 top-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent"
-          style={{
-            animation: 'globe-pin-pulse 2.5s ease-in-out infinite',
-            boxShadow: '0 0 20px rgba(212,175,55,0.8)',
-          }}
-        />
-      </div>
-
-      {/* Layer 4: Floating particles (altın toz) — desktop only */}
+      {/* Layer 5: Subtle altın particles (yıldız tozu) */}
       <div className="absolute inset-0 hidden sm:block">
         {particles.map((p) => (
           <div
@@ -128,15 +89,25 @@ export function VirtualTourBackground() {
               top: p.top,
               width: p.size,
               height: p.size,
-              animation: `twinkle 4s ease-in-out infinite ${p.delay}s, particle-float 10s ease-in-out infinite ${p.delay}s`,
-              boxShadow: '0 0 4px rgba(240,216,117,0.6)',
+              animation: `twinkle 5s ease-in-out infinite ${p.delay}s, particle-float 12s ease-in-out infinite ${p.delay}s`,
+              boxShadow: '0 0 6px rgba(240,216,117,0.7)',
             }}
           />
         ))}
       </div>
 
-      {/* Layer 5: Vignette (köşelerden koyulaşma — derinlik) */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,rgba(10,19,48,0.7)_100%)]" />
+      {/* Layer 6: Vignette — kenar koyulaşma */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            'radial-gradient(ellipse at center, transparent 35%, rgba(10,19,48,0.7) 100%)',
+        }}
+      />
+
+      {/* Layer 7: Üst alt linear fade (section blend) */}
+      <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-primary-900 to-transparent" />
+      <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-primary-900 to-transparent" />
     </div>
   );
 }
