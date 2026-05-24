@@ -47,13 +47,13 @@ export function Header({ locale }: HeaderProps): React.ReactElement {
           aria-label="Hat Naturel Sapanca Bungalov — Anasayfa"
           className="group relative flex items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-primary-900 rounded-2xl"
         >
-          {/* Ambient breathing glow (arka katman, motion-safe) */}
+          {/* Ambient breathing glow (arka katman, şampanya bej) */}
           <motion.span
             aria-hidden
-            className="pointer-events-none absolute -inset-3 -z-10 rounded-3xl bg-accent/10 blur-2xl motion-reduce:hidden"
+            className="pointer-events-none absolute -inset-4 -z-10 rounded-[2rem] bg-[#e8c897]/15 blur-3xl motion-reduce:hidden"
             animate={{
-              opacity: scrolled ? [0.25, 0.4, 0.25] : [0.35, 0.55, 0.35],
-              scale: [1, 1.05, 1],
+              opacity: scrolled ? [0.3, 0.5, 0.3] : [0.45, 0.7, 0.45],
+              scale: [1, 1.08, 1],
             }}
             transition={{
               repeat: Infinity,
@@ -62,46 +62,35 @@ export function Header({ locale }: HeaderProps): React.ReactElement {
             }}
           />
 
-          {/* Glass çerçeve — cinematic reveal */}
-          <motion.div
+          {/* Logo — cinematic reveal, çerçeve YOK */}
+          <motion.span
             initial={{ scale: 0.92, opacity: 0, filter: 'blur(8px)' }}
             animate={{ scale: 1, opacity: 1, filter: 'blur(0px)' }}
             transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
             className={cn(
-              'relative rounded-2xl p-1 transition-all duration-500',
-              'bg-gradient-to-br from-white/12 via-white/5 to-transparent',
-              'backdrop-blur-xl ring-1 ring-inset ring-white/20',
+              'relative block overflow-hidden rounded-xl transition-all duration-500',
               scrolled
-                ? 'shadow-[0_2px_12px_rgba(0,0,0,0.25)]'
-                : 'shadow-[0_8px_32px_rgba(0,0,0,0.35),0_0_60px_rgba(212,175,55,0.18)]',
+                ? 'shadow-[0_4px_16px_rgba(0,0,0,0.35),0_0_30px_rgba(232,200,151,0.20)]'
+                : 'shadow-[0_10px_40px_rgba(0,0,0,0.45),0_0_70px_rgba(232,200,151,0.30)]',
             )}
           >
-            {/* Hover'da görünür altın iç parıltı */}
+            <Image
+              src="/images/brand/logo-header.jpg"
+              alt="Hat Naturel Sapanca Bungalov"
+              width={240}
+              height={200}
+              priority
+              className={cn(
+                'block w-auto transition-all duration-500',
+                scrolled ? 'h-12' : 'h-16 sm:h-20',
+              )}
+            />
+            {/* Shine sweep — hover'da soldan sağa beyaz parlama */}
             <span
               aria-hidden
-              className="pointer-events-none absolute -inset-px rounded-2xl bg-gradient-to-br from-accent/25 via-accent/5 to-transparent opacity-0 transition-opacity duration-700 group-hover:opacity-100"
+              className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/35 to-transparent transition-transform duration-1000 ease-out group-hover:translate-x-full"
             />
-
-            {/* Logo görsel container */}
-            <span className="relative block overflow-hidden rounded-xl">
-              <Image
-                src="/images/brand/logo-header.jpg"
-                alt="Hat Naturel Sapanca Bungalov"
-                width={240}
-                height={200}
-                priority
-                className={cn(
-                  'block w-auto transition-all duration-500',
-                  scrolled ? 'h-10' : 'h-12 sm:h-14',
-                )}
-              />
-              {/* Shine sweep — hover'da soldan sağa beyaz parlama */}
-              <span
-                aria-hidden
-                className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/35 to-transparent transition-transform duration-1000 ease-out group-hover:translate-x-full"
-              />
-            </span>
-          </motion.div>
+          </motion.span>
         </Link>
 
         {/* Desktop nav — animated underline */}
