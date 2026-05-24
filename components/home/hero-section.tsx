@@ -64,10 +64,10 @@ export function HeroSection({ locale }: HeroSectionProps): React.ReactElement {
           aria-hidden
           className="absolute inset-0 bg-gradient-to-b from-primary-900/40 via-primary-900/30 to-primary-900/80"
         />
-        {/* Altın vinyet — premium dokunuş */}
+        {/* Yumuşak beyaz vinyet — premium dokunuş */}
         <div
           aria-hidden
-          className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_40%,rgba(212,175,55,0.10),transparent_70%)]"
+          className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_40%,rgba(255,255,255,0.08),transparent_70%)]"
         />
       </motion.div>
 
@@ -84,8 +84,8 @@ export function HeroSection({ locale }: HeroSectionProps): React.ReactElement {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="flex flex-col items-center"
           >
-            <span className="block h-px w-16 bg-accent" aria-hidden />
-            <span className="mt-4 text-xs font-medium uppercase tracking-[0.4em] text-accent-light">
+            <span className="block h-px w-16 bg-white/70" aria-hidden />
+            <span className="mt-4 text-xs font-medium uppercase tracking-[0.4em] text-white/90">
               Sapanca · Bungalov
             </span>
           </motion.div>
@@ -120,7 +120,7 @@ export function HeroSection({ locale }: HeroSectionProps): React.ReactElement {
             <ButtonLink
               href={`/${locale}${RESERVATION_HREF}`}
               size="lg"
-              className="!bg-accent !text-primary-900 hover:!bg-accent-light"
+              className="!bg-white !text-primary-900 hover:!bg-neutral-100"
             >
               {t('heroCta')}
             </ButtonLink>
@@ -128,7 +128,7 @@ export function HeroSection({ locale }: HeroSectionProps): React.ReactElement {
               href={`/${locale}/odalar`}
               variant="outline"
               size="lg"
-              className="!border-white/70 !bg-white/10 !text-white backdrop-blur hover:!bg-white/20"
+              className="!border-white/70 !bg-transparent !text-white backdrop-blur hover:!bg-white/15"
             >
               {t('roomsTitle')}
             </ButtonLink>
