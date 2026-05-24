@@ -64,11 +64,11 @@ export function MobileMenu({
       >
         <div className="flex items-center justify-between border-b border-neutral-200 px-6 py-4">
           <Image
-            src="/images/brand/logo-header.jpg"
+            src="/images/brand/logo-navy-header.png"
             alt="Hat Naturel Sapanca Bungalov"
-            width={240}
-            height={200}
-            className="h-12 w-auto rounded-md"
+            width={600}
+            height={500}
+            className="h-12 w-auto"
           />
           <button
             type="button"

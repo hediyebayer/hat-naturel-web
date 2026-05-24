@@ -36,8 +36,8 @@ export function Header({ locale }: HeaderProps): React.ReactElement {
       className={cn(
         'fixed top-0 left-0 right-0 z-40 w-full transition-all duration-500',
         scrolled
-          ? 'bg-primary-900/85 shadow-medium backdrop-blur-xl py-2'
-          : 'bg-gradient-to-b from-primary-900/60 via-primary-900/30 to-transparent py-4',
+          ? 'bg-white/90 shadow-medium backdrop-blur-xl py-2'
+          : 'bg-gradient-to-b from-white/70 via-white/40 to-transparent py-4 backdrop-blur-sm',
       )}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
@@ -47,48 +47,26 @@ export function Header({ locale }: HeaderProps): React.ReactElement {
           aria-label="Hat Naturel Sapanca Bungalov — Anasayfa"
           className="group relative flex items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-primary-900 rounded-2xl"
         >
-          {/* Ambient breathing glow (arka katman, şampanya bej) */}
-          <motion.span
-            aria-hidden
-            className="pointer-events-none absolute -inset-4 -z-10 rounded-[2rem] bg-[#e8c897]/15 blur-3xl motion-reduce:hidden"
-            animate={{
-              opacity: scrolled ? [0.3, 0.5, 0.3] : [0.45, 0.7, 0.45],
-              scale: [1, 1.08, 1],
-            }}
-            transition={{
-              repeat: Infinity,
-              duration: 4.5,
-              ease: 'easeInOut',
-            }}
-          />
-
-          {/* Logo — cinematic reveal, çerçeve YOK */}
+          {/* Logo — transparent PNG, cinematic reveal */}
           <motion.span
             initial={{ scale: 0.92, opacity: 0, filter: 'blur(8px)' }}
             animate={{ scale: 1, opacity: 1, filter: 'blur(0px)' }}
             transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
             className={cn(
-              'relative block overflow-hidden rounded-xl transition-all duration-500',
-              scrolled
-                ? 'shadow-[0_4px_16px_rgba(0,0,0,0.35),0_0_30px_rgba(232,200,151,0.20)]'
-                : 'shadow-[0_10px_40px_rgba(0,0,0,0.45),0_0_70px_rgba(232,200,151,0.30)]',
+              'relative block transition-all duration-500',
+              'drop-shadow-[0_2px_8px_rgba(29,51,112,0.15)] group-hover:drop-shadow-[0_4px_16px_rgba(29,51,112,0.25)]',
             )}
           >
             <Image
-              src="/images/brand/logo-header.jpg"
+              src="/images/brand/logo-navy-header.png"
               alt="Hat Naturel Sapanca Bungalov"
-              width={240}
-              height={200}
+              width={600}
+              height={500}
               priority
               className={cn(
                 'block w-auto transition-all duration-500',
                 scrolled ? 'h-12' : 'h-16 sm:h-20',
               )}
-            />
-            {/* Shine sweep — hover'da soldan sağa beyaz parlama */}
-            <span
-              aria-hidden
-              className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/35 to-transparent transition-transform duration-1000 ease-out group-hover:translate-x-full"
             />
           </motion.span>
         </Link>
@@ -109,13 +87,13 @@ export function Header({ locale }: HeaderProps): React.ReactElement {
                 key={key}
                 href={fullHref}
                 aria-current={isActive ? 'page' : undefined}
-                className="group relative px-4 py-2 text-sm font-medium text-white/90 transition-colors hover:text-white"
+                className="group relative px-4 py-2 text-sm font-medium text-primary-800 transition-colors hover:text-primary-600"
               >
                 <span className="relative z-10">{t(key)}</span>
                 <span
                   aria-hidden
                   className={cn(
-                    'absolute bottom-0 left-1/2 h-px -translate-x-1/2 bg-accent transition-all duration-300',
+                    'absolute bottom-0 left-1/2 h-px -translate-x-1/2 bg-primary-600 transition-all duration-300',
                     isActive ? 'w-8' : 'w-0 group-hover:w-8',
                   )}
                 />
@@ -123,7 +101,7 @@ export function Header({ locale }: HeaderProps): React.ReactElement {
                   {isActive && (
                     <motion.span
                       layoutId="nav-active-bg"
-                      className="absolute inset-0 -z-0 rounded-full bg-white/10"
+                      className="absolute inset-0 -z-0 rounded-full bg-primary-100"
                       transition={{ type: 'spring', stiffness: 300, damping: 30 }}
                     />
                   )}
@@ -135,11 +113,11 @@ export function Header({ locale }: HeaderProps): React.ReactElement {
 
         {/* Right actions */}
         <div className="flex items-center gap-3">
-          <LanguageSwitcher currentLocale={locale} className="hidden sm:flex" />
+          <LanguageSwitcher currentLocale={locale} variant="dark" className="hidden sm:flex" />
           <ButtonLink
             href={`/${locale}${RESERVATION_HREF}`}
             size="sm"
-            className="hidden md:inline-flex !bg-white !text-primary-900 hover:!bg-accent hover:!text-primary-900"
+            className="hidden md:inline-flex"
           >
             {tCommon('reservation')}
           </ButtonLink>
@@ -148,7 +126,7 @@ export function Header({ locale }: HeaderProps): React.ReactElement {
             aria-label="Menüyü aç"
             aria-expanded={mobileOpen}
             onClick={() => setMobileOpen(true)}
-            className="rounded-full p-2 text-white hover:bg-white/10 lg:hidden"
+            className="rounded-full p-2 text-primary-800 hover:bg-primary-50 lg:hidden"
           >
             <Menu size={22} />
           </button>

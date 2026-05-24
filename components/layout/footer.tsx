@@ -23,11 +23,11 @@ export function Footer({ locale }: FooterProps): React.ReactElement {
           <div>
             <Link href={`/${locale}`} aria-label="Hat Naturel Sapanca Bungalov">
               <Image
-                src="/images/brand/logo-header.jpg"
+                src="/images/brand/logo-white-header.png"
                 alt="Hat Naturel Sapanca Bungalov"
-                width={240}
-                height={200}
-                className="h-16 w-auto rounded-md"
+                width={600}
+                height={500}
+                className="h-16 w-auto"
               />
             </Link>
             <p className="mt-4 text-sm leading-6 text-primary-100/80">
