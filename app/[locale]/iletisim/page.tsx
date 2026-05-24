@@ -19,7 +19,6 @@ import {
 } from 'lucide-react';
 import { Container } from '@/components/ui/container';
 import { Heading } from '@/components/ui/heading';
-import { Text } from '@/components/ui/text';
 import { ContactForm } from '@/components/forms/contact-form';
 import { MapSection } from '@/components/home/map-section';
 import { SITE_CONFIG } from '@/lib/constants';
