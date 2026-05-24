@@ -48,8 +48,8 @@ export default function RoomDetailPage({ params }: PageProps) {
 
   return (
     <>
-      {/* BREADCRUMB strip — pt-32 fixed header'ın altında kalmasın */}
-      <section className="border-b border-neutral-200 bg-white pt-32 pb-4">
+      {/* BREADCRUMB strip — pt-24 fixed header'ın altında kalmasın */}
+      <section className="border-b border-neutral-200 bg-white pt-24 pb-4">
         <Container>
           <nav className="flex items-center gap-2 text-sm text-neutral-500">
             <a href={`/${params.locale}`} className="hover:text-primary-700">

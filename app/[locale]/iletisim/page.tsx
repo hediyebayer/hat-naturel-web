@@ -42,7 +42,7 @@ export default async function ContactPage({
     <>
       {/* Hero — lacivert */}
       <section
-        className="relative overflow-hidden bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 pb-24 pt-40 text-white sm:pb-32 sm:pt-48"
+        className="relative overflow-hidden bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 pb-24 pt-32 text-white sm:pb-32 sm:pt-36"
         aria-label={t('title')}
       >
         <div className="absolute inset-0 opacity-30 [background-image:radial-gradient(rgba(255,255,255,0.15)_1px,transparent_1px)] [background-size:3px_3px]" />

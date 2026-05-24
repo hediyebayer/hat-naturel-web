@@ -73,7 +73,7 @@ export function Header({ locale }: HeaderProps): React.ReactElement {
                 width={600}
                 height={437}
                 priority
-                className="block h-20 w-auto transition-all duration-500 sm:h-24"
+                className="block h-14 w-auto transition-all duration-500 sm:h-16"
               />
             </motion.span>
 
