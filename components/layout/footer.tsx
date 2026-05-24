@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { Instagram, Facebook, Mail, Phone, MapPin } from 'lucide-react';
 import { NAVIGATION, SITE_CONFIG } from '@/lib/constants';
@@ -20,13 +21,16 @@ export function Footer({ locale }: FooterProps): React.ReactElement {
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
           <div>
-            <Link
-              href={`/${locale}`}
-              className="font-serif text-2xl font-semibold text-white"
-            >
-              Hat Naturel
+            <Link href={`/${locale}`} aria-label="Hat Naturel Sapanca Bungalov">
+              <Image
+                src="/images/brand/logo-sm.jpg"
+                alt="Hat Naturel Sapanca Bungalov"
+                width={300}
+                height={250}
+                className="h-20 w-auto rounded-md"
+              />
             </Link>
-            <p className="mt-3 text-sm leading-6 text-neutral-400">
+            <p className="mt-4 text-sm leading-6 text-neutral-400">
               {tFooter('tagline')}
             </p>
           </div>

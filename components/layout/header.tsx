@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { Menu } from 'lucide-react';
 import { NAVIGATION, RESERVATION_HREF } from '@/lib/constants';
@@ -40,15 +41,17 @@ export function Header({ locale }: HeaderProps): React.ReactElement {
         {/* Logo */}
         <Link
           href={`/${locale}`}
-          aria-label="Hat Naturel Resort Anasayfa"
-          className="flex items-center gap-2"
+          aria-label="Hat Naturel Sapanca Bungalov — Anasayfa"
+          className="flex items-center"
         >
-          <span className="font-serif text-xl sm:text-2xl font-semibold text-primary-800">
-            Hat Naturel
-          </span>
-          <span className="hidden sm:inline text-xs uppercase tracking-widest text-neutral-500">
-            Resort
-          </span>
+          <Image
+            src="/images/brand/logo-header.jpg"
+            alt="Hat Naturel Sapanca Bungalov"
+            width={180}
+            height={150}
+            priority
+            className="h-12 w-auto rounded-md sm:h-14"
+          />
         </Link>
 
         {/* Desktop nav */}

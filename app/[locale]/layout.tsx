@@ -30,6 +30,17 @@ export async function generateMetadata({
       type: 'website',
       locale: params.locale,
       siteName: t('brand'),
+      images: [
+        {
+          url: '/images/brand/og-default.jpg',
+          width: 1200,
+          height: 1000,
+          alt: 'Hat Naturel Sapanca Bungalov',
+        },
+      ],
+    },
+    icons: {
+      icon: '/images/brand/logo-sm.jpg',
     },
   };
 }

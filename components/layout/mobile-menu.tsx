@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { X } from 'lucide-react';
 import { NAVIGATION, RESERVATION_HREF } from '@/lib/constants';
@@ -62,7 +63,13 @@ export function MobileMenu({
         )}
       >
         <div className="flex items-center justify-between border-b border-neutral-200 px-6 py-4">
-          <span className="font-serif text-lg text-primary-800">Hat Naturel</span>
+          <Image
+            src="/images/brand/logo-sm.jpg"
+            alt="Hat Naturel Sapanca Bungalov"
+            width={240}
+            height={200}
+            className="h-10 w-auto rounded-md"
+          />
           <button
             type="button"
             onClick={onClose}

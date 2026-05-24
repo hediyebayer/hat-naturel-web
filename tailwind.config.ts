@@ -50,6 +50,19 @@ const config: Config = {
           light: '#f0d875',
           dark: '#b8941f',
         },
+        // Logo arka plan tonu (kraliyet mavisi)
+        brand: {
+          50: '#eef1f8',
+          100: '#d6deec',
+          200: '#aebdda',
+          300: '#7a8fc1',
+          400: '#4b66a4',
+          500: '#2a4685',
+          600: '#1d3370',
+          700: '#162659',
+          800: '#101c44',
+          900: '#0a1330',
+        },
       },
       fontFamily: {
         serif: ['var(--font-playfair)', 'Georgia', 'serif'],
