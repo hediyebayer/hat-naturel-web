@@ -65,7 +65,7 @@ export function Header({ locale }: HeaderProps): React.ReactElement {
               priority
               className={cn(
                 'block w-auto transition-all duration-500',
-                scrolled ? 'h-16 sm:h-20' : 'h-24 sm:h-28 lg:h-32',
+                scrolled ? 'h-20 sm:h-24' : 'h-32 sm:h-40 lg:h-48',
               )}
             />
           </motion.span>
