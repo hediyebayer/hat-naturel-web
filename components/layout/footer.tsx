@@ -59,7 +59,7 @@ export function Footer({ locale }: FooterProps): React.ReactElement {
               <li className="flex items-center gap-2">
                 <Phone size={16} className="flex-shrink-0 text-primary-400" />
                 <a
-                  href={`tel:${SITE_CONFIG.contact.phone.replace(/\s/g, '')}`}
+                  href={`tel:${SITE_CONFIG.contact.phoneRaw}`}
                   className="text-neutral-400 hover:text-white"
                 >
                   {SITE_CONFIG.contact.phone}

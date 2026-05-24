@@ -4,6 +4,8 @@ import { Container } from '@/components/ui/container';
 import { Heading } from '@/components/ui/heading';
 import { Text } from '@/components/ui/text';
 import { ButtonLink } from '@/components/ui/button';
+import { MapSection } from '@/components/home/map-section';
+import { VirtualTourSection } from '@/components/home/virtual-tour-section';
 import { RESERVATION_HREF } from '@/lib/constants';
 
 interface HomePageProps {
@@ -70,7 +72,7 @@ export default function HomePage({
         </Container>
       </section>
 
-      {/* Placeholder sections — M2'de doldurulacak */}
+      {/* Placeholder — M2'de oda kartları */}
       <section className="bg-neutral-100 py-20">
         <Container className="text-center">
           <Heading level={2}>{t('roomsTitle')}</Heading>
@@ -82,6 +84,12 @@ export default function HomePage({
           </Text>
         </Container>
       </section>
+
+      {/* 360° Sanal Tur */}
+      <VirtualTourSection locale={params.locale} preview />
+
+      {/* Konum / Harita */}
+      <MapSection />
     </>
   );
 }
