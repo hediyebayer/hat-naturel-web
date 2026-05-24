@@ -10,19 +10,24 @@ const SLIDES = [
   '/images/virtual-tour-bg/04.jpg',
 ];
 
-// Her resim ekranda bu kadar saniye kalsın (cross-fade dahil)
-const SLIDE_DURATION_MS = 6000;
-// Cross-fade süresi
-const FADE_DURATION_MS = 1500;
+// Her resim ekranda bu kadar saniye kalsın
+const SLIDE_DURATION_MS = 7000;
+// Cross-fade süresi (uzun fade = daha smooth, takılma hissi yok)
+const FADE_DURATION_MS = 2200;
 
 /**
- * Anasayfa Sanal Tur bölümü — Bungalov otel temalı arka plan slideshow.
- * - 4 resim sürekli cross-fade geçişli
- * - Her resimde Ken Burns zoom-pan
- * - Lacivert overlay + aurora glow + particle + vignette
+ * Anasayfa Sanal Tur — Bungalov slideshow arka plan
+ * - 4 resim sürekli cross-fade
+ * - Tüm resimler aynı anda render edilir (lazy değil) → ilk yüklemede biraz gecikme,
+ *   sonra geçişler smooth (browser cache + decoded image)
+ * - Ken Burns: tüm resimlerde sürekli çalışır (transition-related stutter yok)
+ * - GPU compositing: transform + opacity sadece
  */
 export function VirtualTourBackground() {
   const [activeIdx, setActiveIdx] = useState(0);
+  const [loaded, setLoaded] = useState<boolean[]>(
+    () => Array(SLIDES.length).fill(false),
+  );
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -30,6 +35,15 @@ export function VirtualTourBackground() {
     }, SLIDE_DURATION_MS);
     return () => clearInterval(interval);
   }, []);
+
+  const handleLoad = (idx: number) => {
+    setLoaded((prev) => {
+      if (prev[idx]) return prev;
+      const next = [...prev];
+      next[idx] = true;
+      return next;
+    });
+  };
 
   const particles = useMemo(
     () =>
@@ -45,23 +59,22 @@ export function VirtualTourBackground() {
 
   return (
     <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden bg-primary-900">
-      {/* Layer 1: SLIDESHOW — 4 resim cross-fade + Ken Burns */}
-      {SLIDES.map((src, idx) => (
-        <div
-          key={src}
-          className="absolute inset-0 will-change-[opacity,transform]"
-          style={{
-            opacity: activeIdx === idx ? 1 : 0,
-            transition: `opacity ${FADE_DURATION_MS}ms ease-in-out`,
-          }}
-        >
+      {/* Layer 1: SLIDESHOW — tüm resimler render edilir, opacity ile cross-fade */}
+      {SLIDES.map((src, idx) => {
+        const isActive = activeIdx === idx;
+        return (
           <div
+            key={src}
             className="absolute inset-0"
             style={{
-              animation:
-                activeIdx === idx
-                  ? 'tour-bg-zoom 18s ease-in-out infinite alternate'
-                  : 'none',
+              opacity: isActive && loaded[idx] ? 1 : 0,
+              transition: `opacity ${FADE_DURATION_MS}ms ease-in-out`,
+              // GPU compositing — transform & opacity
+              transform: 'translateZ(0)',
+              willChange: 'opacity',
+              // Ken Burns her resim için sürekli çalışsın (transition stutter olmasın)
+              animation: 'tour-bg-zoom 22s ease-in-out infinite alternate',
+              animationDelay: `${idx * -5.5}s`,
             }}
           >
             <Image
@@ -69,16 +82,18 @@ export function VirtualTourBackground() {
               alt=""
               fill
               sizes="100vw"
-              quality={85}
-              priority={idx === 0}
+              quality={80}
+              priority={idx < 2}
+              loading={idx < 2 ? 'eager' : 'lazy'}
               className="object-cover"
               style={{ objectPosition: 'center center' }}
+              onLoad={() => handleLoad(idx)}
             />
           </div>
-        </div>
-      ))}
+        );
+      })}
 
-      {/* Layer 2: Lacivert gradient overlay (içerik okunsun diye) */}
+      {/* Layer 2: Lacivert gradient overlay */}
       <div
         className="absolute inset-0"
         style={{
@@ -89,27 +104,31 @@ export function VirtualTourBackground() {
 
       {/* Layer 3: Altın aurora glow (üst sol) */}
       <div
-        className="absolute -left-32 top-0 h-[36rem] w-[36rem] rounded-full will-change-transform"
+        className="absolute -left-32 top-0 h-[36rem] w-[36rem] rounded-full"
         style={{
           background:
-            'radial-gradient(circle, rgba(212,175,55,0.28) 0%, transparent 65%)',
+            'radial-gradient(circle, rgba(212,175,55,0.25) 0%, transparent 65%)',
           filter: 'blur(60px)',
           animation: 'aurora-drift 22s ease-in-out infinite alternate',
+          transform: 'translateZ(0)',
+          willChange: 'transform',
         }}
       />
 
       {/* Layer 4: Lacivert aurora glow (sağ alt) */}
       <div
-        className="absolute -right-24 bottom-0 h-[32rem] w-[32rem] rounded-full will-change-transform"
+        className="absolute -right-24 bottom-0 h-[32rem] w-[32rem] rounded-full"
         style={{
           background:
             'radial-gradient(circle, rgba(29,51,112,0.4) 0%, transparent 60%)',
           filter: 'blur(70px)',
           animation: 'aurora-drift 28s ease-in-out infinite alternate-reverse',
+          transform: 'translateZ(0)',
+          willChange: 'transform',
         }}
       />
 
-      {/* Layer 5: Altın particle (yıldız tozu) — sm+ */}
+      {/* Layer 5: Altın particle */}
       <div className="absolute inset-0 hidden sm:block">
         {particles.map((p) => (
           <div
@@ -136,16 +155,16 @@ export function VirtualTourBackground() {
         }}
       />
 
-      {/* Layer 7: Üst + alt linear fade (section blend) */}
+      {/* Layer 7: Üst+alt linear fade */}
       <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-primary-900 to-transparent" />
       <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-primary-900 to-transparent" />
 
-      {/* Slide indicator dots (alt orta — subtle) */}
+      {/* Slide indicator dots */}
       <div className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 flex items-center gap-2">
         {SLIDES.map((_, idx) => (
           <span
             key={idx}
-            className="block h-1 rounded-full transition-all duration-500"
+            className="block h-1 rounded-full transition-all duration-700"
             style={{
               width: activeIdx === idx ? '24px' : '8px',
               background:

@@ -56,37 +56,100 @@ export function VirtualTourSection({
               </Link>
             </div>
 
-            {/* iframe — sağ, sinematik 16:9 */}
+            {/* iframe — sağ, BUNGALOV temalı çerçeve */}
             <div className="group relative">
-              {/* Outer rotating conic border (subtle altın halka) */}
+              {/* Üçgen çatı silüeti (bungalov referansı, üst orta) */}
+              <div className="pointer-events-none absolute -top-7 left-1/2 z-20 -translate-x-1/2">
+                <svg
+                  width="80"
+                  height="32"
+                  viewBox="0 0 80 32"
+                  fill="none"
+                  className="drop-shadow-[0_2px_8px_rgba(212,175,55,0.4)]"
+                >
+                  <path
+                    d="M40 2 L74 30 L6 30 Z"
+                    fill="url(#roofGrad)"
+                    stroke="rgba(212,175,55,0.8)"
+                    strokeWidth="1.5"
+                    strokeLinejoin="round"
+                  />
+                  <defs>
+                    <linearGradient id="roofGrad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#3d2817" />
+                      <stop offset="100%" stopColor="#5a3d23" />
+                    </linearGradient>
+                  </defs>
+                  <line
+                    x1="40"
+                    y1="6"
+                    x2="40"
+                    y2="28"
+                    stroke="rgba(212,175,55,0.5)"
+                    strokeWidth="1"
+                  />
+                </svg>
+              </div>
+
+              {/* Ahşap dokulu çerçeve (bungalov ahşap kaplama gibi) */}
               <div
-                className="absolute -inset-px rounded-2xl opacity-50 transition-opacity duration-500 group-hover:opacity-100"
+                className="relative overflow-hidden rounded-2xl p-[10px] shadow-[0_25px_60px_-20px_rgba(0,0,0,0.5)] transition-shadow duration-500 group-hover:shadow-[0_30px_70px_-15px_rgba(212,175,55,0.35)]"
                 style={{
                   background:
-                    'conic-gradient(from 0deg, transparent 0deg, rgba(212,175,55,0.5) 90deg, transparent 180deg, rgba(212,175,55,0.3) 270deg, transparent 360deg)',
-                  animation: 'globe-rotate 8s linear infinite',
+                    'linear-gradient(135deg, #3d2817 0%, #5a3d23 20%, #6b4a2a 40%, #5a3d23 60%, #3d2817 100%)',
+                  backgroundSize: '200% 200%',
                 }}
-              />
+              >
+                {/* Altın iç çerçeve (lambri detayı) */}
+                <div className="relative overflow-hidden rounded-xl border-2 border-accent/40 shadow-[inset_0_0_0_1px_rgba(212,175,55,0.2)]">
+                  {/* 4 köşede altın ornament */}
+                  <span className="pointer-events-none absolute left-1.5 top-1.5 z-20 h-4 w-4">
+                    <span className="absolute left-0 top-0 h-full w-[2px] bg-accent" />
+                    <span className="absolute left-0 top-0 h-[2px] w-full bg-accent" />
+                    <span className="absolute left-1 top-1 h-1.5 w-1.5 rounded-full bg-accent" />
+                  </span>
+                  <span className="pointer-events-none absolute right-1.5 top-1.5 z-20 h-4 w-4">
+                    <span className="absolute right-0 top-0 h-full w-[2px] bg-accent" />
+                    <span className="absolute right-0 top-0 h-[2px] w-full bg-accent" />
+                    <span className="absolute right-1 top-1 h-1.5 w-1.5 rounded-full bg-accent" />
+                  </span>
+                  <span className="pointer-events-none absolute bottom-1.5 left-1.5 z-20 h-4 w-4">
+                    <span className="absolute bottom-0 left-0 h-full w-[2px] bg-accent" />
+                    <span className="absolute bottom-0 left-0 h-[2px] w-full bg-accent" />
+                    <span className="absolute bottom-1 left-1 h-1.5 w-1.5 rounded-full bg-accent" />
+                  </span>
+                  <span className="pointer-events-none absolute bottom-1.5 right-1.5 z-20 h-4 w-4">
+                    <span className="absolute bottom-0 right-0 h-full w-[2px] bg-accent" />
+                    <span className="absolute bottom-0 right-0 h-[2px] w-full bg-accent" />
+                    <span className="absolute bottom-1 right-1 h-1.5 w-1.5 rounded-full bg-accent" />
+                  </span>
 
-              {/* Glassmorphism frame */}
-              <div className="relative overflow-hidden rounded-2xl border border-accent/20 bg-primary-800/50 p-1 shadow-[0_0_40px_-10px_rgba(212,175,55,0.25)] backdrop-blur-md transition-all duration-500 group-hover:border-accent/40 group-hover:shadow-[0_0_60px_-10px_rgba(212,175,55,0.45)]">
-                {/* 4 köşede dekoratif altın L marker'lar */}
-                <span className="pointer-events-none absolute left-2 top-2 z-20 h-3 w-3 border-l-2 border-t-2 border-accent" />
-                <span className="pointer-events-none absolute right-2 top-2 z-20 h-3 w-3 border-r-2 border-t-2 border-accent" />
-                <span className="pointer-events-none absolute bottom-2 left-2 z-20 h-3 w-3 border-b-2 border-l-2 border-accent" />
-                <span className="pointer-events-none absolute bottom-2 right-2 z-20 h-3 w-3 border-b-2 border-r-2 border-accent" />
+                  {/* Alt orta — bungalov label */}
+                  <div className="pointer-events-none absolute -bottom-3 left-1/2 z-20 -translate-x-1/2 whitespace-nowrap rounded-full border border-accent/40 bg-primary-900 px-3 py-1 text-[9px] font-semibold uppercase tracking-[0.25em] text-accent shadow-md">
+                    🏡 Hat Naturel Bungalov
+                  </div>
 
-                {/* iframe — sinematik 16:9 (kare değil, daha geniş) */}
-                <div className="relative aspect-video">
-                  <iframe
-                    src={SITE_CONFIG.virtualTour.embedUrl}
-                    title="Hat Naturel Resort 360° Sanal Tur"
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                    allowFullScreen
-                    className="absolute inset-0 h-full w-full rounded-xl border-0"
-                  />
+                  {/* iframe */}
+                  <div className="relative aspect-video">
+                    <iframe
+                      src={SITE_CONFIG.virtualTour.embedUrl}
+                      title="Hat Naturel Resort 360° Sanal Tur"
+                      loading="lazy"
+                      referrerPolicy="no-referrer-when-downgrade"
+                      allowFullScreen
+                      className="absolute inset-0 h-full w-full border-0"
+                    />
+                  </div>
                 </div>
+
+                {/* Ahşap doku — yatay damar simülasyonu (subtle) */}
+                <div
+                  className="pointer-events-none absolute inset-0 opacity-25 mix-blend-overlay"
+                  style={{
+                    backgroundImage:
+                      'repeating-linear-gradient(180deg, transparent 0px, transparent 3px, rgba(0,0,0,0.15) 3px, rgba(0,0,0,0.15) 4px)',
+                  }}
+                />
               </div>
             </div>
           </div>
@@ -108,23 +171,87 @@ export function VirtualTourSection({
                 {t('subtitle')}
               </p>
             </div>
+            {/* BUNGALOV temalı çerçeve — full mode */}
             <div className="group relative">
+              {/* Üçgen çatı (üst orta) */}
+              <div className="pointer-events-none absolute -top-9 left-1/2 z-20 -translate-x-1/2">
+                <svg
+                  width="110"
+                  height="42"
+                  viewBox="0 0 110 42"
+                  fill="none"
+                  className="drop-shadow-[0_3px_10px_rgba(212,175,55,0.4)]"
+                >
+                  <path
+                    d="M55 3 L103 38 L7 38 Z"
+                    fill="url(#roofGradFull)"
+                    stroke="rgba(212,175,55,0.8)"
+                    strokeWidth="1.5"
+                    strokeLinejoin="round"
+                  />
+                  <defs>
+                    <linearGradient id="roofGradFull" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#3d2817" />
+                      <stop offset="100%" stopColor="#5a3d23" />
+                    </linearGradient>
+                  </defs>
+                  <line
+                    x1="55"
+                    y1="8"
+                    x2="55"
+                    y2="36"
+                    stroke="rgba(212,175,55,0.5)"
+                    strokeWidth="1"
+                  />
+                </svg>
+              </div>
+
               <div
-                className="absolute -inset-px rounded-3xl opacity-50"
+                className="relative overflow-hidden rounded-3xl p-3 shadow-[0_30px_80px_-25px_rgba(0,0,0,0.6)]"
                 style={{
                   background:
-                    'conic-gradient(from 0deg, transparent 0deg, rgba(212,175,55,0.5) 90deg, transparent 180deg, rgba(212,175,55,0.3) 270deg, transparent 360deg)',
-                  animation: 'globe-rotate 10s linear infinite',
+                    'linear-gradient(135deg, #3d2817 0%, #5a3d23 20%, #6b4a2a 40%, #5a3d23 60%, #3d2817 100%)',
                 }}
-              />
-              <div className="relative overflow-hidden rounded-3xl border border-accent/25 bg-primary-800/30 p-1.5 shadow-[0_0_80px_-20px_rgba(212,175,55,0.3)] backdrop-blur-md">
-                <iframe
-                  src={SITE_CONFIG.virtualTour.embedUrl}
-                  title="Hat Naturel Resort 360° Sanal Tur"
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  allowFullScreen
-                  className="h-[78vh] min-h-[560px] w-full rounded-2xl border-0"
+              >
+                <div className="relative overflow-hidden rounded-2xl border-2 border-accent/40 shadow-[inset_0_0_0_1px_rgba(212,175,55,0.2)]">
+                  {/* Köşe ornamentleri */}
+                  <span className="pointer-events-none absolute left-2 top-2 z-20 h-5 w-5">
+                    <span className="absolute left-0 top-0 h-full w-[2px] bg-accent" />
+                    <span className="absolute left-0 top-0 h-[2px] w-full bg-accent" />
+                    <span className="absolute left-1.5 top-1.5 h-1.5 w-1.5 rounded-full bg-accent" />
+                  </span>
+                  <span className="pointer-events-none absolute right-2 top-2 z-20 h-5 w-5">
+                    <span className="absolute right-0 top-0 h-full w-[2px] bg-accent" />
+                    <span className="absolute right-0 top-0 h-[2px] w-full bg-accent" />
+                    <span className="absolute right-1.5 top-1.5 h-1.5 w-1.5 rounded-full bg-accent" />
+                  </span>
+                  <span className="pointer-events-none absolute bottom-2 left-2 z-20 h-5 w-5">
+                    <span className="absolute bottom-0 left-0 h-full w-[2px] bg-accent" />
+                    <span className="absolute bottom-0 left-0 h-[2px] w-full bg-accent" />
+                    <span className="absolute bottom-1.5 left-1.5 h-1.5 w-1.5 rounded-full bg-accent" />
+                  </span>
+                  <span className="pointer-events-none absolute bottom-2 right-2 z-20 h-5 w-5">
+                    <span className="absolute bottom-0 right-0 h-full w-[2px] bg-accent" />
+                    <span className="absolute bottom-0 right-0 h-[2px] w-full bg-accent" />
+                    <span className="absolute bottom-1.5 right-1.5 h-1.5 w-1.5 rounded-full bg-accent" />
+                  </span>
+
+                  <iframe
+                    src={SITE_CONFIG.virtualTour.embedUrl}
+                    title="Hat Naturel Resort 360° Sanal Tur"
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    allowFullScreen
+                    className="h-[78vh] min-h-[560px] w-full border-0"
+                  />
+                </div>
+
+                <div
+                  className="pointer-events-none absolute inset-0 opacity-20 mix-blend-overlay"
+                  style={{
+                    backgroundImage:
+                      'repeating-linear-gradient(180deg, transparent 0px, transparent 3px, rgba(0,0,0,0.15) 3px, rgba(0,0,0,0.15) 4px)',
+                  }}
                 />
               </div>
             </div>
