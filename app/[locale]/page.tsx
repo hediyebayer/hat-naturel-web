@@ -8,8 +8,8 @@ import { HeroSection } from '@/components/home/hero-section';
 import { AboutSection } from '@/components/home/about-section';
 import { MapSection } from '@/components/home/map-section';
 import { VirtualTourSection } from '@/components/home/virtual-tour-section';
-import { ROOMS } from '@/lib/data/rooms';
-import { RoomCard } from '@/components/rooms/room-card';
+import { ROOMS, type Room } from '@/lib/data/rooms';
+import { RoomDisplayCard } from '@/components/rooms/room-grid-display';
 
 interface HomePageProps {
   params: { locale: string };
@@ -28,7 +28,7 @@ export default function HomePage({
       {/* About / Neden Hat Naturel — 'Doğanın Yanı Başında Bir Mola' */}
       <AboutSection />
 
-      {/* Featured rooms — beyaz zemin, lacivert text */}
+      {/* Featured rooms — odalar sayfasındaki RoomDisplayCard ile aynı görünüm */}
       <section className="bg-white pt-8 pb-20">
         <Container size="xl">
           <div className="text-center">
@@ -42,9 +42,11 @@ export default function HomePage({
               {t('roomsSubtitle')}
             </Text>
           </div>
-          <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {ROOMS.filter((r) => r.featured).map((room, i) => (
-              <RoomCard
+          <div className="mt-12 grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+            {(['ucgen-2-1', 'ucgen-1-1', 'mor']
+              .map((slug) => ROOMS.find((r) => r.slug === slug))
+              .filter(Boolean) as Room[]).map((room, i) => (
+              <RoomDisplayCard
                 key={room.slug}
                 room={room}
                 locale={params.locale}

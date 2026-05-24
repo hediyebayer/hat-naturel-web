@@ -50,7 +50,7 @@ export function RoomGridDisplay({ locale }: RoomGridDisplayProps) {
   );
 }
 
-function RoomDisplayCard({
+export function RoomDisplayCard({
   room,
   locale,
   index,
