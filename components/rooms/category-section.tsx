@@ -39,7 +39,7 @@ export function CategorySection({ locale }: CategorySectionProps) {
           >
             <Link
               href={`/${locale}/odalar/${firstRoomSlug}`}
-              className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-neutral-200 bg-white transition-all duration-500 hover:-translate-y-1 hover:border-accent/60 hover:shadow-[0_20px_50px_-10px_rgba(212,175,55,0.25)]"
+              className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-neutral-200 bg-white transition-all duration-500 hover:-translate-y-1 hover:border-accent/60 hover:shadow-[0_20px_50px_-10px_rgba(29,51,112,0.25)]"
             >
               {/* Görsel */}
               <div className="relative aspect-[4/3] overflow-hidden">

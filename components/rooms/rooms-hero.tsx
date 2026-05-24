@@ -62,7 +62,7 @@ export function RoomsHero() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
-          className="inline-flex items-center gap-2 rounded-full border border-accent/40 bg-accent/10 px-5 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-accent backdrop-blur-md shadow-[0_0_30px_rgba(212,175,55,0.15)]"
+          className="inline-flex items-center gap-2 rounded-full border border-accent/40 bg-accent/10 px-5 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-accent backdrop-blur-md shadow-[0_0_30px_rgba(29,51,112,0.15)]"
         >
           <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
           Hat Naturel Resort · Sapanca
@@ -75,7 +75,7 @@ export function RoomsHero() {
           transition={{ duration: 0.9, delay: 0.15, ease: [0.25, 1, 0.5, 1] }}
           className="mt-10 font-serif text-4xl font-bold leading-[1.05] tracking-tight md:text-6xl lg:text-[5.5rem]"
         >
-          <span className="block bg-gradient-to-r from-accent-light via-accent to-accent-light bg-clip-text font-bold italic text-transparent drop-shadow-[0_4px_30px_rgba(212,175,55,0.4)]">
+          <span className="block bg-gradient-to-r from-accent-light via-accent to-accent-light bg-clip-text font-bold italic text-transparent drop-shadow-[0_4px_30px_rgba(29,51,112,0.4)]">
             Aileye Özel,
           </span>
           <span className="mt-3 block font-light text-white/95 drop-shadow-[0_2px_20px_rgba(0,0,0,0.5)]">

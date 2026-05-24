@@ -27,7 +27,7 @@ export function RoomCard({ room, locale, index = 0 }: RoomCardProps) {
       >
         {/* LED Glow & Premium Container */}
         <div 
-          className="relative h-full overflow-hidden rounded-3xl bg-[#0A1128]/80 backdrop-blur-md border border-white/10 transition-all duration-[600ms] group-hover:scale-[1.02] group-hover:shadow-[0_0_30px_rgba(212,175,55,0.15)] group-hover:border-accent/50"
+          className="relative h-full overflow-hidden rounded-3xl bg-[#0A1128]/80 backdrop-blur-md border border-white/10 transition-all duration-[600ms] group-hover:scale-[1.02] group-hover:shadow-[0_0_30px_rgba(29,51,112,0.15)] group-hover:border-accent/50"
           style={{ transitionTimingFunction: 'cubic-bezier(0.25, 1, 0.5, 1)' }}
         >
           {/* IMAGE */}

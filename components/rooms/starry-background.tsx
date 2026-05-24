@@ -68,7 +68,7 @@ export const StarryBackground = () => {
         className="absolute right-1/4 top-2/3 h-[35rem] w-[35rem] translate-x-1/2 -translate-y-1/2 rounded-full"
         style={{
           background:
-            'radial-gradient(circle, rgba(212,175,55,0.06) 0%, transparent 65%)',
+            'radial-gradient(circle, rgba(29,51,112,0.06) 0%, transparent 65%)',
           animation: 'float-drift 22s ease-in-out infinite reverse',
         }}
       />
@@ -103,7 +103,7 @@ export const StarryBackground = () => {
               top: `${star.y}%`,
               width: `${star.size}px`,
               height: `${star.size}px`,
-              boxShadow: `0 0 ${star.size * 4}px ${star.size}px rgba(255,255,255,0.7), 0 0 ${star.size * 8}px ${star.size * 2}px rgba(212,175,55,0.2)`,
+              boxShadow: `0 0 ${star.size * 4}px ${star.size}px rgba(255,255,255,0.7), 0 0 ${star.size * 8}px ${star.size * 2}px rgba(29,51,112,0.2)`,
               animation: `twinkle-bright ${star.duration}s ease-in-out ${star.delay}s infinite`,
               willChange: 'opacity, transform',
             }}
@@ -121,7 +121,7 @@ export const StarryBackground = () => {
               top: `${m.top}%`,
               left: `${m.left}%`,
               background:
-                'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.95) 40%, rgba(212,175,55,0.7) 80%, transparent 100%)',
+                'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.95) 40%, rgba(29,51,112,0.7) 80%, transparent 100%)',
               transform: 'rotate(-22deg)',
               animation: `meteor ${m.duration}s linear ${m.delay}s infinite`,
               opacity: 0,

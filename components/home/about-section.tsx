@@ -36,7 +36,7 @@ export function AboutSection() {
       <div className="pointer-events-none absolute inset-0 opacity-[0.04] [background-image:radial-gradient(circle_at_1px_1px,#0a1330_1px,transparent_0)] [background-size:32px_32px]" />
 
       {/* Soft accent glow */}
-      <div className="pointer-events-none absolute left-1/2 top-0 h-96 w-[40rem] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(212,175,55,0.06)_0%,transparent_70%)]" />
+      <div className="pointer-events-none absolute left-1/2 top-0 h-96 w-[40rem] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(29,51,112,0.06)_0%,transparent_70%)]" />
 
       <Container size="lg" className="relative">
         <motion.div
@@ -103,7 +103,7 @@ export function AboutSection() {
                 delay: 0.4 + i * 0.1,
                 ease: [0.25, 1, 0.5, 1],
               }}
-              className="group relative rounded-2xl border border-neutral-200 bg-white p-6 transition-all duration-500 hover:-translate-y-1 hover:border-accent/40 hover:shadow-[0_15px_40px_-10px_rgba(212,175,55,0.2)]"
+              className="group relative rounded-2xl border border-neutral-200 bg-white p-6 transition-all duration-500 hover:-translate-y-1 hover:border-accent/40 hover:shadow-[0_15px_40px_-10px_rgba(29,51,112,0.2)]"
             >
               {/* Accent köşe çizgisi */}
               <div className="absolute left-6 top-6 h-6 w-px bg-gradient-to-b from-accent to-transparent" />

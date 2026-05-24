@@ -46,7 +46,7 @@ export default async function ContactPage({
         aria-label={t('title')}
       >
         <div className="absolute inset-0 opacity-30 [background-image:radial-gradient(rgba(255,255,255,0.15)_1px,transparent_1px)] [background-size:3px_3px]" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_30%,rgba(212,175,55,0.12),transparent_60%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_30%,rgba(29,51,112,0.12),transparent_60%)]" />
         <Container className="relative z-10 text-center">
           <span className="mx-auto block h-px w-16 bg-accent" aria-hidden />
           <span className="mt-4 inline-block text-xs uppercase tracking-[0.3em] text-accent-light">

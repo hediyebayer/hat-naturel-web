@@ -33,7 +33,7 @@ export default function RoomsPage({ params }: RoomsPageProps) {
 
       {/* CTA strip — beyaz tema */}
       <section className="relative overflow-hidden border-t border-neutral-200 bg-gradient-to-b from-white to-neutral-50 py-20 text-neutral-900">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(212,175,55,0.08),transparent_50%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(29,51,112,0.08),transparent_50%)]" />
         <Container className="relative text-center">
           <h2 className="font-serif text-3xl font-bold text-neutral-900 md:text-5xl">
             Karar veremediniz mi?
@@ -54,7 +54,7 @@ export default function RoomsPage({ params }: RoomsPageProps) {
             <ButtonLink
               href={`/${params.locale}${RESERVATION_HREF}`}
               size="lg"
-              className="border-none bg-accent text-neutral-900 shadow-[0_8px_24px_rgba(212,175,55,0.4)] hover:bg-accent-light"
+              className="border-none bg-accent text-neutral-900 shadow-[0_8px_24px_rgba(29,51,112,0.4)] hover:bg-accent-light"
             >
               Rezervasyon Yap
             </ButtonLink>
