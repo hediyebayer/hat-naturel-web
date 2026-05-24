@@ -47,23 +47,43 @@ export function Header({ locale }: HeaderProps): React.ReactElement {
           aria-label="Hat Naturel Sapanca Bungalov — Anasayfa"
           className="group relative flex items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-primary-900 rounded-2xl"
         >
-          {/* Logo — oval lacivert mockup (transparent PNG), cinematic reveal */}
+          {/* Logo — cinematic reveal + dönüş + hover parlama */}
           <motion.span
             initial={{ scale: 0.92, opacity: 0, filter: 'blur(8px)' }}
             animate={{ scale: 1, opacity: 1, filter: 'blur(0px)' }}
             transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
-            className="relative block transition-all duration-500 drop-shadow-[0_6px_20px_rgba(0,0,0,0.35)]"
+            className="relative block transition-all duration-500 drop-shadow-[0_6px_20px_rgba(0,0,0,0.35)] group-hover:drop-shadow-[0_8px_28px_rgba(212,175,55,0.45)]"
+            style={{ perspective: '1000px' }}
           >
-            <Image
-              src="/images/brand/logo-header.png"
-              alt="Hat Naturel Sapanca Bungalov"
-              width={600}
-              height={437}
-              priority
-              className={cn(
-                'block w-auto transition-all duration-500',
-                scrolled ? 'h-14 sm:h-16' : 'h-20 sm:h-24',
-              )}
+            {/* Periodik 360 dönüş */}
+            <motion.span
+              className="block motion-reduce:!transform-none"
+              animate={{ rotateY: [0, 360] }}
+              transition={{
+                duration: 1.8,
+                ease: [0.65, 0, 0.35, 1],
+                repeat: Infinity,
+                repeatDelay: 6,
+              }}
+              style={{ transformStyle: 'preserve-3d', backfaceVisibility: 'visible' }}
+            >
+              <Image
+                src="/images/brand/logo-header.png"
+                alt="Hat Naturel Sapanca Bungalov"
+                width={600}
+                height={437}
+                priority
+                className={cn(
+                  'block w-auto transition-all duration-500',
+                  scrolled ? 'h-14 sm:h-16' : 'h-20 sm:h-24',
+                )}
+              />
+            </motion.span>
+
+            {/* Hover parlama — üstünden altın ışıltı geçer */}
+            <span
+              aria-hidden
+              className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-accent/40 to-transparent skew-x-12 transition-transform duration-1000 ease-out group-hover:translate-x-full"
             />
           </motion.span>
         </Link>
