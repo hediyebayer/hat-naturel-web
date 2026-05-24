@@ -22,12 +22,13 @@ interface RoomGridDisplayProps {
  * Her kartta köşelerden LED ışık efekti (hover'da yoğunlaşır).
  */
 export function RoomGridDisplay({ locale }: RoomGridDisplayProps) {
-  // ROOMS sırasını manuel kontrol et: önce üçgenler, sonra köşkler (havuzlu/havuzsuz)
+  // ROOMS sırasını manuel kontrol et:
+  // önce üçgen kategoriler (havuzlu+sauna), sonra Mor (yaz havuzlu), sonra havuzsuz köşkler
   const displayOrder = [
     'ucgen-2-1',
     'ucgen-1-1',
-    'sari',
     'mor',
+    'sari',
     'bej',
     'turkuaz',
   ];

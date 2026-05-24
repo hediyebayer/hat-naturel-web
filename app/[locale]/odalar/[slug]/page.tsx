@@ -49,7 +49,7 @@ export default function RoomDetailPage({ params }: PageProps) {
   return (
     <>
       {/* BREADCRUMB strip */}
-      <section className="border-b border-neutral-200 bg-neutral-50/60 py-4">
+      <section className="border-b border-neutral-200 bg-white py-4">
         <Container>
           <nav className="flex items-center gap-2 text-sm text-neutral-500">
             <a href={`/${params.locale}`} className="hover:text-primary-700">
@@ -69,7 +69,7 @@ export default function RoomDetailPage({ params }: PageProps) {
       </section>
 
       {/* HERO + GALLERY */}
-      <section className="bg-gradient-to-b from-white to-neutral-50 py-10 md:py-16">
+      <section className="bg-white py-10 md:py-16">
         <Container size="xl">
           {/* Header */}
           <div className="mb-8 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">

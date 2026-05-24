@@ -99,16 +99,16 @@ export const CATEGORIES: CategoryMeta[] = [
     id: 'kosk-1-1-havuzsuz',
     title: '1+1 Köşk (Havuzsuz)',
     titleEn: '1+1 Lodge (No Pool)',
-    subtitle: 'Bej ve Turkuaz — 85 m² ferah çift bungalovları',
-    totalCount: 2,
+    subtitle: 'Bej, Turkuaz ve Sarı — 85-95 m² ferah, havuzsuz köşkler',
+    totalCount: 3,
     hasPool: false,
   },
   {
     id: 'kosk-2-1-havuzlu',
     title: '2+1 Köşk (Yaz Havuzlu)',
     titleEn: '2+1 Lodge (Summer Pool)',
-    subtitle: 'Sarı ve Mor — yaz aylarında özel havuzlu aile köşkleri',
-    totalCount: 2,
+    subtitle: 'Mor — yaz aylarında özel havuzlu aile köşkü',
+    totalCount: 1,
     hasPool: true,
     poolNote: 'Yaz sezonunda kullanıma açıktır',
   },
@@ -168,8 +168,8 @@ export const ROOMS: Room[] = [
     description:
       'Tesisin en popüler yapılarından — özel ısıtmalı havuz, sauna ve ikonik üçgen tasarım. Tesisimizde 6 adet bulunur.',
     longDescription:
-      '1+1 Üçgen Bungalov’larımız tesisimizin en çok tercih edilen yapılarındandır ve toplam 6 adet bulunur. İkonik üçgen mimarisi, sıcak ahşap dokuları ve şömineli oda sobasıyla doğanın içinde benzersiz bir atmosfer sunar. **Özel ısıtmalı havuzu ve saunası** sayesinde mevsim fark etmeksizin yıl boyu spa keyfi yaşarsınız. 5 kişiye kadar konaklama imkanı ile aileler ve arkadaş grupları için ideal, hem fiyat hem konfor olarak avantajlı bir seçim.',
-    specs: { area: 85, guests: 5, extraGuests: 3, bedrooms: 1, bathrooms: 1 },
+      '1+1 Üçgen Bungalov’larımız tesisimizin en çok tercih edilen yapılarındandır ve toplam 6 adet bulunur. İkonik üçgen mimarisi, sıcak ahşap dokuları ve şömineli oda sobasıyla doğanın içinde benzersiz bir atmosfer sunar. **Özel ısıtmalı havuzu ve saunası** sayesinde mevsim fark etmeksizin yıl boyu spa keyfi yaşarsınız. 2 standart + 3 ek olmak üzere 5 kişiye kadar konaklama imkanı sunan bungalov, çiftler ve küçük aileler için ideal — hem fiyat hem konfor olarak avantajlı bir seçim.',
+    specs: { area: 85, guests: 2, extraGuests: 3, bedrooms: 1, bathrooms: 1 },
     amenities: ['heatedPool', 'sauna', ...COMMON_AMENITIES],
     images: [
       '01.jpg', '02.jpg', '03.jpg', '04.jpg', '05.jpg',
@@ -204,14 +204,14 @@ export const ROOMS: Room[] = [
     slug: 'sari',
     name: 'Sarı Köşk 2+1',
     shortName: 'Sarı 2+1',
-    tagline: 'Yaz havuzlu, özel tasarım köşk',
-    category: 'kosk-2-1-havuzlu',
+    tagline: 'Özel tasarım, geniş aile köşkü',
+    category: 'kosk-1-1-havuzsuz',
     description:
-      'Özel tasarım 95 m² 2+1 köşk; özel yaz havuzu, ferahlık ve yaşamsal genişlikle dikkat çeker.',
+      'Özel tasarım 95 m² 2+1 köşk; ferahlık ve yaşamsal genişlikle dikkat çeker. (Havuzsuz)',
     longDescription:
-      'Sarı Köşk 2+1 evimiz özel dizayn olarak tasarlanmıştır. Odaların ferahlığı ve yaşamsal genişliğiyle öne çıkan köşkümüz, yaz aylarında kullanıma açılan özel havuzuyla müstakil bir tatil keyfi sunar. Doğa manzaralı geniş bahçesinde ailecek unutulmaz anlar yaşayabilirsiniz.',
+      'Sarı Köşk 2+1 evimiz özel dizayn olarak tasarlanmıştır. Odaların ferahlığı ve yaşamsal genişliğiyle öne çıkan köşkümüz, müstakil yapısı ile sizleri doğa manzarası eşliğinde ağırlar. Doğa manzaralı geniş bahçesinde ailecek unutulmaz anlar yaşayabilirsiniz. Köşkümüz havuzsuzdur; tesisin ortak sosyal alanlarından faydalanabilirsiniz.',
     specs: { area: 95, guests: 4, extraGuests: 3, bedrooms: 2, bathrooms: 2 },
-    amenities: ['pool', ...COMMON_AMENITIES],
+    amenities: COMMON_AMENITIES,
     images: ['01.jpg', '02.jpg', '03.jpg', '04.jpg', '05.jpg'].map(
       (n) => `/images/rooms/sari/${n}`,
     ),
