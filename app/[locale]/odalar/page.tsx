@@ -20,24 +20,25 @@ export default function RoomsPage({ params }: RoomsPageProps) {
   unstable_setRequestLocale(params.locale);
 
   return (
-    <main className="min-h-screen bg-[#0B132B] text-white selection:bg-accent/30">
+    // Kırık beyaz arka plan (warm ivory, Aman Resorts paleti)
+    <main className="min-h-screen bg-[#FAF8F3] text-neutral-900 selection:bg-accent/30">
       <RoomsHero />
 
-      {/* Kategoriler — yan yana 4 kart + scroll'da detay */}
-      <section className="relative z-10 bg-[#0B132B] py-20 md:py-28">
+      {/* Kategoriler — tek sıra yan yana 4 kart */}
+      <section className="relative bg-[#FAF8F3] py-20 md:py-28">
         <Container size="xl" className="relative">
           <CategorySection locale={params.locale} />
         </Container>
       </section>
 
-      {/* CTA strip */}
-      <section className="relative z-10 overflow-hidden border-t border-white/10 bg-gradient-to-b from-[#0B132B] to-[#07091a] py-20 text-white">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(212,175,55,0.05),transparent_50%)]" />
+      {/* CTA strip — kırık beyaz tema */}
+      <section className="relative overflow-hidden border-t border-neutral-200/60 bg-gradient-to-b from-[#FAF8F3] to-[#F2EDE3] py-20 text-neutral-900">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(212,175,55,0.08),transparent_50%)]" />
         <Container className="relative text-center">
-          <h2 className="font-serif text-3xl font-bold text-white md:text-5xl">
+          <h2 className="font-serif text-3xl font-bold text-neutral-900 md:text-5xl">
             Karar veremediniz mi?
           </h2>
-          <p className="mx-auto mt-6 max-w-2xl text-lg text-white/70">
+          <p className="mx-auto mt-6 max-w-2xl text-lg text-neutral-600">
             Size en uygun bungalovu birlikte seçelim. Bir mesaj atın, telefonla
             arayalım — tüm sorularınızı yanıtlayalım.
           </p>
@@ -46,14 +47,14 @@ export default function RoomsPage({ params }: RoomsPageProps) {
               href={`/${params.locale}/iletisim`}
               variant="outline"
               size="lg"
-              className="!border-white/20 !text-white hover:!bg-white/5"
+              className="!border-neutral-300 !text-neutral-700 hover:!bg-neutral-100"
             >
               Bize Ulaşın
             </ButtonLink>
             <ButtonLink
               href={`/${params.locale}${RESERVATION_HREF}`}
               size="lg"
-              className="border-none bg-accent text-[#0B132B] shadow-[0_0_20px_rgba(212,175,55,0.3)] hover:bg-accent-light"
+              className="border-none bg-accent text-neutral-900 shadow-[0_8px_24px_rgba(212,175,55,0.4)] hover:bg-accent-light"
             >
               Rezervasyon Yap
             </ButtonLink>
