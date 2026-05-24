@@ -227,7 +227,7 @@ const SARI_KOSK_AMENITIES: Amenity[] = [
 export const ROOMS: Room[] = [
   {
     slug: 'bej',
-    name: 'Bej Köşk 1+1',
+    name: '1+1 Bej Köşk',
     shortName: 'Bej 1+1',
     tagline: 'Zarif sadelik, doğa manzarası',
     category: 'kosk-1-1-havuzsuz',
@@ -252,7 +252,7 @@ export const ROOMS: Room[] = [
   },
   {
     slug: 'turkuaz',
-    name: 'Turkuaz Köşk 1+1',
+    name: '1+1 Turkuaz Köşk',
     shortName: 'Turkuaz 1+1',
     tagline: 'İki banyolu konfor, çiftler için',
     category: 'kosk-1-1-havuzsuz',
@@ -305,7 +305,7 @@ export const ROOMS: Room[] = [
   },
   {
     slug: 'mor',
-    name: 'Mor Köşk 2+1',
+    name: '2+1 Mor Köşk',
     shortName: 'Mor 2+1',
     tagline: 'Yaz havuzlu, dikkat çeken köşk',
     category: 'kosk-2-1-havuzlu',
@@ -339,7 +339,7 @@ export const ROOMS: Room[] = [
   },
   {
     slug: 'sari',
-    name: 'Sarı Köşk 2+1',
+    name: '2+1 Sarı Köşk',
     shortName: 'Sarı 2+1',
     tagline: 'Özel tasarım, geniş aile köşkü',
     category: 'kosk-1-1-havuzsuz',
