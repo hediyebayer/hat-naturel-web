@@ -39,7 +39,6 @@ export const NAVIGATION = [
   { key: 'gallery', href: '/galeri' },
   { key: 'virtualTour', href: '/sanal-tur' },
   { key: 'restaurant', href: '/restoran' },
-  { key: 'blog', href: '/blog' },
   { key: 'contact', href: '/iletisim' },
 ] as const;
 

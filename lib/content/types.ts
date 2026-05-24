@@ -1,5 +1,3 @@
-import type { Locale } from '@/lib/i18n/config';
-
 export interface Room {
   id: string;
   slug: string;
@@ -12,18 +10,6 @@ export interface Room {
   amenities: string[];
   images: string[];
   featured?: boolean;
-}
-
-export interface BlogPost {
-  slug: string;
-  title: string;
-  excerpt: string;
-  content: string;
-  publishedAt: string;
-  author: string;
-  coverImage: string;
-  locale: Locale;
-  readingTimeMin: number;
 }
 
 export interface GalleryImage {

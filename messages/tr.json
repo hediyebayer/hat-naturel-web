@@ -20,9 +20,8 @@
     "home": "Anasayfa",
     "rooms": "Odalar",
     "gallery": "Galeri",
-    "blog": "Blog",
-    "restaurant": "Restoran",
     "virtualTour": "Sanal Tur",
+    "restaurant": "Restoran",
     "contact": "İletişim",
     "reservation": "Rezervasyon"
   },
@@ -87,13 +86,6 @@
     "emailLabel": "E-posta",
     "hoursLabel": "Çalışma Saatleri",
     "followUs": "Bizi Takip Edin"
-  },
-  "blog": {
-    "title": "Blog",
-    "subtitle": "Sapanca ve tesisimizden haberler",
-    "readingTime": "{min} dk okuma",
-    "publishedAt": "Yayın tarihi",
-    "noPosts": "Henüz blog yazısı yok."
   },
   "restaurant": {
     "title": "Restoran",

@@ -1,7 +1,6 @@
 import type { Locale } from '@/lib/i18n/config';
 import type { ContentAdapter } from './adapter';
 import type {
-  BlogPost,
   GalleryImage,
   Offer,
   Room,
@@ -23,17 +22,6 @@ export class StaticContentAdapter implements ContentAdapter {
 
   async getRoomBySlug(slug: string, _locale: Locale): Promise<Room | null> {
     return ROOMS_STATIC.find((r) => r.slug === slug) ?? null;
-  }
-
-  async getBlogPosts(_locale: Locale): Promise<BlogPost[]> {
-    return [];
-  }
-
-  async getBlogPostBySlug(
-    _slug: string,
-    _locale: Locale,
-  ): Promise<BlogPost | null> {
-    return null;
   }
 
   async getGalleryImages(): Promise<GalleryImage[]> {

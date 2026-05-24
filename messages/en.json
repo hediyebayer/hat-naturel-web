@@ -20,9 +20,8 @@
     "home": "Home",
     "rooms": "Rooms",
     "gallery": "Gallery",
-    "blog": "Blog",
-    "restaurant": "Restaurant",
     "virtualTour": "Virtual Tour",
+    "restaurant": "Restaurant",
     "contact": "Contact",
     "reservation": "Reservation"
   },
@@ -87,13 +86,6 @@
     "emailLabel": "Email",
     "hoursLabel": "Hours",
     "followUs": "Follow Us"
-  },
-  "blog": {
-    "title": "Blog",
-    "subtitle": "News from Sapanca and our resort",
-    "readingTime": "{min} min read",
-    "publishedAt": "Published",
-    "noPosts": "No blog posts yet."
   },
   "restaurant": {
     "title": "Restaurant",
