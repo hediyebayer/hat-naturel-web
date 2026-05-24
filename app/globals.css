@@ -228,11 +228,33 @@
 
 @keyframes globe-pin-pulse {
   0%, 100% {
-    transform: scale(1);
+    transform: translate(-50%, -50%) scale(1);
     opacity: 0.9;
   }
   50% {
-    transform: scale(1.4);
+    transform: translate(-50%, -50%) scale(1.6);
     opacity: 1;
+  }
+}
+
+/* ============================================
+   3D PERSPECTIVE GRID + ORBIT RINGS
+   Sanal tur arka plan 3D tema
+   ============================================ */
+@keyframes grid-scroll {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 0 60px;
+  }
+}
+
+@keyframes spin-y {
+  from {
+    transform: rotateX(70deg) rotateZ(0deg);
+  }
+  to {
+    transform: rotateX(70deg) rotateZ(360deg);
   }
 }
