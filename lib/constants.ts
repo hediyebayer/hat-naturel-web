@@ -26,6 +26,12 @@ export const SITE_CONFIG = {
     embedUrl:
       'https://www.google.com/maps/embed?pb=!4v1751282567227!6m8!1m7!1sCAoSLEFGMVFpcE82UzVqbkV1aHZzQWs0SzNKRDJlLTJ3R0VYYWJGQlpDZDZjMDhF!2m2!1d40.66864244965133!2d30.26540175088224!3f151.9861990905399!4f8.733223319116348!5f0.7820865974627469',
   },
+  // WhatsApp — wa.me uluslararası format, + ve boşluksuz
+  whatsapp: {
+    number: '905339175424',
+    displayNumber: '+90 533 917 54 24',
+    defaultMessage: 'Merhaba, Hat Naturel Sapanca hakkında bilgi almak istiyorum.',
+  },
   socialMedia: {
     instagram: 'https://www.instagram.com/hatnaturelsapanca',
     instagramHandle: '@hatnaturelsapanca',

@@ -3,13 +3,14 @@ import {
   unstable_setRequestLocale,
   getTranslations,
 } from 'next-intl/server';
-import { MapPin, Phone, Mail, Video, Instagram, Facebook, Clock } from 'lucide-react';
+import { MapPin, Phone, Mail, Video, Instagram, Facebook, Clock, MessageCircle } from 'lucide-react';
 import { Container } from '@/components/ui/container';
 import { Heading } from '@/components/ui/heading';
 import { Text } from '@/components/ui/text';
 import { ContactForm } from '@/components/forms/contact-form';
 import { MapSection } from '@/components/home/map-section';
 import { SITE_CONFIG } from '@/lib/constants';
+import { buildWhatsAppUrl } from '@/lib/utils/whatsapp';
 
 interface PageProps {
   params: { locale: string };
@@ -67,16 +68,56 @@ export default async function ContactPage({
       <section className="py-20">
         <Container>
           <div className="grid gap-10 lg:grid-cols-5">
-            {/* Sol: Form (3 kolon) */}
-            <div className="lg:col-span-3">
-              <Heading level={2} className="!text-3xl">
-                {t('reachUs')}
-              </Heading>
-              <Text muted className="mt-3">
-                {t('reachUsLead')}
-              </Text>
-              <div className="mt-8 rounded-2xl bg-white p-6 shadow-soft sm:p-8">
-                <ContactForm />
+            {/* Sol: WhatsApp CTA + Form (3 kolon) */}
+            <div className="lg:col-span-3 space-y-8">
+              {/* WhatsApp hızlı iletişim kartı */}
+              <a
+                href={buildWhatsAppUrl()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center justify-between gap-4 rounded-2xl bg-gradient-to-br from-[#25D366] to-[#128C7E] p-6 text-white shadow-soft transition-shadow hover:shadow-medium"
+              >
+                <div className="flex items-center gap-4">
+                  <span className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-white/20">
+                    <MessageCircle size={24} />
+                  </span>
+                  <div>
+                    <p className="text-xs uppercase tracking-widest text-white/80">
+                      {t('whatsappTitle')}
+                    </p>
+                    <p className="mt-0.5 font-serif text-xl">{t('whatsappCta')}</p>
+                    <p className="mt-0.5 text-sm text-white/90">
+                      {t('whatsappLead')}
+                    </p>
+                  </div>
+                </div>
+                <span
+                  aria-hidden
+                  className="hidden flex-shrink-0 rounded-full bg-white/15 px-4 py-2 text-sm font-medium transition-colors group-hover:bg-white/25 sm:inline-flex"
+                >
+                  {SITE_CONFIG.whatsapp.displayNumber}
+                </span>
+              </a>
+
+              {/* ya da ayıracı */}
+              <div className="flex items-center gap-4" role="separator">
+                <span className="h-px flex-1 bg-neutral-200" />
+                <span className="text-xs uppercase tracking-widest text-neutral-500">
+                  {t('orDivider')}
+                </span>
+                <span className="h-px flex-1 bg-neutral-200" />
+              </div>
+
+              <div>
+                <Heading level={2} className="!text-3xl">
+                  {t('reachUs')}
+                </Heading>
+                <Text muted className="mt-3">
+                  {t('reachUsLead')}
+                </Text>
+                <div className="mt-8 rounded-2xl bg-white p-6 shadow-soft sm:p-8">
+                  <ContactForm />
+                </div>
               </div>
             </div>
 

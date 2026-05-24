@@ -6,6 +6,7 @@ import { playfair, inter } from '@/styles/fonts';
 import { locales, type Locale } from '@/lib/i18n/config';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
+import { WhatsAppFab } from '@/components/layout/whatsapp-fab';
 import '../globals.css';
 
 interface LocaleLayoutProps {
@@ -68,6 +69,7 @@ export default async function LocaleLayout({
             {children}
           </main>
           <Footer locale={params.locale} />
+          <WhatsAppFab />
         </NextIntlClientProvider>
       </body>
     </html>
