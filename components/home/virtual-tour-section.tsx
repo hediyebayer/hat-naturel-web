@@ -120,41 +120,41 @@ export function VirtualTourSection({
 function AnimatedBackground(): React.ReactElement {
   return (
     <div aria-hidden className="pointer-events-none absolute inset-0 -z-0">
-      {/* 1. Conic dönen ışın — belirgin altın ışınlar */}
+      {/* 1. Conic dönen ışın */}
       <motion.div
         className="absolute left-1/2 top-1/2 h-[180%] w-[180%] -translate-x-1/2 -translate-y-1/2 motion-reduce:hidden"
         style={{
           background:
-            'conic-gradient(from 0deg, transparent 0deg, rgba(212,175,55,0.18) 60deg, transparent 120deg, transparent 240deg, rgba(212,175,55,0.14) 300deg, transparent 360deg)',
+            'conic-gradient(from 0deg, transparent 0deg, rgba(212,175,55,0.13) 60deg, transparent 120deg, transparent 240deg, rgba(212,175,55,0.10) 300deg, transparent 360deg)',
         }}
         animate={{ rotate: 360 }}
-        transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+        transition={{ duration: 22, repeat: Infinity, ease: 'linear' }}
       />
 
-      {/* 2. Pulse radial glow — ortada belirgin altın halo */}
+      {/* 2. Pulse radial glow */}
       <motion.div
         className="absolute left-1/2 top-1/2 h-[700px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full motion-reduce:hidden"
         style={{
           background:
-            'radial-gradient(circle, rgba(212,175,55,0.20) 0%, rgba(212,175,55,0.05) 50%, transparent 75%)',
+            'radial-gradient(circle, rgba(212,175,55,0.14) 0%, rgba(212,175,55,0.04) 50%, transparent 75%)',
         }}
         animate={{
-          scale: [1, 1.2, 1],
-          opacity: [0.7, 1, 0.7],
+          scale: [1, 1.18, 1],
+          opacity: [0.65, 0.95, 0.65],
         }}
-        transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+        transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}
       />
 
       {/* 3. Floating ikon parçacıkları */}
       <FloatingIcons />
 
-      {/* 4. Grid pattern — belirgin dot grid */}
+      {/* 4. Dot grid pattern */}
       <div
-        className="absolute inset-0 opacity-60"
+        className="absolute inset-0 opacity-50"
         style={{
           backgroundImage:
-            'radial-gradient(circle, rgba(255,255,255,0.18) 1.5px, transparent 1.5px)',
-          backgroundSize: '36px 36px',
+            'radial-gradient(circle, rgba(255,255,255,0.14) 1.3px, transparent 1.3px)',
+          backgroundSize: '38px 38px',
         }}
       />
 
@@ -170,15 +170,23 @@ function AnimatedBackground(): React.ReactElement {
  */
 function FloatingIcons(): React.ReactElement {
   const icons = [
-    { Icon: Compass, x: '8%', y: '20%', size: 52, dur: 11, delay: 0 },
-    { Icon: Camera, x: '85%', y: '70%', size: 42, dur: 14, delay: 1.5 },
-    { Icon: Eye, x: '15%', y: '75%', size: 48, dur: 12, delay: 4 },
-    { Icon: Aperture, x: '78%', y: '15%', size: 58, dur: 15, delay: 0.8 },
-    { Icon: Move3d, x: '50%', y: '55%', size: 36, dur: 10, delay: 2.5 },
-    { Icon: Compass, x: '45%', y: '85%', size: 44, dur: 13, delay: 5 },
-    { Icon: Camera, x: '30%', y: '40%', size: 34, dur: 12, delay: 3 },
-    { Icon: Aperture, x: '65%', y: '50%', size: 38, dur: 13, delay: 6 },
+    // — Sol bölge (zenginleştirildi)
+    { Icon: Compass, x: '4%', y: '12%', size: 48, dur: 12, delay: 0 },
+    { Icon: Aperture, x: '2%', y: '45%', size: 42, dur: 13, delay: 2.5 },
+    { Icon: Eye, x: '12%', y: '60%', size: 44, dur: 12, delay: 4 },
+    { Icon: Move3d, x: '6%', y: '82%', size: 38, dur: 14, delay: 1 },
+    { Icon: Camera, x: '22%', y: '28%', size: 36, dur: 11, delay: 5.5 },
+    { Icon: Compass, x: '18%', y: '92%', size: 32, dur: 12, delay: 3.5 },
+    { Icon: Aperture, x: '26%', y: '68%', size: 28, dur: 13, delay: 6.5 },
+    // — Orta
+    { Icon: Move3d, x: '50%', y: '55%', size: 34, dur: 11, delay: 2 },
+    { Icon: Camera, x: '38%', y: '40%', size: 30, dur: 12, delay: 4.5 },
+    { Icon: Compass, x: '45%', y: '85%', size: 38, dur: 13, delay: 6 },
+    // — Sağ bölge
+    { Icon: Aperture, x: '78%', y: '15%', size: 50, dur: 14, delay: 0.8 },
+    { Icon: Camera, x: '85%', y: '70%', size: 38, dur: 13, delay: 1.5 },
     { Icon: Eye, x: '92%', y: '40%', size: 30, dur: 11, delay: 7 },
+    { Icon: Aperture, x: '65%', y: '50%', size: 32, dur: 12, delay: 5 },
   ];
 
   return (
@@ -186,12 +194,12 @@ function FloatingIcons(): React.ReactElement {
       {icons.map(({ Icon, x, y, size, dur, delay }, i) => (
         <motion.div
           key={i}
-          className="absolute text-accent/40 motion-reduce:hidden"
-          style={{ left: x, top: y, filter: 'drop-shadow(0 0 8px rgba(212,175,55,0.3))' }}
+          className="absolute text-accent/30 motion-reduce:hidden"
+          style={{ left: x, top: y, filter: 'drop-shadow(0 0 6px rgba(212,175,55,0.2))' }}
           initial={{ opacity: 0, y: 30, rotate: 0 }}
           animate={{
-            opacity: [0, 0.9, 0.9, 0],
-            y: [-30, -140],
+            opacity: [0, 0.7, 0.7, 0],
+            y: [-25, -120],
             rotate: [0, 360],
           }}
           transition={{
@@ -201,7 +209,7 @@ function FloatingIcons(): React.ReactElement {
             ease: 'linear',
           }}
         >
-          <Icon size={size} strokeWidth={1.5} />
+          <Icon size={size} strokeWidth={1.4} />
         </motion.div>
       ))}
     </>
