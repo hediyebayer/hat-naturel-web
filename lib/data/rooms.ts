@@ -356,9 +356,15 @@ export const ROOMS: Room[] = [
       'Sarı Köşk 2+1 evimiz özel dizayn olarak tasarlanmıştır. Odaların ferahlığı ve yaşamsal genişliğiyle öne çıkan köşkümüz, müstakil yapısı ile sizleri doğa manzarası eşliğinde ağırlar. Doğa manzaralı geniş bahçesinde ailecek unutulmaz anlar yaşayabilirsiniz. Köşkümüz havuzsuzdur; tesisin ortak sosyal alanlarından faydalanabilirsiniz.',
     specs: { area: 95, guests: 4, extraGuests: 3, bedrooms: 2, bathrooms: 2 },
     amenities: SARI_KOSK_AMENITIES,
-    images: ['01.jpg', '02.jpg', '03.jpg', '04.jpg', '05.jpg'].map(
-      (n) => `/images/rooms/sari/${n}`,
-    ),
+    images: [
+      '01.jpg',
+      '02.jpg',
+      '03.jpg',
+      '04.jpg',
+      '05.jpg',
+      '06.jpg',
+      '07.jpg',
+    ].map((n) => `/images/rooms/sari/${n}`),
     accentColor: 'from-yellow-300/40 via-amber-200/20 to-transparent',
     theme: 'yellow',
     featured: true,
