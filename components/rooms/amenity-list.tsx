@@ -2,18 +2,21 @@
 
 import { motion } from 'framer-motion';
 import * as Icons from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import { AMENITY_META, type Amenity } from '@/lib/data/rooms';
 
 interface AmenityListProps {
   amenities: Amenity[];
 }
 
+const IconMap = Icons as unknown as Record<string, LucideIcon>;
+
 export function AmenityList({ amenities }: AmenityListProps) {
   return (
     <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3">
       {amenities.map((key, i) => {
         const meta = AMENITY_META[key];
-        const Icon = (Icons as Record<string, React.ComponentType<{ className?: string }>>)[meta.icon] ?? Icons.Check;
+        const Icon = IconMap[meta.icon] ?? Icons.Check;
         return (
           <motion.li
             key={key}
