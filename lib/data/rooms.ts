@@ -97,7 +97,7 @@ export const ROOMS: Room[] = [
       'En çok tercih edilen 1+1 üçgen bungalov — aileler için geniş ve konforlu.',
     longDescription:
       '1+1 Üçgen Bungalov’larımız tesisin en çok tercih edilen yapılarındandır. İkonik üçgen mimarisi, sıcak ahşap dokuları ve şömineli oda sobasıyla doğanın içinde benzersiz bir atmosfer sunar. 5 kişiye kadar konaklama imkanı ile aileler ve arkadaş grupları için ideal, hem fiyat hem konfor olarak avantajlı bir seçim.',
-    specs: { area: 85, guests: 5, extraGuests: 0, bedrooms: 1, bathrooms: 1 },
+    specs: { area: 85, guests: 5, extraGuests: 3, bedrooms: 1, bathrooms: 1 },
     amenities: COMMON_AMENITIES,
     images: [
       '01.jpg', '02.jpg', '03.jpg', '04.jpg', '05.jpg',
