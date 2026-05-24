@@ -52,12 +52,12 @@ export function Header({ locale }: HeaderProps): React.ReactElement {
             initial={{ scale: 0.92, opacity: 0, filter: 'blur(8px)' }}
             animate={{ scale: 1, opacity: 1, filter: 'blur(0px)' }}
             transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
-            className="relative block transition-all duration-500 drop-shadow-[0_6px_20px_rgba(0,0,0,0.35)] group-hover:drop-shadow-[0_8px_28px_rgba(212,175,55,0.45)]"
+            className="relative inline-block transition-all duration-500 drop-shadow-[0_6px_20px_rgba(0,0,0,0.35)]"
             style={{ perspective: '1000px' }}
           >
-            {/* Periodik 360 dönüş */}
+            {/* Periodik 360 dönüş — parlamayı da içeride tutan wrapper */}
             <motion.span
-              className="block motion-reduce:!transform-none"
+              className="relative block overflow-hidden motion-reduce:!transform-none"
               animate={{ rotateY: [0, 360] }}
               transition={{
                 duration: 1.8,
@@ -78,13 +78,13 @@ export function Header({ locale }: HeaderProps): React.ReactElement {
                   scrolled ? 'h-14 sm:h-16' : 'h-20 sm:h-24',
                 )}
               />
-            </motion.span>
 
-            {/* Hover parlama — üstünden altın ışıltı geçer */}
-            <span
-              aria-hidden
-              className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-accent/40 to-transparent skew-x-12 transition-transform duration-1000 ease-out group-hover:translate-x-full"
-            />
+              {/* Hover parlama — SADECE logo içinde, beyaz ışıltı */}
+              <span
+                aria-hidden
+                className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/50 to-transparent skew-x-12 transition-transform duration-1000 ease-out group-hover:translate-x-full"
+              />
+            </motion.span>
           </motion.span>
         </Link>
 
