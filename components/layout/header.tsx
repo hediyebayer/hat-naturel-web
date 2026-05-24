@@ -34,10 +34,10 @@ export function Header({ locale }: HeaderProps): React.ReactElement {
   return (
     <header
       className={cn(
-        'fixed top-0 left-0 right-0 z-40 w-full transition-all duration-500',
+        'fixed top-0 left-0 right-0 z-40 w-full py-4 transition-all duration-500',
         scrolled
-          ? 'bg-primary-900/85 shadow-medium backdrop-blur-xl py-2'
-          : 'bg-gradient-to-b from-primary-900/60 via-primary-900/30 to-transparent py-4',
+          ? 'bg-primary-900/85 shadow-medium backdrop-blur-xl'
+          : 'bg-gradient-to-b from-primary-900/60 via-primary-900/30 to-transparent',
       )}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
@@ -73,10 +73,7 @@ export function Header({ locale }: HeaderProps): React.ReactElement {
                 width={600}
                 height={437}
                 priority
-                className={cn(
-                  'block w-auto transition-all duration-500',
-                  scrolled ? 'h-14 sm:h-16' : 'h-20 sm:h-24',
-                )}
+                className="block h-20 w-auto transition-all duration-500 sm:h-24"
               />
             </motion.span>
 
