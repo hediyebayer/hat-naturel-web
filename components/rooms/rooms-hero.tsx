@@ -3,7 +3,6 @@
 import Image from 'next/image';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { useEffect, useRef } from 'react';
-import { Shield, Users } from 'lucide-react';
 
 export function RoomsHero() {
   // Mouse parallax — aerial image moves subtly with cursor
@@ -37,7 +36,7 @@ export function RoomsHero() {
       ref={sectionRef}
       className="relative isolate flex min-h-[88vh] items-center justify-center overflow-hidden bg-[#07091a] pt-32 pb-24 text-white md:pt-40 md:pb-32"
     >
-      {/* Layer 1: Real aerial night photo with mouse parallax */}
+      {/* Real aerial night photo with mouse parallax */}
       <motion.div
         className="pointer-events-none absolute inset-0 z-0"
         style={{ x: imageX, y: imageY, scale: 1.08 }}
@@ -51,73 +50,50 @@ export function RoomsHero() {
           className="object-cover"
           sizes="100vw"
         />
-        {/* Dark gradient overlay — make text readable */}
+        {/* Dark gradient overlay — readability */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#07091a]/55 via-[#0B132B]/45 to-[#0B132B]/85" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_25%,rgba(7,9,26,0.75)_100%)]" />
       </motion.div>
 
-      {/* Layer 2: (YILDIZLAR KALDIRILDI — kullanıcı isteği) */}
-
-      {/* Layer 3: Hero text content */}
+      {/* Hero text content */}
       <div className="relative z-20 mx-auto max-w-5xl px-4 text-center sm:px-6">
-        {/* Üst etiket — mahremiyet vurgusu */}
+        {/* Üst etiket — 13 özel bungalov vurgusu */}
         <motion.span
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
           className="inline-flex items-center gap-2 rounded-full border border-accent/40 bg-accent/10 px-5 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-accent backdrop-blur-md shadow-[0_0_30px_rgba(212,175,55,0.15)]"
         >
-          <Shield className="h-3.5 w-3.5" />
-          Müstakil · Mahrem · Aileye Uygun
+          <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
+          Hat Naturel Resort · Sapanca
         </motion.span>
 
-        {/* ANA BAŞLIK — Mahremiyet + Aileye Uygun vurgulu */}
+        {/* ANA BAŞLIK — büyük, çekici, premium */}
         <motion.h1
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.15, ease: [0.25, 1, 0.5, 1] }}
-          className="mt-10 font-serif text-4xl font-bold leading-[1.05] tracking-tight md:text-6xl lg:text-7xl"
+          className="mt-10 font-serif text-4xl font-bold leading-[1.05] tracking-tight md:text-6xl lg:text-[5.5rem]"
         >
-          <span className="italic font-light text-white/85 drop-shadow-[0_2px_20px_rgba(0,0,0,0.5)]">
-            Tam Mahremiyet,
+          <span className="block bg-gradient-to-r from-accent-light via-accent to-accent-light bg-clip-text font-bold italic text-transparent drop-shadow-[0_4px_30px_rgba(212,175,55,0.4)]">
+            13 Özel Bungalov
           </span>
-          <span className="mt-3 block bg-gradient-to-r from-accent via-accent-light to-accent bg-clip-text font-bold text-transparent drop-shadow-[0_4px_30px_rgba(212,175,55,0.3)]">
-            Aileye Uygun Kaçamak
+          <span className="mt-3 block font-light text-white/95 drop-shadow-[0_2px_20px_rgba(0,0,0,0.5)]">
+            Doğanın Sessizliği,{' '}
+            <span className="italic">Size Ait Bir Alan</span>
           </span>
         </motion.h1>
 
-        {/* Açıklama subtitle */}
+        {/* Senin verdiğin cümle — ana açıklama */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.5 }}
           className="mx-auto mt-10 max-w-2xl font-sans text-base text-white/85 tracking-[0.02em] md:text-lg leading-relaxed"
         >
-          Komşunuz yok, gürültü yok — Sapanca&apos;da müstakil bungalov ve
-          köşkler, ailecek huzurlu bir tatil için tasarlandı.
+          Her biri özenle konumlandırılmış 13 özel bungalovumuzda doğanın
+          sessizliğini, konforu ve size ait özel alanın keyfini yaşayın.
         </motion.p>
-
-        {/* Mahremiyet vurgu chips */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.75 }}
-          className="mx-auto mt-10 flex flex-wrap justify-center gap-3"
-        >
-          {[
-            { icon: Shield, text: 'Müstakil Giriş' },
-            { icon: Users, text: 'Aileye Uygun' },
-            { icon: Shield, text: 'Komşusuz Mahremiyet' },
-          ].map((chip, i) => (
-            <span
-              key={i}
-              className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-xs font-medium text-white/85 backdrop-blur-md"
-            >
-              <chip.icon className="h-3 w-3 text-accent" />
-              {chip.text}
-            </span>
-          ))}
-        </motion.div>
 
         {/* Scroll indicator */}
         <motion.div
@@ -127,7 +103,9 @@ export function RoomsHero() {
           className="absolute -bottom-24 left-1/2 -translate-x-1/2"
         >
           <div className="flex flex-col items-center gap-2 text-white/50">
-            <span className="text-[10px] uppercase tracking-[0.3em]">Keşfet</span>
+            <span className="text-[10px] uppercase tracking-[0.3em]">
+              Keşfet
+            </span>
             <motion.div
               animate={{ y: [0, 8, 0] }}
               transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
