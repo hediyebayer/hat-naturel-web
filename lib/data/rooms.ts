@@ -231,6 +231,12 @@ export const ROOMS: Room[] = [
     shortName: 'Bej 1+1',
     tagline: 'Zarif sadelik, doğa manzarası',
     category: 'kosk-1-1-havuzsuz',
+    bedConfig: [
+      '🛏️ Asma katta çift kişilik yatak',
+      '🛋️ Ortak alanda çift kişilik çekyat',
+      '🛋️ Tek kişilik ek çekyat',
+      '👪 Maksimum 5 kişi konaklayabilir',
+    ],
     description:
       'Standart 1+1 köşkümüz; 85 m² ferah yaşam alanı, doğa manzaralı müstakil bungalov. (Havuzsuz)',
     longDescription:
@@ -250,6 +256,12 @@ export const ROOMS: Room[] = [
     shortName: 'Turkuaz 1+1',
     tagline: 'İki banyolu konfor, çiftler için',
     category: 'kosk-1-1-havuzsuz',
+    bedConfig: [
+      '🛏️ Asma katta çift kişilik yatak',
+      '🛋️ Ortak alanda çift kişilik çekyat',
+      '🛋️ Tek kişilik ek çekyat',
+      '👪 Maksimum 5 kişi konaklayabilir',
+    ],
     description:
       '85 m² genişliğinde, çift banyolu ferah 1+1 köşk — pratik konfor arayanlara. (Havuzsuz)',
     longDescription:
@@ -336,6 +348,13 @@ export const ROOMS: Room[] = [
     tagline: 'Isıtmalı havuz + jakuzi + sauna, geniş aile',
     category: 'ucgen-2-1',
     count: 3,
+    bedConfig: [
+      '🛏️ Ebeveyn odasında 1 adet çift kişilik yatak',
+      '🛏️ Asma katta 2 adet tek kişilik yatak',
+      '🛋️ Ortak alanda çift kişilik çekyat',
+      '🛋️ Ortak alanda tek kişilik çekyat',
+      '👪 Maksimum 7 kişi konaklayabilir',
+    ],
     description:
       '95 m² genişliğinde üçgen mimari 2+1 — özel ısıtmalı havuz, sauna ve geniş aileye rahat yaşam alanı. Tesisimizde 3 adet bulunur.',
     longDescription:
