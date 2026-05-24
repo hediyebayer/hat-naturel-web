@@ -7,6 +7,8 @@ import { ButtonLink } from '@/components/ui/button';
 import { MapSection } from '@/components/home/map-section';
 import { VirtualTourSection } from '@/components/home/virtual-tour-section';
 import { RESERVATION_HREF } from '@/lib/constants';
+import { ROOMS } from '@/lib/data/rooms';
+import { RoomCard } from '@/components/rooms/room-card';
 
 interface HomePageProps {
   params: { locale: string };
@@ -81,16 +83,39 @@ export default function HomePage({
         </Container>
       </section>
 
-      {/* Placeholder — M2'de oda kartları */}
-      <section className="bg-neutral-100 py-20">
-        <Container className="text-center">
-          <Heading level={2}>{t('roomsTitle')}</Heading>
-          <Text muted className="mt-3">
-            {t('roomsSubtitle')}
-          </Text>
-          <Text className="mt-10 italic" muted>
-            (M2 — Oda kartları yakında)
-          </Text>
+      {/* Featured rooms */}
+      <section className="bg-neutral-50 py-20">
+        <Container size="xl">
+          <div className="text-center">
+            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-primary-600">
+              Konaklama
+            </span>
+            <Heading level={2} className="mt-2">
+              {t('roomsTitle')}
+            </Heading>
+            <Text muted className="mt-3">
+              {t('roomsSubtitle')}
+            </Text>
+          </div>
+          <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            {ROOMS.filter((r) => r.featured).map((room, i) => (
+              <RoomCard
+                key={room.slug}
+                room={room}
+                locale={params.locale}
+                index={i}
+              />
+            ))}
+          </div>
+          <div className="mt-12 text-center">
+            <ButtonLink
+              href={`/${params.locale}/odalar`}
+              variant="outline"
+              size="lg"
+            >
+              Tüm Köşkleri Gör →
+            </ButtonLink>
+          </div>
         </Container>
       </section>
 
