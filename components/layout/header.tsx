@@ -47,16 +47,17 @@ export function Header({ locale }: HeaderProps): React.ReactElement {
           aria-label="Hat Naturel Sapanca Bungalov — Anasayfa"
           className="group relative flex items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-primary-900 rounded-2xl"
         >
-          {/* Logo — cinematic reveal + 360 dönüş + hover hafif büyüme */}
+          {/* Logo — cinematic reveal + 360 dönüş + hover parıltı (logo içi) */}
           <motion.span
             initial={{ scale: 0.92, opacity: 0, filter: 'blur(8px)' }}
             animate={{ scale: 1, opacity: 1, filter: 'blur(0px)' }}
             transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
-            className="relative inline-block transition-all duration-500 drop-shadow-[0_6px_20px_rgba(0,0,0,0.35)] group-hover:drop-shadow-[0_8px_28px_rgba(255,255,255,0.25)]"
+            className="relative inline-block transition-all duration-500 drop-shadow-[0_6px_20px_rgba(0,0,0,0.35)]"
             style={{ perspective: '1000px' }}
           >
+            {/* Dönen logo katmanı */}
             <motion.span
-              className="relative block motion-reduce:!transform-none transition-transform duration-300 group-hover:scale-[1.04]"
+              className="relative block motion-reduce:!transform-none"
               animate={{ rotateY: [0, 360] }}
               transition={{
                 duration: 1.8,
@@ -78,6 +79,24 @@ export function Header({ locale }: HeaderProps): React.ReactElement {
                 )}
               />
             </motion.span>
+
+            {/* Hover parıltı — dışardaki sabit katman, logo PNG'sine maskelendi */}
+            <span
+              aria-hidden
+              className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+              style={{
+                WebkitMaskImage: "url('/images/brand/logo-header.png')",
+                WebkitMaskRepeat: 'no-repeat',
+                WebkitMaskSize: '100% 100%',
+                WebkitMaskPosition: 'center',
+                maskImage: "url('/images/brand/logo-header.png')",
+                maskRepeat: 'no-repeat',
+                maskSize: '100% 100%',
+                maskPosition: 'center',
+              }}
+            >
+              <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/70 to-transparent skew-x-12 transition-transform duration-[1200ms] ease-out group-hover:translate-x-full" />
+            </span>
           </motion.span>
         </Link>
 
