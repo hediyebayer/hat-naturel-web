@@ -36,8 +36,8 @@ export function Header({ locale }: HeaderProps): React.ReactElement {
       className={cn(
         'fixed top-0 left-0 right-0 z-40 w-full transition-all duration-500',
         scrolled
-          ? 'bg-white/90 shadow-medium backdrop-blur-xl py-2'
-          : 'bg-gradient-to-b from-white/70 via-white/40 to-transparent py-4 backdrop-blur-sm',
+          ? 'bg-primary-900/85 shadow-medium backdrop-blur-xl py-2'
+          : 'bg-gradient-to-b from-primary-900/60 via-primary-900/30 to-transparent py-4',
       )}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
@@ -47,26 +47,33 @@ export function Header({ locale }: HeaderProps): React.ReactElement {
           aria-label="Hat Naturel Sapanca Bungalov — Anasayfa"
           className="group relative flex items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-primary-900 rounded-2xl"
         >
-          {/* Logo — transparent PNG, cinematic reveal */}
+          {/* Logo — orijinal lacivert mockup, cinematic reveal */}
           <motion.span
             initial={{ scale: 0.92, opacity: 0, filter: 'blur(8px)' }}
             animate={{ scale: 1, opacity: 1, filter: 'blur(0px)' }}
             transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
             className={cn(
-              'relative block transition-all duration-500',
-              'drop-shadow-[0_2px_8px_rgba(29,51,112,0.15)] group-hover:drop-shadow-[0_4px_16px_rgba(29,51,112,0.25)]',
+              'relative block overflow-hidden rounded-xl transition-all duration-500',
+              scrolled
+                ? 'shadow-[0_4px_16px_rgba(0,0,0,0.35)]'
+                : 'shadow-[0_10px_40px_rgba(0,0,0,0.45)]',
             )}
           >
             <Image
-              src="/images/brand/logo-navy-header.png"
+              src="/images/brand/logo-header.jpg"
               alt="Hat Naturel Sapanca Bungalov"
-              width={600}
-              height={500}
+              width={240}
+              height={200}
               priority
               className={cn(
                 'block w-auto transition-all duration-500',
-                scrolled ? 'h-20 sm:h-24' : 'h-32 sm:h-40 lg:h-48',
+                scrolled ? 'h-12 sm:h-14' : 'h-16 sm:h-20',
               )}
+            />
+            {/* Shine sweep */}
+            <span
+              aria-hidden
+              className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/35 to-transparent transition-transform duration-1000 ease-out group-hover:translate-x-full"
             />
           </motion.span>
         </Link>
@@ -87,13 +94,13 @@ export function Header({ locale }: HeaderProps): React.ReactElement {
                 key={key}
                 href={fullHref}
                 aria-current={isActive ? 'page' : undefined}
-                className="group relative px-4 py-2 text-sm font-medium text-primary-800 transition-colors hover:text-primary-600"
+                className="group relative px-4 py-2 text-sm font-medium text-white/90 transition-colors hover:text-white"
               >
                 <span className="relative z-10">{t(key)}</span>
                 <span
                   aria-hidden
                   className={cn(
-                    'absolute bottom-0 left-1/2 h-px -translate-x-1/2 bg-primary-600 transition-all duration-300',
+                    'absolute bottom-0 left-1/2 h-px -translate-x-1/2 bg-accent transition-all duration-300',
                     isActive ? 'w-8' : 'w-0 group-hover:w-8',
                   )}
                 />
@@ -101,7 +108,7 @@ export function Header({ locale }: HeaderProps): React.ReactElement {
                   {isActive && (
                     <motion.span
                       layoutId="nav-active-bg"
-                      className="absolute inset-0 -z-0 rounded-full bg-primary-100"
+                      className="absolute inset-0 -z-0 rounded-full bg-white/10"
                       transition={{ type: 'spring', stiffness: 300, damping: 30 }}
                     />
                   )}
@@ -113,11 +120,11 @@ export function Header({ locale }: HeaderProps): React.ReactElement {
 
         {/* Right actions */}
         <div className="flex items-center gap-3">
-          <LanguageSwitcher currentLocale={locale} variant="dark" className="hidden sm:flex" />
+          <LanguageSwitcher currentLocale={locale} className="hidden sm:flex" />
           <ButtonLink
             href={`/${locale}${RESERVATION_HREF}`}
             size="sm"
-            className="hidden md:inline-flex"
+            className="hidden md:inline-flex !bg-white !text-primary-900 hover:!bg-accent hover:!text-primary-900"
           >
             {tCommon('reservation')}
           </ButtonLink>
@@ -126,7 +133,7 @@ export function Header({ locale }: HeaderProps): React.ReactElement {
             aria-label="Menüyü aç"
             aria-expanded={mobileOpen}
             onClick={() => setMobileOpen(true)}
-            className="rounded-full p-2 text-primary-800 hover:bg-primary-50 lg:hidden"
+            className="rounded-full p-2 text-white hover:bg-white/10 lg:hidden"
           >
             <Menu size={22} />
           </button>
