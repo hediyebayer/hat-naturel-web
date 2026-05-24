@@ -5,6 +5,7 @@
  */
 
 export type Amenity =
+  // Mevcut (silinmedi)
   | 'pool'
   | 'bbq'
   | 'swing'
@@ -25,7 +26,22 @@ export type Amenity =
   | 'towels'
   | 'generator'
   | 'heatedPool'
-  | 'sauna';
+  | 'sauna'
+  // YENİ — Hediye'nin verdiği liste
+  | 'jacuzzi'           // 🛁 Jakuzi (üçgen bungalovlarda)
+  | 'sunbed'            // Şezlong (havuz başı)
+  | 'doubleSwing'       // Çift kişilik yataklı salıncak
+  | 'streamingTv'       // 📺 TV + YouTube & Netflix
+  | 'coolingPool'       // 🏊 Özel serinleme havuzu (Mor Köşk için)
+  // Tesis içi olanaklar (ortak)
+  | 'cafe'              // ☕ Kafe
+  | 'parking'           // 🚗 Ücretsiz otopark
+  | 'playground'        // 🎠 Çocuk oyun parkı
+  | 'waterfall'         // 💧 Mini şelale
+  | 'naturalArea'       // 🌿 Geniş doğal alan
+  | 'lakeView'          // 🌊 Göl manzarası
+  | 'privateVeranda'    // 🌳 Özel veranda ve yeşil alan
+  | 'noPets';           // 🐾 Pet kabul edilmiyor
 
 /**
  * Oda kategorisi — tipler. Aynı kategoride birden fazla oda olabilir;
@@ -54,6 +70,8 @@ export interface Room {
     bedrooms: number;
     bathrooms: number;
   };
+  /** Yatak düzeni — örn: 'Asma katta çift kişilik yatak + alt katta çekyat' */
+  bedConfig?: string[];
   amenities: Amenity[];
   images: string[];      // public/images/rooms/<slug>/... yolu
   accentColor: string;   // tailwind class fragment (border / glow)
@@ -114,11 +132,97 @@ export const CATEGORIES: CategoryMeta[] = [
   },
 ];
 
-const COMMON_AMENITIES: Amenity[] = [
-  'bbq', 'swing', 'ac', 'wifi', 'smartTv', 'kitchen', 'toiletries',
-  'waterTank', 'fireExtinguisher', 'security', 'firePit', 'gardenFurniture',
-  'fireplace', 'hairDryer', 'fridge', 'wardrobe', 'towels', 'generator',
+/**
+ * Tesis içi ortak olanaklar — tüm odalarda var
+ */
+const FACILITY_AMENITIES: Amenity[] = [
+  'cafe',
+  'parking',
+  'playground',
+  'waterfall',
+  'naturalArea',
+  'lakeView',
+  'noPets',
 ];
+
+/**
+ * Temel oda donanımı — tüm odalarda var
+ */
+const BASE_ROOM_AMENITIES: Amenity[] = [
+  'ac',
+  'wifi',
+  'streamingTv',
+  'kitchen',
+  'fridge',
+  'hairDryer',
+  'wardrobe',
+  'towels',
+  'toiletries',
+  'waterTank',
+  'fireExtinguisher',
+  'security',
+  'generator',
+];
+
+/**
+ * Dış alan ortak donanımı — tüm odalarda var
+ */
+const OUTDOOR_AMENITIES: Amenity[] = [
+  'bbq',
+  'firePit',
+  'privateVeranda',
+  'gardenFurniture',
+];
+
+/**
+ * Üçgen bungalov özel amenities (ısıtmalı havuz + jakuzi + sauna + şezlong + çift salıncak)
+ */
+const TRIANGLE_BUNGALOW_AMENITIES: Amenity[] = [
+  'heatedPool',
+  'jacuzzi',
+  'sauna',
+  'sunbed',
+  'doubleSwing',
+  ...BASE_ROOM_AMENITIES,
+  ...OUTDOOR_AMENITIES,
+  ...FACILITY_AMENITIES,
+];
+
+/**
+ * 1+1 Köşk amenity'leri (havuzsuz, sade)
+ * Şömine var, klima + mutfak + standart dış donanım
+ */
+const KOSK_1_1_AMENITIES: Amenity[] = [
+  'fireplace',
+  ...BASE_ROOM_AMENITIES,
+  ...OUTDOOR_AMENITIES,
+  ...FACILITY_AMENITIES,
+];
+
+/**
+ * Mor Köşk 2+1 amenity'leri (özel serinleme havuzu + şezlong + çift salıncak + şömine)
+ */
+const MOR_KOSK_AMENITIES: Amenity[] = [
+  'coolingPool',
+  'sunbed',
+  'doubleSwing',
+  'fireplace',
+  ...BASE_ROOM_AMENITIES,
+  ...OUTDOOR_AMENITIES,
+  ...FACILITY_AMENITIES,
+];
+
+/**
+ * Sarı Köşk 2+1 amenity'leri (havuzsuz ama geniş, şömine)
+ */
+const SARI_KOSK_AMENITIES: Amenity[] = [
+  'fireplace',
+  ...BASE_ROOM_AMENITIES,
+  ...OUTDOOR_AMENITIES,
+  ...FACILITY_AMENITIES,
+];
+
+// (Legacy COMMON_AMENITIES kaldırıldı — artık preset'ler kullanılıyor)
 
 export const ROOMS: Room[] = [
   {
@@ -132,7 +236,7 @@ export const ROOMS: Room[] = [
     longDescription:
       'Hat Naturel Resort Sapanca tesisimizin 1+1 standart köşklerinden Bej Köşk, 85 m² genişliğinde salon ve oda yapısıyla size evinizdeki konforu sunar. Doğa manzaralı müstakil yapısı, modern iç tasarımı ve sıcak atmosferiyle çiftler ve küçük aileler için ideal bir kaçamak. Bu köşkümüz havuzsuzdur; ancak tesisin ortak alanlarındaki sosyal imkânlardan tam olarak faydalanabilirsiniz.',
     specs: { area: 85, guests: 2, extraGuests: 3, bedrooms: 1, bathrooms: 1 },
-    amenities: COMMON_AMENITIES,
+    amenities: KOSK_1_1_AMENITIES,
     images: ['01.jpg', '02.jpg', '03.jpg', '04.jpg', '05.jpg', '06.jpg'].map(
       (n) => `/images/rooms/bej/${n}`,
     ),
@@ -151,7 +255,7 @@ export const ROOMS: Room[] = [
     longDescription:
       'Turkuaz Köşk 1+1 evimiz 85 m² genişliğe ve 2 ayrı banyoya sahiptir; bu sayede çiftlere ve yakın arkadaşlara rahat bir tatil deneyimi sunar. Doğanın içinde, modern donanımıyla ev konforu hissini koruyan ideal bir konaklama seçeneği. Köşkümüz havuzsuzdur; tesisin ortak sosyal alanlarından faydalanabilirsiniz.',
     specs: { area: 85, guests: 2, extraGuests: 3, bedrooms: 1, bathrooms: 2 },
-    amenities: COMMON_AMENITIES,
+    amenities: KOSK_1_1_AMENITIES,
     images: ['01.jpg', '02.jpg', '03.jpg', '04.jpg', '05.jpg'].map(
       (n) => `/images/rooms/turkuaz/${n}`,
     ),
@@ -162,15 +266,21 @@ export const ROOMS: Room[] = [
     slug: 'ucgen-1-1',
     name: '1+1 Üçgen Bungalov',
     shortName: '1+1 Üçgen',
-    tagline: 'Isıtmalı havuz + sauna, ikonik üçgen mimari',
+    tagline: 'Isıtmalı havuz + jakuzi + sauna, ikonik üçgen',
     category: 'ucgen-1-1',
     count: 6,
+    bedConfig: [
+      '🛏️ Asma katta çift kişilik yatak',
+      '🛋️ Ortak alanda çift kişilik çekyat',
+      '🛋️ Tek kişilik ek çekyat',
+      '👪 Maksimum 5 kişi konaklayabilir',
+    ],
     description:
       'Tesisin en popüler yapılarından — özel ısıtmalı havuz, sauna ve ikonik üçgen tasarım. Tesisimizde 6 adet bulunur.',
     longDescription:
-      '1+1 Üçgen Bungalov’larımız tesisimizin en çok tercih edilen yapılarındandır ve toplam 6 adet bulunur. İkonik üçgen mimarisi, sıcak ahşap dokuları ve şömineli oda sobasıyla doğanın içinde benzersiz bir atmosfer sunar. **Özel ısıtmalı havuzu ve saunası** sayesinde mevsim fark etmeksizin yıl boyu spa keyfi yaşarsınız. 2 standart + 3 ek olmak üzere 5 kişiye kadar konaklama imkanı sunan bungalov, çiftler ve küçük aileler için ideal — hem fiyat hem konfor olarak avantajlı bir seçim.',
+      '1+1 Üçgen Bungalov’larımız tesisimizin en çok tercih edilen yapılarındandır ve toplam 6 adet bulunur. İkonik üçgen mimarisi ve sıcak ahşap dokularıyla doğanın içinde benzersiz bir atmosfer sunar. **Bungalov içi özel ısıtmalı havuz, jakuzi, sauna** ve havuz başı şezlong + çift kişilik yataklı salıncak ile yıl boyu spa keyfi yaşarsınız. **Yatak düzeni:** Asma katta çift kişilik yatak + ortak alanda çift kişilik çekyat ve tek kişilik çekyat ile maksimum 5 kişi konaklayabilir. Çiftler ve küçük aileler için ideal, hem fiyat hem konfor olarak avantajlı bir seçim.',
     specs: { area: 85, guests: 2, extraGuests: 3, bedrooms: 1, bathrooms: 1 },
-    amenities: ['heatedPool', 'sauna', ...COMMON_AMENITIES],
+    amenities: TRIANGLE_BUNGALOW_AMENITIES,
     images: [
       '01.jpg', '02.jpg', '03.jpg', '04.jpg', '05.jpg',
       '06.jpg', '07.jpg', '08.jpg', '09.jpg', '10.jpg', '11.jpg',
@@ -190,9 +300,9 @@ export const ROOMS: Room[] = [
     description:
       '95 m² genişlikte, 2+1 tasarımıyla ferah ortam — özel yaz havuzlu aile köşkü.',
     longDescription:
-      'Tesisin en dikkat çeken köşklerinden Mor Köşk, 2+1 yapısı ve 95 m² genişliğiyle ferah bir ortam sağlar. Yaz sezonunda kullanıma açılan özel havuzu sayesinde sıcak günlerde ailecek serinleme keyfini bahçenizde yaşayabilirsiniz. Doğanın sessizliği ile ailecek huzurlu bir tatil deneyimi arıyorsanız doğru tercih.',
+      'Tesisin en dikkat çeken köşklerinden Mor Köşk, 2+1 yapısı ve 95 m² genişliğiyle ferah bir ortam sağlar. Yaz sezonunda kullanıma açılan **özel serinleme havuzu**, havuz başı şezlong ve çift kişilik yataklı büyük salıncağı sayesinde sıcak günlerde ailecek serinleme keyfini bahçenizde yaşayabilirsiniz. Şömine konforu ile kış aylarında da aynı sıcak atmosfer; doğanın sessizliği eşliğinde ailecek huzurlu bir tatil deneyimi için ideal tercih.',
     specs: { area: 95, guests: 4, extraGuests: 3, bedrooms: 2, bathrooms: 2 },
-    amenities: ['pool', ...COMMON_AMENITIES],
+    amenities: MOR_KOSK_AMENITIES,
     images: ['01.jpg', '02.jpg', '03.jpg', '04.jpg', '05.jpg', '06.jpg'].map(
       (n) => `/images/rooms/mor/${n}`,
     ),
@@ -211,7 +321,7 @@ export const ROOMS: Room[] = [
     longDescription:
       'Sarı Köşk 2+1 evimiz özel dizayn olarak tasarlanmıştır. Odaların ferahlığı ve yaşamsal genişliğiyle öne çıkan köşkümüz, müstakil yapısı ile sizleri doğa manzarası eşliğinde ağırlar. Doğa manzaralı geniş bahçesinde ailecek unutulmaz anlar yaşayabilirsiniz. Köşkümüz havuzsuzdur; tesisin ortak sosyal alanlarından faydalanabilirsiniz.',
     specs: { area: 95, guests: 4, extraGuests: 3, bedrooms: 2, bathrooms: 2 },
-    amenities: COMMON_AMENITIES,
+    amenities: SARI_KOSK_AMENITIES,
     images: ['01.jpg', '02.jpg', '03.jpg', '04.jpg', '05.jpg'].map(
       (n) => `/images/rooms/sari/${n}`,
     ),
@@ -223,15 +333,15 @@ export const ROOMS: Room[] = [
     slug: 'ucgen-2-1',
     name: '2+1 Üçgen Bungalov',
     shortName: 'Üçgen 2+1',
-    tagline: 'Isıtmalı havuz + sauna, geniş aile için',
+    tagline: 'Isıtmalı havuz + jakuzi + sauna, geniş aile',
     category: 'ucgen-2-1',
     count: 3,
     description:
       '95 m² genişliğinde üçgen mimari 2+1 — özel ısıtmalı havuz, sauna ve geniş aileye rahat yaşam alanı. Tesisimizde 3 adet bulunur.',
     longDescription:
-      'Hat Naturel Resort Sapanca\'da 2+1 Üçgen Bungalov’larımız geniş aile yapısı için tasarlanmıştır ve tesiste toplam 3 adet bulunur. 95 m² büyüklüğünde tam bir aileye rahatça yaşam alanı sunan bungalovlarımız doğa manzaralıdır. **Özel ısıtmalı havuz ve sauna** ile her mevsim spa keyfi yaşanır. İkonik üçgen mimarisi ile fotoğraflık bir atmosfer yaratır; her biri benzer iç tasarım ve donanıma sahiptir.',
+      'Hat Naturel Resort Sapanca\'da 2+1 Üçgen Bungalov’larımız geniş aile yapısı için tasarlanmıştır ve tesiste toplam 3 adet bulunur. 95 m² büyüklüğünde tam bir aileye rahatça yaşam alanı sunan bungalovlarımız doğa manzaralıdır. **Bungalov içi özel ısıtmalı havuz, jakuzi, sauna**, havuz başı şezlong ve çift kişilik yataklı salıncak ile her mevsim spa keyfi yaşanır. İkonik üçgen mimarisi ile fotoğraflık bir atmosfer yaratır; her biri benzer iç tasarım ve donanıma sahiptir.',
     specs: { area: 95, guests: 4, extraGuests: 3, bedrooms: 2, bathrooms: 1 },
-    amenities: ['heatedPool', 'sauna', ...COMMON_AMENITIES],
+    amenities: TRIANGLE_BUNGALOW_AMENITIES,
     images: ['01.jpg', '02.jpg', '03.jpg', '04.jpg', '05.jpg'].map(
       (n) => `/images/rooms/ucgen-2-1/${n}`,
     ),
@@ -268,25 +378,49 @@ export const AMENITY_META: Record<
   Amenity,
   { label: string; labelEn: string; icon: string }
 > = {
+  // Bungalov içi — havuz/sauna/jakuzi grup
   pool:             { label: 'Havuz (yaz sezonu)',   labelEn: 'Pool (summer)',    icon: 'Waves' },
-  heatedPool:       { label: 'Isıtmalı Havuz',         labelEn: 'Heated Pool',      icon: 'Waves' },
+  heatedPool:       { label: 'Isıtmalı Özel Havuz',   labelEn: 'Heated Pool',      icon: 'Waves' },
+  coolingPool:      { label: 'Özel Serinleme Havuzu', labelEn: 'Cooling Pool',     icon: 'Waves' },
   sauna:            { label: 'Sauna',                  labelEn: 'Sauna',            icon: 'Flame' },
-  bbq:              { label: 'Barbekü Mangal',       labelEn: 'BBQ Grill',        icon: 'Flame' },
-  swing:            { label: 'Salıncak',              labelEn: 'Swing',            icon: 'Baby' },
+  jacuzzi:          { label: 'Jakuzi',                 labelEn: 'Jacuzzi',          icon: 'Bath' },
+  sunbed:           { label: 'Şezlong',                labelEn: 'Sunbeds',          icon: 'Sun' },
+  doubleSwing:      { label: 'Çift Kişilik Salıncak', labelEn: 'Double Swing',     icon: 'Heart' },
+  swing:            { label: 'Çocuk Salıncakı',        labelEn: 'Kids Swing',       icon: 'Baby' },
+
+  // Bungalov içi — oda donanımı
   ac:               { label: 'Klima',                 labelEn: 'Air Conditioning', icon: 'Wind' },
-  wifi:             { label: 'Ücretsiz WiFi',         labelEn: 'Free WiFi',        icon: 'Wifi' },
+  wifi:             { label: 'Ücretsiz Wi-Fi',        labelEn: 'Free Wi-Fi',       icon: 'Wifi' },
   smartTv:          { label: 'Akıllı TV',             labelEn: 'Smart TV',         icon: 'Tv' },
+  streamingTv:      { label: 'TV (YouTube & Netflix)', labelEn: 'TV (YouTube & Netflix)', icon: 'Tv' },
   kitchen:          { label: 'Tam Donanımlı Mutfak',  labelEn: 'Full Kitchen',     icon: 'ChefHat' },
+  fridge:           { label: 'Buzdolabı',             labelEn: 'Refrigerator',     icon: 'Refrigerator' },
+  fireplace:        { label: 'Şömine',                labelEn: 'Fireplace',        icon: 'Flame' },
+  hairDryer:        { label: 'Saç Kurutma Makinesi',  labelEn: 'Hair Dryer',       icon: 'Wind' },
+  wardrobe:         { label: 'Elbise Dolabı',         labelEn: 'Wardrobe',         icon: 'Shirt' },
+  towels:           { label: 'Banyo Havlusu',         labelEn: 'Bath Towels',      icon: 'Bath' },
   toiletries:       { label: 'Buklet Malzemeleri',    labelEn: 'Toiletries',       icon: 'SprayCan' },
+
+  // Dış alan & çevre
+  bbq:              { label: 'Mangal Ekipmanları',    labelEn: 'BBQ Equipment',    icon: 'Flame' },
+  firePit:          { label: 'Ateş Çukuru',           labelEn: 'Fire Pit',         icon: 'Flame' },
+  privateVeranda:   { label: 'Özel Veranda & Bahçe',  labelEn: 'Private Veranda',  icon: 'TreePine' },
+  gardenFurniture:  { label: 'Bahçe Mobilyası',       labelEn: 'Garden Furniture', icon: 'Armchair' },
+  lakeView:         { label: 'Göl Manzarası',          labelEn: 'Lake View',         icon: 'Mountain' },
+
+  // Güvenlik & altyapı
   waterTank:        { label: 'Su Deposu',             labelEn: 'Water Tank',       icon: 'Droplet' },
   fireExtinguisher: { label: 'Yangın Tüpü',           labelEn: 'Fire Extinguisher',icon: 'CircleAlert' },
   security:         { label: '7/24 Güvenlik Kamerası',labelEn: '24/7 Security',    icon: 'ShieldCheck' },
-  firePit:          { label: 'Ateş Çukuru',           labelEn: 'Fire Pit',         icon: 'Flame' },
-  gardenFurniture:  { label: 'Bahçe Mobilyası',       labelEn: 'Garden Furniture', icon: 'Armchair' },
-  fireplace:        { label: 'Şömineli Odun Sobası',  labelEn: 'Wood Stove',       icon: 'Flame' },
-  hairDryer:        { label: 'Saç Kurutma Makinesi',  labelEn: 'Hair Dryer',       icon: 'Wind' },
-  fridge:           { label: 'Buzdolabı',             labelEn: 'Refrigerator',     icon: 'Refrigerator' },
-  wardrobe:         { label: 'Elbise Dolabı',         labelEn: 'Wardrobe',         icon: 'Shirt' },
-  towels:           { label: 'Banyo Havlusu',         labelEn: 'Bath Towels',      icon: 'Bath' },
   generator:        { label: 'Jeneratör',              labelEn: 'Generator',        icon: 'Zap' },
+
+  // Tesis içi ortak olanaklar
+  cafe:             { label: 'Tesis Kafesi',          labelEn: 'On-site Cafe',     icon: 'Coffee' },
+  parking:          { label: 'Ücretsiz Otopark',      labelEn: 'Free Parking',     icon: 'Car' },
+  playground:       { label: 'Çocuk Oyun Parkı',      labelEn: 'Playground',       icon: 'PartyPopper' },
+  waterfall:        { label: 'Mini Şelale',            labelEn: 'Mini Waterfall',   icon: 'Droplets' },
+  naturalArea:      { label: 'Geniş Doğal Alan',      labelEn: 'Wide Natural Area',icon: 'TreePine' },
+
+  // Politika
+  noPets:           { label: 'Evcil Hayvan Kabul Edilmiyor', labelEn: 'No Pets Allowed', icon: 'Ban' },
 };

@@ -156,6 +156,28 @@ export default function RoomDetailPage({ params }: PageProps) {
                 {room.longDescription}
               </p>
 
+              {/* Yatak Düzeni / Kapasite Bilgisi (varsa) */}
+              {room.bedConfig && room.bedConfig.length > 0 && (
+                <div className="mt-8 rounded-2xl border border-primary-200 bg-gradient-to-br from-primary-50 to-white p-6">
+                  <div className="mb-3 flex items-center gap-2">
+                    <span className="text-2xl animate-bounce-slow">🛏️</span>
+                    <h3 className="font-serif text-lg font-bold text-primary-900">
+                      Yatak Düzeni & Kapasite
+                    </h3>
+                  </div>
+                  <ul className="space-y-2">
+                    {room.bedConfig.map((line, i) => (
+                      <li
+                        key={i}
+                        className="flex items-start gap-2 text-sm text-primary-900"
+                      >
+                        <span>{line}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
               <div className="mt-8 rounded-2xl border-l-4 border-primary-500 bg-primary-50/60 p-5">
                 <p className="text-sm text-primary-900">
                   💡 <strong>İpucu:</strong> Hafta içi tarihler daha sakin ve daha

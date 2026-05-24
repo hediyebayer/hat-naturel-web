@@ -4,7 +4,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Waves, Flame, ArrowRight, Users, Bed, Bath } from 'lucide-react';
+import { Waves, Flame, ArrowRight, Users, Bed, Bath, Bath as BathIcon } from 'lucide-react';
 import { ROOMS, type Room } from '@/lib/data/rooms';
 
 interface RoomGridDisplayProps {
@@ -60,7 +60,9 @@ function RoomDisplayCard({
   index: number;
 }) {
   const hasHeatedPool = room.amenities.includes('heatedPool');
+  const hasCoolingPool = room.amenities.includes('coolingPool');
   const hasSauna = room.amenities.includes('sauna');
+  const hasJacuzzi = room.amenities.includes('jacuzzi');
   const hasSummerPool = room.amenities.includes('pool');
   const count = room.count ?? 1;
 
@@ -111,13 +113,25 @@ function RoomDisplayCard({
                 Isıtmalı Havuz
               </span>
             )}
+            {hasJacuzzi && (
+              <span className="inline-flex items-center gap-1 rounded-full border border-violet-300/60 bg-gradient-to-r from-violet-500 to-fuchsia-500 px-2.5 py-1 text-[10px] font-bold text-white shadow-[0_0_15px_rgba(168,85,247,0.5)] backdrop-blur-md">
+                <BathIcon className="h-2.5 w-2.5" />
+                Jakuzi
+              </span>
+            )}
             {hasSauna && (
               <span className="inline-flex items-center gap-1 rounded-full border border-orange-400/60 bg-gradient-to-r from-orange-500 to-red-500 px-2.5 py-1 text-[10px] font-bold text-white shadow-[0_0_15px_rgba(251,146,60,0.6)] backdrop-blur-md">
                 <Flame className="h-2.5 w-2.5" />
                 Sauna
               </span>
             )}
-            {hasSummerPool && !hasHeatedPool && (
+            {hasCoolingPool && (
+              <span className="inline-flex items-center gap-1 rounded-full border border-cyan-300/50 bg-gradient-to-r from-cyan-400 to-teal-500 px-2.5 py-1 text-[10px] font-bold text-white shadow-[0_0_12px_rgba(127,229,245,0.5)] backdrop-blur-md">
+                <Waves className="h-2.5 w-2.5" />
+                Serinleme Havuzu
+              </span>
+            )}
+            {hasSummerPool && !hasHeatedPool && !hasCoolingPool && (
               <span className="inline-flex items-center gap-1 rounded-full border border-cyan-300/50 bg-cyan-500/90 px-2.5 py-1 text-[10px] font-bold text-white shadow-[0_0_12px_rgba(127,229,245,0.5)] backdrop-blur-md">
                 <Waves className="h-2.5 w-2.5" />
                 Yaz Havuzlu
