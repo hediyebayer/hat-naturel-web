@@ -1,87 +1,124 @@
 'use client';
 
 import Image from 'next/image';
-import { motion } from 'framer-motion';
-import { ROOMS } from '@/lib/data/rooms';
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { useEffect, useRef } from 'react';
 import { StarryBackground } from './starry-background';
 
 export function RoomsHero() {
-  // Use 3 hero images
-  const collage = [
-    ROOMS.find((r) => r.slug === 'mor')?.images[0] || '/images/hero-1.jpg',
-    ROOMS.find((r) => r.slug === 'ucgen-2-1')?.images[0] || '/images/hero-2.jpg',
-    ROOMS.find((r) => r.slug === 'sari')?.images[0] || '/images/hero-3.jpg',
-  ];
+  // Mouse parallax — aerial image moves subtly with cursor
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  // Smooth spring physics for natural movement
+  const springConfig = { damping: 30, stiffness: 80, mass: 1 };
+  const springX = useSpring(mouseX, springConfig);
+  const springY = useSpring(mouseY, springConfig);
+
+  // Image moves opposite to cursor (parallax depth effect)
+  // Range: -25px to +25px on each axis
+  const imageX = useTransform(springX, [-1, 1], [25, -25]);
+  const imageY = useTransform(springY, [-1, 1], [15, -15]);
+
+  // Scale slightly so edges don't show during parallax movement
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!sectionRef.current) return;
+      const rect = sectionRef.current.getBoundingClientRect();
+      // Normalize: -1 (left/top) to +1 (right/bottom)
+      const x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+      const y = ((e.clientY - rect.top) / rect.height) * 2 - 1;
+      mouseX.set(x);
+      mouseY.set(y);
+    };
+
+    // Listen on document for smooth tracking even outside section
+    document.addEventListener('mousemove', handleMouseMove);
+    return () => document.removeEventListener('mousemove', handleMouseMove);
+  }, [mouseX, mouseY]);
 
   return (
-    <section className="relative isolate overflow-hidden bg-[#0B132B] pt-32 pb-24 text-white md:pt-40 md:pb-32">
-      <StarryBackground />
-      
-      {/* Animated blurred backdrop using room images */}
-      <div className="pointer-events-none absolute inset-0 -z-10 mix-blend-screen opacity-20">
-        {collage.map((src, i) => (
-          <motion.div
-            key={src}
-            initial={{ opacity: 0, scale: 1.1 }}
-            animate={{ opacity: 0.8, scale: 1 }}
-            transition={{ duration: 3, delay: i * 0.4, ease: 'easeOut' }}
-            className="absolute inset-0"
-            style={{
-              clipPath: ['inset(0 66% 0 0)', 'inset(0 33% 0 33%)', 'inset(0 0 0 66%)'][i],
-            }}
-          >
-            <Image src={src} alt="" fill priority className="object-cover blur-[8px]" sizes="100vw" />
-          </motion.div>
-        ))}
-        {/* Night veil gradient */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0B132B] via-[#0B132B]/80 to-transparent" />
-      </div>
+    <section
+      ref={sectionRef}
+      className="relative isolate flex min-h-[88vh] items-center justify-center overflow-hidden bg-[#07091a] pt-32 pb-24 text-white md:pt-40 md:pb-32"
+    >
+      {/* Layer 1: Aerial night photo with mouse parallax */}
+      <motion.div
+        className="pointer-events-none absolute inset-0 z-0"
+        style={{ x: imageX, y: imageY, scale: 1.08 }}
+      >
+        <Image
+          src="/images/hero/aerial-night.png"
+          alt="Hat Naturel Resort - kuş bakışı gece görünümü"
+          fill
+          priority
+          quality={85}
+          className="object-cover"
+          sizes="100vw"
+        />
+        {/* Dark gradient overlay — make text readable */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#07091a]/60 via-[#0B132B]/50 to-[#0B132B]/95" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,rgba(7,9,26,0.7)_100%)]" />
+      </motion.div>
 
-      <div className="relative z-10 mx-auto max-w-5xl px-4 text-center sm:px-6">
+      {/* Layer 2: Animated stars (on top of aerial, below text) */}
+      <StarryBackground />
+
+      {/* Layer 3: Hero text content */}
+      <div className="relative z-20 mx-auto max-w-5xl px-4 text-center sm:px-6">
         <motion.span
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
-          className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-medium uppercase tracking-[0.2em] text-white/80 backdrop-blur-md"
+          className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-5 py-2 text-xs font-medium uppercase tracking-[0.25em] text-white/85 backdrop-blur-md shadow-[0_0_30px_rgba(212,175,55,0.08)]"
         >
-          ✨ Hat Naturel Resort
+          <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
+          Hat Naturel Resort · Sapanca
         </motion.span>
 
         <motion.h1
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.1 }}
-          className="mt-8 font-serif text-5xl font-bold leading-tight tracking-tight md:text-7xl"
+          transition={{ duration: 0.9, delay: 0.15, ease: [0.25, 1, 0.5, 1] }}
+          className="mt-10 font-serif text-5xl font-bold leading-[1.05] tracking-tight md:text-7xl lg:text-8xl"
         >
-          <span className="italic font-light text-accent/90">Sapanca&apos;nın</span> Sessiz Köşeleri
+          <span className="block font-light italic text-accent/95 drop-shadow-[0_2px_20px_rgba(212,175,55,0.3)]">
+            Sapanca&apos;nın
+          </span>
+          <span className="mt-2 block text-white drop-shadow-[0_4px_30px_rgba(0,0,0,0.5)]">
+            Sessiz Köşeleri
+          </span>
         </motion.h1>
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          className="mx-auto mt-8 max-w-2xl font-sans text-base text-white/70 tracking-[0.02em] md:text-lg leading-relaxed"
+          transition={{ duration: 0.8, delay: 0.5 }}
+          className="mx-auto mt-10 max-w-2xl font-sans text-base text-white/75 tracking-[0.02em] md:text-lg leading-relaxed"
         >
-          Her biri farklı, her biri müstakil — doğa içinde 8 özel evinizden birini seçin, gerisi sadece huzur.
+          Doğa içinde müstakil bungalov ve köşkler — kapıyı kapattığınızda
+          sadece doğa, sessizlik ve Sapanca kalır.
         </motion.p>
 
-        {/* Minimalist chips inline instead of heavy stats strip */}
+        {/* Scroll indicator */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-          className="mx-auto mt-12 flex flex-wrap justify-center gap-3"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 1.2 }}
+          className="absolute -bottom-24 left-1/2 -translate-x-1/2"
         >
-          {['8 Müstakil Ev', '4 Farklı Konsept', '85–95 m² Yaşam Alanı'].map((stat, i) => (
-            <span key={i} className="inline-flex items-center rounded-full border border-accent/30 bg-accent/5 px-4 py-1.5 text-sm font-medium text-accent/90 backdrop-blur-sm shadow-[0_0_15px_rgba(212,175,55,0.05)]">
-              {stat}
-            </span>
-          ))}
+          <div className="flex flex-col items-center gap-2 text-white/40">
+            <span className="text-[10px] uppercase tracking-[0.3em]">Keşfet</span>
+            <motion.div
+              animate={{ y: [0, 8, 0] }}
+              transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+              className="h-8 w-[1px] bg-gradient-to-b from-accent/60 to-transparent"
+            />
+          </div>
         </motion.div>
       </div>
-      
-      {/* Soft gradient bottom edge instead of wave */}
-      <div className="absolute bottom-0 left-0 h-32 w-full bg-gradient-to-b from-transparent to-[#0B132B]" />
     </section>
   );
 }

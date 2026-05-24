@@ -2,6 +2,77 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ============================================
+   STARRY NIGHT ANIMATIONS
+   (Raw CSS — guarantees keyframes exist even
+    when used only via inline style)
+   ============================================ */
+@keyframes twinkle {
+  0%, 100% {
+    opacity: 0.15;
+    transform: scale(0.9);
+  }
+  50% {
+    opacity: 0.95;
+    transform: scale(1.25);
+  }
+}
+
+@keyframes twinkle-bright {
+  0%, 100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.4);
+  }
+}
+
+@keyframes meteor {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(-22deg);
+    opacity: 0;
+  }
+  3% {
+    opacity: 1;
+  }
+  20% {
+    opacity: 1;
+  }
+  40%, 100% {
+    transform: translate3d(140vw, 60vh, 0) rotate(-22deg);
+    opacity: 0;
+  }
+}
+
+@keyframes float-drift {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(20px, -15px, 0);
+  }
+}
+
+@keyframes led-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 40px 8px rgba(212, 175, 55, 0.15);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
