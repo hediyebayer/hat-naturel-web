@@ -34,7 +34,7 @@ export function RoomsHero() {
   return (
     <section
       ref={sectionRef}
-      className="relative isolate flex min-h-[88vh] items-center justify-center overflow-hidden bg-[#07091a] pt-32 pb-24 text-white md:pt-40 md:pb-32"
+      className="relative isolate flex min-h-[88vh] items-center justify-center overflow-hidden bg-[#0a1330] pt-32 pb-24 text-white md:pt-40 md:pb-32"
     >
       {/* Real aerial night photo with mouse parallax */}
       <motion.div
@@ -51,7 +51,7 @@ export function RoomsHero() {
           sizes="100vw"
         />
         {/* Dark gradient overlay — readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#07091a]/55 via-[#0B132B]/45 to-[#0B132B]/85" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0a1330]/55 via-[#0a1330]/45 to-[#0a1330]/85" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_25%,rgba(7,9,26,0.75)_100%)]" />
       </motion.div>
 

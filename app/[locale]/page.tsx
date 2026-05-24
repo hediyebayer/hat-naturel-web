@@ -28,17 +28,17 @@ export default function HomePage({
       {/* About / Neden Hat Naturel — 'Doğanın Yanı Başında Bir Mola' */}
       <AboutSection />
 
-      {/* Featured rooms */}
-      <section className="bg-white py-20">
+      {/* Featured rooms — lacivert zemin, beyaz text */}
+      <section className="bg-primary-900 py-20 text-white">
         <Container size="xl">
           <div className="text-center">
-            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-primary-600">
+            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-white/70">
               Konaklama
             </span>
-            <Heading level={2} className="mt-2">
+            <Heading level={2} className="mt-2 !text-white">
               {t('roomsTitle')}
             </Heading>
-            <Text muted className="mt-3">
+            <Text className="mt-3 !text-white/80">
               {t('roomsSubtitle')}
             </Text>
           </div>
@@ -57,8 +57,9 @@ export default function HomePage({
               href={`/${params.locale}/odalar`}
               variant="outline"
               size="lg"
+              className="!border-white/60 !text-white hover:!bg-white hover:!text-primary-900"
             >
-Tüm Bungalov & Köşkleri Gör →
+              Tüm Bungalov & Köşkleri Gör →
             </ButtonLink>
           </div>
         </Container>
