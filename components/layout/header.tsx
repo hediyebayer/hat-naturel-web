@@ -41,30 +41,67 @@ export function Header({ locale }: HeaderProps): React.ReactElement {
       )}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
-        {/* Logo — animated shine */}
+        {/* Logo — premium glow + glassmorphism + cinematic reveal */}
         <Link
           href={`/${locale}`}
           aria-label="Hat Naturel Sapanca Bungalov — Anasayfa"
-          className="group relative flex items-center gap-3"
+          className="group relative flex items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-primary-900 rounded-2xl"
         >
-          <span className="relative block overflow-hidden rounded-xl">
-            <Image
-              src="/images/brand/logo-header.jpg"
-              alt="Hat Naturel Sapanca Bungalov"
-              width={240}
-              height={200}
-              priority
-              className={cn(
-                'block w-auto transition-all duration-500',
-                scrolled ? 'h-10' : 'h-12 sm:h-14',
-              )}
-            />
-            {/* Shine effect — hover'da soldan sağa parlama */}
+          {/* Ambient breathing glow (arka katman, motion-safe) */}
+          <motion.span
+            aria-hidden
+            className="pointer-events-none absolute -inset-3 -z-10 rounded-3xl bg-accent/10 blur-2xl motion-reduce:hidden"
+            animate={{
+              opacity: scrolled ? [0.25, 0.4, 0.25] : [0.35, 0.55, 0.35],
+              scale: [1, 1.05, 1],
+            }}
+            transition={{
+              repeat: Infinity,
+              duration: 4.5,
+              ease: 'easeInOut',
+            }}
+          />
+
+          {/* Glass çerçeve — cinematic reveal */}
+          <motion.div
+            initial={{ scale: 0.92, opacity: 0, filter: 'blur(8px)' }}
+            animate={{ scale: 1, opacity: 1, filter: 'blur(0px)' }}
+            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
+            className={cn(
+              'relative rounded-2xl p-1 transition-all duration-500',
+              'bg-gradient-to-br from-white/12 via-white/5 to-transparent',
+              'backdrop-blur-xl ring-1 ring-inset ring-white/20',
+              scrolled
+                ? 'shadow-[0_2px_12px_rgba(0,0,0,0.25)]'
+                : 'shadow-[0_8px_32px_rgba(0,0,0,0.35),0_0_60px_rgba(212,175,55,0.18)]',
+            )}
+          >
+            {/* Hover'da görünür altın iç parıltı */}
             <span
               aria-hidden
-              className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-1000 ease-out group-hover:translate-x-full"
+              className="pointer-events-none absolute -inset-px rounded-2xl bg-gradient-to-br from-accent/25 via-accent/5 to-transparent opacity-0 transition-opacity duration-700 group-hover:opacity-100"
             />
-          </span>
+
+            {/* Logo görsel container */}
+            <span className="relative block overflow-hidden rounded-xl">
+              <Image
+                src="/images/brand/logo-header.jpg"
+                alt="Hat Naturel Sapanca Bungalov"
+                width={240}
+                height={200}
+                priority
+                className={cn(
+                  'block w-auto transition-all duration-500',
+                  scrolled ? 'h-10' : 'h-12 sm:h-14',
+                )}
+              />
+              {/* Shine sweep — hover'da soldan sağa beyaz parlama */}
+              <span
+                aria-hidden
+                className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/35 to-transparent transition-transform duration-1000 ease-out group-hover:translate-x-full"
+              />
+            </span>
+          </motion.div>
         </Link>
 
         {/* Desktop nav — animated underline */}
@@ -86,7 +123,6 @@ export function Header({ locale }: HeaderProps): React.ReactElement {
                 className="group relative px-4 py-2 text-sm font-medium text-white/90 transition-colors hover:text-white"
               >
                 <span className="relative z-10">{t(key)}</span>
-                {/* Animated underline */}
                 <span
                   aria-hidden
                   className={cn(
@@ -94,7 +130,6 @@ export function Header({ locale }: HeaderProps): React.ReactElement {
                     isActive ? 'w-8' : 'w-0 group-hover:w-8',
                   )}
                 />
-                {/* Hover halo */}
                 <AnimatePresence>
                   {isActive && (
                     <motion.span
