@@ -129,7 +129,7 @@ export function AboutSection() {
         >
           &ldquo;Sizin köşeniz hazır.{' '}
           <span className="text-accent-dark">
-            Bir tarih seçin, gerisini biz düşünelim.
+            Bir tarih seçin, gerisini biz halledelim.
           </span>
           &rdquo;
         </motion.p>
