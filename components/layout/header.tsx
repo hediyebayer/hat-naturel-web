@@ -31,10 +31,10 @@ export function Header({ locale }: HeaderProps): React.ReactElement {
   return (
     <header
       className={cn(
-        'sticky top-0 z-40 w-full bg-white/95 backdrop-blur-md transition-shadow duration-300',
+        'sticky top-0 z-40 w-full bg-white transition-shadow duration-300',
         scrolled
-          ? 'shadow-soft border-b border-neutral-200/60'
-          : 'border-b border-transparent',
+          ? 'shadow-soft border-b border-neutral-200'
+          : 'border-b border-neutral-100',
       )}
     >
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
