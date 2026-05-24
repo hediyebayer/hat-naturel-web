@@ -83,6 +83,8 @@
     "messagePlaceholder": "Sorunuzu veya isteğinizi buraya yazın...",
     "error": "Gönderim başarısız oldu, lütfen tekrar deneyin.",
     "heroLead": "Sorularınız, rezervasyon talepleriniz veya öneri ve şikayetleriniz için bizimle iletişime geçin. En kısa sürede dönüş yapacağız.",
+    "heroLeadShort": "Bize Ulaşın",
+    "quickResponse": "Genellikle 1 saat içinde yanıtlıyoruz",
     "reachUs": "Bize Ulaşın",
     "reachUsLead": "Tek bir mesajla başlayın, gerisini biz halledelim.",
     "whatsappTitle": "Hızlı iletişim",

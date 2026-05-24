@@ -83,6 +83,8 @@
     "messagePlaceholder": "Type your question or request here...",
     "error": "Sending failed, please try again.",
     "heroLead": "Reach out for questions, reservations or feedback — we'll reply as soon as possible.",
+    "heroLeadShort": "Get in Touch",
+    "quickResponse": "We usually reply within 1 hour",
     "reachUs": "Get in Touch",
     "reachUsLead": "Start with a single message, we'll handle the rest.",
     "whatsappTitle": "Quick contact",
