@@ -91,9 +91,8 @@ export function RoomsHero() {
           transition={{ duration: 0.8, delay: 0.5 }}
           className="mx-auto mt-10 max-w-2xl font-sans text-base text-white/85 tracking-[0.02em] md:text-lg leading-relaxed"
         >
-          Her biri özenle konumlandırılmış müstakil bungalovlarımızda; ailenize
-          ait özel bir alanda, doğanın sessizliğiyle baş başa unutulmaz bir
-          tatil yaşayın.
+          Doğa ve manzara eşliğinde, size özel müstakil bungalovlarımızda
+          huzur dolu tatil ve unutulmaz anlar sizi bekliyor.
         </motion.p>
 
         {/* Scroll indicator */}
