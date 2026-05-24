@@ -98,7 +98,10 @@ export const ROOMS: Room[] = [
       'Üçgen 1+1 evlerimiz tesisin en çok tercih edilen yapılarındandır. Ikonik üçgen mimarisi, sıcak ahşap dokuları ve şömineli oda sobasıyla doğanın içinde benzersiz bir atmosfer sunar. Küçük aile yapısına uygun, hem fiyat hem konfor olarak avantajlı bir seçim.',
     specs: { area: 85, guests: 2, extraGuests: 3, bedrooms: 1, bathrooms: 1 },
     amenities: COMMON_AMENITIES,
-    images: ['01.jpg', '02.jpg', '03.jpg', '04.jpg', '05.jpg'].map(
+    images: [
+      '01.jpg', '02.jpg', '03.jpg', '04.jpg', '05.jpg',
+      '06.jpg', '07.jpg', '08.jpg', '09.jpg', '10.jpg', '11.jpg',
+    ].map(
       (n) => `/images/rooms/ucgen-1-1/${n}`,
     ),
     accentColor: 'from-orange-300/40 via-amber-200/20 to-transparent',
