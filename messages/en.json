@@ -132,7 +132,18 @@
   "gallery": {
     "title": "Gallery",
     "subtitle": "Moments from our resort and rooms",
-    "all": "All"
+    "badge": "Visual Journey",
+    "heroTitle": "Moments from",
+    "heroTitleItalic": "Nature",
+    "heroLead": "A curated selection of drone and ground shots — discover our resort from every angle.",
+    "all": "All",
+    "drone": "Drone",
+    "ground": "Ground",
+    "viewLarger": "View",
+    "close": "Close",
+    "previous": "Previous",
+    "next": "Next",
+    "imageOf": "{current} / {total}"
   },
   "virtualTour": {
     "title": "360° Virtual Tour",

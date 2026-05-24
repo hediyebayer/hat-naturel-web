@@ -132,7 +132,18 @@
   "gallery": {
     "title": "Galeri",
     "subtitle": "Tesisimizden ve odalarımızdan kareler",
-    "all": "Tümü"
+    "badge": "Görsel Yolculuk",
+    "heroTitle": "Doğadan",
+    "heroTitleItalic": "Kareler",
+    "heroLead": "Drone ve yer çekimlerinden oluşan seçki — tesisimizi her açıdan keşfedin.",
+    "all": "Tümü",
+    "drone": "Drone",
+    "ground": "Yer Çekimleri",
+    "viewLarger": "Büyüt",
+    "close": "Kapat",
+    "previous": "Önceki",
+    "next": "Sonraki",
+    "imageOf": "{current} / {total}"
   },
   "virtualTour": {
     "title": "360° Sanal Tur",
