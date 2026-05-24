@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { unstable_setRequestLocale } from 'next-intl/server';
 import { Coffee, Clock, Sun, Infinity as InfinityIcon } from 'lucide-react';
@@ -152,19 +153,28 @@ function RestoranHero(): React.ReactElement {
 
   return (
     <section className="relative isolate overflow-hidden bg-primary-900 pb-20 pt-32 text-white md:pb-28 md:pt-40">
-      {/* Layer 1: lacivert gradient base */}
+      {/* Layer 0: Background kahvaltı fotoğrafı — yavaş Ken Burns zoom */}
+      <Image
+        src="/images/restoran/hero-kahvalti.jpg"
+        alt=""
+        fill
+        priority
+        sizes="100vw"
+        className="-z-20 object-cover motion-safe:animate-[heroZoom_20s_ease-out_infinite_alternate]"
+      />
+      {/* Layer 1: dark overlay — okunabilirlik */}
       <div
         aria-hidden
         className="absolute inset-0 -z-10"
         style={{
           background:
-            'linear-gradient(135deg, #07091a 0%, #0a1330 40%, #2a1a3e 100%)',
+            'linear-gradient(135deg, rgba(7,9,26,0.85) 0%, rgba(10,19,48,0.75) 50%, rgba(42,26,62,0.80) 100%)',
         }}
       />
       {/* Layer 2: sunrise glow — bottom amber */}
       <div
         aria-hidden
-        className="absolute inset-x-0 bottom-0 -z-10 h-1/2 bg-gradient-to-t from-amber-500/15 via-amber-300/5 to-transparent"
+        className="absolute inset-x-0 bottom-0 -z-10 h-1/2 bg-gradient-to-t from-amber-500/20 via-amber-300/5 to-transparent"
       />
       {/* Layer 3: pulsing sun — sağ üst */}
       <div
@@ -172,19 +182,14 @@ function RestoranHero(): React.ReactElement {
         className="absolute -right-20 top-20 -z-10 h-64 w-64 animate-pulse rounded-full blur-3xl"
         style={{
           background:
-            'radial-gradient(circle, rgba(251,191,36,0.3) 0%, rgba(252,211,77,0.1) 50%, transparent 100%)',
+            'radial-gradient(circle, rgba(251,191,36,0.35) 0%, rgba(252,211,77,0.12) 50%, transparent 100%)',
           animationDuration: '4s',
         }}
       />
-      {/* Layer 4: dot pattern */}
+      {/* Layer 4: vinyet — kenarları koyulaştır */}
       <div
         aria-hidden
-        className="absolute inset-0 -z-10 opacity-20 [background-image:radial-gradient(rgba(255,255,255,0.15)_1px,transparent_1px)] [background-size:32px_32px]"
-      />
-      {/* Layer 5: vinyet */}
-      <div
-        aria-hidden
-        className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,transparent_30%,rgba(7,9,26,0.6)_100%)]"
+        className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,transparent_30%,rgba(7,9,26,0.7)_100%)]"
       />
 
       <Container>

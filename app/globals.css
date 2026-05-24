@@ -3,6 +3,18 @@
 @tailwind utilities;
 
 /* ============================================
+   HERO BACKGROUND ZOOM (Ken Burns)
+   ============================================ */
+@keyframes heroZoom {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.08);
+  }
+}
+
+/* ============================================
    STARRY NIGHT ANIMATIONS
    (Raw CSS — guarantees keyframes exist even
     when used only via inline style)
