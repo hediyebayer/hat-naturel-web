@@ -76,7 +76,7 @@ export function RoomsHero() {
           transition={{ duration: 0.9, delay: 0.15, ease: [0.25, 1, 0.5, 1] }}
           className="mt-10 font-serif text-4xl font-bold leading-[1.2] tracking-tight md:text-6xl lg:text-[5.5rem]"
         >
-          <span className="block bg-gradient-to-r from-accent-light via-accent to-accent-light bg-clip-text pb-2 font-bold italic text-transparent drop-shadow-[0_4px_30px_rgba(212,175,55,0.4)]">
+          <span className="block pb-2 font-bold italic text-white drop-shadow-[0_4px_30px_rgba(0,0,0,0.5)]">
             Aileye Özel,
           </span>
           <span className="mt-3 block pb-2 font-light text-white/95 drop-shadow-[0_2px_20px_rgba(0,0,0,0.5)]">
