@@ -6,7 +6,7 @@ import { ButtonLink } from '@/components/ui/button';
 import { ROOMS, getRoomBySlug, getRelatedRooms } from '@/lib/data/rooms';
 import { RoomGallery } from '@/components/rooms/room-gallery';
 import { AmenityList } from '@/components/rooms/amenity-list';
-import { RoomCard } from '@/components/rooms/room-card';
+import { RoomDisplayCard } from '@/components/rooms/room-grid-display';
 import { RESERVATION_HREF } from '@/lib/constants';
 import {
   Maximize2,
@@ -203,8 +203,8 @@ export default function RoomDetailPage({ params }: PageProps) {
         </Container>
       </section>
 
-      {/* RELATED ROOMS */}
-      <section className="bg-neutral-100 py-16 md:py-20">
+      {/* RELATED ROOMS — odalar sayfasıyla aynı görünüm */}
+      <section className="bg-white py-16 md:py-20">
         <Container size="xl">
           <div className="mb-10 text-center">
             <span className="text-xs font-semibold uppercase tracking-[0.2em] text-primary-600">
@@ -214,9 +214,9 @@ export default function RoomDetailPage({ params }: PageProps) {
               İlginizi Çekebilir
             </h2>
           </div>
-          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+          <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
             {related.map((r, i) => (
-              <RoomCard
+              <RoomDisplayCard
                 key={r.slug}
                 room={r}
                 locale={params.locale}
