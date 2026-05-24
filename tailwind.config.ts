@@ -132,6 +132,7 @@ const config: Config = {
         twinkle: 'twinkle 3s ease-in-out infinite',
         meteor: 'meteor 4s linear infinite',
         'led-pulse': 'led-pulse 3s ease-in-out infinite',
+        'spin-slow': 'spin 12s linear infinite',
       },
     },
   },

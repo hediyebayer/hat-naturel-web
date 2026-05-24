@@ -201,3 +201,38 @@
            focus:rounded-md focus:bg-primary-600 focus:px-4 focus:py-2 focus:text-white;
   }
 }
+
+/* ============================================
+   ROTATING GLOBE animations
+   (Sanal tur section için 3D dönen dünya)
+   ============================================ */
+@keyframes globe-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes globe-glow-pulse {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.08);
+  }
+}
+
+@keyframes globe-pin-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  50% {
+    transform: scale(1.4);
+    opacity: 1;
+  }
+}
