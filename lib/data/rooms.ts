@@ -274,9 +274,15 @@ export const ROOMS: Room[] = [
       'Turkuaz Köşk 1+1 evimiz 85 m² genişliğe ve 2 ayrı banyoya sahiptir; bu sayede çiftlere ve yakın arkadaşlara rahat bir tatil deneyimi sunar. Doğanın içinde, modern donanımıyla ev konforu hissini koruyan ideal bir konaklama seçeneği. Köşkümüz havuzsuzdur; tesisin ortak sosyal alanlarından faydalanabilirsiniz.',
     specs: { area: 85, guests: 2, extraGuests: 3, bedrooms: 1, bathrooms: 2 },
     amenities: KOSK_1_1_AMENITIES,
-    images: ['01.jpg', '02.jpg', '03.jpg', '04.jpg', '05.jpg'].map(
-      (n) => `/images/rooms/turkuaz/${n}`,
-    ),
+    images: [
+      '01.jpg',
+      '02.jpg',
+      '03.jpg',
+      '04.jpg',
+      '05.jpg',
+      '06.jpg',
+      '07.jpg',
+    ].map((n) => `/images/rooms/turkuaz/${n}`),
     accentColor: 'from-teal-300/40 via-cyan-200/20 to-transparent',
     theme: 'turquoise',
   },
