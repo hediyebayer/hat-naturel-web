@@ -260,7 +260,7 @@ export const ROOMS: Room[] = [
     slug: 'turkuaz',
     name: '1+1 Turkuaz Köşk',
     shortName: 'Turkuaz 1+1',
-    tagline: 'İki banyolu konfor, çiftler için',
+    tagline: 'Sade konfor, çiftler için',
     category: 'kosk-1-1-havuzsuz',
     bedConfig: [
       '🛏️ Asma katta çift kişilik yatak',
@@ -269,10 +269,10 @@ export const ROOMS: Room[] = [
       '👪 Maksimum 5 kişi konaklayabilir',
     ],
     description:
-      '85 m² genişliğinde, çift banyolu ferah 1+1 köşk — pratik konfor arayanlara. (Havuzsuz)',
+      '85 m² genişliğinde ferah 1+1 köşk — pratik konfor arayanlara. (Havuzsuz)',
     longDescription:
-      'Turkuaz Köşk 1+1 evimiz 85 m² genişliğe ve 2 ayrı banyoya sahiptir; bu sayede çiftlere ve yakın arkadaşlara rahat bir tatil deneyimi sunar. Doğanın içinde, modern donanımıyla ev konforu hissini koruyan ideal bir konaklama seçeneği. Köşkümüz havuzsuzdur; tesisin ortak sosyal alanlarından faydalanabilirsiniz.',
-    specs: { area: 85, guests: 2, extraGuests: 3, bedrooms: 1, bathrooms: 2 },
+      'Turkuaz Köşk 1+1 evimiz 85 m² genişliğe sahiptir; çiftlere ve yakın arkadaşlara rahat bir tatil deneyimi sunar. Doğanın içinde, modern donanımıyla ev konforu hissini koruyan ideal bir konaklama seçeneği. Köşkümüz havuzsuzdur; tesisin ortak sosyal alanlarından faydalanabilirsiniz.',
+    specs: { area: 85, guests: 2, extraGuests: 3, bedrooms: 1, bathrooms: 1 },
     amenities: KOSK_1_1_AMENITIES,
     images: [
       '01.jpg',
