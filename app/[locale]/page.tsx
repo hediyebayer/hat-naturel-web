@@ -11,6 +11,7 @@ import { Heading } from '@/components/ui/heading';
 import { Text } from '@/components/ui/text';
 import { ButtonLink } from '@/components/ui/button';
 import { HeroSection } from '@/components/home/hero-section';
+import { ReservationBar } from '@/components/reservation/reservation-bar';
 import { AboutSection } from '@/components/home/about-section';
 import { MapSection } from '@/components/home/map-section';
 import { VirtualTourSection } from '@/components/home/virtual-tour-section';
@@ -78,6 +79,9 @@ export default function HomePage({
       />
       {/* Hero — drone manzarası + slow zoom + parallax + stagger fade-in */}
       <HeroSection locale={params.locale} />
+
+      {/* Rezervasyon barı — hero'nun altına yapışık */}
+      <ReservationBar locale={params.locale} />
 
       {/* About / Neden Hat Naturel — 'Doğanın Yanı Başında Bir Mola' */}
       <AboutSection />
