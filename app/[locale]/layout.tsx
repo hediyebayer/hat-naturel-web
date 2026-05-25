@@ -20,17 +20,42 @@ export async function generateMetadata({
   params: { locale: string };
 }): Promise<Metadata> {
   const t = await getTranslations({ locale: params.locale, namespace: 'meta' });
+  const title = t('defaultTitle');
+  const description = t('defaultDescription');
+
+  // Alternates için tüm locale'leri map'le
+  const languages = Object.fromEntries(
+    locales.map((loc) => [loc, `/${loc}`]),
+  );
+
   return {
     title: {
-      default: t('defaultTitle'),
+      default: title,
       template: `%s | ${t('brand')}`,
     },
-    description: t('defaultDescription'),
+    description,
     metadataBase: new URL('https://www.hatnaturel.com.tr'),
+    alternates: {
+      canonical: `/${params.locale}`,
+      languages,
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
+    },
     openGraph: {
       type: 'website',
       locale: params.locale,
       siteName: t('brand'),
+      title,
+      description,
+      url: `/${params.locale}`,
       images: [
         {
           url: '/images/brand/og-default.jpg',
@@ -40,7 +65,12 @@ export async function generateMetadata({
         },
       ],
     },
-
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: ['/images/brand/og-default.jpg'],
+    },
   };
 }
 

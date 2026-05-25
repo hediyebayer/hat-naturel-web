@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { unstable_setRequestLocale, getTranslations } from 'next-intl/server';
 import { useTranslations } from 'next-intl';
+import { locales } from '@/lib/i18n/config';
 import { Camera } from 'lucide-react';
 import { Container } from '@/components/ui/container';
 import { GalleryGrid } from '@/components/gallery/gallery-grid';
@@ -14,11 +15,34 @@ export async function generateMetadata({
 }: PageProps): Promise<Metadata> {
   const t = await getTranslations({
     locale: params.locale,
-    namespace: 'gallery',
+    namespace: 'meta.gallery',
   });
+
+  const languages = Object.fromEntries(
+    locales.map((loc) => [loc, `/${loc}/galeri`]),
+  );
+
+  const title = t('title');
+  const description = t('description');
+
   return {
-    title: t('title'),
-    description: t('subtitle'),
+    title,
+    description,
+    alternates: {
+      canonical: `/${params.locale}/galeri`,
+      languages,
+    },
+    openGraph: {
+      title,
+      description,
+      url: `/${params.locale}/galeri`,
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+    },
   };
 }
 

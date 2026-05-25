@@ -3,6 +3,11 @@ import {
   unstable_setRequestLocale,
   getTranslations,
 } from 'next-intl/server';
+import { locales } from '@/lib/i18n/config';
+import {
+  generateOrganizationSchema,
+  generateBreadcrumbSchema,
+} from '@/lib/seo/schema';
 import {
   MapPin,
   Phone,
@@ -33,11 +38,34 @@ export async function generateMetadata({
 }: PageProps): Promise<Metadata> {
   const t = await getTranslations({
     locale: params.locale,
-    namespace: 'contact',
+    namespace: 'meta.contact',
   });
+
+  const languages = Object.fromEntries(
+    locales.map((loc) => [loc, `/${loc}/iletisim`]),
+  );
+
+  const title = t('title');
+  const description = t('description');
+
   return {
-    title: t('title'),
-    description: t('subtitle'),
+    title,
+    description,
+    alternates: {
+      canonical: `/${params.locale}/iletisim`,
+      languages,
+    },
+    openGraph: {
+      title,
+      description,
+      url: `/${params.locale}/iletisim`,
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+    },
   };
 }
 
@@ -49,9 +77,30 @@ export default async function ContactPage({
     locale: params.locale,
     namespace: 'contact',
   });
+  const navT = await getTranslations({
+    locale: params.locale,
+    namespace: 'nav',
+  });
+
+  // JSON-LD schemas
+  const orgSchema = generateOrganizationSchema();
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: navT('home'), url: `${SITE_CONFIG.url}/${params.locale}` },
+    {
+      name: navT('contact'),
+      url: `${SITE_CONFIG.url}/${params.locale}/iletisim`,
+    },
+  ]);
 
   return (
     <>
+      {/* JSON-LD Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify([orgSchema, breadcrumbSchema]),
+        }}
+      />
       {/* ─── HERO ─── */}
       <section
         className="relative isolate overflow-hidden bg-primary-900 pb-24 pt-32 text-white sm:pb-32 sm:pt-36"

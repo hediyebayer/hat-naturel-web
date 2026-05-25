@@ -1,7 +1,13 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import { unstable_setRequestLocale } from 'next-intl/server';
+import { unstable_setRequestLocale, getTranslations } from 'next-intl/server';
+import { locales, type Locale } from '@/lib/i18n/config';
+import { SITE_CONFIG } from '@/lib/constants';
+import {
+  generateRestaurantSchema,
+  generateBreadcrumbSchema,
+} from '@/lib/seo/schema';
 import { Coffee, Clock, Sun, Infinity as InfinityIcon } from 'lucide-react';
 import { Container } from '@/components/ui/container';
 import { Heading } from '@/components/ui/heading';
@@ -12,11 +18,41 @@ interface RestoranPageProps {
   params: { locale: string };
 }
 
-export const metadata: Metadata = {
-  title: 'Kahvaltı · Hat Naturel Resort Sapanca',
-  description:
-    "Doğanın içinde, sınırsız çay eşliğinde köy kahvaltısı. Patates kızartması, sigara böreği, omlet, peynir tabağı, zeytin söğüş, bal-tereyağ, reçel ve daha fazlası.",
-};
+export async function generateMetadata({
+  params,
+}: RestoranPageProps): Promise<Metadata> {
+  const t = await getTranslations({
+    locale: params.locale,
+    namespace: 'meta.restaurant',
+  });
+
+  const languages = Object.fromEntries(
+    locales.map((loc) => [loc, `/${loc}/restoran`]),
+  );
+
+  const title = t('title');
+  const description = t('description');
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: `/${params.locale}/restoran`,
+      languages,
+    },
+    openGraph: {
+      title,
+      description,
+      url: `/${params.locale}/restoran`,
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+    },
+  };
+}
 
 /**
  * Restoran sayfası — sadece kahvaltı.
@@ -29,6 +65,29 @@ export const metadata: Metadata = {
  *  5. Kahvaltı saatleri (büyük tek kart)
  *  6. CTA (WhatsApp + iletişim)
  */
+// Schema wrapper async component
+async function RestaurantSchema({ locale }: { locale: string }) {
+  const navT = await getTranslations({ locale, namespace: 'nav' });
+
+  const restaurantSchema = generateRestaurantSchema(locale as Locale);
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: navT('home'), url: `${SITE_CONFIG.url}/${locale}` },
+    {
+      name: navT('restaurant'),
+      url: `${SITE_CONFIG.url}/${locale}/restoran`,
+    },
+  ]);
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify([restaurantSchema, breadcrumbSchema]),
+      }}
+    />
+  );
+}
+
 export default function RestoranPage({
   params,
 }: RestoranPageProps): React.ReactElement {
@@ -37,6 +96,7 @@ export default function RestoranPage({
 
   return (
     <>
+      <RestaurantSchema locale={params.locale} />
       <RestoranHero />
 
       {/* INTRO */}

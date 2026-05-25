@@ -1,16 +1,47 @@
 import type { Metadata } from 'next';
-import { unstable_setRequestLocale } from 'next-intl/server';
+import { unstable_setRequestLocale, getTranslations } from 'next-intl/server';
+import { locales } from '@/lib/i18n/config';
 import { Container } from '@/components/ui/container';
-import { TOTAL_HOUSE_COUNT } from '@/lib/data/rooms';
 import { RoomsHero } from '@/components/rooms/rooms-hero';
 import { RoomGridDisplay } from '@/components/rooms/room-grid-display';
 import { ButtonLink } from '@/components/ui/button';
 import { RESERVATION_HREF } from '@/lib/constants';
 
-export const metadata: Metadata = {
-  title: 'Bungalov & Köşklerimiz — Hat Naturel Resort Sapanca',
-  description: `Sapanca'da doğanın içinde ${TOTAL_HOUSE_COUNT} müstakil bungalov ve köşk. Isıtmalı havuz + sauna içeren üçgen bungalovlar, yaz havuzlu köşkler.`,
-};
+export async function generateMetadata({
+  params,
+}: RoomsPageProps): Promise<Metadata> {
+  const t = await getTranslations({
+    locale: params.locale,
+    namespace: 'meta.rooms',
+  });
+
+  const languages = Object.fromEntries(
+    locales.map((loc) => [loc, `/${loc}/odalar`]),
+  );
+
+  const title = t('title');
+  const description = t('description');
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: `/${params.locale}/odalar`,
+      languages,
+    },
+    openGraph: {
+      title,
+      description,
+      url: `/${params.locale}/odalar`,
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+    },
+  };
+}
 
 interface RoomsPageProps {
   params: { locale: string };

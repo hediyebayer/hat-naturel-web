@@ -1,6 +1,12 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { unstable_setRequestLocale } from 'next-intl/server';
+import { unstable_setRequestLocale, getTranslations } from 'next-intl/server';
+import { locales, type Locale } from '@/lib/i18n/config';
+import { SITE_CONFIG } from '@/lib/constants';
+import {
+  generateHotelRoomSchema,
+  generateBreadcrumbSchema,
+} from '@/lib/seo/schema';
 import { Container } from '@/components/ui/container';
 import { ButtonLink } from '@/components/ui/button';
 import { ROOMS, getRoomBySlug, getRelatedRooms } from '@/lib/data/rooms';
@@ -25,29 +31,89 @@ export function generateStaticParams() {
   return ROOMS.map((r) => ({ slug: r.slug }));
 }
 
-export function generateMetadata({ params }: PageProps): Metadata {
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
   const room = getRoomBySlug(params.slug);
   if (!room) return { title: 'Oda bulunamadı' };
+
+  const t = await getTranslations({
+    locale: params.locale,
+    namespace: 'meta.roomDetail',
+  });
+
+  const title = t('titleTemplate', { roomName: room.name });
+  const description = t('descriptionTemplate', { roomName: room.name });
+
+  const languages = Object.fromEntries(
+    locales.map((loc) => [loc, `/${loc}/odalar/${room.slug}`]),
+  );
+
+  // Cover image full URL
+  const coverImage = room.images[0]
+    ? `${SITE_CONFIG.url}${room.images[0]}`
+    : `${SITE_CONFIG.url}/images/brand/og-default.jpg`;
+
   return {
-    title: `${room.name} — Hat Naturel Resort Sapanca`,
-    description: room.description,
+    title,
+    description,
+    alternates: {
+      canonical: `/${params.locale}/odalar/${room.slug}`,
+      languages,
+    },
     openGraph: {
-      title: room.name,
-      description: room.description,
-      images: room.images.slice(0, 1),
+      title,
+      description,
+      url: `/${params.locale}/odalar/${room.slug}`,
+      type: 'website',
+      images: [
+        {
+          url: coverImage,
+          width: 1200,
+          height: 800,
+          alt: room.name,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [coverImage],
     },
   };
 }
 
-export default function RoomDetailPage({ params }: PageProps) {
+export default async function RoomDetailPage({ params }: PageProps) {
   unstable_setRequestLocale(params.locale);
   const room = getRoomBySlug(params.slug);
   if (!room) notFound();
 
   const related = getRelatedRooms(room.slug, 3);
 
+  // i18n çeviriler breadcrumb için
+  const t = await getTranslations({ locale: params.locale, namespace: 'nav' });
+
+  // JSON-LD schemas
+  const roomSchema = generateHotelRoomSchema(room, params.locale as Locale);
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: t('home'), url: `${SITE_CONFIG.url}/${params.locale}` },
+    { name: t('rooms'), url: `${SITE_CONFIG.url}/${params.locale}/odalar` },
+    {
+      name: room.name,
+      url: `${SITE_CONFIG.url}/${params.locale}/odalar/${room.slug}`,
+    },
+  ]);
+
   return (
     <>
+      {/* JSON-LD Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify([roomSchema, breadcrumbSchema]),
+        }}
+      />
       {/* BREADCRUMB strip — pt-24 fixed header'ın altında kalmasın */}
       <section className="border-b border-neutral-200 bg-white pt-24 pb-4">
         <Container>

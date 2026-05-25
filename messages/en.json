@@ -2,7 +2,35 @@
   "meta": {
     "brand": "Hat Naturel Resort",
     "defaultTitle": "Hat Naturel Resort Sapanca — Bungalow Retreat in Nature",
-    "defaultDescription": "A peaceful getaway in Sapanca. Premium bungalows surrounded by nature for an unforgettable holiday."
+    "defaultDescription": "A peaceful getaway in Sapanca. Premium bungalows surrounded by nature for an unforgettable holiday.",
+    "home": {
+      "title": "Hat Naturel Resort Sapanca — Bungalow Retreat in Nature",
+      "description": "Boutique bungalow resort at the heart of Sapanca. Heated pool, sauna, jacuzzi-equipped triangle bungalows. Peaceful holiday in nature."
+    },
+    "rooms": {
+      "title": "Our Bungalows — Hat Naturel Resort Sapanca",
+      "description": "1+1 and 2+1 triangle bungalows, heated pool lodges. 6 unique concepts. Unforgettable accommodation in Sapanca."
+    },
+    "roomDetail": {
+      "titleTemplate": "{roomName} — Hat Naturel Resort Sapanca",
+      "descriptionTemplate": "{roomName} in Sapanca, surrounded by nature. Premium amenities, modern comfort and ideal accommodation for a peaceful holiday."
+    },
+    "gallery": {
+      "title": "Gallery — Hat Naturel Resort Sapanca",
+      "description": "Drone and ground shots from our resort and bungalows. Discover our premium holiday venue in nature."
+    },
+    "restaurant": {
+      "title": "Breakfast — Hat Naturel Resort Sapanca",
+      "description": "Sapanca village breakfast, homemade flavors, unlimited brewed tea. Breakfast with a view of nature."
+    },
+    "virtualTour": {
+      "title": "360° Virtual Tour — Hat Naturel Resort Sapanca",
+      "description": "Explore Hat Naturel Resort Sapanca with 360° Google Street View. Tour our bungalows virtually."
+    },
+    "contact": {
+      "title": "Contact & Reservation — Hat Naturel Resort Sapanca",
+      "description": "Reach us for reservations, inquiries, and questions. WhatsApp, phone, email. Sapanca, Sakarya."
+    }
   },
   "common": {
     "brand": "Hat Naturel Resort",

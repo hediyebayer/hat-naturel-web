@@ -2,7 +2,35 @@
   "meta": {
     "brand": "Hat Naturel Resort",
     "defaultTitle": "Hat Naturel Resort Sapanca — Doğayla İç İçe Bungalov Tatili",
-    "defaultDescription": "Sapanca'da huzurlu bir kaçamak. Doğa manzaralı, premium bungalov evlerde unutulmaz tatil deneyimi."
+    "defaultDescription": "Sapanca'da huzurlu bir kaçamak. Doğa manzaralı, premium bungalov evlerde unutulmaz tatil deneyimi.",
+    "home": {
+      "title": "Hat Naturel Resort Sapanca — Doğayla İç İçe Bungalov Tatili",
+      "description": "Sapanca'nın kalbinde butik bungalov resort. Isıtmalı havuz, sauna, jakuzili özel üçgen bungalovlar. Doğada huzurlu tatil."
+    },
+    "rooms": {
+      "title": "Bungalov Evlerimiz — Hat Naturel Resort Sapanca",
+      "description": "1+1 ve 2+1 üçgen bungalov, ısıtmalı havuzlu köşkler. 6 farklı konsept. Sapanca'da unutulmaz konaklama."
+    },
+    "roomDetail": {
+      "titleTemplate": "{roomName} — Hat Naturel Resort Sapanca",
+      "descriptionTemplate": "Sapanca'da doğanın içinde {roomName}. Özel donanım, modern konfor ve huzurlu tatil için ideal konaklama."
+    },
+    "gallery": {
+      "title": "Galeri — Hat Naturel Resort Sapanca",
+      "description": "Tesisimizden ve bungalov evlerimizden drone ve yer çekimleri. Doğanın içinde premium tatil mekanını keşfedin."
+    },
+    "restaurant": {
+      "title": "Kahvaltı — Hat Naturel Resort Sapanca",
+      "description": "Sapanca köy kahvaltısı, ev yapımı lezzetler, sınırsız demli çay. Doğa manzaralı kahvaltı keyfi."
+    },
+    "virtualTour": {
+      "title": "360° Sanal Tur — Hat Naturel Resort Sapanca",
+      "description": "Hat Naturel Resort Sapanca tesisini 360° Google Street View ile keşfedin. Bungalovlarımızı sanal turla gezin."
+    },
+    "contact": {
+      "title": "İletişim & Rezervasyon — Hat Naturel Resort Sapanca",
+      "description": "Rezervasyon, bilgi ve sorularınız için bize ulaşın. WhatsApp, telefon, email. Sapanca, Sakarya."
+    }
   },
   "common": {
     "brand": "Hat Naturel Resort",

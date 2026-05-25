@@ -1,5 +1,6 @@
 import { unstable_setRequestLocale, getTranslations } from 'next-intl/server';
 import type { Metadata } from 'next';
+import { locales } from '@/lib/i18n/config';
 import { FloatingIconsBg } from '@/components/sanal-tur/floating-icons-bg';
 import { SanalTurHero } from '@/components/sanal-tur/sanal-tur-hero';
 import { LiveTourSection } from '@/components/sanal-tur/live-tour-section';
@@ -16,11 +17,34 @@ export async function generateMetadata({
 }: PageProps): Promise<Metadata> {
   const t = await getTranslations({
     locale: params.locale,
-    namespace: 'virtualTour',
+    namespace: 'meta.virtualTour',
   });
+
+  const languages = Object.fromEntries(
+    locales.map((loc) => [loc, `/${loc}/sanal-tur`]),
+  );
+
+  const title = t('title');
+  const description = t('description');
+
   return {
-    title: t('title'),
-    description: t('subtitle'),
+    title,
+    description,
+    alternates: {
+      canonical: `/${params.locale}/sanal-tur`,
+      languages,
+    },
+    openGraph: {
+      title,
+      description,
+      url: `/${params.locale}/sanal-tur`,
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+    },
   };
 }
 

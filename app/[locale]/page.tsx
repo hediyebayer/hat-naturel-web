@@ -1,5 +1,11 @@
+import type { Metadata } from 'next';
 import { useTranslations } from 'next-intl';
-import { unstable_setRequestLocale } from 'next-intl/server';
+import { unstable_setRequestLocale, getTranslations } from 'next-intl/server';
+import { locales, type Locale } from '@/lib/i18n/config';
+import {
+  generateLodgingBusinessSchema,
+  generateOrganizationSchema,
+} from '@/lib/seo/schema';
 import { Container } from '@/components/ui/container';
 import { Heading } from '@/components/ui/heading';
 import { Text } from '@/components/ui/text';
@@ -15,13 +21,61 @@ interface HomePageProps {
   params: { locale: string };
 }
 
+export async function generateMetadata({
+  params,
+}: HomePageProps): Promise<Metadata> {
+  const t = await getTranslations({
+    locale: params.locale,
+    namespace: 'meta.home',
+  });
+
+  const languages = Object.fromEntries(
+    locales.map((loc) => [loc, `/${loc}`]),
+  );
+
+  const title = t('title');
+  const description = t('description');
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: `/${params.locale}`,
+      languages,
+    },
+    openGraph: {
+      title,
+      description,
+      url: `/${params.locale}`,
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+    },
+  };
+}
+
 export default function HomePage({
   params,
 }: HomePageProps): React.ReactElement {
   unstable_setRequestLocale(params.locale);
   const t = useTranslations('home');
+
+  // JSON-LD structured data
+  const lodgingSchema = generateLodgingBusinessSchema(params.locale as Locale);
+  const orgSchema = generateOrganizationSchema();
+
   return (
     <>
+      {/* JSON-LD Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify([lodgingSchema, orgSchema]),
+        }}
+      />
       {/* Hero — drone manzarası + slow zoom + parallax + stagger fade-in */}
       <HeroSection locale={params.locale} />
 
