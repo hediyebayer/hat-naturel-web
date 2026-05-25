@@ -1,0 +1,81 @@
+name: 🚀 Deploy to Production
+
+# main branch'e her push'ta tetiklenir
+on:
+  push:
+    branches: [main]
+  # Manuel tetikleme için (Actions tab'ında "Run workflow" butonu)
+  workflow_dispatch:
+
+# Aynı anda sadece 1 deploy çalışsın (yeni push gelirse beklesin)
+concurrency:
+  group: production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Deploy to DigitalOcean
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+
+      - name: 🔑 Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
+      - name: 🚀 Deploy to server
+        run: |
+          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no \
+            ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'ENDSSH'
+            set -e
+            echo "📁 Proje klasörüne giriyorum..."
+            cd /var/www/hat-naturel-web
+
+            echo "📥 Git pull (origin/main)..."
+            git fetch origin main
+            git reset --hard origin/main
+
+            echo "📦 Dependencies kontrol..."
+            # package-lock değiştiyse install, değilse skip
+            if git diff HEAD@{1} HEAD --name-only | grep -qE 'package(-lock)?\.json'; then
+              echo "  → package.json değişmiş, npm ci çalıştırıyorum..."
+              npm ci --omit=dev --no-audit --no-fund || npm install --no-audit --no-fund
+            else
+              echo "  → package.json değişmemiş, install skip"
+            fi
+
+            echo "🏗️  Build (Next.js)..."
+            npm run build
+
+            echo "🔄 PM2 reload (zero-downtime)..."
+            pm2 reload hat-naturel-web --update-env
+
+            echo "✅ Deploy tamamlandı!"
+            pm2 status hat-naturel-web
+          ENDSSH
+
+      - name: 🌐 Health check
+        run: |
+          sleep 5
+          echo "🏥 Site canlı mı kontrol..."
+          for i in 1 2 3; do
+            STATUS=$(curl -sL -o /dev/null -w "%{http_code}" http://${{ secrets.SSH_HOST }}/tr || echo "000")
+            if [ "$STATUS" = "200" ]; then
+              echo "✅ Site canlıda (HTTP $STATUS)"
+              exit 0
+            fi
+            echo "Deneme $i: HTTP $STATUS — 5sn bekleyip tekrar..."
+            sleep 5
+          done
+          echo "❌ Site cevap vermiyor!"
+          exit 1
+
+      - name: 🧹 Cleanup
+        if: always()
+        run: rm -f ~/.ssh/deploy_key
