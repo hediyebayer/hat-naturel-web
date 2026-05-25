@@ -34,7 +34,7 @@ export function Header({ locale }: HeaderProps): React.ReactElement {
   return (
     <header
       className={cn(
-        'fixed top-0 left-0 right-0 z-40 w-full py-4 transition-all duration-500',
+        'fixed top-0 left-0 right-0 z-40 w-full py-1 transition-all duration-500',
         scrolled
           ? 'bg-primary-900/85 shadow-medium backdrop-blur-xl'
           : 'bg-gradient-to-b from-primary-900/60 via-primary-900/30 to-transparent',
