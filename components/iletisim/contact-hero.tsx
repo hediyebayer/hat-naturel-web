@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { useMemo } from 'react';
 import { Zap } from 'lucide-react';
@@ -43,13 +44,26 @@ export function ContactHero({
       className="relative isolate overflow-hidden bg-primary-900 pb-24 pt-32 text-white sm:pb-32 sm:pt-36"
       aria-label={title}
     >
-      {/* L1: Lacivert gradient base */}
+      {/* L0: Drone bg image (en altta) */}
+      <div aria-hidden className="absolute inset-0 -z-20">
+        <Image
+          src="/images/iletisim/contact-bg.jpg"
+          alt=""
+          fill
+          priority
+          quality={85}
+          sizes="100vw"
+          className="object-cover"
+        />
+      </div>
+
+      {/* L1: Lacivert gradient base — image üzerinde okunabilirlik overlay'i */}
       <div
         aria-hidden
         className="absolute inset-0 -z-10"
         style={{
           background:
-            'linear-gradient(135deg, #07091a 0%, #0a1330 50%, #1a2a5e 100%)',
+            'linear-gradient(135deg, rgba(7,9,26,0.85) 0%, rgba(10,19,48,0.78) 50%, rgba(26,42,94,0.82) 100%)',
         }}
       />
 

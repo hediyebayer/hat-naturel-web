@@ -29,6 +29,8 @@ const FILES: ReadonlyArray<{ file: string; category: GalleryCategory }> = [
   { file: '08-drone.jpg', category: 'drone' },
   { file: '09-drone.jpg', category: 'drone' },
   { file: '10-drone.jpg', category: 'drone' },
+  { file: '13-drone.jpg', category: 'drone' },
+  { file: '14-drone.jpg', category: 'drone' },
   { file: '11-ground.jpg', category: 'ground' },
   { file: '12-restaurant-01.jpg', category: 'restaurant' },
   { file: '12-restaurant-02.jpg', category: 'restaurant' },
