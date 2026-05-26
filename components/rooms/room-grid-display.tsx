@@ -15,7 +15,7 @@ import {
   Bath as BathIcon,
   Sparkle,
 } from 'lucide-react';
-import { ROOMS, type Room } from '@/lib/data/rooms';
+import { ROOMS, ROOMS_DISPLAY_ORDER, type Room } from '@/lib/data/rooms';
 import { useTranslatedRoom } from '@/lib/data/use-translated-room';
 
 interface RoomGridDisplayProps {
@@ -33,17 +33,8 @@ interface RoomGridDisplayProps {
  * Her kartta köşelerden LED ışık efekti (hover'da yoğunlaşır).
  */
 export function RoomGridDisplay({ locale }: RoomGridDisplayProps) {
-  // ROOMS sırasını manuel kontrol et:
-  // önce üçgen kategoriler (havuzlu+sauna), sonra Mor (yaz havuzlu), sonra havuzsuz köşkler
-  const displayOrder = [
-    'ucgen-2-1',
-    'ucgen-1-1',
-    'mor',
-    'sari',
-    'bej',
-    'turkuaz',
-  ];
-  const orderedRooms = displayOrder
+  // Sıra: lib/data/rooms.ts'teki ROOMS_DISPLAY_ORDER — üçgenler önde, köşkler arkada
+  const orderedRooms = ROOMS_DISPLAY_ORDER
     .map((slug) => ROOMS.find((r) => r.slug === slug))
     .filter(Boolean) as Room[];
 

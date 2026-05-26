@@ -10,7 +10,7 @@
  */
 
 import { differenceInCalendarDays, parseISO, isValid } from 'date-fns';
-import { ROOMS, type Room } from '@/lib/data/rooms';
+import { ROOMS, getOrderedRooms, type Room } from '@/lib/data/rooms';
 import {
   fetchHatoperasyonAvailability,
   mapBungalowToSlugWithCapacity,
@@ -178,7 +178,7 @@ export async function getAvailability(
 
   // Erişim hatası — fallback'e düş
   if (!hatoperasyonResult.ok) {
-    const fallbackRooms = ROOMS.map((room) =>
+    const fallbackRooms = getOrderedRooms().map((room) =>
       calculateFallbackAvailability(room, validation.nights, query.guests),
     );
     return {
@@ -191,7 +191,8 @@ export async function getAvailability(
   }
 
   // Her web oda kategorisi için hatoperasyon'dan en uygun bungalovu seç
-  const rooms = ROOMS.map<AvailableRoom>((room) => {
+  // Üçgen bungalovlar önde, köşkler arkada (getOrderedRooms)
+  const rooms = getOrderedRooms().map<AvailableRoom>((room) => {
     const match = pickBestForCategory(
       hatoperasyonResult.rooms,
       room.slug,

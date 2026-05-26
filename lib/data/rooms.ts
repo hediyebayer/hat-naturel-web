@@ -254,7 +254,6 @@ export const ROOMS: Room[] = [
     ].map((n) => `/images/rooms/bej/${n}`),
     accentColor: 'from-amber-200/40 via-amber-100/20 to-transparent',
     theme: 'beige',
-    featured: true,
   },
   {
     slug: 'turkuaz',
@@ -347,7 +346,6 @@ export const ROOMS: Room[] = [
     ].map((n) => `/images/rooms/mor/${n}`),
     accentColor: 'from-violet-400/40 via-purple-200/20 to-transparent',
     theme: 'purple',
-    featured: true,
   },
   {
     slug: 'sari',
@@ -379,7 +377,6 @@ export const ROOMS: Room[] = [
     ].map((n) => `/images/rooms/sari/${n}`),
     accentColor: 'from-yellow-300/40 via-amber-200/20 to-transparent',
     theme: 'yellow',
-    featured: true,
   },
   {
     slug: 'ucgen-2-1',
@@ -431,6 +428,26 @@ export const TOTAL_HOUSE_COUNT = CATEGORIES.reduce(
 export const CATEGORY_COUNT = CATEGORIES.length;
 
 /** Bir kategoriye ait odaları getir */
+/**
+ * Sayfalarda gösterim sırası — üçgen bungalovlar önde, köşkler arkada.
+ * Anasayfa, odalar listesi ve rezervasyon sayfası aynı sırayı kullanır.
+ */
+export const ROOMS_DISPLAY_ORDER: ReadonlyArray<string> = [
+  'ucgen-2-1',
+  'ucgen-1-1',
+  'mor',
+  'sari',
+  'bej',
+  'turkuaz',
+];
+
+/** Dışa dönük oda listesi: üçgenler önde, köşkler arkada. */
+export function getOrderedRooms(): Room[] {
+  return ROOMS_DISPLAY_ORDER.map((slug) => ROOMS.find((r) => r.slug === slug)).filter(
+    (r): r is Room => r !== undefined,
+  );
+}
+
 export function getRoomsByCategory(category: RoomCategory): Room[] {
   return ROOMS.filter((r) => r.category === category);
 }
