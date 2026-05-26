@@ -93,7 +93,7 @@ export function RoomGallery({ images, alt }: RoomGalleryProps) {
   return (
     <>
       {/* MAIN + THUMBS LAYOUT */}
-      <div className="grid gap-5 md:grid-cols-[1fr_140px] lg:grid-cols-[1fr_160px]">
+      <div className="mx-auto grid w-full max-w-full gap-5 md:grid-cols-[1fr_140px] lg:grid-cols-[1fr_160px]">
         {/* ═══════════════════════════════════════════
             MAIN IMAGE — premium with mouse parallax
             ═══════════════════════════════════════════ */}
