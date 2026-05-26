@@ -5,6 +5,8 @@ import { locales } from '@/lib/i18n/config';
 import { Camera } from 'lucide-react';
 import { Container } from '@/components/ui/container';
 import { GalleryGrid } from '@/components/gallery/gallery-grid';
+import { HeroPhotoCarousel } from '@/components/gallery/hero-photo-carousel';
+import { GALLERY_IMAGES } from '@/lib/data/gallery';
 
 interface PageProps {
   params: { locale: string };
@@ -112,8 +114,8 @@ function GaleriHero(): React.ReactElement {
       />
 
       <Container>
+        {/* Üst: Badge + Büyük başlık + Lead */}
         <div className="mx-auto max-w-3xl text-center">
-          {/* Gold pulse badge */}
           <span className="inline-flex items-center gap-2 rounded-full border border-accent/40 bg-accent/10 px-5 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-accent backdrop-blur-md">
             <Camera size={14} />
             {t('badge')}
@@ -127,9 +129,16 @@ function GaleriHero(): React.ReactElement {
             </span>
           </h1>
 
-          <p className="mx-auto mt-10 max-w-2xl font-sans text-base text-white/85 leading-relaxed tracking-[0.02em] md:text-lg">
+          <p className="mx-auto mt-8 max-w-2xl font-sans text-base text-white/85 leading-relaxed tracking-[0.02em] md:text-lg">
             {t('heroLead')}
           </p>
+        </div>
+
+        {/* Dinamik dönen carousel — tüm galeri fotoğrafları 5sn'de bir gruba geçer */}
+        <div className="mt-14 md:mt-16">
+          <HeroPhotoCarousel
+            images={GALLERY_IMAGES.map((img) => img.src)}
+          />
         </div>
       </Container>
     </section>

@@ -46,6 +46,9 @@ const FILES: ReadonlyArray<{ file: string; category: GalleryCategory }> = [
   { file: '30-ground.jpg', category: 'ground' },
   { file: '31-ground.jpg', category: 'ground' },
   { file: '32-ground.jpg', category: 'ground' },
+  { file: '40-feat-01.jpg', category: 'ground' },
+  { file: '40-feat-02.jpg', category: 'ground' },
+  { file: '40-feat-03.jpg', category: 'ground' },
 ];
 
 export const GALLERY_IMAGES: ReadonlyArray<GalleryImage> = FILES.map(
