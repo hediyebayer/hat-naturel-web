@@ -10,7 +10,7 @@
  */
 
 import { differenceInCalendarDays, parseISO, isValid } from 'date-fns';
-import { ROOMS, getOrderedRooms, type Room } from '@/lib/data/rooms';
+import { getOrderedRooms, type Room } from '@/lib/data/rooms';
 import {
   fetchHatoperasyonAvailability,
   mapBungalowToSlugWithCapacity,

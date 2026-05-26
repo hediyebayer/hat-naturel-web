@@ -15,7 +15,7 @@ import {
   Bath as BathIcon,
   Sparkle,
 } from 'lucide-react';
-import { ROOMS, ROOMS_DISPLAY_ORDER, type Room } from '@/lib/data/rooms';
+import { getOrderedRooms, type Room } from '@/lib/data/rooms';
 import { useTranslatedRoom } from '@/lib/data/use-translated-room';
 
 interface RoomGridDisplayProps {
@@ -34,9 +34,7 @@ interface RoomGridDisplayProps {
  */
 export function RoomGridDisplay({ locale }: RoomGridDisplayProps) {
   // Sıra: lib/data/rooms.ts'teki ROOMS_DISPLAY_ORDER — üçgenler önde, köşkler arkada
-  const orderedRooms = ROOMS_DISPLAY_ORDER
-    .map((slug) => ROOMS.find((r) => r.slug === slug))
-    .filter(Boolean) as Room[];
+  const orderedRooms: Room[] = getOrderedRooms();
 
   return (
     <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
