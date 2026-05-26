@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Mobilde yatay scroll engelleme — taşan elementler ekran dışına taşmasın */
+html,
+body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
 /* ============================================
    HERO BACKGROUND ZOOM (Ken Burns)
    ============================================ */
