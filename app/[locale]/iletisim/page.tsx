@@ -96,6 +96,29 @@ export default async function ContactPage({
         }}
       />
 
+      {/* ─── ÜST VİDEO BANNER ─── */}
+      <section
+        className="relative h-[50vh] min-h-[360px] w-full overflow-hidden bg-primary-900 md:h-[65vh]"
+        aria-hidden="true"
+      >
+        <video
+          className="absolute inset-0 h-full w-full object-cover"
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="metadata"
+          poster="/videos/iletisim-bg-poster.jpg"
+        >
+          <source src="/videos/iletisim-bg.mp4" type="video/mp4" />
+        </video>
+        {/* Alt gradient — ContactHero'ya yumuşak geçiş */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent via-primary-900/60 to-primary-900"
+        />
+      </section>
+
       {/* ─── HERO — animasyonlu lacivert + altın particles + orbit rings ─── */}
       <ContactHero
         title={t('title')}

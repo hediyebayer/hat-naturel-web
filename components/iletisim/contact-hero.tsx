@@ -40,7 +40,7 @@ export function ContactHero({
 
   return (
     <section
-      className="relative isolate overflow-hidden bg-primary-900 pb-24 pt-32 text-white sm:pb-32 sm:pt-36"
+      className="relative isolate overflow-hidden bg-primary-900 pb-24 pt-16 text-white sm:pb-32 sm:pt-20"
       aria-label={title}
     >
       {/* L1: Lacivert gradient base */}
