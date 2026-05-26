@@ -12,6 +12,8 @@ const FILTERS: ReadonlyArray<'all' | GalleryCategory> = [
   'all',
   'drone',
   'ground',
+  'restaurant',
+  'night',
 ];
 
 /**
