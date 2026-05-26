@@ -91,7 +91,7 @@ export function RoomGallery({ images, alt }: RoomGalleryProps) {
           ref={mainImageRef}
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
-          className="group relative aspect-[4/3] overflow-hidden rounded-2xl bg-neutral-100 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.25)] sm:aspect-[4/3] md:aspect-[16/10] md:rounded-3xl"
+          className="group relative aspect-video max-h-[240px] overflow-hidden rounded-2xl bg-neutral-100 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.25)] sm:aspect-[4/3] sm:max-h-none md:aspect-[16/10] md:rounded-3xl"
           style={{ perspective: '1200px' }}
         >
           {/* ⚡ FIX: key by image URL+index, not just active number */}
@@ -205,7 +205,7 @@ export function RoomGallery({ images, alt }: RoomGalleryProps) {
                   whileHover={{ scale: isActive ? 1 : 1.05, y: -2 }}
                   whileTap={{ scale: 0.96 }}
                   className={cn(
-                    'group/thumb relative aspect-square h-20 w-20 shrink-0 overflow-hidden rounded-xl transition-all duration-300 md:h-24 md:w-full md:aspect-[4/3]',
+                    'group/thumb relative aspect-square h-14 w-14 shrink-0 overflow-hidden rounded-xl transition-all duration-300 sm:h-20 sm:w-20 md:h-24 md:w-full md:aspect-[4/3]',
                     isActive ? 'z-10' : 'opacity-65 hover:opacity-100',
                   )}
                   aria-label={`Görsel ${i + 1}`}
