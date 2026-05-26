@@ -101,7 +101,7 @@ export function RoomGallery({ images, alt }: RoomGalleryProps) {
           ref={mainImageRef}
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
-          className="group relative aspect-video max-h-[240px] overflow-hidden rounded-2xl bg-neutral-100 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.25)] sm:aspect-[4/3] sm:max-h-none md:aspect-[16/10] md:rounded-3xl"
+          className="group relative aspect-[4/3] overflow-hidden rounded-2xl bg-neutral-100 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.25)] md:aspect-[16/10] md:rounded-3xl"
           style={{ perspective: '1200px' }}
         >
           {/* ⚡ FIX: key by image URL+index, not just active number */}
