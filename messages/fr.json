@@ -34,6 +34,10 @@
     "reservation": {
       "title": "Réservation — Hat Naturel Resort Sapanca",
       "description": "Découvrez les bungalows et lodges disponibles au Hat Naturel Resort Sapanca. Prix et disponibilité selon dates et nombre de personnes."
+    },
+    "rules": {
+      "title": "Règlement intérieur — Hat Naturel Resort Sapanca",
+      "description": "Règles de l'établissement, conditions de séjour et informations générales. Détails essentiels pour chaque client."
     }
   },
   "common": {
@@ -516,6 +520,35 @@
         "🛋️ Canapé-lit simple dans le salon",
         "👪 Jusqu'à 7 personnes"
       ]
+    }
+  },
+  "rules": {
+    "badge": "Informations sur l'établissement",
+    "heroTitle": "Règles",
+    "heroTitleItalic": "de séjour",
+    "heroLead": "Au Hat Naturel Resort, nous avons quelques règles importantes pour garantir des vacances paisibles et sûres à tous nos clients.",
+    "sectionGeneral": "Règles générales",
+    "sectionCheckIn": "Heures d'arrivée et de départ",
+    "checkInTitle": "Arrivée",
+    "checkInTime": "14:00",
+    "checkInDesc": "Vous pouvez arriver à tout moment après 14h00. Merci de nous indiquer votre heure d'arrivée à l'avance. Les bungalows sont nettoyés entre 11h30 et 14h00 avant l'arrivée.",
+    "checkOutTitle": "Départ",
+    "checkOutTime": "11:30",
+    "checkOutDesc": "Merci d'être prêt à partir à 11h30. Un départ anticipé est possible, mais nous ne pouvons pas prolonger l'heure de départ.",
+    "thanksNote": "Merci. 🌿",
+    "items": {
+      "identity": "À l'arrivée, vos données d'identité sont enregistrées dans le système de sécurité de la police. Chaque client — y compris enfants et bébés — doit présenter une pièce d'identité ou un passeport valide. Les séjours non enregistrés ne sont pas autorisés. Les mineurs de moins de 18 ans ne peuvent pas séjourner sans un parent.",
+      "identityWarning": "Si vous arrivez sans pièce d'identité ou refusez de la présenter, l'accès sera refusé. Aucun remboursement ne sera accordé dans ce cas.",
+      "guests": "Recevoir des visiteurs extérieurs — même brièvement — sans nous informer engage une responsabilité importante pour l'établissement. À l'arrivée d'un visiteur de courte durée, ses informations d'identité doivent être collectées et enregistrées dans le système de sécurité.",
+      "guestsWarning": "Accueillir des visiteurs non enregistrés entraînera la fin immédiate de votre séjour sans remboursement.",
+      "pets": "Nous ne pouvons pas accueillir les animaux de compagnie.",
+      "trash": "Il est interdit de jeter des déchets et des mégots sur le terrain, dans le jardin ou autour du bungalow.",
+      "furniture": "Merci de ne pas déplacer les meubles ou objets du bungalow. Tout dommage sera facturé au client.",
+      "pool": "L'utilisation de shampoing et de bain moussant dans la piscine est interdite.",
+      "poolWarning": "Les enfants de moins de 13 ans ne sont pas autorisés à entrer dans la piscine sans surveillance.",
+      "fire": "Sortir le brasero ou l'équipement de barbecue sur la véranda est dangereux et interdit. Veuillez les utiliser uniquement dans votre jardin désigné.",
+      "breakfast": "Le petit-déjeuner est servi à notre café entre 9h30 et 11h30. Nous ne proposons pas de service en chambre.",
+      "reservation": "Nous n'acceptons pas les annulations de réservation ni les remboursements d'acompte. Vous pouvez reporter votre séjour jusqu'à 7 jours avant la date d'arrivée. Les changements de date dans les 1 à 2 jours précédant l'arrivée ne sont pas possibles — quelle que soit la raison personnelle, météo ou changement de plan."
     }
   }
 }

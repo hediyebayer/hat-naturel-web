@@ -44,8 +44,8 @@ export function ContactHero({
       className="relative isolate overflow-hidden bg-primary-900 pb-24 pt-32 text-white sm:pb-32 sm:pt-36"
       aria-label={title}
     >
-      {/* L0: Drone bg image (en altta) */}
-      <div aria-hidden className="absolute inset-0 -z-20">
+      {/* L-1: Drone bg image — video yüklenene kadar fallback */}
+      <div aria-hidden className="absolute inset-0 -z-30">
         <Image
           src="/images/iletisim/contact-bg.jpg"
           alt=""
@@ -57,7 +57,20 @@ export function ContactHero({
         />
       </div>
 
-      {/* L1: Lacivert gradient base — image üzerinde okunabilirlik overlay'i */}
+      {/* L0: ARKA PLAN VIDEO — Resepsiyon temalı intro (1.7MB) */}
+      <video
+        aria-hidden
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="metadata"
+        className="pointer-events-none absolute inset-0 -z-20 h-full w-full object-cover opacity-60"
+      >
+        <source src="/videos/contact-reception.mp4" type="video/mp4" />
+      </video>
+
+      {/* L1: Lacivert gradient overlay (video üzerine — metin okunsun) */}
       <div
         aria-hidden
         className="absolute inset-0 -z-10"

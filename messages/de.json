@@ -34,6 +34,10 @@
     "reservation": {
       "title": "Reservierung — Hat Naturel Resort Sapanca",
       "description": "Entdecken Sie verfügbare Bungalows und Lodges im Sapanca Hat Naturel Resort. Preis und Verfügbarkeit je nach Daten und Gästezahl."
+    },
+    "rules": {
+      "title": "Hausordnung — Hat Naturel Resort Sapanca",
+      "description": "Anlagenregeln, Aufenthaltsbedingungen und allgemeine Informationen. Wichtige Details, die jeder Gast wissen sollte."
     }
   },
   "common": {
@@ -516,6 +520,35 @@
         "🛋️ Einzel-Schlafsofa im Wohnbereich",
         "👪 Bis zu 7 Personen"
       ]
+    }
+  },
+  "rules": {
+    "badge": "Anlageninformationen",
+    "heroTitle": "Aufenthalts",
+    "heroTitleItalic": "Regeln",
+    "heroLead": "Im Hat Naturel Resort gelten einige wichtige Regeln, um einen erholsamen und sicheren Urlaub für alle Gäste zu gewährleisten.",
+    "sectionGeneral": "Allgemeine Regeln",
+    "sectionCheckIn": "Check-in & Check-out Zeiten",
+    "checkInTitle": "Check-in",
+    "checkInTime": "14:00",
+    "checkInDesc": "Sie können ab 14:00 Uhr jederzeit einchecken. Bitte teilen Sie uns Ihre Ankunftszeit im Voraus mit. Die Bungalows werden vor dem Check-in zwischen 11:30 und 14:00 Uhr gereinigt.",
+    "checkOutTitle": "Check-out",
+    "checkOutTime": "11:30",
+    "checkOutDesc": "Bitte seien Sie um 11:30 Uhr bereit zum Auschecken. Ein früherer Check-out ist möglich, eine Verlängerung der Check-out-Zeit jedoch nicht.",
+    "thanksNote": "Danke. 🌿",
+    "items": {
+      "identity": "Beim Check-in werden Ihre Ausweisdaten im polizeilichen Sicherheitssystem registriert. Jeder Gast — auch Kinder und Säuglinge — muss einen gültigen Ausweis oder Reisepass vorlegen. Nicht registrierte Aufenthalte sind nicht erlaubt. Gäste unter 18 Jahren dürfen nicht ohne einen Elternteil übernachten.",
+      "identityWarning": "Wenn Sie ohne Ausweis ankommen oder sich weigern, einen vorzulegen, dürfen Sie nicht einchecken. In solchen Fällen wird keine Rückerstattung gewährt.",
+      "guests": "Externe Besucher — auch kurzzeitig — ohne Vorinformation zu empfangen, stellt eine erhebliche Verantwortung für die Anlage dar. Bei der Ankunft eines Kurzbesuchers müssen dessen Ausweisdaten erfasst und im polizeilichen Sicherheitssystem registriert werden.",
+      "guestsWarning": "Das Beherbergen nicht registrierter Besucher führt zur sofortigen Beendigung Ihres Aufenthalts ohne Rückerstattung.",
+      "pets": "Wir können keine Haustiere aufnehmen.",
+      "trash": "Müll und Zigarettenstummel auf dem Gelände, im Garten oder rund um den Bungalow zu hinterlassen ist verboten.",
+      "furniture": "Bitte versetzen Sie die Möbel und Gegenstände des Bungalows nicht. Schäden werden dem Gast in Rechnung gestellt.",
+      "pool": "Die Verwendung von Shampoo und Schaumbad im Pool ist verboten.",
+      "poolWarning": "Kindern unter 13 Jahren ist das Betreten des Pools ohne Begleitung untersagt.",
+      "fire": "Das Mitnehmen der Feuerstelle oder Grillausrüstung auf die Veranda ist gefährlich und verboten. Bitte verwenden Sie sie nur in Ihrem zugewiesenen Gartenbereich.",
+      "breakfast": "Das Frühstück wird zwischen 09:30 und 11:30 Uhr in unserem Café serviert. Wir bieten keinen Zimmerservice an.",
+      "reservation": "Reservierungsstornierungen und Anzahlungsrückerstattungen sind nicht möglich. Sie können Ihren Aufenthalt bis zu 7 Tage vor dem Check-in-Datum umbuchen. Datumsänderungen innerhalb von 1–2 Tagen vor dem Check-in sind nicht möglich — unabhängig von persönlichen Gründen, Wetter oder Planänderungen."
     }
   }
 }
