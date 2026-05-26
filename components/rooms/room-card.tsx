@@ -77,7 +77,7 @@ export function RoomCard({ room, locale, index = 0 }: RoomCardProps) {
             {/* SPECS */}
             <ul className="grid grid-cols-4 gap-2 border-t border-white/10 pt-4 text-center text-xs text-white/70">
               <SpecChip icon={<Maximize2 className="h-4 w-4" />} value={`${room.specs.area}m²`} />
-              <SpecChip icon={<Users className="h-4 w-4" />} value={`${room.specs.guests}+${room.specs.extraGuests}`} />
+              <SpecChip icon={<Users className="h-4 w-4" />} value={`${room.specs.guests + room.specs.extraGuests}`} />
               <SpecChip icon={<BedDouble className="h-4 w-4" />} value={`${room.specs.bedrooms}`} />
               <SpecChip icon={<Bath className="h-4 w-4" />} value={`${room.specs.bathrooms}`} />
             </ul>

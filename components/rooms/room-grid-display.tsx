@@ -192,7 +192,7 @@ export function RoomDisplayCard({
               <span className="h-1 w-1 rounded-full bg-neutral-300" />
               <span className="inline-flex items-center gap-1">
                 <Users className="h-3 w-3" />
-                {room.specs.guests}+{room.specs.extraGuests} Kişi
+                {room.specs.guests + room.specs.extraGuests} Kişi
               </span>
               <span className="h-1 w-1 rounded-full bg-neutral-300" />
               <span className="inline-flex items-center gap-1">
