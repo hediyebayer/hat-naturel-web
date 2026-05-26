@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# Pre-commit hook — hızlı TypeScript kontrolü.
+# Build kırılmasın diye commit'ten önce tsc --noEmit çalıştırır.
+
+set -e
+
+echo "🔍 TypeScript kontrolü..."
+npm run typecheck --silent
+echo "✅ TS temiz, commit devam ediyor..."

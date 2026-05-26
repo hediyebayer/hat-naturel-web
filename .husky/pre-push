@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+# Pre-push hook — uzak branch ile senkron kontrolü.
+# Partnerinin yeni commit'i varsa push'u durdurur, önce pull --rebase yapmanı ister.
+
+set -e
+
+REMOTE="origin"
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+
+# Detached HEAD veya branch yoksa atla
+if [ "$BRANCH" = "HEAD" ] || [ -z "$BRANCH" ]; then
+  exit 0
+fi
+
+echo "🔍 Uzaktan kontrol ediliyor ($REMOTE/$BRANCH)..."
+
+# Sessizce fetch (network yoksa hata vermesin)
+if ! git fetch --quiet "$REMOTE" "$BRANCH" 2>/dev/null; then
+  echo "⚠️  Fetch başarısız (offline mı?). Kontrol atlanıyor."
+  exit 0
+fi
+
+# Upstream branch yoksa atla (ilk push)
+if ! git rev-parse --verify "$REMOTE/$BRANCH" >/dev/null 2>&1; then
+  exit 0
+fi
+
+# Ahead/behind hesapla
+BEHIND=$(git rev-list --count "HEAD..$REMOTE/$BRANCH")
+AHEAD=$(git rev-list --count "$REMOTE/$BRANCH..HEAD")
+
+if [ "$BEHIND" -gt 0 ]; then
+  echo ""
+  echo "❌ PUSH ENGELLENDİ — Uzakta $BEHIND yeni commit var, sende yok."
+  echo ""
+  echo "   Partnerinin değişikliklerini görmek için:"
+  echo "   $ git log --oneline HEAD..$REMOTE/$BRANCH"
+  echo ""
+  echo "   Çözüm:"
+  echo "   $ git pull --rebase $REMOTE $BRANCH"
+  echo "   $ git push"
+  echo ""
+  echo "   (Çakışma çıkarsa düzelt → git add . → git rebase --continue)"
+  echo ""
+  exit 1
+fi
+
+echo "✅ Senkron ($AHEAD commit ileride, $BEHIND geride). Push devam ediyor..."
