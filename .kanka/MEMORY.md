@@ -34,13 +34,29 @@ ssh -i ~/.ssh/digitalocean_hatnaturel root@206.81.29.231
 - Nginx 1.24.0 (reverse proxy: 80 → 127.0.0.1:3001)
 - UFW firewall: OpenSSH + Nginx Full açık
 
-## 🚀 Deploy komutları (sunucuda)
+## 🚀 Deploy — OTOMATİK (GitHub Actions)
+
+⚠️ **MANUEL DEPLOY YAPMA!** `.github/workflows/deploy.yml` her `main` push'unda otomatik deploy ediyor.
+
+Manuel `ssh hatnaturel "cd /var/www/... && npm run build"` ile Actions çakışıp `.next/export/500.html` rename hatası verir.
+
+### Doğru akış:
 ```bash
-cd /var/www/hat-naturel-web
-git pull origin main
-npm ci --no-audit --no-fund
-npm run build
-pm2 reload hat-naturel-web
+# Local’de:
+git add -A && git commit -m "..." && git push origin main
+# Sonra:
+gh run watch  # ya da gh run list ile takip et
+```
+
+### Actions failed olursa sebep araştır:
+```bash
+gh run list --limit 5
+gh run view <RUN_ID> --log-failed
+```
+
+### Acil durum (Actions yokken) — manuel deploy:
+```bash
+ssh hatnaturel "cd /var/www/hat-naturel-web && git pull origin main && rm -rf .next && npm ci --no-audit --no-fund && npm run build && pm2 reload hat-naturel-web"
 ```
 
 ## 🔁 PM2 komutları
@@ -59,7 +75,9 @@ pm2 reload hat-naturel-web
 - Vercel'deki proje silinmeli veya pasifleştirilmeli (manuel).
 
 ## ⏭️ TODO (sırada)
-- [ ] DNS yayılınca `certbot --nginx -d hatnature.com.tr -d www.hatnature.com.tr` ile SSL
-- [ ] Auto-deploy webhook veya GitHub Actions (`main` push → droplet `git pull && build && pm2 reload`)
+- [ ] DNS — `hatnaturel.com.tr` `206.81.29.231`'e yönlendirilmeli (şu an yanlış IP'de)
+- [ ] DNS yayılınca `certbot --nginx -d hatnaturel.com.tr -d www.hatnaturel.com.tr` ile SSL
+- [x] Auto-deploy GitHub Actions (`main` push → droplet `git pull && build && pm2 reload`) — partner tarafından eklendi
 - [ ] Nginx config'e HTTPS redirect (SSL sonrası)
 - [ ] Backup stratejisi (snapshot / rsync)
+- [ ] Partner için droplet'e SSH key ekleme (kendi key'i ile)
