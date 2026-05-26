@@ -93,7 +93,7 @@ export function RoomGallery({ images, alt }: RoomGalleryProps) {
   return (
     <>
       {/* MAIN + THUMBS LAYOUT */}
-      <div className="mx-auto grid w-full max-w-full gap-5 md:grid-cols-[minmax(0,1fr)_140px] lg:grid-cols-[minmax(0,1fr)_160px]">
+      <div className="mx-auto grid w-full max-w-full gap-5 md:grid-cols-[1fr_140px] lg:grid-cols-[1fr_160px]">
         {/* ═══════════════════════════════════════════
             MAIN IMAGE — premium with mouse parallax
             ═══════════════════════════════════════════ */}
@@ -101,7 +101,7 @@ export function RoomGallery({ images, alt }: RoomGalleryProps) {
           ref={mainImageRef}
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
-          className="group relative min-w-0 max-w-full aspect-video max-h-[240px] overflow-hidden rounded-2xl bg-neutral-100 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.25)] sm:aspect-[4/3] sm:max-h-none md:aspect-[16/10] md:rounded-3xl"
+          className="group relative aspect-video max-h-[240px] overflow-hidden rounded-2xl bg-neutral-100 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.25)] sm:aspect-[4/3] sm:max-h-none md:aspect-[16/10] md:rounded-3xl"
           style={{ perspective: '1200px' }}
         >
           {/* ⚡ FIX: key by image URL+index, not just active number */}
