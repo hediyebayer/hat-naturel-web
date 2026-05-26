@@ -87,8 +87,11 @@ export default async function LocaleLayout({
 
   const messages = await getMessages();
 
+  // Arapça sağdan sola (RTL), diğer diller soldan sağa (LTR)
+  const dir = params.locale === 'ar' ? 'rtl' : 'ltr';
+
   return (
-    <html lang={params.locale} className={`${playfair.variable} ${inter.variable}`}>
+    <html lang={params.locale} dir={dir} className={`${playfair.variable} ${inter.variable}`}>
       <body className="flex min-h-screen flex-col">
         <NextIntlClientProvider messages={messages} locale={params.locale}>
           <a href="#main" className="skip-link">

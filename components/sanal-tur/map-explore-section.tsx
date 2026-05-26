@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 import { Map, Eye, Play, X, Compass } from 'lucide-react';
 import { SITE_CONFIG } from '@/lib/constants';
 
@@ -9,8 +10,12 @@ import { SITE_CONFIG } from '@/lib/constants';
  * Harita Önizleme Bölümü
  * "Oteli haritadan gezmek ister misin?" → tıklayınca Street View iframe açılır
  * Önizleme olarak bir cover image + play button gösterir
+ * Tüm metinler `sanalTur` + `virtualTour` namespace'lerinden gelir.
  */
 export function MapExploreSection() {
+  const t = useTranslations('sanalTur');
+  const tTour = useTranslations('virtualTour');
+
   const [isOpen, setIsOpen] = useState(false);
   const tourUrl =
     SITE_CONFIG.virtualTour?.embedUrl ||
@@ -29,18 +34,17 @@ export function MapExploreSection() {
         >
           <span className="inline-flex items-center gap-2 rounded-full border border-accent/40 bg-accent/5 px-5 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-accent-dark backdrop-blur-sm">
             <Map size={14} />
-            360° Sanal Tur
+            {t('mapBadge')}
           </span>
           <h2 className="mt-6 font-serif text-4xl font-bold leading-tight tracking-tight text-neutral-900 md:text-5xl">
-            Oteli{' '}
+            {t('mapTitle')}{' '}
             <span className="italic font-light text-accent-dark">
-              Haritadan
+              {t('mapTitleItalic')}
             </span>{' '}
-            Gezmek İster misin?
+            {t('mapTitleAfter')}
           </h2>
           <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-neutral-600 md:text-lg">
-            Google Street View ile tesisin her köşesini önceden keşfet. Tek
-            tıkla içeri buyur, 360° dön, her yeri gör.
+            {t('mapSubtitle')}
           </p>
         </motion.div>
 
@@ -120,13 +124,13 @@ export function MapExploreSection() {
                         <div className="text-center text-white">
                           <div className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/10 px-2.5 py-1 text-[8px] font-semibold uppercase tracking-[0.2em] backdrop-blur-md sm:gap-2 sm:px-4 sm:py-1.5 sm:text-[10px] sm:tracking-[0.25em]">
                             <Compass className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
-                            360° Etkileşimli
+                            {t('mapInteractive')}
                           </div>
                           <p className="mt-2 font-serif text-base italic sm:mt-3 sm:text-xl md:mt-4 md:text-2xl lg:text-3xl">
-                            İçeri Buyurun
+                            {t('mapCta')}
                           </p>
                           <p className="mt-1 text-[10px] text-white/70 sm:mt-2 sm:text-xs md:text-sm">
-                            Tıkla, 360° dön, her yeri keşfet
+                            {t('mapClickHint')}
                           </p>
                         </div>
                       </div>
@@ -143,7 +147,7 @@ export function MapExploreSection() {
                     >
                       <iframe
                         src={tourUrl}
-                        title="Hat Naturel Resort 360° Sanal Tur"
+                        title={tTour('iframeTitle')}
                         loading="lazy"
                         referrerPolicy="no-referrer-when-downgrade"
                         allowFullScreen
@@ -153,7 +157,7 @@ export function MapExploreSection() {
                       <button
                         onClick={() => setIsOpen(false)}
                         className="absolute right-4 top-4 z-20 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-neutral-800 shadow-lg backdrop-blur transition hover:bg-white"
-                        aria-label="Sanal turu kapat"
+                        aria-label={t('closeAria')}
                       >
                         <X size={18} />
                       </button>
@@ -167,7 +171,7 @@ export function MapExploreSection() {
           {/* Alt meta */}
           <p className="mt-4 flex items-center justify-center gap-1.5 text-center text-[11px] text-neutral-500 sm:mt-6 sm:gap-2 sm:text-xs">
             <Eye className="h-3 w-3 text-accent" />
-            Sanal tura tıkla, 360° döndürerek tesisi gez
+            {t('mapFullScreen')}
           </p>
         </motion.div>
       </div>

@@ -1,10 +1,13 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 import { MapPin, Navigation, Clock, Car, Plane, Bus } from 'lucide-react';
 import { SITE_CONFIG } from '@/lib/constants';
 
 export function LocationSection() {
+  const t = useTranslations('sanalTur');
+
   const address =
     SITE_CONFIG.contact?.address ||
     'Nailiye Mah. Nailiye/4 Sk. No:6/1 Sapanca / Sakarya';
@@ -13,12 +16,12 @@ export function LocationSection() {
     `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(address)}`;
 
   const distances = [
-    { icon: Car, label: 'Sapanca Merkez', value: '6-7 dk' },
-    { icon: Car, label: 'Sapanca Gölü', value: '8 dk' },
-    { icon: Plane, label: 'Sabiha Gökçen Havalimanı', value: '~1 sa 15 dk' },
-    { icon: Plane, label: 'İstanbul Havalimanı', value: '~1 sa 45 dk' },
-    { icon: Bus, label: 'Sakarya Otogarı', value: '~30 dk' },
-    { icon: Navigation, label: 'TEM Otoyolu', value: '5 dk' },
+    { icon: Car, label: t('distanceSapancaCenter'), value: '6-7 dk' },
+    { icon: Car, label: t('distanceSapancaLake'), value: '8 dk' },
+    { icon: Plane, label: t('distanceSawAirport'), value: '~1 sa 15 dk' },
+    { icon: Plane, label: t('distanceIstAirport'), value: '~1 sa 45 dk' },
+    { icon: Bus, label: t('distanceBusTerminal'), value: '~30 dk' },
+    { icon: Navigation, label: t('distanceHighway'), value: '5 dk' },
   ];
 
   return (
@@ -34,15 +37,16 @@ export function LocationSection() {
         >
           <span className="inline-flex items-center gap-2 rounded-full border border-accent/40 bg-accent/5 px-5 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-accent-dark backdrop-blur-sm">
             <MapPin size={14} />
-            Konum & Ulaşım
+            {t('locationBadge')}
           </span>
           <h2 className="mt-6 font-serif text-4xl font-bold leading-tight tracking-tight text-neutral-900 md:text-5xl">
-            <span className="italic font-light text-accent-dark">Sapanca</span>{' '}
-            Doğasının Tam Kalbinde
+            <span className="italic font-light text-accent-dark">
+              {t('locationTitleItalic')}
+            </span>{' '}
+            {t('locationTitleAfter')}
           </h2>
           <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-neutral-600 md:text-lg">
-            Şehrin gürültüsünden uzak, doğanın sessizliğine yakın — kolayca
-            ulaşılan müstakil bir köşe.
+            {t('locationSubtitle')}
           </p>
         </motion.div>
 
@@ -63,7 +67,7 @@ export function LocationSection() {
                 </div>
                 <div className="flex-1">
                   <h3 className="font-serif text-lg font-bold text-neutral-900">
-                    Adresimiz
+                    {t('addressLabel')}
                   </h3>
                   <p className="mt-2 text-sm leading-relaxed text-neutral-600">
                     {address}
@@ -75,7 +79,7 @@ export function LocationSection() {
                     className="mt-4 inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2 text-sm font-semibold text-primary-900 shadow-[0_6px_18px_rgba(212,175,55,0.3)] transition-all hover:scale-105 hover:bg-accent-light"
                   >
                     <Navigation size={14} />
-                    Yol Tarifi Al
+                    {t('directionsButton')}
                   </a>
                 </div>
               </div>
@@ -86,7 +90,7 @@ export function LocationSection() {
               <div className="mb-4 flex items-center gap-3">
                 <Clock size={18} className="text-accent-dark" />
                 <h3 className="font-serif text-lg font-bold text-neutral-900">
-                  Mesafeler
+                  {t('distancesLabel')}
                 </h3>
               </div>
               <ul className="grid gap-3 sm:grid-cols-2">
@@ -141,7 +145,7 @@ export function LocationSection() {
 
               <iframe
                 src={SITE_CONFIG.contact?.mapEmbedUrl || ''}
-                title="Hat Naturel Resort Sapanca Konum"
+                title="Hat Naturel Resort Sapanca"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
                 allowFullScreen

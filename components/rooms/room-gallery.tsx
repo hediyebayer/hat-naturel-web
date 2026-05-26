@@ -10,6 +10,7 @@ import {
   useTransform,
 } from 'framer-motion';
 import { ChevronLeft, ChevronRight, X, Expand, Camera } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { cn } from '@/lib/utils/cn';
 
 interface RoomGalleryProps {
@@ -18,6 +19,7 @@ interface RoomGalleryProps {
 }
 
 export function RoomGallery({ images, alt }: RoomGalleryProps) {
+  const t = useTranslations('common');
   const [active, setActive] = useState(0);
   const [lightbox, setLightbox] = useState(false);
 
@@ -166,14 +168,14 @@ export function RoomGallery({ images, alt }: RoomGalleryProps) {
           {/* Arrows — premium glass */}
           <button
             onClick={prev}
-            aria-label="Önceki görsel"
+            aria-label={t('prevImage')}
             className="absolute left-3 top-1/2 inline-flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-white/40 bg-white/85 text-neutral-800 shadow-lg backdrop-blur-md transition-all hover:scale-110 hover:bg-white sm:left-4 sm:h-12 sm:w-12"
           >
             <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5" />
           </button>
           <button
             onClick={next}
-            aria-label="Sonraki görsel"
+            aria-label={t('nextImage')}
             className="absolute right-3 top-1/2 inline-flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-white/40 bg-white/85 text-neutral-800 shadow-lg backdrop-blur-md transition-all hover:scale-110 hover:bg-white sm:right-4 sm:h-12 sm:w-12"
           >
             <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5" />
@@ -182,7 +184,7 @@ export function RoomGallery({ images, alt }: RoomGalleryProps) {
           {/* Expand button */}
           <button
             onClick={() => setLightbox(true)}
-            aria-label="Tam ekran görüntüle"
+            aria-label="View fullscreen"
             className="absolute bottom-2 right-2 inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-black/55 px-2.5 py-1 text-[10px] font-semibold text-white backdrop-blur-md transition-all hover:scale-105 hover:bg-black/75 sm:bottom-4 sm:right-4 sm:gap-2 sm:px-4 sm:py-2 sm:text-xs"
           >
             <Expand className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
@@ -218,7 +220,7 @@ export function RoomGallery({ images, alt }: RoomGalleryProps) {
                     'group/thumb relative aspect-square h-14 w-14 shrink-0 overflow-hidden rounded-xl transition-all duration-300 sm:h-20 sm:w-20 md:h-24 md:w-full md:aspect-[4/3]',
                     isActive ? 'z-10' : 'opacity-65 hover:opacity-100',
                   )}
-                  aria-label={`Görsel ${i + 1}`}
+                  aria-label={`Image ${i + 1}`}
                   aria-current={isActive ? 'true' : 'false'}
                 >
                   {/* Active border with animated glow */}
@@ -303,7 +305,7 @@ export function RoomGallery({ images, alt }: RoomGalleryProps) {
                 e.stopPropagation();
                 setLightbox(false);
               }}
-              aria-label="Kapat"
+              aria-label="Close"
               className="absolute right-4 top-4 inline-flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20"
             >
               <X className="h-5 w-5" />
@@ -313,7 +315,7 @@ export function RoomGallery({ images, alt }: RoomGalleryProps) {
                 e.stopPropagation();
                 prev();
               }}
-              aria-label="Önceki"
+              aria-label={t('previous')}
               className="absolute left-4 inline-flex h-14 w-14 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20"
             >
               <ChevronLeft className="h-6 w-6" />
@@ -323,7 +325,7 @@ export function RoomGallery({ images, alt }: RoomGalleryProps) {
                 e.stopPropagation();
                 next();
               }}
-              aria-label="Sonraki"
+              aria-label={t('next')}
               className="absolute right-4 inline-flex h-14 w-14 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20"
             >
               <ChevronRight className="h-6 w-6" />

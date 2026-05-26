@@ -2,9 +2,26 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useTranslations, useLocale } from 'next-intl';
 import { DayPicker, type DateRange } from 'react-day-picker';
-import { tr } from 'date-fns/locale';
-import { format, differenceInCalendarDays, addDays, isBefore, startOfDay } from 'date-fns';
+import {
+  tr,
+  enUS,
+  de,
+  ru,
+  ar,
+  fr,
+  es,
+  it,
+  type Locale as DateFnsLocale,
+} from 'date-fns/locale';
+import {
+  format,
+  differenceInCalendarDays,
+  addDays,
+  isBefore,
+  startOfDay,
+} from 'date-fns';
 import { CalendarDays, Users, Search } from 'lucide-react';
 import 'react-day-picker/dist/style.css';
 import { RESERVATION_HREF } from '@/lib/constants';
@@ -17,13 +34,29 @@ const MIN_NIGHTS = 1;
 const MAX_GUESTS = 7;
 const DEFAULT_GUESTS = 2;
 
+const DATE_FNS_LOCALES: Record<string, DateFnsLocale> = {
+  tr,
+  en: enUS,
+  de,
+  ru,
+  ar,
+  fr,
+  es,
+  it,
+};
+
 /**
  * Ana sayfa rezervasyon barı.
  * Giriş tarihi, çıkış tarihi ve kişi sayısı seçimi.
  * Submit edince /rezervasyon sayfasına query param'larla yönlendirir.
- * (Müsaitlik & fiyat sorgusu sonraki adımda hatoperasyon API'sine bağlanacak)
+ * Tüm metinler `reservation` namespace'inden gelir (i18n).
  */
 export function ReservationBar({ locale }: ReservationBarProps): React.ReactElement {
+  const t = useTranslations('reservation');
+  const activeLocale = useLocale();
+  const dateLocale =
+    DATE_FNS_LOCALES[activeLocale] || DATE_FNS_LOCALES[locale] || enUS;
+
   const router = useRouter();
   const today = startOfDay(new Date());
 
@@ -61,13 +94,13 @@ export function ReservationBar({ locale }: ReservationBarProps): React.ReactElem
 
   function formatDate(date: Date | undefined): string {
     if (!date) return '';
-    return format(date, 'd MMM yyyy', { locale: tr });
+    return format(date, 'd MMM yyyy', { locale: dateLocale });
   }
 
   return (
     <section
       className="relative z-20 -mt-28 px-3 pb-10 sm:-mt-20 sm:px-4 sm:pb-12 lg:-mt-28"
-      aria-label="Rezervasyon Arama"
+      aria-label={t('searchAriaLabel')}
     >
       <div className="mx-auto max-w-6xl">
         <form
@@ -89,18 +122,18 @@ export function ReservationBar({ locale }: ReservationBarProps): React.ReactElem
                 <div className="grid flex-1 grid-cols-2 gap-2">
                   <div>
                     <div className="text-[9px] font-semibold uppercase tracking-wider text-neutral-500 sm:text-[10px]">
-                      Giriş
+                      {t('checkInShort')}
                     </div>
                     <div className="text-xs font-medium text-neutral-900 sm:text-sm">
-                      {range?.from ? formatDate(range.from) : 'Tarih seç'}
+                      {range?.from ? formatDate(range.from) : t('pickDate')}
                     </div>
                   </div>
                   <div className="border-l border-neutral-200 pl-2">
                     <div className="text-[9px] font-semibold uppercase tracking-wider text-neutral-500 sm:text-[10px]">
-                      Çıkış
+                      {t('checkOutShort')}
                     </div>
                     <div className="text-xs font-medium text-neutral-900 sm:text-sm">
-                      {range?.to ? formatDate(range.to) : 'Tarih seç'}
+                      {range?.to ? formatDate(range.to) : t('pickDate')}
                     </div>
                   </div>
                 </div>
@@ -117,7 +150,7 @@ export function ReservationBar({ locale }: ReservationBarProps): React.ReactElem
                         setIsDatePickerOpen(false);
                       }
                     }}
-                    locale={tr}
+                    locale={dateLocale}
                     numberOfMonths={typeof window !== 'undefined' && window.innerWidth < 640 ? 1 : 2}
                     disabled={(date) => isBefore(date, today)}
                     defaultMonth={range?.from ?? today}
@@ -136,7 +169,7 @@ export function ReservationBar({ locale }: ReservationBarProps): React.ReactElem
                       onClick={() => setRange(undefined)}
                       className="text-xs font-medium text-neutral-500 hover:text-neutral-900"
                     >
-                      Temizle
+                      {t('clearDates')}
                     </button>
                     <button
                       type="button"
@@ -148,7 +181,7 @@ export function ReservationBar({ locale }: ReservationBarProps): React.ReactElem
                       }}
                       className="rounded-lg bg-primary-600 px-4 py-1.5 text-xs font-semibold text-white hover:bg-primary-700"
                     >
-                      Tamam
+                      {t('confirmDates')}
                     </button>
                   </div>
                 </div>
@@ -167,7 +200,7 @@ export function ReservationBar({ locale }: ReservationBarProps): React.ReactElem
                     htmlFor="guests"
                     className="block text-[9px] font-semibold uppercase tracking-wider text-neutral-500 sm:text-[10px]"
                   >
-                    Kişi
+                    {t('guestsLabel')}
                   </label>
                   <select
                     id="guests"
@@ -178,7 +211,7 @@ export function ReservationBar({ locale }: ReservationBarProps): React.ReactElem
                     {Array.from({ length: MAX_GUESTS }, (_, i) => i + 1).map(
                       (n) => (
                         <option key={n} value={n}>
-                          {n} kişi
+                          {n} {t('guestsSuffix')}
                         </option>
                       ),
                     )}
@@ -194,14 +227,14 @@ export function ReservationBar({ locale }: ReservationBarProps): React.ReactElem
               className="flex items-center justify-center gap-1.5 rounded-xl bg-primary-600 px-3 py-2 text-xs font-semibold text-white shadow-sm transition hover:bg-primary-700 disabled:cursor-not-allowed disabled:opacity-50 sm:gap-2 sm:rounded-full sm:px-7 sm:py-3 sm:text-sm"
             >
               <Search className="h-3.5 w-3.5 sm:h-4 sm:w-4" aria-hidden />
-              <span className="sm:hidden">Sorgula</span>
-              <span className="hidden sm:inline">Müsaitlik Sorgula</span>
+              <span className="sm:hidden">{t('searchMobile')}</span>
+              <span className="hidden sm:inline">{t('searchDesktop')}</span>
             </button>
           </div>
 
           {nights > 0 && (
             <div className="mt-1.5 px-3 text-[11px] text-neutral-500 sm:mt-2 sm:px-5 sm:text-xs">
-              {nights} gece konaklama
+              {nights} {t('nightsLabel')}
             </div>
           )}
         </form>

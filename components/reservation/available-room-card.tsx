@@ -1,10 +1,12 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { Users, BedDouble, Bath, Maximize } from 'lucide-react';
 import {
   type AvailableRoom,
   formatPrice,
 } from '@/lib/reservation/availability';
+import { useTranslatedRoom } from '@/lib/data/use-translated-room';
 
 interface AvailableRoomCardProps {
   data: AvailableRoom;
@@ -23,6 +25,9 @@ export function AvailableRoomCard({
   query,
 }: AvailableRoomCardProps): React.ReactElement {
   const { room, isAvailable, pricePerNight, totalPrice, nights, unavailableReason } = data;
+  const t = useTranslations('reservation');
+  const tRoomDetail = useTranslations('roomDetail');
+  const tr = useTranslatedRoom(room);
   const firstImage = room.images[0] ?? '/images/rooms/placeholder.jpg';
 
   return (
@@ -36,7 +41,7 @@ export function AvailableRoomCard({
         <div className="relative aspect-[4/3] w-full md:aspect-auto">
           <Image
             src={firstImage}
-            alt={room.name}
+            alt={tr.name}
             fill
             sizes="(max-width: 768px) 100vw, 280px"
             className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -48,16 +53,16 @@ export function AvailableRoomCard({
           <div className="flex-1">
             <div className="flex items-start justify-between gap-3">
               <h3 className="font-serif text-xl text-neutral-900 sm:text-2xl">
-                {room.name}
+                {tr.name}
               </h3>
               {!isAvailable && (
                 <span className="rounded-full bg-red-100 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-red-700">
-                  Müsait Değil
+                  {t('unavailable')}
                 </span>
               )}
             </div>
 
-            <p className="mt-1 text-sm text-neutral-600">{room.tagline}</p>
+            <p className="mt-1 text-sm text-neutral-600">{tr.tagline}</p>
 
             {/* Özellikler */}
             <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2 text-xs text-neutral-600">
@@ -67,11 +72,11 @@ export function AvailableRoomCard({
               </span>
               <span className="flex items-center gap-1">
                 <Users className="h-3.5 w-3.5" aria-hidden />
-                {room.specs.guests}+{room.specs.extraGuests} kişi
+                {room.specs.guests}+{room.specs.extraGuests} {tRoomDetail('guestsUnit')}
               </span>
               <span className="flex items-center gap-1">
                 <BedDouble className="h-3.5 w-3.5" aria-hidden />
-                {room.specs.bedrooms} yatak odası
+                {room.specs.bedrooms} {t('bedroomLabel')}
               </span>
               <span className="flex items-center gap-1">
                 <Bath className="h-3.5 w-3.5" aria-hidden />

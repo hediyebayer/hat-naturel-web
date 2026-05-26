@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 import * as Icons from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { AMENITY_META, type Amenity } from '@/lib/data/rooms';
@@ -20,21 +21,21 @@ const IconMap = Icons as unknown as Record<string, LucideIcon>;
  *  - 🌿 Tesis İçi Ortak (kafe, otopark, oyun parkı, şelale, doğa, göl manzarası)
  */
 const AMENITY_GROUPS: Array<{
-  title: string;
+  titleKey: string;
   emoji: string;
   bgGradient: string;
   iconColor: string;
   amenities: Amenity[];
 }> = [
   {
-    title: 'Havuz & Spa',
+    titleKey: 'amenityGroupPoolSpa',
     emoji: '🏊',
     bgGradient: 'from-cyan-50 to-blue-50',
     iconColor: 'text-cyan-700',
     amenities: ['pool', 'heatedPool', 'coolingPool', 'jacuzzi', 'sauna', 'sunbed', 'doubleSwing'],
   },
   {
-    title: 'Bungalov İçi',
+    titleKey: 'amenityGroup1',
     emoji: '🏠',
     bgGradient: 'from-amber-50 to-orange-50',
     iconColor: 'text-amber-700',
@@ -44,21 +45,21 @@ const AMENITY_GROUPS: Array<{
     ],
   },
   {
-    title: 'Dış Alan & Çevre',
+    titleKey: 'amenityGroup2',
     emoji: '🌳',
     bgGradient: 'from-emerald-50 to-green-50',
     iconColor: 'text-emerald-700',
     amenities: ['bbq', 'firePit', 'privateVeranda', 'gardenFurniture', 'swing'],
   },
   {
-    title: 'Tesis İçi Olanaklar',
+    titleKey: 'amenityGroup3',
     emoji: '🌿',
     bgGradient: 'from-violet-50 to-purple-50',
     iconColor: 'text-violet-700',
     amenities: ['cafe', 'parking', 'playground', 'waterfall', 'naturalArea', 'lakeView'],
   },
   {
-    title: 'Güvenlik & Altyapı',
+    titleKey: 'amenityGroup4',
     emoji: '🛡️',
     bgGradient: 'from-neutral-50 to-stone-50',
     iconColor: 'text-neutral-700',
@@ -67,6 +68,9 @@ const AMENITY_GROUPS: Array<{
 ];
 
 export function AmenityList({ amenities }: AmenityListProps) {
+  const t = useTranslations('rooms');
+  const tLabels = useTranslations('amenities');
+
   // Her grup için sadece bu odada bulunan amenity'leri filtrele
   const groupedAmenities = AMENITY_GROUPS.map((group) => ({
     ...group,
@@ -79,7 +83,7 @@ export function AmenityList({ amenities }: AmenityListProps) {
     <div className="space-y-8">
       {groupedAmenities.map((group, groupIdx) => (
         <motion.div
-          key={group.title}
+          key={group.titleKey}
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-50px' }}
@@ -101,7 +105,7 @@ export function AmenityList({ amenities }: AmenityListProps) {
               {group.emoji}
             </motion.span>
             <h4 className={`font-serif text-lg font-bold tracking-tight ${group.iconColor}`}>
-              {group.title}
+              {t(group.titleKey)}
             </h4>
             <span className="ml-auto rounded-full bg-white/70 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-neutral-600">
               {group.items.length}
@@ -127,7 +131,7 @@ export function AmenityList({ amenities }: AmenityListProps) {
                     <Icon className="h-4 w-4" />
                   </span>
                   <span className="text-xs font-medium leading-tight text-neutral-800">
-                    {meta.label}
+                    {tLabels(key)}
                   </span>
                 </motion.li>
               );
@@ -153,7 +157,7 @@ export function AmenityList({ amenities }: AmenityListProps) {
             🐾
           </motion.span>
           <span className="font-medium">
-            Maalesef patili dostlarımızı tesisimizde ağırlayamıyoruz.
+            {t('amenityNoPets')}
           </span>
         </motion.div>
       )}
@@ -174,9 +178,11 @@ export function AmenityList({ amenities }: AmenityListProps) {
           📍
         </motion.span>
         <p className="text-sm leading-relaxed text-neutral-700">
-          <strong className="font-semibold text-neutral-900">Konum:</strong>{' '}
-          Sapanca şehir merkezine sadece <strong>6-7 dakika</strong> mesafede,
-          doğanın kalbinde ve <strong>göl manzaralı</strong> konumda.
+          <strong className="font-semibold text-neutral-900">{t('amenityLocationLabel')}</strong>{' '}
+          {t('amenityLocationText', {
+            minutes: t('amenityLocationMinutes'),
+            lakeView: t('amenityLocationLakeView'),
+          })}
         </p>
       </motion.div>
     </div>

@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import Link from 'next/link';
 import {
@@ -15,6 +16,7 @@ import {
   Sparkle,
 } from 'lucide-react';
 import { ROOMS, type Room } from '@/lib/data/rooms';
+import { useTranslatedRoom } from '@/lib/data/use-translated-room';
 
 interface RoomGridDisplayProps {
   locale: string;
@@ -68,6 +70,8 @@ export function RoomDisplayCard({
   locale: string;
   index: number;
 }) {
+  const t = useTranslations('rooms');
+  const tr = useTranslatedRoom(room);
   const hasHeatedPool = room.amenities.includes('heatedPool');
   const hasCoolingPool = room.amenities.includes('coolingPool');
   const hasSauna = room.amenities.includes('sauna');
@@ -103,7 +107,7 @@ export function RoomDisplayCard({
         <div className="relative h-48 overflow-hidden bg-neutral-100 sm:h-auto sm:aspect-[4/3]">
           <Image
             src={room.images[0]}
-            alt={room.name}
+            alt={tr.name}
             fill
             className="object-cover transition-transform duration-[900ms] ease-out group-hover:scale-110"
             sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
@@ -115,49 +119,49 @@ export function RoomDisplayCard({
           <div className="absolute right-3 top-3 flex flex-col items-end gap-1.5">
             {count > 1 && (
               <span className="inline-flex items-center rounded-full border border-white/30 bg-black/65 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white backdrop-blur-md">
-                {count} Adet
+                {count} {t('badgeUnits')}
               </span>
             )}
             {hasHeatedPool && (
               <span className="inline-flex items-center gap-1 rounded-full border border-cyan-300/60 bg-gradient-to-r from-cyan-500 to-blue-500 px-2.5 py-1 text-[10px] font-bold text-white shadow-[0_0_15px_rgba(34,211,238,0.6)] backdrop-blur-md">
                 <Waves className="h-2.5 w-2.5" />
-                Isıtmalı Havuz
+                {t('badgeHeatedPool')}
               </span>
             )}
             {hasJacuzzi && (
               <span className="inline-flex items-center gap-1 rounded-full border border-violet-300/60 bg-gradient-to-r from-violet-500 to-fuchsia-500 px-2.5 py-1 text-[10px] font-bold text-white shadow-[0_0_15px_rgba(168,85,247,0.5)] backdrop-blur-md">
                 <BathIcon className="h-2.5 w-2.5" />
-                Jakuzi
+                {t('badgeJacuzzi')}
               </span>
             )}
             {hasSauna && (
               <span className="inline-flex items-center gap-1 rounded-full border border-orange-400/60 bg-gradient-to-r from-orange-500 to-red-500 px-2.5 py-1 text-[10px] font-bold text-white shadow-[0_0_15px_rgba(251,146,60,0.6)] backdrop-blur-md">
                 <Flame className="h-2.5 w-2.5" />
-                Sauna
+                {t('badgeSauna')}
               </span>
             )}
             {hasCoolingPool && (
               <span className="inline-flex items-center gap-1 rounded-full border border-cyan-300/50 bg-gradient-to-r from-cyan-400 to-teal-500 px-2.5 py-1 text-[10px] font-bold text-white shadow-[0_0_12px_rgba(127,229,245,0.5)] backdrop-blur-md">
                 <Waves className="h-2.5 w-2.5" />
-                Serinleme Havuzu
+                {t('badgeCoolingPool')}
               </span>
             )}
             {hasSummerPool && !hasHeatedPool && !hasCoolingPool && (
               <span className="inline-flex items-center gap-1 rounded-full border border-cyan-300/50 bg-cyan-500/90 px-2.5 py-1 text-[10px] font-bold text-white shadow-[0_0_12px_rgba(127,229,245,0.5)] backdrop-blur-md">
                 <Waves className="h-2.5 w-2.5" />
-                Yaz Havuzlu
+                {t('badgePool')}
               </span>
             )}
             {hasFireplace && (
               <span className="inline-flex items-center gap-1 rounded-full border border-amber-300/60 bg-gradient-to-r from-amber-600 to-orange-700 px-2.5 py-1 text-[10px] font-bold text-white shadow-[0_0_15px_rgba(217,119,6,0.55)] backdrop-blur-md">
                 <Flame className="h-2.5 w-2.5" />
-                Şömine
+                {t('badgeFireplace')}
               </span>
             )}
             {hasFirePit && (
               <span className="inline-flex items-center gap-1 rounded-full border border-red-400/60 bg-gradient-to-r from-red-500 to-orange-600 px-2.5 py-1 text-[10px] font-bold text-white shadow-[0_0_15px_rgba(239,68,68,0.55)] backdrop-blur-md">
                 <Sparkle className="h-2.5 w-2.5" />
-                Ateş Çukuru
+                {t('badgeFirePit')}
               </span>
             )}
           </div>
@@ -165,10 +169,10 @@ export function RoomDisplayCard({
           {/* Bottom-left room name overlay */}
           <div className="absolute bottom-0 left-0 right-0 p-5">
             <h3 className="font-serif text-xl font-bold leading-tight text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] md:text-2xl">
-              {room.name}
+              {tr.name}
             </h3>
             <p className="mt-1.5 text-xs font-medium uppercase tracking-wider text-white/80 drop-shadow">
-              {room.tagline}
+              {tr.tagline}
             </p>
           </div>
         </div>
@@ -177,7 +181,7 @@ export function RoomDisplayCard({
         <div className="flex flex-1 flex-col justify-between p-5">
           <div>
             <p className="text-sm leading-relaxed text-neutral-600 line-clamp-3">
-              {room.description}
+              {tr.description}
             </p>
 
             {/* Specs row — kompakt ikonlu */}
@@ -206,7 +210,7 @@ export function RoomDisplayCard({
           {/* CTA satırı */}
           <div className="mt-5 flex items-center justify-between border-t border-neutral-100 pt-4">
             <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-accent-dark">
-              Detayları Gör
+              {t('seeDetails')}
             </span>
             <ArrowRight className="h-4 w-4 text-accent-dark transition-transform duration-300 group-hover:translate-x-1.5" />
           </div>

@@ -1,33 +1,21 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 import { Container } from '@/components/ui/container';
 import { TreePine, Waves, Home, Heart } from 'lucide-react';
 
 /**
  * Anasayfa "Hakkımızda / Neden Hat Naturel" bölümü.
- * Copywriter Tarz C: samimi, davetkâr.
- *
- * "Doğanın Yanı Başında Bir Mola"
  */
 export function AboutSection() {
+  const t = useTranslations('home');
+
   const highlights = [
-    {
-      icon: TreePine,
-      text: 'Sabah uyanınca dışarıda sadece ağaçlar ve kuş sesi var.',
-    },
-    {
-      icon: Waves,
-      text: 'Isıtmalı havuz ve sauna ile her mevsim gerçek bir sıfırlama.',
-    },
-    {
-      icon: Home,
-      text: 'Mutfak, oturma odası, tam mahremiyet — otel odası değil, eviniz.',
-    },
-    {
-      icon: Heart,
-      text: 'Her gelişinizde aynı sıcaklıkla karşılayan bir köşe.',
-    },
+    { icon: TreePine, text: t('highlight1') },
+    { icon: Waves, text: t('highlight2') },
+    { icon: Home, text: t('highlight3') },
+    { icon: Heart, text: t('highlight4') },
   ];
 
   return (
@@ -49,19 +37,19 @@ export function AboutSection() {
           {/* Kicker */}
           <span className="inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/5 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.25em] text-accent-dark">
             <span className="h-1 w-1 rounded-full bg-accent" />
-            Hat Naturel
+            {t('aboutKicker')}
           </span>
 
           {/* Başlık */}
           <h2 className="mx-auto mt-6 max-w-3xl font-serif text-4xl font-bold leading-tight tracking-tight text-neutral-900 md:text-5xl lg:text-6xl">
-            <span className="italic font-light text-accent-dark">Doğanın</span>{' '}
-            Yanı Başında{' '}
-            <span className="block md:inline">Bir Mola</span>
+            <span className="italic font-light text-accent-dark">{t('aboutTitleLight')}</span>{' '}
+            {t('aboutTitleAfter')}{' '}
+            <span className="block md:inline">{t('aboutTitleEnd')}</span>
           </h2>
 
           {/* Subtitle */}
           <p className="mx-auto mt-6 max-w-2xl text-base text-neutral-600 md:text-lg">
-            Sapanca&apos;da, ağaçların arasında — şehirden uzak, ruhunuza yakın.
+            {t('aboutSubtitle')}
           </p>
         </motion.div>
 
@@ -74,19 +62,14 @@ export function AboutSection() {
           className="mx-auto mt-14 max-w-3xl"
         >
           <p className="text-center text-lg leading-relaxed text-neutral-700 md:text-xl md:leading-[1.8]">
-            Hat Naturel, büyük otellerin gürültüsünden sıkılanlar için
-            tasarlandı. Sapanca ormanına yayılmış{' '}
+            {t('aboutBodyP1Pre')}{' '}
             <strong className="font-semibold text-neutral-900">
-              13 müstakil evimizde
+              {t('aboutBodyP1Bold')}
             </strong>{' '}
-            konaklayan her misafirimiz kendine ait bir dünyaya adım atar:
-            üçgen çatıların altında huzurlu bir sabah, ısıtmalı havuzda
-            serbest kalan zihin, saunanın sıcaklığında gevşeyen omuzlar.
+            {t('aboutBodyP1Post')}
           </p>
           <p className="mt-6 text-center text-base leading-relaxed text-neutral-600 md:text-lg">
-            Bir hafta sonu kaçamağı da olsa, uzun bir mola da — burası her
-            gelişinizde sizi o aynı sıcaklıkla karşılar. Çünkü gerçek
-            dinlenme, sayısı 13&apos;ü geçmeyen bir yerde başlar.
+            {t('aboutBodyP2')}
           </p>
         </motion.div>
 
@@ -127,9 +110,9 @@ export function AboutSection() {
           transition={{ duration: 1, delay: 0.8 }}
           className="mx-auto mt-20 max-w-xl text-center font-serif text-2xl italic leading-snug text-neutral-800 md:text-3xl"
         >
-          &ldquo;Sizin köşeniz hazır.{' '}
+          &ldquo;{t('ctaQuoteOpen')}{' '}
           <span className="text-accent-dark">
-            Bir tarih seçin, gerisini biz halledelim.
+            {t('ctaQuoteEm')}
           </span>
           &rdquo;
         </motion.p>

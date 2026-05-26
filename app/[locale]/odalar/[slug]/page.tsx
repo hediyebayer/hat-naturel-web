@@ -35,7 +35,10 @@ export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const room = getRoomBySlug(params.slug);
-  if (!room) return { title: 'Oda bulunamadı' };
+  if (!room) {
+    const tnf = await getTranslations({ locale: params.locale, namespace: 'roomDetail' });
+    return { title: tnf('notFound') };
+  }
 
   const t = await getTranslations({
     locale: params.locale,
@@ -91,16 +94,28 @@ export default async function RoomDetailPage({ params }: PageProps) {
 
   const related = getRelatedRooms(room.slug, 3);
 
-  // i18n çeviriler breadcrumb için
-  const t = await getTranslations({ locale: params.locale, namespace: 'nav' });
+  // i18n çeviriler
+  const t = await getTranslations({ locale: params.locale, namespace: 'roomDetail' });
+  const tRoomNames = await getTranslations({ locale: params.locale, namespace: 'roomNames' });
+  const tRoomDesc = await getTranslations({ locale: params.locale, namespace: 'roomDescriptions' });
+
+  // Locale'e göre çevrilmiş oda metinleri
+  const localizedName = tRoomNames(`${room.slug}.name`);
+  const localizedTagline = tRoomNames(`${room.slug}.tagline`);
+  const localizedLongDescription = tRoomDesc(`${room.slug}.longDescription`);
+  // bedConfig dizi olarak (raw access)
+  const localizedBedConfig = tRoomDesc.raw(`${room.slug}.bedConfig`) as string[] | undefined;
 
   // JSON-LD schemas
-  const roomSchema = generateHotelRoomSchema(room, params.locale as Locale);
+  const roomSchema = generateHotelRoomSchema(room, params.locale as Locale, {
+    name: localizedName,
+    description: localizedLongDescription,
+  });
   const breadcrumbSchema = generateBreadcrumbSchema([
-    { name: t('home'), url: `${SITE_CONFIG.url}/${params.locale}` },
-    { name: t('rooms'), url: `${SITE_CONFIG.url}/${params.locale}/odalar` },
+    { name: t('breadcrumbHome'), url: `${SITE_CONFIG.url}/${params.locale}` },
+    { name: t('breadcrumbRooms'), url: `${SITE_CONFIG.url}/${params.locale}/odalar` },
     {
-      name: room.name,
+      name: localizedName,
       url: `${SITE_CONFIG.url}/${params.locale}/odalar/${room.slug}`,
     },
   ]);
@@ -119,17 +134,17 @@ export default async function RoomDetailPage({ params }: PageProps) {
         <Container>
           <nav className="flex items-center gap-2 text-sm text-neutral-500">
             <a href={`/${params.locale}`} className="hover:text-primary-700">
-              Anasayfa
+              {t('breadcrumbHome')}
             </a>
             <ChevronRight className="h-4 w-4" />
             <a
               href={`/${params.locale}/odalar`}
               className="hover:text-primary-700"
             >
-              Odalar
+              {t('breadcrumbRooms')}
             </a>
             <ChevronRight className="h-4 w-4" />
-            <span className="font-medium text-neutral-800">{room.name}</span>
+            <span className="font-medium text-neutral-800">{localizedName}</span>
           </nav>
         </Container>
       </section>
@@ -146,14 +161,14 @@ export default async function RoomDetailPage({ params }: PageProps) {
                 </span>
                 {room.featured && (
                   <span className="rounded-full bg-accent/15 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-accent-dark">
-                    ⭐ Öne Çıkan
+                    {t('featured')}
                   </span>
                 )}
               </div>
               <h1 className="mt-3 font-serif text-4xl font-bold leading-tight text-neutral-900 md:text-5xl">
-                {room.name}
+                {localizedName}
               </h1>
-              <p className="mt-2 text-lg text-neutral-600">{room.tagline}</p>
+              <p className="mt-2 text-lg text-neutral-600">{localizedTagline}</p>
             </div>
             <div className="flex gap-3">
               <ButtonLink
@@ -161,45 +176,45 @@ export default async function RoomDetailPage({ params }: PageProps) {
                 variant="outline"
                 size="lg"
               >
-                Bilgi Al
+                {t('getInfoCta')}
               </ButtonLink>
               <ButtonLink
                 href={`/${params.locale}${RESERVATION_HREF}?room=${room.slug}`}
                 size="lg"
               >
-                Rezerve Et
+                {t('reserveCta')}
               </ButtonLink>
             </div>
           </div>
 
           {/* Gallery */}
-          <RoomGallery images={room.images} alt={room.name} />
+          <RoomGallery images={room.images} alt={localizedName} />
 
           {/* SPECS strip */}
           <div className="mt-8 grid grid-cols-2 gap-3 rounded-3xl border border-neutral-200 bg-white p-4 shadow-soft sm:grid-cols-5">
             <SpecBig
               icon={<Maximize2 className="h-5 w-5" />}
-              label="Alan"
+              label={t('specArea')}
               value={`${room.specs.area} m²`}
             />
             <SpecBig
               icon={<Users className="h-5 w-5" />}
-              label="Kapasite"
-              value={`${room.specs.guests} kişi`}
+              label={t('specCapacity')}
+              value={`${room.specs.guests} ${t('guestsUnit')}`}
             />
             <SpecBig
               icon={<UserPlus className="h-5 w-5" />}
-              label="Ek Yatak"
+              label={t('specExtraBed')}
               value={`+${room.specs.extraGuests}`}
             />
             <SpecBig
               icon={<BedDouble className="h-5 w-5" />}
-              label="Yatak Odası"
+              label={t('specBedroom')}
               value={`${room.specs.bedrooms}`}
             />
             <SpecBig
               icon={<Bath className="h-5 w-5" />}
-              label="Banyo"
+              label={t('specBathroom')}
               value={`${room.specs.bathrooms}`}
             />
           </div>
@@ -213,26 +228,26 @@ export default async function RoomDetailPage({ params }: PageProps) {
             {/* Description */}
             <div>
               <span className="text-xs font-semibold uppercase tracking-[0.2em] text-primary-600">
-                Hakkında
+                {t('aboutKicker')}
               </span>
               <h2 className="mt-2 font-serif text-3xl font-bold text-neutral-900 md:text-4xl">
-                Doğanın içinde ev konforu
+                {t('aboutTitle')}
               </h2>
               <p className="mt-5 text-base leading-relaxed text-neutral-700 md:text-lg">
-                {room.longDescription}
+                {localizedLongDescription}
               </p>
 
               {/* Yatak Düzeni / Kapasite Bilgisi (varsa) */}
-              {room.bedConfig && room.bedConfig.length > 0 && (
+              {localizedBedConfig && localizedBedConfig.length > 0 && (
                 <div className="mt-8 rounded-2xl border border-primary-200 bg-gradient-to-br from-primary-50 to-white p-6">
                   <div className="mb-3 flex items-center gap-2">
                     <span className="text-2xl animate-bounce-slow">🛏️</span>
                     <h3 className="font-serif text-lg font-bold text-primary-900">
-                      Yatak Düzeni & Kapasite
+                      {t('bedConfigTitle')}
                     </h3>
                   </div>
                   <ul className="space-y-2">
-                    {room.bedConfig.map((line, i) => (
+                    {localizedBedConfig.map((line, i) => (
                       <li
                         key={i}
                         className="flex items-start gap-2 text-sm text-primary-900"
@@ -246,9 +261,7 @@ export default async function RoomDetailPage({ params }: PageProps) {
 
               <div className="mt-8 rounded-2xl border-l-4 border-primary-500 bg-primary-50/60 p-5">
                 <p className="text-sm text-primary-900">
-                  💡 <strong>İpucu:</strong> Hafta içi tarihler daha sakin ve daha
-                  avantajlı. Rezervasyon öncesi bizimle iletişime geçerek en uygun
-                  paketi konuşalım.
+                  💡 <strong>{t('tipLabel')}</strong> {t('tipText')}
                 </p>
               </div>
             </div>
@@ -256,10 +269,10 @@ export default async function RoomDetailPage({ params }: PageProps) {
             {/* Amenities */}
             <div>
               <span className="text-xs font-semibold uppercase tracking-[0.2em] text-primary-600">
-                Olanaklar
+                {t('amenitiesKicker')}
               </span>
               <h2 className="mt-2 font-serif text-3xl font-bold text-neutral-900 md:text-4xl">
-                Bu bungalovda sizi neler bekliyor?
+                {t('amenitiesTitle')}
               </h2>
               <div className="mt-6">
                 <AmenityList amenities={room.amenities} />
@@ -274,10 +287,10 @@ export default async function RoomDetailPage({ params }: PageProps) {
         <Container size="xl">
           <div className="mb-10 text-center">
             <span className="text-xs font-semibold uppercase tracking-[0.2em] text-primary-600">
-              Diğer Köşkler
+              {t('relatedKicker')}
             </span>
             <h2 className="mt-2 font-serif text-3xl font-bold text-neutral-900 md:text-4xl">
-              İlginizi Çekebilir
+              {t('relatedTitle')}
             </h2>
           </div>
           <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">

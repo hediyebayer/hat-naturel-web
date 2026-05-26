@@ -30,6 +30,10 @@
     "contact": {
       "title": "Contact & Reservation — Hat Naturel Resort Sapanca",
       "description": "Reach us for reservations, inquiries, and questions. WhatsApp, phone, email. Sapanca, Sakarya."
+    },
+    "reservation": {
+      "title": "Reservation — Hat Naturel Resort Sapanca",
+      "description": "Discover available bungalows and lodges at Sapanca Hat Naturel Resort. Price and availability based on dates and guest count."
     }
   },
   "common": {
@@ -42,7 +46,12 @@
     "loading": "Loading...",
     "error": "An error occurred",
     "send": "Send",
-    "bookNow": "Book Now"
+    "bookNow": "Book Now",
+    "prevImage": "Previous image",
+    "nextImage": "Next image",
+    "closeMenu": "Close menu",
+    "previous": "Previous",
+    "next": "Next"
   },
   "nav": {
     "home": "Home",
@@ -66,7 +75,27 @@
     "galleryTitle": "Gallery",
     "gallerySubtitle": "Moments from our resort",
     "locationTitle": "Location",
-    "locationSubtitle": "At the heart of Sapanca, surrounded by nature"
+    "locationSubtitle": "At the heart of Sapanca, surrounded by nature",
+    "mapAddressTitle": "Address",
+    "mapPhoneTitle": "Phone",
+    "mapDirectionsButton": "Get Directions",
+    "mapIframeTitle": "Hat Naturel Resort location — Google Maps",
+    "aboutKicker": "Hat Naturel",
+    "aboutTitleLight": "Nature's",
+    "aboutTitleAfter": "Doorstep",
+    "aboutTitleEnd": "A Break",
+    "aboutSubtitle": "In Sapanca, among the trees — far from the city, close to your soul.",
+    "aboutBodyP1Pre": "Hat Naturel was designed for those tired of the noise of big hotels. In our",
+    "aboutBodyP1Bold": "13 detached homes",
+    "aboutBodyP1Post": "spread across the Sapanca forest, every guest steps into a world of their own: a peaceful morning under triangular roofs, a mind set free in the heated pool, shoulders that relax in the warmth of the sauna.",
+    "aboutBodyP2": "Whether a weekend escape or a long retreat — this place welcomes you with the same warmth every time. Because true rest begins where there are no more than 13.",
+    "highlight1": "When you wake up, outside there are only trees and the sound of birds.",
+    "highlight2": "A real reset every season with heated pool and sauna.",
+    "highlight3": "Kitchen, living room, full privacy — not a hotel room, your home.",
+    "highlight4": "A corner that welcomes you with the same warmth every visit.",
+    "ctaQuoteOpen": "Your corner is ready.",
+    "ctaQuoteEm": "Pick a date, we'll handle the rest.",
+    "seeAllRooms": "See All Bungalows & Lodges →"
   },
   "rooms": {
     "title": "Our Bungalows",
@@ -75,7 +104,35 @@
     "guests": "{count, plural, =1 {# guest} other {# guests}}",
     "amenities": "Amenities",
     "perNight": "/ night",
-    "from": "starting from"
+    "from": "starting from",
+    "heroBadge": "Hat Naturel Resort · Sapanca",
+    "heroTitleLight": "A Small Doorway",
+    "heroTitleItalic": "into Nature",
+    "heroSubtitle": "Surrounded by nature and views, peaceful holidays and unforgettable moments await you in our private detached bungalows.",
+    "heroScroll": "Discover",
+    "amenityGroup1": "Inside the Bungalow",
+    "amenityGroup2": "Outdoor & Surroundings",
+    "amenityGroup3": "Facility Amenities",
+    "amenityGroup4": "Security & Infrastructure",
+    "amenityGroupPoolSpa": "Pool & Spa",
+    "amenityNoPets": "We unfortunately cannot host pets at our facility.",
+    "amenityLocationLabel": "Location:",
+    "amenityLocationText": "Just {minutes} from Sapanca centre, in the heart of nature with a {lakeView} setting.",
+    "amenityLocationMinutes": "6-7 minutes",
+    "amenityLocationLakeView": "lake-view",
+    "badgeUnits": "Units",
+    "badgeHeatedPool": "Heated Pool",
+    "badgeJacuzzi": "Jacuzzi",
+    "badgeSauna": "Sauna",
+    "badgeCoolingPool": "Cooling Pool",
+    "badgePool": "Summer Pool",
+    "badgeFireplace": "Fireplace",
+    "badgeFirePit": "Fire Pit",
+    "ctaTitle": "Cannot decide?",
+    "ctaText": "Let's pick the best bungalow together. Drop us a message or call us — we'll answer all your questions.",
+    "ctaContact": "Contact Us",
+    "ctaReserve": "Make a Reservation",
+    "seeDetails": "See Details"
   },
   "reservation": {
     "title": "Book Now",
@@ -93,7 +150,21 @@
     "submit": "Send Reservation Request",
     "submitting": "Sending...",
     "success": "Your request has been received! We'll get back to you shortly.",
-    "error": "Something went wrong, please try again."
+    "error": "Something went wrong, please try again.",
+    "checkInShort": "Check-in",
+    "checkOutShort": "Check-out",
+    "pickDate": "Pick a date",
+    "guestsLabel": "Guests",
+    "guestsSuffix": "guests",
+    "searchMobile": "Search",
+    "searchDesktop": "Check Availability",
+    "nightsLabel": "nights",
+    "clearDates": "Clear",
+    "confirmDates": "Done",
+    "searchAriaLabel": "Reservation Search",
+    "unavailable": "Not Available",
+    "bedroomLabel": "bedroom(s)",
+    "updateBtn": "Update"
   },
   "contact": {
     "title": "Contact",
@@ -176,6 +247,7 @@
     "heroTitle": "Moments from",
     "heroTitleItalic": "Nature",
     "heroLead": "A curated selection of drone and ground shots — discover our resort from every angle.",
+    "natureFramesBadge": "Frames from Nature",
     "all": "All",
     "drone": "Drone",
     "ground": "Ground",
@@ -189,7 +261,76 @@
   },
   "virtualTour": {
     "title": "360° Virtual Tour",
-    "subtitle": "Explore our resort virtually"
+    "subtitle": "Explore our resort virtually",
+    "badge": "Virtual Experience",
+    "cta": "Discover the Resort",
+    "panorama": "360° Full Panorama",
+    "bungalovLabel": "🏡 Hat Naturel Bungalow",
+    "videoCallShort": "Video calls available",
+    "iframeTitle": "Hat Naturel Resort 360° Virtual Tour"
+  },
+  "sanalTur": {
+    "badge": "Virtual Experience Hub",
+    "heroTitleLight": "Hat Naturel",
+    "heroTitleBold": "4 Ways to Discover",
+    "heroSubtitle": "Live video tour, 360° map, guest photos and address details — every way to get to know the resort before you arrive.",
+    "chipLiveTour": "Live Tour",
+    "chipLocation": "Location",
+    "chipMap360": "360° Map",
+    "chipGuestGallery": "Guest Gallery",
+    "liveBadge": "Live Connection",
+    "liveTitle": "Tour the Resort",
+    "liveTitleItalic": "Live",
+    "liveSubtitle": "Want to see the resort for real? Reach us on Instagram, WhatsApp video or by phone — we'll connect instantly and give you a personal live tour.",
+    "instagramKicker": "Social Media",
+    "instagramTitle": "Instagram",
+    "instagramSubtitle": "Latest photos and stories",
+    "instagramCta": "Follow",
+    "whatsappKicker": "Live Video",
+    "whatsappTitle": "WhatsApp Video",
+    "whatsappSubtitle": "Instant live video tour experience",
+    "whatsappCta": "Connect Live",
+    "whatsappBadge": "Recommended",
+    "whatsappMessage": "Hello 👋 I'd like to tour Hat Naturel via live video — may I schedule an available time?",
+    "phoneKicker": "Voice Call",
+    "phoneTitle": "Phone",
+    "phoneSubtitle": "Classic call, we're always here",
+    "phoneCta": "Call Now",
+    "locationBadge": "Location & Access",
+    "locationTitleItalic": "Sapanca",
+    "locationTitleAfter": "In the Heart of Nature",
+    "locationSubtitle": "Far from the city's noise, close to nature's silence — a private spot with easy access.",
+    "addressLabel": "Our Address",
+    "directionsButton": "Get Directions",
+    "distancesLabel": "Distances",
+    "distanceSapancaCenter": "Sapanca Centre",
+    "distanceSapancaLake": "Lake Sapanca",
+    "distanceSawAirport": "Sabiha Gökçen Airport",
+    "distanceIstAirport": "Istanbul Airport",
+    "distanceBusTerminal": "Sakarya Bus Terminal",
+    "distanceHighway": "TEM Highway",
+    "mapBadge": "360° Virtual Tour",
+    "mapTitle": "Tour the Resort",
+    "mapTitleItalic": "on the Map",
+    "mapTitleAfter": "— ready to explore?",
+    "mapSubtitle": "Discover every corner of the resort beforehand with Google Street View. One click in, spin 360°, see it all.",
+    "mapInteractive": "360° Interactive",
+    "mapCta": "Step Inside",
+    "mapClickHint": "Click, spin 360°, explore everywhere",
+    "mapFullScreen": "Click the icon in the top right for full screen",
+    "closeAria": "Close virtual tour",
+    "guestBadge": "Guest Gallery",
+    "guestTitleItalic": "Photos",
+    "guestTitleAfter": "from You",
+    "guestSubtitle": "Share the most beautiful moments you captured at Hat Naturel — see the resort through our guests' eyes.",
+    "guestComingSoon": "Coming Soon",
+    "guestPlaceholder": "Waiting for guest photos",
+    "guestShareKicker": "Share Yours Too",
+    "guestShareTitle": "Bring Your Memories",
+    "guestShareTitleItalic": "to Our Site",
+    "guestShareDescription": "Send a photo you took at Hat Naturel via WhatsApp, add a caption, and we'll feature it on the site. For everyone who wants to discover the resort through our guests' eyes.",
+    "guestShareCta": "Share a Photo",
+    "guestShareMessage": "Hello! I'd like to share a photo I took at Hat Naturel and have it featured on the site 📸"
   },
   "footer": {
     "tagline": "Premium holiday in nature, in Sapanca.",
@@ -211,5 +352,170 @@
     "invalidPhone": "Please enter a valid phone number",
     "minLength": "Must be at least {min} characters",
     "checkOutAfterCheckIn": "Check-out must be after check-in"
+  },
+  "amenities": {
+    "pool": "Pool (summer)",
+    "heatedPool": "Heated Pool",
+    "coolingPool": "Cooling Pool",
+    "sauna": "Sauna",
+    "jacuzzi": "Jacuzzi",
+    "sunbed": "Sunbeds",
+    "doubleSwing": "Double Swing",
+    "swing": "Kids Swing",
+    "ac": "Air Conditioning",
+    "wifi": "Free Wi-Fi",
+    "smartTv": "Smart TV",
+    "streamingTv": "TV (YouTube & Netflix)",
+    "kitchen": "Full Kitchen",
+    "fridge": "Refrigerator",
+    "fireplace": "Fireplace",
+    "hairDryer": "Hair Dryer",
+    "wardrobe": "Wardrobe",
+    "towels": "Bath Towels",
+    "toiletries": "Toiletries",
+    "bbq": "BBQ Equipment",
+    "firePit": "Fire Pit",
+    "privateVeranda": "Private Veranda",
+    "gardenFurniture": "Garden Furniture",
+    "lakeView": "Lake View",
+    "waterTank": "Water Tank",
+    "fireExtinguisher": "Fire Extinguisher",
+    "security": "24/7 Security",
+    "generator": "Generator",
+    "cafe": "On-site Cafe",
+    "parking": "Free Parking",
+    "playground": "Playground",
+    "waterfall": "Mini Waterfall",
+    "naturalArea": "Wide Natural Area",
+    "noPets": "No Pets Allowed"
+  },
+  "roomNames": {
+    "bej": {
+      "name": "1+1 Beige Lodge",
+      "shortName": "Beige 1+1",
+      "tagline": "Elegant simplicity, nature views"
+    },
+    "turkuaz": {
+      "name": "1+1 Turquoise Lodge",
+      "shortName": "Turquoise 1+1",
+      "tagline": "Simple comfort, for couples"
+    },
+    "ucgen-1-1": {
+      "name": "1+1 Triangle Bungalow",
+      "shortName": "1+1 Triangle",
+      "tagline": "Heated pool + jacuzzi + sauna, iconic triangle"
+    },
+    "mor": {
+      "name": "2+1 Purple Lodge",
+      "shortName": "Purple 2+1",
+      "tagline": "Summer pool, striking lodge"
+    },
+    "sari": {
+      "name": "2+1 Yellow Lodge",
+      "shortName": "Yellow 2+1",
+      "tagline": "Special design, large family lodge"
+    },
+    "ucgen-2-1": {
+      "name": "2+1 Triangle Bungalow",
+      "shortName": "Triangle 2+1",
+      "tagline": "Heated pool + jacuzzi + sauna, large family"
+    }
+  },
+  "roomDetail": {
+    "breadcrumbHome": "Home",
+    "breadcrumbRooms": "Rooms",
+    "notFound": "Room not found",
+    "featured": "⭐ Featured",
+    "reserveCta": "Book Now",
+    "specArea": "Area",
+    "specCapacity": "Capacity",
+    "specExtraBed": "Extra Bed",
+    "specBedroom": "Bedroom",
+    "specBathroom": "Bathroom",
+    "aboutKicker": "About",
+    "aboutTitle": "Home comfort in nature",
+    "bedConfigTitle": "Bed Layout & Capacity",
+    "tipLabel": "Tip:",
+    "tipText": "Weekday dates are quieter and more affordable. Reach out before booking to discuss the best package.",
+    "amenitiesKicker": "Amenities",
+    "amenitiesTitle": "What awaits you in this bungalow?",
+    "relatedKicker": "Other Lodges",
+    "relatedTitle": "You Might Also Like",
+    "guestsUnit": "guests",
+    "getInfoCta": "Get Info"
+  },
+  "reservationPage": {
+    "kicker": "Reservation",
+    "title": "Available Bungalows & Lodges",
+    "subtitle": "Pick your dates and guest count, discover the right stay for you.",
+    "emptyState": "Please select a date and number of guests above.",
+    "queryInvalid": "Invalid query.",
+    "fallbackWarning": "⚠️ Live availability could not be retrieved. Displayed prices are estimates, please contact us to book.",
+    "resultsCount": "{count} available stays for {nights} night(s)"
+  },
+  "roomDescriptions": {
+    "bej": {
+      "description": "Standard 1+1 lodge; 85 m² of spacious living, detached bungalow with nature views. (No pool)",
+      "longDescription": "Beige Lodge, one of our standard 1+1 lodges at Hat Naturel Resort Sapanca, offers 85 m² of comfortable living and bedroom space with the feel of home. Its detached structure with nature views, modern interior design and warm atmosphere makes it ideal for couples and small families. This lodge has no private pool, but you can fully enjoy the shared facilities on the resort.",
+      "bedConfig": [
+        "🛏️ Double bed in the mezzanine",
+        "🛋️ Double sofa-bed in the living area",
+        "🛋️ Extra single sofa-bed",
+        "👪 Up to 5 guests"
+      ]
+    },
+    "turkuaz": {
+      "description": "Spacious 85 m² 1+1 lodge — for those seeking practical comfort. (No pool)",
+      "longDescription": "Our Turquoise Lodge 1+1 is 85 m² wide and offers couples and close friends a relaxed holiday experience. With modern equipment that preserves the feeling of home comfort right in the heart of nature, it is an ideal accommodation choice. The lodge has no private pool, but you can enjoy the shared facilities of the resort.",
+      "bedConfig": [
+        "🛏️ Double bed in the mezzanine",
+        "🛋️ Double sofa-bed in the living area",
+        "🛋️ Extra single sofa-bed",
+        "👪 Up to 5 guests"
+      ]
+    },
+    "ucgen-1-1": {
+      "description": "One of the most popular structures — private heated pool, sauna and iconic triangular design. 6 units available.",
+      "longDescription": "Our 1+1 Triangle Bungalows are among the most preferred structures on the resort, with 6 units in total. The iconic triangular architecture and warm wooden textures offer a unique atmosphere right in nature. Inside each bungalow you will find a private heated pool, jacuzzi, sauna and poolside loungers plus a double-seat swing — for year-round spa enjoyment. With a double bed in the mezzanine and a double sofa-bed plus single sofa-bed in the living area, up to 5 people can stay. Ideal for couples and small families, advantageous in both price and comfort.",
+      "bedConfig": [
+        "🛏️ Double bed in the mezzanine",
+        "🛋️ Double sofa-bed in the living area",
+        "🛋️ Extra single sofa-bed",
+        "👪 Up to 5 guests"
+      ]
+    },
+    "mor": {
+      "description": "Spacious 2+1 layout in 95 m² — family lodge with private summer cooling pool.",
+      "longDescription": "One of the most eye-catching lodges of the resort, Purple Lodge offers a spacious 2+1 layout across 95 m². Thanks to its private summer cooling pool, poolside loungers and large two-person swing, you can enjoy cooling moments with the family in your garden on hot days. Fireplace comfort brings the same warm atmosphere in winter; an ideal choice for a peaceful family holiday in nature's silence.",
+      "bedConfig": [
+        "🛏️ 1 double bed in the master bedroom",
+        "🛏️ 1 double bed in the 2nd bedroom",
+        "🛋️ Double sofa-bed in the living area",
+        "🛋️ Single sofa-bed in the living area",
+        "👪 Up to 7 guests"
+      ]
+    },
+    "sari": {
+      "description": "Custom-designed 2+1 lodge of 95 m²; stands out with spaciousness and living comfort. (No pool)",
+      "longDescription": "Our Yellow Lodge 2+1 was custom designed. Standing out with the spaciousness of the rooms and the breadth of the living space, this detached lodge welcomes you with nature views. You can spend unforgettable family moments in its large garden facing nature. The lodge has no private pool; you can enjoy the shared facilities of the resort.",
+      "bedConfig": [
+        "🛏️ 1 double bed in the master bedroom",
+        "🛏️ 1 double bed in the 2nd bedroom",
+        "🛋️ Double sofa-bed in the living area",
+        "🛋️ Single sofa-bed in the living area",
+        "👪 Up to 7 guests"
+      ]
+    },
+    "ucgen-2-1": {
+      "description": "Triangular 2+1 of 95 m² — private heated pool, sauna and comfortable living for large families. 3 units available.",
+      "longDescription": "At Hat Naturel Resort Sapanca our 2+1 Triangle Bungalows were designed for larger families, with 3 units in total. Spanning 95 m², they offer comfortable space for a whole family and overlook nature. Each bungalow includes a private heated pool, jacuzzi, sauna, poolside loungers and a double-seat swing — spa enjoyment in every season. The iconic triangular architecture creates a picture-perfect atmosphere; each unit shares the same interior design and equipment.",
+      "bedConfig": [
+        "🛏️ 1 double bed in the master bedroom",
+        "🛏️ 2 single beds in the mezzanine",
+        "🛋️ Double sofa-bed in the living area",
+        "🛋️ Single sofa-bed in the living area",
+        "👪 Up to 7 guests"
+      ]
+    }
   }
 }

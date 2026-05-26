@@ -84,7 +84,7 @@ export function MobileMenu({
           <button
             type="button"
             onClick={onClose}
-            aria-label="Menüyü kapat"
+            aria-label={tCommon('closeMenu')}
             className="rounded-full p-2 text-neutral-600 hover:bg-neutral-100"
           >
             <X size={20} />

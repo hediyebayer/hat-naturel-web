@@ -30,6 +30,10 @@
     "contact": {
       "title": "İletişim & Rezervasyon — Hat Naturel Resort Sapanca",
       "description": "Rezervasyon, bilgi ve sorularınız için bize ulaşın. WhatsApp, telefon, email. Sapanca, Sakarya."
+    },
+    "reservation": {
+      "title": "Rezervasyon — Hat Naturel Resort Sapanca",
+      "description": "Sapanca Hat Naturel Resort'ta müsait bungalov ve köşkleri keşfedin. Tarih ve kişi sayısına göre fiyat ve müsaitlik bilgisi."
     }
   },
   "common": {
@@ -42,7 +46,12 @@
     "loading": "Yükleniyor...",
     "error": "Bir hata oluştu",
     "send": "Gönder",
-    "bookNow": "Şimdi Rezerve Et"
+    "bookNow": "Şimdi Rezerve Et",
+    "prevImage": "Önceki görsel",
+    "nextImage": "Sonraki görsel",
+    "closeMenu": "Menüyü kapat",
+    "previous": "Önceki",
+    "next": "Sonraki"
   },
   "nav": {
     "home": "Anasayfa",
@@ -66,7 +75,27 @@
     "galleryTitle": "Galeri",
     "gallerySubtitle": "Tesisimizden kareler",
     "locationTitle": "Konum",
-    "locationSubtitle": "Sapanca'nın kalbinde, doğanın içinde"
+    "locationSubtitle": "Sapanca'nın kalbinde, doğanın içinde",
+    "mapAddressTitle": "Adres",
+    "mapPhoneTitle": "Telefon",
+    "mapDirectionsButton": "Yol Tarifi Al",
+    "mapIframeTitle": "Hat Naturel Resort konumu — Google Maps",
+    "aboutKicker": "Hat Naturel",
+    "aboutTitleLight": "Doğanın",
+    "aboutTitleAfter": "Yanı Başında",
+    "aboutTitleEnd": "Bir Mola",
+    "aboutSubtitle": "Sapanca'da, ağaçların arasında — şehirden uzak, ruhunuza yakın.",
+    "aboutBodyP1Pre": "Hat Naturel, büyük otellerin gürültüsünden sıkılanlar için tasarlandı. Sapanca ormanına yayılmış",
+    "aboutBodyP1Bold": "13 müstakil evimizde",
+    "aboutBodyP1Post": "konaklayan her misafirimiz kendine ait bir dünyaya adım atar: üçgen çatıların altında huzurlu bir sabah, ısıtmalı havuzda serbest kalan zihin, saunanın sıcaklığında gevşeyen omuzlar.",
+    "aboutBodyP2": "Bir hafta sonu kaçamağı da olsa, uzun bir mola da — burası her gelişinizde sizi o aynı sıcaklıkla karşılar. Çünkü gerçek dinlenme, sayısı 13'ü geçmeyen bir yerde başlar.",
+    "highlight1": "Sabah uyanınca dışarıda sadece ağaçlar ve kuş sesi var.",
+    "highlight2": "Isıtmalı havuz ve sauna ile her mevsim gerçek bir sıfırlama.",
+    "highlight3": "Mutfak, oturma odası, tam mahremiyet — otel odası değil, eviniz.",
+    "highlight4": "Her gelişinizde aynı sıcaklıkla karşılayan bir köşe.",
+    "ctaQuoteOpen": "Sizin köşeniz hazır.",
+    "ctaQuoteEm": "Bir tarih seçin, gerisini biz halledelim.",
+    "seeAllRooms": "Tüm Bungalov & Köşkleri Gör →"
   },
   "rooms": {
     "title": "Bungalov Evlerimiz",
@@ -75,7 +104,35 @@
     "guests": "{count, plural, =1 {# misafir} other {# misafir}}",
     "amenities": "Olanaklar",
     "perNight": "/ gece",
-    "from": "başlangıç fiyatı"
+    "from": "başlangıç fiyatı",
+    "heroBadge": "Hat Naturel Resort · Sapanca",
+    "heroTitleLight": "Doğaya Açılan",
+    "heroTitleItalic": "Küçük Bir Kapı",
+    "heroSubtitle": "Doğa ve manzara eşliğinde, size özel muhafazakar müstakil bungalovlarımızda huzur dolu tatil ve unutulmaz anlar sizi bekliyor.",
+    "heroScroll": "Keşfet",
+    "amenityGroup1": "Bungalov İçi",
+    "amenityGroup2": "Dış Alan & Çevre",
+    "amenityGroup3": "Tesis İçi Olanaklar",
+    "amenityGroup4": "Güvenlik & Altyapı",
+    "amenityGroupPoolSpa": "Havuz & Spa",
+    "amenityNoPets": "Maalesef patili dostlarımızı tesisimizde ağırlayamıyoruz.",
+    "amenityLocationLabel": "Konum:",
+    "amenityLocationText": "Sapanca şehir merkezine sadece {minutes} mesafede, doğanın kalbinde ve {lakeView} konumda.",
+    "amenityLocationMinutes": "6-7 dakika",
+    "amenityLocationLakeView": "göl manzaralı",
+    "badgeUnits": "Adet",
+    "badgeHeatedPool": "Isıtmalı Havuz",
+    "badgeJacuzzi": "Jakuzi",
+    "badgeSauna": "Sauna",
+    "badgeCoolingPool": "Serinleme Havuzu",
+    "badgePool": "Yaz Havuzlu",
+    "badgeFireplace": "Şömine",
+    "badgeFirePit": "Ateş Çukuru",
+    "ctaTitle": "Karar veremediniz mi?",
+    "ctaText": "Size en uygun bungalovu birlikte seçelim. Bir mesaj atın, telefonla arayalım — tüm sorularınızı yanıtlayalım.",
+    "ctaContact": "Bize Ulaşın",
+    "ctaReserve": "Rezervasyon Yap",
+    "seeDetails": "Detayları Gör"
   },
   "reservation": {
     "title": "Rezervasyon Yap",
@@ -93,7 +150,21 @@
     "submit": "Rezervasyon Talebi Gönder",
     "submitting": "Gönderiliyor...",
     "success": "Rezervasyon talebiniz alındı! En kısa sürede sizinle iletişime geçeceğiz.",
-    "error": "Bir hata oluştu, lütfen tekrar deneyin."
+    "error": "Bir hata oluştu, lütfen tekrar deneyin.",
+    "checkInShort": "Giriş",
+    "checkOutShort": "Çıkış",
+    "pickDate": "Tarih seç",
+    "guestsLabel": "Kişi",
+    "guestsSuffix": "kişi",
+    "searchMobile": "Sorgula",
+    "searchDesktop": "Müsaitlik Sorgula",
+    "nightsLabel": "gece konaklama",
+    "clearDates": "Temizle",
+    "confirmDates": "Tamam",
+    "searchAriaLabel": "Rezervasyon Arama",
+    "unavailable": "Müsait Değil",
+    "bedroomLabel": "yatak odası",
+    "updateBtn": "Güncelle"
   },
   "contact": {
     "title": "İletişim",
@@ -166,8 +237,8 @@
     "breakfastHours": "09:30 – 11:30",
     "ctaTitle": "Yerinizi şimdiden ayırtın",
     "ctaText": "Kahvaltı rezervasyonu için WhatsApp üzerinden bize ulaşabilirsiniz.",
-    "ctaButton": "WhatsApp ile yaz\u0131n",
-    "contactButton": "İleti\u015fim sayfas\u0131"
+    "ctaButton": "WhatsApp ile yazın",
+    "contactButton": "İletişim sayfası"
   },
   "gallery": {
     "title": "Galeri",
@@ -176,6 +247,7 @@
     "heroTitle": "Doğadan",
     "heroTitleItalic": "Kareler",
     "heroLead": "Drone ve yer çekimlerinden oluşan seçkin — tesisimizi her açıdan keşfedin.",
+    "natureFramesBadge": "Doğadan Kareler",
     "all": "Tümü",
     "drone": "Drone",
     "ground": "Yer Çekimleri",
@@ -189,7 +261,76 @@
   },
   "virtualTour": {
     "title": "360° Sanal Tur",
-    "subtitle": "Tesisimizi yerinde keşfedin"
+    "subtitle": "Tesisimizi yerinde keşfedin",
+    "badge": "Sanal Deneyim",
+    "cta": "Tesisi Keşfedin",
+    "panorama": "360° Tam Panorama",
+    "bungalovLabel": "🏡 Hat Naturel Bungalov",
+    "videoCallShort": "Görüntülü arama yapılabilir",
+    "iframeTitle": "Hat Naturel Resort 360° Sanal Tur"
+  },
+  "sanalTur": {
+    "badge": "Sanal Deneyim Merkezi",
+    "heroTitleLight": "Hat Naturel'i",
+    "heroTitleBold": "Keşfetmenin 4 Yolu",
+    "heroSubtitle": "Canlı görüntülü tur, 360° harita, misafir fotoğrafları ve adres bilgileri — tesisi gelmeden tanımanın her yolu burada.",
+    "chipLiveTour": "Canlı Tur",
+    "chipLocation": "Konum",
+    "chipMap360": "360° Harita",
+    "chipGuestGallery": "Misafir Galerimiz",
+    "liveBadge": "Canlı Bağlantı",
+    "liveTitle": "Oteli",
+    "liveTitleItalic": "Canlı Gez",
+    "liveSubtitle": "Tesisin gerçek halini görmek ister misin? Instagram, WhatsApp video veya telefonla bizi ara — anında bağlanalım, sana özel canlı tur atalım.",
+    "instagramKicker": "Sosyal Medya",
+    "instagramTitle": "Instagram",
+    "instagramSubtitle": "Güncel fotoğraflar ve hikayeler",
+    "instagramCta": "Takip Et",
+    "whatsappKicker": "Canlı Görüntülü",
+    "whatsappTitle": "WhatsApp Video",
+    "whatsappSubtitle": "Anlık görüntülü tur deneyimi",
+    "whatsappCta": "Canlı Bağlan",
+    "whatsappBadge": "Tavsiye Edilen",
+    "whatsappMessage": "Merhaba 👋 Hat Naturel'i canlı video ile gezmek istiyorum, müsait bir vakte randevu alabilir miyim?",
+    "phoneKicker": "Sesli Arama",
+    "phoneTitle": "Telefon",
+    "phoneSubtitle": "Klasik arama, hep yanınızdayız",
+    "phoneCta": "Hemen Ara",
+    "locationBadge": "Konum & Ulaşım",
+    "locationTitleItalic": "Sapanca",
+    "locationTitleAfter": "Doğasının Tam Kalbinde",
+    "locationSubtitle": "Şehrin gürültüsünden uzak, doğanın sessizliğine yakın — kolayca ulaşılan müstakil bir köşe.",
+    "addressLabel": "Adresimiz",
+    "directionsButton": "Yol Tarifi Al",
+    "distancesLabel": "Mesafeler",
+    "distanceSapancaCenter": "Sapanca Merkez",
+    "distanceSapancaLake": "Sapanca Gölü",
+    "distanceSawAirport": "Sabiha Gökçen Havalimanı",
+    "distanceIstAirport": "İstanbul Havalimanı",
+    "distanceBusTerminal": "Sakarya Otogarı",
+    "distanceHighway": "TEM Otoyolu",
+    "mapBadge": "360° Sanal Tur",
+    "mapTitle": "Oteli",
+    "mapTitleItalic": "Haritadan",
+    "mapTitleAfter": "Gezmek İster misin?",
+    "mapSubtitle": "Google Street View ile tesisin her köşesini önceden keşfet. Tek tıkla içeri buyur, 360° dön, her yeri gör.",
+    "mapInteractive": "360° Etkileşimli",
+    "mapCta": "İçeri Buyurun",
+    "mapClickHint": "Tıkla, 360° dön, her yeri keşfet",
+    "mapFullScreen": "Tam ekran için sağ üst köşedeki ikona tıklayın",
+    "closeAria": "Sanal turu kapat",
+    "guestBadge": "Misafir Galerimiz",
+    "guestTitleItalic": "Sizden",
+    "guestTitleAfter": "Gelen Fotoğraflar",
+    "guestSubtitle": "Hat Naturel'de çektiğiniz en güzel anları paylaşın — misafirlerimizin gözünden tesisi gör.",
+    "guestComingSoon": "Yakında",
+    "guestPlaceholder": "Misafir fotoğrafı bekleniyor",
+    "guestShareKicker": "Sen de Paylaş",
+    "guestShareTitle": "Anılarını",
+    "guestShareTitleItalic": "sitemize taşı",
+    "guestShareDescription": "Hat Naturel'de çektiğin bir fotoğrafı WhatsApp'tan yolla, açıklama yaz, biz sitende sergileyelim. Misafirlerimizin gözünden tesisi keşfetmek isteyen herkes için.",
+    "guestShareCta": "Fotoğraf Paylaş",
+    "guestShareMessage": "Merhaba! Hat Naturel'de çektiğim fotoğrafı sizinle paylaşmak ve sitede yayınlamak istiyorum 📸"
   },
   "footer": {
     "tagline": "Sapanca'da doğayla iç içe, premium tatil deneyimi.",
@@ -211,5 +352,170 @@
     "invalidPhone": "Geçerli bir telefon numarası girin",
     "minLength": "En az {min} karakter olmalı",
     "checkOutAfterCheckIn": "Çıkış tarihi giriş tarihinden sonra olmalı"
+  },
+  "amenities": {
+    "pool": "Havuz (yaz sezonu)",
+    "heatedPool": "Isıtmalı Özel Havuz",
+    "coolingPool": "Özel Serinleme Havuzu",
+    "sauna": "Sauna",
+    "jacuzzi": "Jakuzi",
+    "sunbed": "Şezlong",
+    "doubleSwing": "Çift Kişilik Salıncak",
+    "swing": "Çocuk Salıncakı",
+    "ac": "Klima",
+    "wifi": "Ücretsiz Wi-Fi",
+    "smartTv": "Akıllı TV",
+    "streamingTv": "TV (YouTube & Netflix)",
+    "kitchen": "Tam Donanımlı Mutfak",
+    "fridge": "Buzdolabı",
+    "fireplace": "Şömine",
+    "hairDryer": "Saç Kurutma Makinesi",
+    "wardrobe": "Elbise Dolabı",
+    "towels": "Banyo Havlusu",
+    "toiletries": "Buklet Malzemeleri",
+    "bbq": "Mangal Ekipmanları",
+    "firePit": "Ateş Çukuru",
+    "privateVeranda": "Özel Veranda & Bahçe",
+    "gardenFurniture": "Bahçe Mobilyası",
+    "lakeView": "Göl Manzarası",
+    "waterTank": "Su Deposu",
+    "fireExtinguisher": "Yangın Tüpü",
+    "security": "7/24 Güvenlik Kamerası",
+    "generator": "Jeneratör",
+    "cafe": "Tesis Kafesi",
+    "parking": "Ücretsiz Otopark",
+    "playground": "Çocuk Oyun Parkı",
+    "waterfall": "Mini Şelale",
+    "naturalArea": "Geniş Doğal Alan",
+    "noPets": "Evcil Hayvan Kabul Edilmiyor"
+  },
+  "roomNames": {
+    "bej": {
+      "name": "1+1 Bej Köşk",
+      "shortName": "Bej 1+1",
+      "tagline": "Zarif sadelik, doğa manzarası"
+    },
+    "turkuaz": {
+      "name": "1+1 Turkuaz Köşk",
+      "shortName": "Turkuaz 1+1",
+      "tagline": "Sade konfor, çiftler için"
+    },
+    "ucgen-1-1": {
+      "name": "1+1 Üçgen Bungalov",
+      "shortName": "1+1 Üçgen",
+      "tagline": "Isıtmalı havuz + jakuzi + sauna, ikonik üçgen"
+    },
+    "mor": {
+      "name": "2+1 Mor Köşk",
+      "shortName": "Mor 2+1",
+      "tagline": "Yaz havuzlu, dikkat çeken köşk"
+    },
+    "sari": {
+      "name": "2+1 Sarı Köşk",
+      "shortName": "Sarı 2+1",
+      "tagline": "Özel tasarım, geniş aile köşkü"
+    },
+    "ucgen-2-1": {
+      "name": "2+1 Üçgen Bungalov",
+      "shortName": "Üçgen 2+1",
+      "tagline": "Isıtmalı havuz + jakuzi + sauna, geniş aile"
+    }
+  },
+  "roomDetail": {
+    "breadcrumbHome": "Anasayfa",
+    "breadcrumbRooms": "Odalar",
+    "notFound": "Oda bulunamadı",
+    "featured": "⭐ Öne Çıkan",
+    "reserveCta": "Rezerve Et",
+    "specArea": "Alan",
+    "specCapacity": "Kapasite",
+    "specExtraBed": "Ek Yatak",
+    "specBedroom": "Yatak Odası",
+    "specBathroom": "Banyo",
+    "aboutKicker": "Hakkında",
+    "aboutTitle": "Doğanın içinde ev konforu",
+    "bedConfigTitle": "Yatak Düzeni & Kapasite",
+    "tipLabel": "İpucu:",
+    "tipText": "Hafta içi tarihler daha sakin ve daha avantajlı. Rezervasyon öncesi bizimle iletişime geçerek en uygun paketi konuşalım.",
+    "amenitiesKicker": "Olanaklar",
+    "amenitiesTitle": "Bu bungalovda sizi neler bekliyor?",
+    "relatedKicker": "Diğer Köşkler",
+    "relatedTitle": "İlginizi Çekebilir",
+    "guestsUnit": "kişi",
+    "getInfoCta": "Bilgi Al"
+  },
+  "reservationPage": {
+    "kicker": "Rezervasyon",
+    "title": "Müsait Bungalov & Köşkler",
+    "subtitle": "Tarihinizi ve kişi sayınızı seçin, size uygun konaklamayı keşfedin.",
+    "emptyState": "Lütfen yukarıdan tarih ve kişi sayısı seçin.",
+    "queryInvalid": "Sorgu geçersiz.",
+    "fallbackWarning": "⚠️ Anlık müsaitlik bilgisi alınamadı. Gösterilen fiyatlar tahminidir, lütfen rezervasyon için bizimle iletişime geçin.",
+    "resultsCount": "{nights} gece için {count} müsait konaklama bulundu"
+  },
+  "roomDescriptions": {
+    "bej": {
+      "description": "Standart 1+1 köşkümüz; 85 m² ferah yaşam alanı, doğa manzaralı müstakil bungalov. (Havuzsuz)",
+      "longDescription": "Hat Naturel Resort Sapanca tesisimizin 1+1 standart köşklerinden Bej Köşk, 85 m² genişliğinde salon ve oda yapısıyla size evinizdeki konforu sunar. Doğa manzaralı müstakil yapısı, modern iç tasarımı ve sıcak atmosferiyle çiftler ve küçük aileler için ideal bir kaçamak. Bu köşkümüz havuzsuzdur; ancak tesisin ortak alanlarındaki sosyal imkânlardan tam olarak faydalanabilirsiniz.",
+      "bedConfig": [
+        "🛏️ Asma katta çift kişilik yatak",
+        "🛋️ Ortak alanda çift kişilik çekyat",
+        "🛋️ Tek kişilik ek çekyat",
+        "👪 Maksimum 5 kişi konaklayabilir"
+      ]
+    },
+    "turkuaz": {
+      "description": "85 m² genişliğinde ferah 1+1 köşk — pratik konfor arayanlara. (Havuzsuz)",
+      "longDescription": "Turkuaz Köşk 1+1 evimiz 85 m² genişliğe sahiptir; çiftlere ve yakın arkadaşlara rahat bir tatil deneyimi sunar. Doğanın içinde, modern donanımıyla ev konforu hissini koruyan ideal bir konaklama seçeneği. Köşkümüz havuzsuzdur; tesisin ortak sosyal alanlarından faydalanabilirsiniz.",
+      "bedConfig": [
+        "🛏️ Asma katta çift kişilik yatak",
+        "🛋️ Ortak alanda çift kişilik çekyat",
+        "🛋️ Tek kişilik ek çekyat",
+        "👪 Maksimum 5 kişi konaklayabilir"
+      ]
+    },
+    "ucgen-1-1": {
+      "description": "Tesisin en popüler yapılarından — özel ısıtmalı havuz, sauna ve ikonik üçgen tasarım. Tesisimizde 6 adet bulunur.",
+      "longDescription": "1+1 Üçgen Bungalov'larımız tesisimizin en çok tercih edilen yapılarındandır ve toplam 6 adet bulunur. İkonik üçgen mimarisi ve sıcak ahşap dokularıyla doğanın içinde benzersiz bir atmosfer sunar. Bungalov içi özel ısıtmalı havuz, jakuzi, sauna ve havuz başı şezlong + çift kişilik yataklı salıncak ile yıl boyu spa keyfi yaşarsınız. Asma katta çift kişilik yatak + ortak alanda çift kişilik çekyat ve tek kişilik çekyat ile maksimum 5 kişi konaklayabilir. Çiftler ve küçük aileler için ideal, hem fiyat hem konfor olarak avantajlı bir seçim.",
+      "bedConfig": [
+        "🛏️ Asma katta çift kişilik yatak",
+        "🛋️ Ortak alanda çift kişilik çekyat",
+        "🛋️ Tek kişilik ek çekyat",
+        "👪 Maksimum 5 kişi konaklayabilir"
+      ]
+    },
+    "mor": {
+      "description": "95 m² genişlikte, 2+1 tasarımıyla ferah ortam — özel yaz havuzlu aile köşkü.",
+      "longDescription": "Tesisin en dikkat çeken köşklerinden Mor Köşk, 2+1 yapısı ve 95 m² genişliğiyle ferah bir ortam sağlar. Yaz sezonunda kullanıma açılan özel serinleme havuzu, havuz başı şezlong ve çift kişilik yataklı büyük salıncağı sayesinde sıcak günlerde ailecek serinleme keyfini bahçenizde yaşayabilirsiniz. Şömine konforu ile kış aylarında da aynı sıcak atmosfer; doğanın sessizliği eşliğinde ailecek huzurlu bir tatil deneyimi için ideal tercih.",
+      "bedConfig": [
+        "🛏️ Ebeveyn odasında 1 adet çift kişilik yatak",
+        "🛏️ 2. yatak odasında 1 adet çift kişilik yatak",
+        "🛋️ Ortak alanda çift kişilik çekyat",
+        "🛋️ Ortak alanda tek kişilik çekyat",
+        "👪 Maksimum 7 kişi konaklayabilir"
+      ]
+    },
+    "sari": {
+      "description": "Özel tasarım 95 m² 2+1 köşk; ferahlık ve yaşamsal genişlikle dikkat çeker. (Havuzsuz)",
+      "longDescription": "Sarı Köşk 2+1 evimiz özel dizayn olarak tasarlanmıştır. Odaların ferahlığı ve yaşamsal genişliğiyle öne çıkan köşkümüz, müstakil yapısı ile sizleri doğa manzarası eşliğinde ağırlar. Doğa manzaralı geniş bahçesinde ailecek unutulmaz anlar yaşayabilirsiniz. Köşkümüz havuzsuzdur; tesisin ortak sosyal alanlarından faydalanabilirsiniz.",
+      "bedConfig": [
+        "🛏️ Ebeveyn odasında 1 adet çift kişilik yatak",
+        "🛏️ 2. yatak odasında 1 adet çift kişilik yatak",
+        "🛋️ Ortak alanda çift kişilik çekyat",
+        "🛋️ Ortak alanda tek kişilik çekyat",
+        "👪 Maksimum 7 kişi konaklayabilir"
+      ]
+    },
+    "ucgen-2-1": {
+      "description": "95 m² genişliğinde üçgen mimari 2+1 — özel ısıtmalı havuz, sauna ve geniş aileye rahat yaşam alanı. Tesisimizde 3 adet bulunur.",
+      "longDescription": "Hat Naturel Resort Sapanca'da 2+1 Üçgen Bungalov'larımız geniş aile yapısı için tasarlanmıştır ve tesiste toplam 3 adet bulunur. 95 m² büyüklüğünde tam bir aileye rahatça yaşam alanı sunan bungalovlarımız doğa manzaralıdır. Bungalov içi özel ısıtmalı havuz, jakuzi, sauna, havuz başı şezlong ve çift kişilik yataklı salıncak ile her mevsim spa keyfi yaşanır. İkonik üçgen mimarisi ile fotoğraflık bir atmosfer yaratır; her biri benzer iç tasarım ve donanıma sahiptir.",
+      "bedConfig": [
+        "🛏️ Ebeveyn odasında 1 adet çift kişilik yatak",
+        "🛏️ Asma katta 2 adet tek kişilik yatak",
+        "🛋️ Ortak alanda çift kişilik çekyat",
+        "🛋️ Ortak alanda tek kişilik çekyat",
+        "👪 Maksimum 7 kişi konaklayabilir"
+      ]
+    }
   }
 }

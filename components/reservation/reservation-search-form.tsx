@@ -2,8 +2,11 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useTranslations, useLocale } from 'next-intl';
 import { DayPicker, type DateRange } from 'react-day-picker';
-import { tr } from 'date-fns/locale';
+import { tr, enUS, de, ru, ar, fr, es, it, type Locale as DateLocale } from 'date-fns/locale';
+
+const DATE_FNS_LOCALES: Record<string, DateLocale> = { tr, en: enUS, de, ru, ar, fr, es, it };
 import {
   format,
   parseISO,
@@ -36,6 +39,11 @@ export function ReservationSearchForm({
 }: ReservationSearchFormProps): React.ReactElement {
   const router = useRouter();
   const today = startOfDay(new Date());
+
+  const activeLocale = useLocale();
+  const dateFnsLocale = DATE_FNS_LOCALES[activeLocale] ?? enUS;
+  const t = useTranslations('reservation');
+  const tReservation = t;
 
   const parseInitialDate = (s: string | undefined): Date | undefined => {
     if (!s) return undefined;
@@ -79,7 +87,7 @@ export function ReservationSearchForm({
 
   function formatDate(date: Date | undefined): string {
     if (!date) return '';
-    return format(date, 'd MMM yyyy', { locale: tr });
+    return format(date, 'd MMM yyyy', { locale: dateFnsLocale });
   }
 
   return (
@@ -101,18 +109,18 @@ export function ReservationSearchForm({
             <div className="grid flex-1 grid-cols-2 gap-2">
               <div>
                 <div className="text-[10px] font-semibold uppercase tracking-wider text-neutral-500">
-                  Giriş
+                  {t('checkInShort')}
                 </div>
                 <div className="text-sm font-medium text-neutral-900">
-                  {range?.from ? formatDate(range.from) : 'Tarih seç'}
+                  {range?.from ? formatDate(range.from) : t('pickDate')}
                 </div>
               </div>
               <div className="border-l border-neutral-200 pl-2">
                 <div className="text-[10px] font-semibold uppercase tracking-wider text-neutral-500">
-                  Çıkış
+                  {t('checkOutShort')}
                 </div>
                 <div className="text-sm font-medium text-neutral-900">
-                  {range?.to ? formatDate(range.to) : 'Tarih seç'}
+                  {range?.to ? formatDate(range.to) : t('pickDate')}
                 </div>
               </div>
             </div>
@@ -127,7 +135,7 @@ export function ReservationSearchForm({
                   setRange(r);
                   if (r?.from && r?.to) setIsOpen(false);
                 }}
-                locale={tr}
+                locale={dateFnsLocale}
                 numberOfMonths={2}
                 disabled={(date) => isBefore(date, today)}
                 defaultMonth={range?.from ?? today}
@@ -154,7 +162,7 @@ export function ReservationSearchForm({
               htmlFor="search-guests"
               className="block text-[10px] font-semibold uppercase tracking-wider text-neutral-500"
             >
-              Kişi
+              {t('guestsLabel')}
             </label>
             <select
               id="search-guests"
@@ -164,7 +172,7 @@ export function ReservationSearchForm({
             >
               {Array.from({ length: MAX_GUESTS }, (_, i) => i + 1).map((n) => (
                 <option key={n} value={n}>
-                  {n} kişi
+                  {n} {t('guestsSuffix')}
                 </option>
               ))}
             </select>
@@ -177,7 +185,7 @@ export function ReservationSearchForm({
           className="flex items-center justify-center gap-2 rounded-xl bg-primary-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-primary-700 disabled:cursor-not-allowed disabled:opacity-50"
         >
           <Search className="h-4 w-4" aria-hidden />
-          Güncelle
+          {tReservation('updateBtn')}
         </button>
       </div>
     </form>

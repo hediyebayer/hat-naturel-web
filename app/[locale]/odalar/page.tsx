@@ -6,6 +6,7 @@ import { RoomsHero } from '@/components/rooms/rooms-hero';
 import { RoomGridDisplay } from '@/components/rooms/room-grid-display';
 import { ButtonLink } from '@/components/ui/button';
 import { RESERVATION_HREF } from '@/lib/constants';
+import { useTranslations } from 'next-intl';
 
 export async function generateMetadata({
   params,
@@ -49,6 +50,7 @@ interface RoomsPageProps {
 
 export default function RoomsPage({ params }: RoomsPageProps) {
   unstable_setRequestLocale(params.locale);
+  const t = useTranslations('rooms');
 
   return (
     // Tam beyaz arka plan
@@ -67,11 +69,10 @@ export default function RoomsPage({ params }: RoomsPageProps) {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(212,175,55,0.08),transparent_50%)]" />
         <Container className="relative text-center">
           <h2 className="font-serif text-3xl font-bold text-neutral-900 md:text-5xl">
-            Karar veremediniz mi?
+            {t('ctaTitle')}
           </h2>
           <p className="mx-auto mt-6 max-w-2xl text-lg text-neutral-600">
-            Size en uygun bungalovu birlikte seçelim. Bir mesaj atın, telefonla
-            arayalım — tüm sorularınızı yanıtlayalım.
+            {t('ctaText')}
           </p>
           <div className="mt-10 flex flex-wrap justify-center gap-4">
             <ButtonLink
@@ -80,14 +81,14 @@ export default function RoomsPage({ params }: RoomsPageProps) {
               size="lg"
               className="!border-neutral-300 !text-neutral-700 hover:!bg-neutral-100"
             >
-              Bize Ulaşın
+              {t('ctaContact')}
             </ButtonLink>
             <ButtonLink
               href={`/${params.locale}${RESERVATION_HREF}`}
               size="lg"
               className="border-none bg-accent text-neutral-900 shadow-[0_8px_24px_rgba(212,175,55,0.4)] hover:bg-accent-light"
             >
-              Rezervasyon Yap
+              {t('ctaReserve')}
             </ButtonLink>
           </div>
         </Container>

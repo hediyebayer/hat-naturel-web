@@ -12,6 +12,7 @@ import { SITE_CONFIG } from '@/lib/constants';
  */
 export function MapSection(): React.ReactElement {
   const t = useTranslations('home');
+  const tTour = useTranslations('virtualTour');
   return (
     <section className="py-20" aria-labelledby="location-heading">
       <Container>
@@ -29,7 +30,7 @@ export function MapSection(): React.ReactElement {
           <div className="lg:col-span-3 overflow-hidden rounded-2xl shadow-medium">
             <iframe
               src={SITE_CONFIG.contact.mapEmbedUrl}
-              title="Hat Naturel Resort konumu — Google Maps"
+              title={t('mapIframeTitle')}
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
               allowFullScreen
@@ -45,7 +46,9 @@ export function MapSection(): React.ReactElement {
                   <MapPin size={18} />
                 </span>
                 <div>
-                  <h3 className="font-serif text-lg text-neutral-900">Adres</h3>
+                  <h3 className="font-serif text-lg text-neutral-900">
+                    {t('mapAddressTitle')}
+                  </h3>
                   <Text className="mt-1" muted>
                     {SITE_CONFIG.contact.address}
                   </Text>
@@ -57,7 +60,9 @@ export function MapSection(): React.ReactElement {
                   <Phone size={18} />
                 </span>
                 <div>
-                  <h3 className="font-serif text-lg text-neutral-900">Telefon</h3>
+                  <h3 className="font-serif text-lg text-neutral-900">
+                    {t('mapPhoneTitle')}
+                  </h3>
                   <a
                     href={`tel:${SITE_CONFIG.contact.phoneRaw}`}
                     className="mt-1 inline-block text-neutral-700 hover:text-primary-700"
@@ -66,7 +71,7 @@ export function MapSection(): React.ReactElement {
                   </a>
                   <span className="mt-2 inline-flex items-center gap-1.5 rounded-full bg-primary-50 px-2.5 py-1 text-xs font-medium text-primary-700">
                     <Video size={12} />
-                    Görüntülü arama yapılabilir
+                    {tTour('videoCallShort')}
                   </span>
                 </div>
               </div>
@@ -81,7 +86,7 @@ export function MapSection(): React.ReactElement {
               className="mt-8"
             >
               <Navigation size={16} />
-              Yol Tarifi Al
+              {t('mapDirectionsButton')}
             </ButtonLink>
           </aside>
         </div>

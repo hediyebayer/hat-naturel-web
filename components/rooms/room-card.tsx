@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowUpRight, BedDouble, Bath, Users, Maximize2 } from 'lucide-react';
 import type { Room } from '@/lib/data/rooms';
+import { useTranslatedRoom } from '@/lib/data/use-translated-room';
 
 interface RoomCardProps {
   room: Room;
@@ -13,6 +14,7 @@ interface RoomCardProps {
 }
 
 export function RoomCard({ room, locale, index = 0 }: RoomCardProps) {
+  const tr = useTranslatedRoom(room);
   return (
     <motion.article
       initial={{ opacity: 0, y: 40 }}
@@ -34,7 +36,7 @@ export function RoomCard({ room, locale, index = 0 }: RoomCardProps) {
           <div className="relative aspect-[4/3] overflow-hidden bg-neutral-900">
             <Image
               src={room.images[0]}
-              alt={room.name}
+              alt={tr.name}
               fill
               sizes="(max-width:768px) 100vw, (max-width:1200px) 50vw, 33vw"
               className="object-cover transition-transform duration-[600ms] ease-out group-hover:scale-[1.05]"
@@ -58,10 +60,10 @@ export function RoomCard({ room, locale, index = 0 }: RoomCardProps) {
             {/* Görsel üzerine başlık — beyaz */}
             <div className="absolute inset-x-0 bottom-0 p-6 text-white">
               <h3 className="font-serif text-2xl font-semibold leading-tight drop-shadow-lg text-white transition-colors duration-300">
-                {room.name}
+                {tr.name}
               </h3>
               <p className="mt-1 text-sm text-white/85 line-clamp-1 font-sans tracking-wide">
-                {room.tagline}
+                {tr.tagline}
               </p>
             </div>
           </div>
@@ -69,7 +71,7 @@ export function RoomCard({ room, locale, index = 0 }: RoomCardProps) {
           {/* BODY — lacivert zemin, beyaz text (oda bilgileri) */}
           <div className="space-y-4 p-6">
             <p className="text-sm leading-relaxed text-white/70 line-clamp-2 font-sans">
-              {room.description}
+              {tr.description}
             </p>
 
             {/* SPECS */}

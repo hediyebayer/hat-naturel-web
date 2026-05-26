@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 import {
   Video,
   Phone,
@@ -14,8 +15,11 @@ import { SITE_CONFIG } from '@/lib/constants';
 /**
  * Canlı Tur Bölümü — Instagram + WhatsApp Video + Telefon
  * 3 kart eşit boyutta normal, hover'da hepsi lacivert+altın temaya döner.
+ * Tüm metinler `sanalTur` namespace'inden gelir (i18n).
  */
 export function LiveTourSection() {
+  const t = useTranslations('sanalTur');
+
   const phoneRaw = SITE_CONFIG.contact?.phoneRaw || '+905339175424';
   const whatsappNumber = SITE_CONFIG.whatsapp?.number || '905339175424';
   const phoneDisplay = SITE_CONFIG.contact?.phone || '+90 533 917 54 24';
@@ -23,36 +27,34 @@ export function LiveTourSection() {
     'https://www.instagram.com/hatnaturelsapanca?igsh=Nmhsazc5NHJxY2Z6';
   const instagramHandle = '@hatnaturelsapanca';
 
-  const waMessage = encodeURIComponent(
-    'Merhaba 👋 Hat Naturel\'i canlı video ile gezmek istiyorum, müsait bir vakte randevu alabilir miyim?',
-  );
+  const waMessage = encodeURIComponent(t('whatsappMessage'));
 
   const options = [
     {
       icon: Instagram,
-      kicker: 'Sosyal Medya',
-      title: 'Instagram',
-      subtitle: 'Güncel fotoğraflar ve hikayeler',
-      cta: 'Takip Et',
+      kicker: t('instagramKicker'),
+      title: t('instagramTitle'),
+      subtitle: t('instagramSubtitle'),
+      cta: t('instagramCta'),
       href: instagramUrl,
       note: instagramHandle,
     },
     {
       icon: Video,
-      kicker: 'Canlı Görüntülü',
-      title: 'WhatsApp Video',
-      subtitle: 'Anlık görüntülü tur deneyimi',
-      cta: 'Canlı Bağlan',
+      kicker: t('whatsappKicker'),
+      title: t('whatsappTitle'),
+      subtitle: t('whatsappSubtitle'),
+      cta: t('whatsappCta'),
       href: `https://wa.me/${whatsappNumber}?text=${waMessage}`,
       note: phoneDisplay,
-      badge: 'Tavsiye Edilen',
+      badge: t('whatsappBadge'),
     },
     {
       icon: Phone,
-      kicker: 'Sesli Arama',
-      title: 'Telefon',
-      subtitle: 'Klasik arama, hep yanınızdayız',
-      cta: 'Hemen Ara',
+      kicker: t('phoneKicker'),
+      title: t('phoneTitle'),
+      subtitle: t('phoneSubtitle'),
+      cta: t('phoneCta'),
       href: `tel:${phoneRaw}`,
       note: phoneDisplay,
     },
@@ -71,16 +73,16 @@ export function LiveTourSection() {
         >
           <span className="inline-flex items-center gap-2 rounded-full border border-accent/40 bg-accent/5 px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.3em] text-accent-dark backdrop-blur-sm">
             <MessageCircle size={13} />
-            Canlı Bağlantı
+            {t('liveBadge')}
           </span>
           <h2 className="mt-7 font-serif text-4xl leading-[1.15] tracking-tight text-neutral-900 md:text-5xl lg:text-[3.5rem]">
-            <span className="font-light italic text-accent-dark">Oteli</span>{' '}
-            <span className="font-semibold">Canlı Gez</span>
+            <span className="font-light italic text-accent-dark">
+              {t('liveTitle')}
+            </span>{' '}
+            <span className="font-semibold">{t('liveTitleItalic')}</span>
           </h2>
           <p className="mx-auto mt-6 max-w-2xl font-sans text-base leading-relaxed text-neutral-600 md:text-lg">
-            Tesisin gerçek halini görmek ister misin? Instagram, WhatsApp video
-            veya telefonla bizi ara — anında bağlanalım, sana özel canlı tur
-            atalım.
+            {t('liveSubtitle')}
           </p>
         </motion.div>
 

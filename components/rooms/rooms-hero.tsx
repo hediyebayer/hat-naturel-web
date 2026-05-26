@@ -3,8 +3,10 @@
 import Image from 'next/image';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { useEffect, useRef } from 'react';
+import { useTranslations } from 'next-intl';
 
 export function RoomsHero() {
+  const t = useTranslations('rooms');
   // Mouse parallax — aerial image moves subtly with cursor
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -65,18 +67,18 @@ export function RoomsHero() {
           className="inline-flex items-center gap-2 rounded-full border border-white/40 bg-white/10 px-5 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-white backdrop-blur-md shadow-[0_0_30px_rgba(255,255,255,0.1)]"
         >
           <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse" />
-          Hat Naturel Resort · Sapanca
+          {t('heroBadge')}
         </motion.span>
 
-        {/* ANA BAŞLIK — iki satır: 'Doğaya Açılan' / 'Küçük Bir Kapı' */}
+        {/* ANA BAŞLIK — iki satır */}
         <motion.h1
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.15, ease: [0.25, 1, 0.5, 1] }}
           className="mt-10 font-serif text-4xl leading-[1.2] tracking-tight text-white drop-shadow-[0_4px_30px_rgba(0,0,0,0.5)] md:text-6xl lg:text-[5.5rem]"
         >
-          <span className="block pb-2 font-light">Doğaya Açılan</span>
-          <span className="mt-2 block pb-2 font-medium italic">Küçük Bir Kapı</span>
+          <span className="block pb-2 font-light">{t('heroTitleLight')}</span>
+          <span className="mt-2 block pb-2 font-medium italic">{t('heroTitleItalic')}</span>
         </motion.h1>
 
         {/* Subtitle — mahremiyet + aile vurgulu, şık */}
@@ -86,8 +88,7 @@ export function RoomsHero() {
           transition={{ duration: 0.8, delay: 0.5 }}
           className="mx-auto mt-10 max-w-2xl font-sans text-base text-white/85 tracking-[0.02em] md:text-lg leading-relaxed"
         >
-          Doğa ve manzara eşliğinde, size özel muhafazakar müstakil
-          bungalovlarımızda huzur dolu tatil ve unutulmaz anlar sizi bekliyor.
+          {t('heroSubtitle')}
         </motion.p>
 
         {/* Scroll indicator */}
@@ -99,7 +100,7 @@ export function RoomsHero() {
         >
           <div className="flex flex-col items-center gap-2 text-white/50">
             <span className="text-[10px] uppercase tracking-[0.3em]">
-              Keşfet
+              {t('heroScroll')}
             </span>
             <motion.div
               animate={{ y: [0, 8, 0] }}

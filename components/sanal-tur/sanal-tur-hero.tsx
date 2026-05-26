@@ -1,9 +1,19 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 import { Compass, Video, MapPin, Camera } from 'lucide-react';
 
 export function SanalTurHero() {
+  const t = useTranslations('sanalTur');
+
+  const chips = [
+    { icon: Video, label: t('chipLiveTour'), href: '#canli-tur' },
+    { icon: MapPin, label: t('chipLocation'), href: '#konum' },
+    { icon: Compass, label: t('chipMap360'), href: '#harita-gez' },
+    { icon: Camera, label: t('chipGuestGallery'), href: '#galeri' },
+  ];
+
   return (
     <section className="relative overflow-hidden pt-32 pb-16 md:pt-40 md:pb-20">
       <div className="relative z-10 mx-auto max-w-4xl px-4 text-center sm:px-6">
@@ -15,7 +25,7 @@ export function SanalTurHero() {
           className="inline-flex items-center gap-2 rounded-full border border-accent/40 bg-accent/5 px-5 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-accent-dark backdrop-blur-sm"
         >
           <Compass size={14} className="animate-spin-slow" />
-          Sanal Deneyim Merkezi
+          {t('badge')}
         </motion.span>
 
         {/* Ana başlık */}
@@ -26,10 +36,10 @@ export function SanalTurHero() {
           className="mt-8 font-serif text-4xl font-bold leading-[1.2] tracking-tight text-neutral-900 md:text-6xl lg:text-7xl"
         >
           <span className="block pb-2 font-light italic text-accent-dark">
-            Hat Naturel&apos;i
+            {t('heroTitleLight')}
           </span>
           <span className="block bg-gradient-to-r from-primary-700 via-primary-900 to-primary-700 bg-clip-text pb-2 font-bold text-transparent">
-            Keşfetmenin 4 Yolu
+            {t('heroTitleBold')}
           </span>
         </motion.h1>
 
@@ -40,8 +50,7 @@ export function SanalTurHero() {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="mx-auto mt-8 max-w-2xl text-base leading-relaxed text-neutral-600 md:text-lg"
         >
-          Canlı görüntülü tur, 360° harita, misafir fotoğrafları ve adres
-          bilgileri — tesisi gelmeden tanımanın her yolu burada.
+          {t('heroSubtitle')}
         </motion.p>
 
         {/* Quick links — 4 ikon chips */}
@@ -51,12 +60,7 @@ export function SanalTurHero() {
           transition={{ duration: 0.8, delay: 0.6 }}
           className="mx-auto mt-10 flex max-w-3xl flex-wrap items-center justify-center gap-3"
         >
-          {[
-            { icon: Video, label: 'Canlı Tur', href: '#canli-tur' },
-            { icon: MapPin, label: 'Konum', href: '#konum' },
-            { icon: Compass, label: '360° Harita', href: '#harita-gez' },
-            { icon: Camera, label: 'Misafir Galerimiz', href: '#galeri' },
-          ].map((chip, i) => (
+          {chips.map((chip, i) => (
             <motion.a
               key={chip.label}
               href={chip.href}

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { unstable_setRequestLocale } from 'next-intl/server';
+import { unstable_setRequestLocale, getTranslations } from 'next-intl/server';
 import { Container } from '@/components/ui/container';
 import { Heading } from '@/components/ui/heading';
 import { Text } from '@/components/ui/text';
@@ -19,10 +19,10 @@ interface ReservationPageProps {
 export async function generateMetadata({
   params,
 }: ReservationPageProps): Promise<Metadata> {
+  const tMeta = await getTranslations({ locale: params.locale, namespace: 'meta.reservation' });
   return {
-    title: 'Rezervasyon — Hat Naturel Resort Sapanca',
-    description:
-      'Sapanca Hat Naturel Resort\'ta müsait bungalov ve köşkleri keşfedin. Tarih ve kişi sayısına göre fiyat ve müsaitlik bilgisi.',
+    title: tMeta('title'),
+    description: tMeta('description'),
     alternates: {
       canonical: `/${params.locale}/rezervasyon`,
     },
@@ -35,6 +35,8 @@ export default async function ReservationPage({
   searchParams,
 }: ReservationPageProps): Promise<React.ReactElement> {
   unstable_setRequestLocale(params.locale);
+
+  const t = await getTranslations({ locale: params.locale, namespace: 'reservationPage' });
 
   const checkIn = searchParams.checkIn ?? '';
   const checkOut = searchParams.checkOut ?? '';
@@ -61,13 +63,13 @@ export default async function ReservationPage({
         {/* Başlık */}
         <div className="text-center">
           <span className="text-xs font-semibold uppercase tracking-[0.2em] text-primary-600">
-            Rezervasyon
+            {t('kicker')}
           </span>
           <Heading level={1} className="mt-2">
-            Müsait Bungalov & Köşkler
+            {t('title')}
           </Heading>
           <Text muted className="mx-auto mt-3 max-w-2xl">
-            Tarihinizi ve kişi sayınızı seçin, size uygun konaklamayı keşfedin.
+            {t('subtitle')}
           </Text>
         </div>
 
@@ -86,7 +88,7 @@ export default async function ReservationPage({
           {!hasQuery && (
             <div className="rounded-2xl bg-white p-10 text-center ring-1 ring-neutral-200">
               <Text muted>
-                Lütfen yukarıdan tarih ve kişi sayısı seçin.
+                {t('emptyState')}
               </Text>
             </div>
           )}
@@ -94,7 +96,7 @@ export default async function ReservationPage({
           {result && !result.isValidQuery && (
             <div className="rounded-2xl bg-red-50 p-6 text-center ring-1 ring-red-200">
               <Text className="text-red-700">
-                {result.errorMessage ?? 'Sorgu geçersiz.'}
+                {result.errorMessage ?? t('queryInvalid')}
               </Text>
             </div>
           )}
@@ -104,15 +106,16 @@ export default async function ReservationPage({
               {result.isFallback && (
                 <div className="mb-4 rounded-xl bg-amber-50 p-4 ring-1 ring-amber-200">
                   <Text className="text-sm text-amber-800">
-                    ⚠️ Anlık müsaitlik bilgisi alınamadı. Gösterilen fiyatlar tahminidir, lütfen rezervasyon için bizimle iletişime geçin.
+                    {t('fallbackWarning')}
                   </Text>
                 </div>
               )}
               <div className="mb-6 flex items-center justify-between">
                 <Text muted className="text-sm">
-                  {result.nights} gece için{' '}
-                  <strong className="text-neutral-900">{availableCount}</strong>{' '}
-                  müsait konaklama bulundu
+                  {t.rich('resultsCount', {
+                    nights: result.nights,
+                    count: availableCount,
+                  })}
                 </Text>
               </div>
 

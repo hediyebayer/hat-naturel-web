@@ -36,7 +36,7 @@ export function VirtualTourSection({
             <div className="text-white">
               <span className="inline-flex items-center gap-2 rounded-full border border-accent/40 bg-accent/5 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-accent backdrop-blur-sm">
                 <Compass size={14} />
-                Sanal Deneyim
+                {t('badge')}
               </span>
               <h2
                 id="virtual-tour-heading"
@@ -51,7 +51,7 @@ export function VirtualTourSection({
                 href={`/${locale}/sanal-tur`}
                 className="mt-8 inline-flex items-center gap-3 rounded-full bg-accent px-7 py-3 text-sm font-semibold text-primary-900 shadow-[0_8px_24px_rgba(212,175,55,0.3)] transition-all hover:scale-105 hover:bg-accent-light"
               >
-                Tesisi Keşfedin
+                {t('cta')}
                 <ArrowRight size={16} />
               </Link>
             </div>
@@ -126,14 +126,14 @@ export function VirtualTourSection({
 
                   {/* Alt orta — bungalov label */}
                   <div className="pointer-events-none absolute -bottom-3 left-1/2 z-20 -translate-x-1/2 whitespace-nowrap rounded-full border border-accent/40 bg-primary-900 px-3 py-1 text-[9px] font-semibold uppercase tracking-[0.25em] text-accent shadow-md">
-                    🏡 Hat Naturel Bungalov
+                    {t('bungalovLabel')}
                   </div>
 
                   {/* iframe */}
                   <div className="relative aspect-video">
                     <iframe
                       src={SITE_CONFIG.virtualTour.embedUrl}
-                      title="Hat Naturel Resort 360° Sanal Tur"
+                      title={t('iframeTitle')}
                       loading="lazy"
                       referrerPolicy="no-referrer-when-downgrade"
                       allowFullScreen
@@ -159,7 +159,7 @@ export function VirtualTourSection({
             <div className="mb-10 text-center text-white">
               <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-accent/40 bg-accent/5 px-5 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-accent backdrop-blur-sm">
                 <Compass size={14} />
-                Sanal Deneyim
+                {t('badge')}
               </span>
               <h1
                 id="virtual-tour-heading"
@@ -238,7 +238,7 @@ export function VirtualTourSection({
 
                   <iframe
                     src={SITE_CONFIG.virtualTour.embedUrl}
-                    title="Hat Naturel Resort 360° Sanal Tur"
+                    title={t('iframeTitle')}
                     loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
                     allowFullScreen

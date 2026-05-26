@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 import { Camera, Heart, Upload, Sparkles } from 'lucide-react';
 import { SITE_CONFIG } from '@/lib/constants';
 
@@ -10,13 +11,13 @@ import { SITE_CONFIG } from '@/lib/constants';
  *  - 6 placeholder kart (Hediye gerçek fotoğrafları yükleyince değişir)
  *  - "Fotoğraf paylaşmak ister misiniz?" CTA → WhatsApp'a yönlendir
  *
- * İleride: gerçek upload sistemi (Supabase storage + moderation queue)
+ * Tüm metinler `sanalTur` namespace'inden gelir.
  */
 export function GuestPhotosSection() {
+  const t = useTranslations('sanalTur');
+
   const whatsappNumber = SITE_CONFIG.whatsapp?.number || '905339175424';
-  const waMessage = encodeURIComponent(
-    'Merhaba! Hat Naturel\'de çektiğim fotoğrafı sizinle paylaşmak ve sitede yayınlamak istiyorum 📸',
-  );
+  const waMessage = encodeURIComponent(t('guestShareMessage'));
   const submitUrl = `https://wa.me/${whatsappNumber}?text=${waMessage}`;
 
   // Placeholder kart sayısı (gerçek fotoğraflar gelene kadar)
@@ -35,15 +36,16 @@ export function GuestPhotosSection() {
         >
           <span className="inline-flex items-center gap-2 rounded-full border border-accent/40 bg-accent/5 px-5 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-accent-dark backdrop-blur-sm">
             <Camera size={14} />
-            Misafir Galerimiz
+            {t('guestBadge')}
           </span>
           <h2 className="mt-6 font-serif text-4xl font-bold leading-tight tracking-tight text-neutral-900 md:text-5xl">
-            <span className="italic font-light text-accent-dark">Sizden</span>{' '}
-            Gelen Fotoğraflar
+            <span className="italic font-light text-accent-dark">
+              {t('guestTitleItalic')}
+            </span>{' '}
+            {t('guestTitleAfter')}
           </h2>
           <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-neutral-600 md:text-lg">
-            Hat Naturel&apos;de çektiğiniz en güzel anları paylaşın —
-            misafirlerimizin gözünden tesisi gör.
+            {t('guestSubtitle')}
           </p>
         </motion.div>
 
@@ -82,10 +84,10 @@ export function GuestPhotosSection() {
                   {['📸', '🌿', '🏡', '✨', '☕', '🌅'][i]}
                 </motion.div>
                 <span className="rounded-full bg-white/80 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-neutral-500 backdrop-blur-sm">
-                  Yakında
+                  {t('guestComingSoon')}
                 </span>
                 <p className="text-xs text-neutral-400">
-                  Misafir fotoğrafı bekleniyor
+                  {t('guestPlaceholder')}
                 </p>
               </div>
 
@@ -132,19 +134,17 @@ export function GuestPhotosSection() {
                 <div className="flex items-center gap-2 text-accent-dark">
                   <Sparkles size={16} />
                   <span className="text-xs font-semibold uppercase tracking-[0.25em]">
-                    Sen de Paylaş
+                    {t('guestShareKicker')}
                   </span>
                 </div>
                 <h3 className="mt-3 font-serif text-2xl font-bold text-neutral-900 md:text-3xl">
-                  Anılarını{' '}
+                  {t('guestShareTitle')}{' '}
                   <span className="italic font-light text-accent-dark">
-                    sitemize taşı
+                    {t('guestShareTitleItalic')}
                   </span>
                 </h3>
                 <p className="mt-3 max-w-xl text-sm leading-relaxed text-neutral-600 md:text-base">
-                  Hat Naturel&apos;de çektiğin bir fotoğrafı WhatsApp&apos;tan
-                  yolla, açıklama yaz, biz sitende sergileyelim. Misafirlerimizin
-                  gözünden tesisi keşfetmek isteyen herkes için.
+                  {t('guestShareDescription')}
                 </p>
               </div>
 
@@ -158,7 +158,7 @@ export function GuestPhotosSection() {
                   size={16}
                   className="transition-transform group-hover:-translate-y-0.5"
                 />
-                Fotoğraf Paylaş
+                {t('guestShareCta')}
               </a>
             </div>
           </div>

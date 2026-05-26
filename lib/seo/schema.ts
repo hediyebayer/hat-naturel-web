@@ -56,7 +56,11 @@ export function generateLodgingBusinessSchema(locale: Locale): unknown {
 // HotelRoom — oda detayı
 // ─────────────────────────────────────────────────────────────────────────────
 
-export function generateHotelRoomSchema(room: Room, locale: Locale): unknown {
+export function generateHotelRoomSchema(
+  room: Room,
+  locale: Locale,
+  i18n?: { name?: string; description?: string },
+): unknown {
   const roomUrl = `${BASE_URL}/${locale}/odalar/${room.slug}`;
   const coverImage = room.images[0]
     ? `${BASE_URL}${room.images[0]}`
@@ -65,8 +69,8 @@ export function generateHotelRoomSchema(room: Room, locale: Locale): unknown {
   return {
     '@context': 'https://schema.org',
     '@type': 'HotelRoom',
-    name: room.name,
-    description: room.longDescription,
+    name: i18n?.name ?? room.name,
+    description: i18n?.description ?? room.longDescription,
     url: roomUrl,
     image: coverImage,
     bed: {

@@ -118,7 +118,7 @@ export default function HomePage({
               variant="outline"
               size="lg"
             >
-              Tüm Bungalov & Köşkleri Gör →
+              {t('seeAllRooms')}
             </ButtonLink>
           </div>
         </Container>
