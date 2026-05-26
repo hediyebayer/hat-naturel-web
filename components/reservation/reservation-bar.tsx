@@ -14,7 +14,7 @@ interface ReservationBarProps {
 }
 
 const MIN_NIGHTS = 1;
-const MAX_GUESTS = 10;
+const MAX_GUESTS = 7;
 const DEFAULT_GUESTS = 2;
 
 /**
