@@ -152,9 +152,28 @@ export default function RestoranPage({
         </Container>
       </section>
 
-      {/* SINIRSIZ ÇAY VURGUSU */}
-      <section className="bg-primary-900 py-20 text-white md:py-28">
-        <Container size="lg">
+      {/* SINIRSIZ ÇAY VURGUSU — video background */}
+      <section className="relative overflow-hidden bg-primary-900 py-20 text-white md:py-28">
+        {/* Background video — muted, autoplay, loop */}
+        <video
+          className="absolute inset-0 h-full w-full object-cover"
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="metadata"
+          poster="/videos/cay-tea-poster.jpg"
+          aria-hidden="true"
+        >
+          <source src="/videos/cay-tea.webm" type="video/webm" />
+          <source src="/videos/cay-tea.mp4" type="video/mp4" />
+        </video>
+        {/* Karartma overlay — yazıların okunması için */}
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-gradient-to-b from-primary-900/70 via-primary-900/60 to-primary-900/80"
+        />
+        <Container size="lg" className="relative z-10">
           <TeaHighlight />
         </Container>
       </section>

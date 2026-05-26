@@ -101,6 +101,13 @@ export default async function ReservationPage({
 
           {result?.isValidQuery && (
             <>
+              {result.isFallback && (
+                <div className="mb-4 rounded-xl bg-amber-50 p-4 ring-1 ring-amber-200">
+                  <Text className="text-sm text-amber-800">
+                    ⚠️ Anlık müsaitlik bilgisi alınamadı. Gösterilen fiyatlar tahminidir, lütfen rezervasyon için bizimle iletişime geçin.
+                  </Text>
+                </div>
+              )}
               <div className="mb-6 flex items-center justify-between">
                 <Text muted className="text-sm">
                   {result.nights} gece için{' '}

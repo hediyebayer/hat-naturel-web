@@ -1,19 +1,24 @@
 /**
  * Müsaitlik & fiyat servisi.
  *
- * Şu anda mock data döndürüyor.
- * İleride hatoperasyon API'sine bağlanacak — sadece bu dosya değişecek,
- * çağıran sayfa/component'ler aynı kalacak.
+ * Hatoperasyon public API'sine bağlanır:
+ *   GET https://hatoperasyon.com/api/public/availability
+ *   Headers: X-Public-Key: <HATOPERASYON_PUBLIC_API_KEY>
  *
- * Sözleşme (contract):
- *   getAvailability({ checkIn, checkOut, guests }) -> AvailabilityResult
+ * Hatoperasyon erişilemezse veya hata dönerse, ROOMS verisinden
+ * fallback mock fiyat gösterir ('isFallback' true ile işaretlenir).
  */
 
 import { differenceInCalendarDays, parseISO, isValid } from 'date-fns';
 import { ROOMS, type Room } from '@/lib/data/rooms';
+import {
+  fetchHatoperasyonAvailability,
+  mapBungalowToSlugWithCapacity,
+  type HatoperasyonRoom,
+} from '@/lib/reservation/hatoperasyon-client';
 
-// Mock fiyatlandırma — gerçek fiyatlar hatoperasyon'dan çekilecek
-const MOCK_BASE_PRICES: Record<string, number> = {
+// Hatoperasyon erişilemezse kullanılacak fallback fiyatlar
+const FALLBACK_BASE_PRICES: Record<string, number> = {
   'ucgen-2-1': 8500,
   'ucgen-1-1': 6500,
   bej: 4500,
@@ -21,9 +26,6 @@ const MOCK_BASE_PRICES: Record<string, number> = {
   sari: 4500,
   mor: 7500,
 };
-
-// Hafta sonu (Cuma, Cumartesi, Pazar) için ek fiyat çarpanı
-const WEEKEND_MULTIPLIER = 1.25;
 
 export interface AvailabilityQuery {
   checkIn: string;  // yyyy-MM-dd
@@ -51,6 +53,8 @@ export interface AvailabilityResult {
   /** Sorgu geçerli mi (tarihler doğru parse ediliyor mu) */
   isValidQuery: boolean;
   errorMessage?: string;
+  /** Hatoperasyon erişilemediği için fallback fiyat gösteriliyorsa true */
+  isFallback?: boolean;
 }
 
 /**
@@ -85,18 +89,17 @@ function validateQuery(query: AvailabilityQuery): {
 }
 
 /**
- * Bir odanın belirli tarihler arasındaki müsaitliğini ve fiyatını hesaplar.
- * MOCK: Şimdilik tüm odalar müsait, fiyat sabit base × gece sayısı.
+ * Fallback hesap — hatoperasyon erişilmediginde devreye girer.
+ * Sabit base fiyat × gece sayısı, sadece kapasite kontrolü.
  */
-function calculateRoomAvailability(
+function calculateFallbackAvailability(
   room: Room,
   nights: number,
   guests: number,
 ): AvailableRoom {
-  const basePrice = MOCK_BASE_PRICES[room.slug] ?? 5000;
+  const basePrice = FALLBACK_BASE_PRICES[room.slug] ?? 5000;
   const maxCapacity = room.specs.guests + room.specs.extraGuests;
 
-  // Kapasite kontrolü
   if (guests > maxCapacity) {
     return {
       room,
@@ -115,6 +118,30 @@ function calculateRoomAvailability(
     totalPrice: basePrice * nights,
     nights,
   };
+}
+
+/**
+ * Hatoperasyon'dan dönen birden fazla bungalovu (B1, B5, B6, ...)
+ * tek bir web kategorisinde (örn "ucgen-1-1") en uygun olana göre birleştirir.
+ * En uygun: müsait olan + en düşük fiyatlı.
+ */
+function pickBestForCategory(
+  hatoperasyonRooms: HatoperasyonRoom[],
+  slug: string,
+  guests: number,
+): HatoperasyonRoom | undefined {
+  const matches = hatoperasyonRooms.filter(
+    (r) =>
+      mapBungalowToSlugWithCapacity(r.name, r.capacity) === slug &&
+      r.capacity >= guests,
+  );
+  if (matches.length === 0) return undefined;
+
+  // Önce müsait olanlar, sonra fiyata göre artık
+  const available = matches.filter((r) => r.isAvailable);
+  const pool = available.length > 0 ? available : matches;
+  pool.sort((a, b) => a.pricePerNight - b.pricePerNight);
+  return pool[0];
 }
 
 /**
@@ -142,9 +169,56 @@ export async function getAvailability(
     };
   }
 
-  const rooms = ROOMS.map((room) =>
-    calculateRoomAvailability(room, validation.nights, query.guests),
-  );
+  // Hatoperasyon'dan gerçek veri çek
+  const hatoperasyonResult = await fetchHatoperasyonAvailability({
+    from: query.checkIn,
+    to: query.checkOut,
+    guests: query.guests,
+  });
+
+  // Erişim hatası — fallback'e düş
+  if (!hatoperasyonResult.ok) {
+    const fallbackRooms = ROOMS.map((room) =>
+      calculateFallbackAvailability(room, validation.nights, query.guests),
+    );
+    return {
+      query,
+      nights: validation.nights,
+      rooms: fallbackRooms,
+      isValidQuery: true,
+      isFallback: true,
+    };
+  }
+
+  // Her web oda kategorisi için hatoperasyon'dan en uygun bungalovu seç
+  const rooms = ROOMS.map<AvailableRoom>((room) => {
+    const match = pickBestForCategory(
+      hatoperasyonResult.rooms,
+      room.slug,
+      query.guests,
+    );
+
+    if (!match) {
+      // Web'de tanımlı ama hatoperasyon'da yok — müsait değil göster
+      return {
+        room,
+        isAvailable: false,
+        pricePerNight: 0,
+        totalPrice: 0,
+        nights: validation.nights,
+        unavailableReason: 'Bu tarihler için müsait değil.',
+      };
+    }
+
+    return {
+      room,
+      isAvailable: match.isAvailable,
+      pricePerNight: match.pricePerNight,
+      totalPrice: match.totalPrice,
+      nights: validation.nights,
+      unavailableReason: match.unavailableReason,
+    };
+  });
 
   return {
     query,
@@ -165,5 +239,4 @@ export function formatPrice(price: number): string {
   }).format(price);
 }
 
-// Eslint için kullanılmayan ama public API'de tutulan sabit
-export { WEEKEND_MULTIPLIER };
+

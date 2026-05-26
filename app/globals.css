@@ -191,10 +191,18 @@
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+    overflow-x: hidden;
   }
 
   body {
     @apply bg-white text-neutral-800 font-sans;
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+
+  /* Mobil menü açıkken header'ı gizle (şeffaflık sorununu önler) */
+  body.menu-open header {
+    visibility: hidden;
   }
 
   ::selection {

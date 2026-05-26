@@ -31,24 +31,26 @@ export function MobileMenu({
     };
     document.addEventListener('keydown', handleKey);
     document.body.style.overflow = 'hidden';
+    document.body.classList.add('menu-open');
     return () => {
       document.removeEventListener('keydown', handleKey);
       document.body.style.overflow = '';
+      document.body.classList.remove('menu-open');
     };
   }, [isOpen, onClose]);
 
   return (
     <div
       className={cn(
-        'fixed inset-0 z-50 lg:hidden',
+        'fixed inset-0 z-[60] lg:hidden',
         'transition-opacity duration-300',
         isOpen ? 'opacity-100' : 'pointer-events-none opacity-0',
       )}
       aria-hidden={!isOpen}
     >
-      {/* Backdrop */}
+      {/* Backdrop — tam opak siyah, alttaki sayfayı göstermez */}
       <div
-        className="absolute inset-0 bg-neutral-900/60 backdrop-blur-sm"
+        className="absolute inset-0 bg-neutral-900"
         onClick={onClose}
       />
       {/* Panel */}
@@ -58,7 +60,7 @@ export function MobileMenu({
         aria-label="Mobil menü"
         className={cn(
           'absolute right-0 top-0 flex h-full w-80 max-w-[85vw] flex-col',
-          'bg-white shadow-strong transition-transform duration-300',
+          'bg-white shadow-2xl transition-transform duration-300',
           isOpen ? 'translate-x-0' : 'translate-x-full',
         )}
       >

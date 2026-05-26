@@ -99,8 +99,8 @@ export function RoomDisplayCard({
         href={`/${locale}/odalar/${room.slug}`}
         className="relative flex h-full flex-col overflow-hidden rounded-2xl border border-neutral-200 bg-white transition-all duration-500 hover:-translate-y-1 hover:border-neutral-300 hover:shadow-[0_25px_60px_-15px_rgba(255,255,255,0.9),0_15px_40px_-10px_rgba(0,0,0,0.15)]"
       >
-        {/* Görsel */}
-        <div className="relative aspect-[4/3] overflow-hidden bg-neutral-100">
+        {/* Görsel — mobilde sabit yükseklik (200px), tablet+ üstü 4:3 oranı */}
+        <div className="relative h-48 overflow-hidden bg-neutral-100 sm:h-auto sm:aspect-[4/3]">
           <Image
             src={room.images[0]}
             alt={room.name}
