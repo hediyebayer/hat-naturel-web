@@ -72,7 +72,28 @@
     "heroTitle": "House",
     "heroTitleItalic": "Rules",
     "heroLead": "At Hat Naturel Resort, we have a few important rules to ensure a peaceful and secure holiday for all guests.",
-    "placeholder": "Rules will be added here soon."
+    "sectionGeneral": "General Rules",
+    "sectionCheckIn": "Check-in & Check-out Hours",
+    "checkInTitle": "Check-in",
+    "checkInTime": "14:00",
+    "checkInDesc": "You may check in any time after 14:00. Please let us know your arrival time in advance. Bungalows are cleaned between 11:30 and 14:00 prior to check-in.",
+    "checkOutTitle": "Check-out",
+    "checkOutTime": "11:30",
+    "checkOutDesc": "Please be ready to check out at 11:30. Early check-out is possible, but we cannot extend the check-out time.",
+    "thanksNote": "Thank you. 🌿",
+    "items": {
+      "identity": "Upon check-in, your ID details are registered to the police safety system. Every guest — including children and infants — must provide a valid ID or passport. Unregistered stays are not permitted. Guests under 18 cannot stay without a parent.",
+      "identityWarning": "If you arrive without ID or refuse to present one, you will not be allowed to check in. No refund will be issued in such cases.",
+      "guests": "Receiving outside visitors — even briefly — without informing us puts a significant burden of responsibility on the facility. When a short-term visitor arrives, their ID information must be collected and registered with the police safety system.",
+      "guestsWarning": "Hosting unregistered visitors will result in immediate termination of your stay with no refund.",
+      "trash": "Littering and discarding cigarette butts on the grounds, in the garden, or around the bungalow is prohibited.",
+      "furniture": "Please do not move the bungalow's furniture or items. Any damage will be charged to the guest.",
+      "pool": "Use of shampoo and bath foam in the pool is prohibited.",
+      "poolWarning": "Children under 13 are not allowed to enter the pool unattended.",
+      "fire": "Taking the fire pit or BBQ equipment onto the veranda is dangerous and prohibited. Please use them only in your designated garden area.",
+      "breakfast": "Breakfast is served at our cafe between 09:30 and 11:30. We do not offer room service.",
+      "reservation": "We do not offer reservation cancellations or deposit refunds. You may reschedule your stay up to 7 days before the check-in date. Date changes within 1–2 days of check-in are not possible — regardless of personal reasons, weather, or plan changes."
+    }
   },
   "home": {
     "heroTitle": "Your Sanctuary in Sapanca",

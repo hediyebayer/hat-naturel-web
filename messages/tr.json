@@ -72,7 +72,28 @@
     "heroTitle": "Konaklama",
     "heroTitleItalic": "Kuralları",
     "heroLead": "Hat Naturel Resort'ta huzurlu ve güvenli bir tatil deneyimi için bazı önemli kurallarımız bulunmaktadır.",
-    "placeholder": "Kurallar yakında burada yer alacaktır."
+    "sectionGeneral": "Genel Kurallar",
+    "sectionCheckIn": "Giriş & Çıkış Saatleri",
+    "checkInTitle": "Bungalova Giriş",
+    "checkInTime": "14:00",
+    "checkInDesc": "14:00 itibariyle dilediğiniz saatte giriş yapabilirsiniz. Giriş yapacağınız saati bize bildirmenizi rica ederiz. Evlerimiz giriş öncesi 11:30-14:00 arasında temizlenmektedir.",
+    "checkOutTitle": "Bungalovdan Çıkış",
+    "checkOutTime": "11:30",
+    "checkOutDesc": "11:30'da çıkış için hazır olmanız gerekmektedir. Öncesinde çıkış yapmanız mümkündür fakat çıkış saatinde esneme yapmamız mümkün değildir.",
+    "thanksNote": "Teşekkür ederiz. 🌿",
+    "items": {
+      "identity": "Bungalova giriş yaparken kimlikleriniz ile emniyet sistemine kaydınız yapılır. Çocuk ve bebek dahil olmak üzere kimlik ya da pasaportlarınızın olması gerekmektedir. Kayıtsız konaklama yapmanız mümkün değildir. 18 yaş altı ebeveynsiz konaklayamaz.",
+      "identityWarning": "Kimliksiz gelmeniz ya da kimlik göstermemeniz durumunda bungalova girişiniz sağlanmayacaktır. Tesisimiz bununla ilgili geri ödeme yapmayacaktır.",
+      "guests": "Bungalova bilgi vermeden dışardan kısa süreli dahil misafir kabul etmenizin işletmemiz açısından büyük sorumluluk gerektirdiğini bilmenizi isteriz. Kısa süreli misafirin giriş yaptığı esnada TC kimlik bilgileri alınarak emniyet sistemine kaydedilir.",
+      "guestsWarning": "Gizli olarak misafir kabul etmeniz durumunda konaklama bedeli iadesiz şekilde konaklamanız sonlandırılır.",
+      "trash": "Bungalovda yerlere, bahçeye, çevreye çöp ve izmarit atmak yasaktır.",
+      "furniture": "Bungalovda eşyaların/ mobilyaların yerlerini değiştirmeyiniz. Eşyaların zarar görmesi halinde ücreti tahsil edilecektir.",
+      "pool": "Havuzda şampuan ve banyo köpüğü kullanımı yasaktır.",
+      "poolWarning": "13 yaş altındaki çocukların havuza tek başına girmesi yasaktır.",
+      "fire": "Ateş çukuru ve mangal ekipmanlarının verandaya çıkarılması tehlikeli ve yasaktır. Size ayrılan bahçe içerisinde kullanımını yapabilirsiniz.",
+      "breakfast": "Kahvaltı 09:30-11:30 arasında kafemizde verilmektedir. Oda servisi hizmetimiz yoktur.",
+      "reservation": "Rezervasyon iptalimiz ve kapora iademiz bulunmamaktadır. Tarih değişikliğinizi konaklama başlangıç tarihine 7 gün kalaya kadar erteleyebilirsiniz. Kişisel sebepler, hava durumu ya da plan değişikliği sebepleri ile rezervasyonunuza 1-2 gün kala tarih değişikliği yapmanız mümkün değildir."
+    }
   },
   "home": {
     "heroTitle": "Sapanca'da Huzurun Adresi",
