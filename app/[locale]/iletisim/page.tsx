@@ -16,6 +16,7 @@ import { SITE_CONFIG } from '@/lib/constants';
 import { buildWhatsAppUrl } from '@/lib/utils/whatsapp';
 
 // Yeni animasyonlu bileşenler
+import { ContactHeroVideo } from '@/components/iletisim/contact-hero-video';
 import { WhatsappCtaCard } from '@/components/iletisim/whatsapp-cta-card';
 import { AnimatedContactCard } from '@/components/iletisim/animated-contact-card';
 import { AnimatedFormWrapper } from '@/components/iletisim/animated-form-wrapper';
@@ -95,23 +96,15 @@ export default async function ContactPage({
         }}
       />
 
-      {/* ─── HERO VİDEO — full ekran, ana sayfa hero tarzı ─── */}
-      <section
-        className="relative h-[100svh] min-h-[560px] w-full overflow-hidden bg-primary-900"
-        aria-label={t('title')}
-      >
-        <video
-          className="absolute inset-0 h-full w-full object-cover"
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="metadata"
-          poster="/videos/iletisim-bg-poster.jpg"
-        >
-          <source src="/videos/iletisim-bg.mp4" type="video/mp4" />
-        </video>
-      </section>
+      {/* ─── HERO VİDEO — ana sayfa hero tarzı yazılar + animasyonlar ─── */}
+      <ContactHeroVideo
+        locale={params.locale}
+        title={t('title')}
+        heroLead={t('heroLead')}
+        scrollCueLabel={t('scrollCue')}
+        whatsappCta={t('whatsappCta')}
+        callCta={t('callCta')}
+      />
 
       {/* ─── FORM + İLETİŞİM KARTLARI — floating glow background ─── */}
       <section className="relative overflow-hidden bg-gradient-to-b from-white via-neutral-50 to-white py-20 md:py-28">
