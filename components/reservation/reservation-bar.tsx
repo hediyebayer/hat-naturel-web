@@ -66,7 +66,7 @@ export function ReservationBar({ locale }: ReservationBarProps): React.ReactElem
 
   return (
     <section
-      className="relative z-20 -mt-14 px-3 pb-10 sm:-mt-20 sm:px-4 sm:pb-12 lg:-mt-28"
+      className="relative z-20 -mt-28 px-3 pb-10 sm:-mt-20 sm:px-4 sm:pb-12 lg:-mt-28"
       aria-label="Rezervasyon Arama"
     >
       <div className="mx-auto max-w-6xl">
