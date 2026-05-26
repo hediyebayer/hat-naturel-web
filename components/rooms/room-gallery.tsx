@@ -10,7 +10,6 @@ import {
   useTransform,
 } from 'framer-motion';
 import { ChevronLeft, ChevronRight, X, Expand, Camera } from 'lucide-react';
-import { useTranslations } from 'next-intl';
 import { cn } from '@/lib/utils/cn';
 
 interface RoomGalleryProps {
@@ -19,7 +18,6 @@ interface RoomGalleryProps {
 }
 
 export function RoomGallery({ images, alt }: RoomGalleryProps) {
-  const t = useTranslations('common');
   const [active, setActive] = useState(0);
   const [lightbox, setLightbox] = useState(false);
 
@@ -37,19 +35,9 @@ export function RoomGallery({ images, alt }: RoomGalleryProps) {
   const rotateX = useTransform(springY, [-1, 1], [-6, 6]);
 
   const mainImageRef = useRef<HTMLDivElement>(null);
-  // Mobilde parallax/3D efektleri kapalı (touch'ta hiçbir anlamı yok, sadece bozuyor)
-  const [isDesktop, setIsDesktop] = useState<boolean>(false);
-
-  useEffect(() => {
-    const mq = window.matchMedia('(min-width: 768px)');
-    setIsDesktop(mq.matches);
-    const onChange = (e: MediaQueryListEvent): void => setIsDesktop(e.matches);
-    mq.addEventListener('change', onChange);
-    return () => mq.removeEventListener('change', onChange);
-  }, []);
 
   const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDesktop || !mainImageRef.current) return;
+    if (!mainImageRef.current) return;
     const rect = mainImageRef.current.getBoundingClientRect();
     const x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
     const y = ((e.clientY - rect.top) / rect.height) * 2 - 1;
@@ -95,7 +83,7 @@ export function RoomGallery({ images, alt }: RoomGalleryProps) {
   return (
     <>
       {/* MAIN + THUMBS LAYOUT */}
-      <div className="mx-auto grid w-full max-w-full gap-5 md:grid-cols-[1fr_140px] lg:grid-cols-[1fr_160px]">
+      <div className="grid gap-5 md:grid-cols-[1fr_140px] lg:grid-cols-[1fr_160px]">
         {/* ═══════════════════════════════════════════
             MAIN IMAGE — premium with mouse parallax
             ═══════════════════════════════════════════ */}
@@ -103,7 +91,7 @@ export function RoomGallery({ images, alt }: RoomGalleryProps) {
           ref={mainImageRef}
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
-          className="group relative aspect-video max-h-[240px] overflow-hidden rounded-2xl bg-neutral-100 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.25)] sm:aspect-[4/3] sm:max-h-none md:aspect-[16/10] md:rounded-3xl"
+          className="group relative h-[42vh] max-h-[320px] overflow-hidden rounded-2xl bg-neutral-100 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.25)] sm:h-auto sm:max-h-none sm:aspect-[4/3] md:aspect-[16/10] md:rounded-3xl"
           style={{ perspective: '1200px' }}
         >
           {/* ⚡ FIX: key by image URL+index, not just active number */}
@@ -117,23 +105,23 @@ export function RoomGallery({ images, alt }: RoomGalleryProps) {
               className="absolute inset-0"
               style={{ transformStyle: 'preserve-3d' }}
             >
-              {/* 3D tilt wrapper — mouse yönüne göre eğilir (sadece desktop) */}
+              {/* 3D tilt wrapper — mouse yönüne göre eğilir */}
               <motion.div
                 className="absolute inset-0"
                 style={{
-                  rotateX: isDesktop ? rotateX : 0,
-                  rotateY: isDesktop ? rotateY : 0,
+                  rotateX,
+                  rotateY,
                   transformStyle: 'preserve-3d',
                   transformOrigin: 'center center',
                 }}
               >
-                {/* Parallax wrapper — mouse yönüne göre kayar (sadece desktop) */}
+                {/* Parallax wrapper — mouse yönüne göre kayar */}
                 <motion.div
                   className="absolute inset-0"
                   style={{
-                    x: isDesktop ? imageX : 0,
-                    y: isDesktop ? imageY : 0,
-                    scale: isDesktop ? 1.04 : 1,
+                    x: imageX,
+                    y: imageY,
+                    scale: 1.12,
                   }}
                 >
                   <Image
@@ -168,32 +156,32 @@ export function RoomGallery({ images, alt }: RoomGalleryProps) {
           {/* Arrows — premium glass */}
           <button
             onClick={prev}
-            aria-label={t('prevImage')}
-            className="absolute left-3 top-1/2 inline-flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-white/40 bg-white/85 text-neutral-800 shadow-lg backdrop-blur-md transition-all hover:scale-110 hover:bg-white sm:left-4 sm:h-12 sm:w-12"
+            aria-label="Önceki görsel"
+            className="absolute left-4 top-1/2 inline-flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/40 bg-white/85 text-neutral-800 shadow-lg backdrop-blur-md transition-all hover:scale-110 hover:bg-white"
           >
-            <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5" />
+            <ChevronLeft className="h-5 w-5" />
           </button>
           <button
             onClick={next}
-            aria-label={t('nextImage')}
-            className="absolute right-3 top-1/2 inline-flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-white/40 bg-white/85 text-neutral-800 shadow-lg backdrop-blur-md transition-all hover:scale-110 hover:bg-white sm:right-4 sm:h-12 sm:w-12"
+            aria-label="Sonraki görsel"
+            className="absolute right-4 top-1/2 inline-flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/40 bg-white/85 text-neutral-800 shadow-lg backdrop-blur-md transition-all hover:scale-110 hover:bg-white"
           >
-            <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5" />
+            <ChevronRight className="h-5 w-5" />
           </button>
 
           {/* Expand button */}
           <button
             onClick={() => setLightbox(true)}
-            aria-label="View fullscreen"
-            className="absolute bottom-2 right-2 inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-black/55 px-2.5 py-1 text-[10px] font-semibold text-white backdrop-blur-md transition-all hover:scale-105 hover:bg-black/75 sm:bottom-4 sm:right-4 sm:gap-2 sm:px-4 sm:py-2 sm:text-xs"
+            aria-label="Tam ekran görüntüle"
+            className="absolute bottom-4 right-4 inline-flex items-center gap-2 rounded-full border border-white/20 bg-black/55 px-4 py-2 text-xs font-semibold text-white backdrop-blur-md transition-all hover:scale-105 hover:bg-black/75"
           >
-            <Expand className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
+            <Expand className="h-3.5 w-3.5" />
             Tam Ekran
           </button>
 
           {/* Counter — left bottom */}
-          <div className="absolute bottom-2 left-2 inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-black/55 px-2.5 py-1 text-[10px] font-bold text-white backdrop-blur-md sm:bottom-4 sm:left-4 sm:gap-2 sm:px-3.5 sm:py-1.5 sm:text-xs">
-            <Camera className="h-2.5 w-2.5 text-accent sm:h-3 sm:w-3" />
+          <div className="absolute bottom-4 left-4 inline-flex items-center gap-2 rounded-full border border-white/20 bg-black/55 px-3.5 py-1.5 text-xs font-bold text-white backdrop-blur-md">
+            <Camera className="h-3 w-3 text-accent" />
             <span className="tabular-nums">
               {String(active + 1).padStart(2, '0')}
               <span className="mx-1 text-white/50">/</span>
@@ -217,10 +205,10 @@ export function RoomGallery({ images, alt }: RoomGalleryProps) {
                   whileHover={{ scale: isActive ? 1 : 1.05, y: -2 }}
                   whileTap={{ scale: 0.96 }}
                   className={cn(
-                    'group/thumb relative aspect-square h-14 w-14 shrink-0 overflow-hidden rounded-xl transition-all duration-300 sm:h-20 sm:w-20 md:h-24 md:w-full md:aspect-[4/3]',
+                    'group/thumb relative aspect-square h-20 w-20 shrink-0 overflow-hidden rounded-xl transition-all duration-300 md:h-24 md:w-full md:aspect-[4/3]',
                     isActive ? 'z-10' : 'opacity-65 hover:opacity-100',
                   )}
-                  aria-label={`Image ${i + 1}`}
+                  aria-label={`Görsel ${i + 1}`}
                   aria-current={isActive ? 'true' : 'false'}
                 >
                   {/* Active border with animated glow */}
@@ -305,7 +293,7 @@ export function RoomGallery({ images, alt }: RoomGalleryProps) {
                 e.stopPropagation();
                 setLightbox(false);
               }}
-              aria-label="Close"
+              aria-label="Kapat"
               className="absolute right-4 top-4 inline-flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20"
             >
               <X className="h-5 w-5" />
@@ -315,7 +303,7 @@ export function RoomGallery({ images, alt }: RoomGalleryProps) {
                 e.stopPropagation();
                 prev();
               }}
-              aria-label={t('previous')}
+              aria-label="Önceki"
               className="absolute left-4 inline-flex h-14 w-14 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20"
             >
               <ChevronLeft className="h-6 w-6" />
@@ -325,7 +313,7 @@ export function RoomGallery({ images, alt }: RoomGalleryProps) {
                 e.stopPropagation();
                 next();
               }}
-              aria-label={t('next')}
+              aria-label="Sonraki"
               className="absolute right-4 inline-flex h-14 w-14 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20"
             >
               <ChevronRight className="h-6 w-6" />
