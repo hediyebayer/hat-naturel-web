@@ -34,27 +34,46 @@ export function Header({ locale }: HeaderProps): React.ReactElement {
   return (
     <header
       className={cn(
-        'fixed top-0 left-0 right-0 z-50 w-full py-1 transition-all duration-500',
+        'fixed top-0 left-0 right-0 z-50 w-full transition-all duration-500',
         scrolled
-          ? 'bg-primary-900/85 shadow-medium backdrop-blur-xl'
-          : 'bg-gradient-to-b from-primary-900/60 via-primary-900/30 to-transparent',
+          ? 'py-1 sm:py-1.5 bg-primary-900/90 shadow-medium backdrop-blur-xl'
+          : 'py-2 sm:py-3 bg-gradient-to-b from-primary-900/60 via-primary-900/30 to-transparent',
       )}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
-        {/* Logo — premium glow + glassmorphism + cinematic reveal */}
+        {/* Logo — büyük premium glassmorphism cam efekti + cinematic reveal */}
         <Link
           href={`/${locale}`}
           aria-label="Hat Naturel Sapanca Bungalov — Anasayfa"
-          className="group relative flex items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-primary-900 rounded-2xl"
+          className="group relative flex items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-primary-900 rounded-3xl"
         >
+
+
           {/* Logo — cinematic reveal + 360 dönüş + hover parıltı (logo içi) */}
           <motion.span
             initial={{ scale: 0.92, opacity: 0, filter: 'blur(8px)' }}
             animate={{ scale: 1, opacity: 1, filter: 'blur(0px)' }}
             transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
-            className="relative inline-block transition-all duration-500 drop-shadow-[0_6px_20px_rgba(0,0,0,0.35)]"
+            className="relative inline-block transition-all duration-500 drop-shadow-[0_12px_32px_rgba(0,0,0,0.75)]"
             style={{ perspective: '1000px' }}
           >
+            {/* GLASSMORPHISM CAM — logo'nun tam şekline yapışık, mask ile */}
+            <span
+              aria-hidden
+              className="pointer-events-none absolute inset-0 transition-all duration-500"
+              style={{
+                WebkitMaskImage: "url('/images/brand/logo-header.png')",
+                WebkitMaskRepeat: 'no-repeat',
+                WebkitMaskSize: '100% 100%',
+                WebkitMaskPosition: 'center',
+                maskImage: "url('/images/brand/logo-header.png')",
+                maskRepeat: 'no-repeat',
+                maskSize: '100% 100%',
+                maskPosition: 'center',
+                background: 'rgba(255,255,255,0.04)',
+                backdropFilter: 'blur(4px)',
+              }}
+            />
             {/* Dönen logo katmanı */}
             <motion.span
               className="relative block motion-reduce:!transform-none"
@@ -73,7 +92,12 @@ export function Header({ locale }: HeaderProps): React.ReactElement {
                 width={600}
                 height={437}
                 priority
-                className="block h-20 w-auto transition-all duration-500 sm:h-24"
+                className={cn(
+                  'block w-auto transition-all duration-500 drop-shadow-[0_6px_16px_rgba(0,0,0,0.55)]',
+                  scrolled
+                    ? 'h-16 sm:h-20 md:h-24'
+                    : 'h-28 sm:h-32 md:h-36',
+                )}
               />
             </motion.span>
 
