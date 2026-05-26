@@ -11,6 +11,7 @@ const STATIC_ROUTES = [
   'galeri',
   'restoran',
   'sanal-tur',
+  'kurallar',
   'iletisim',
 ] as const;
 

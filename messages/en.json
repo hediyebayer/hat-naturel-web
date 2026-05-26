@@ -31,6 +31,10 @@
       "title": "Contact & Reservation — Hat Naturel Resort Sapanca",
       "description": "Reach us for reservations, inquiries, and questions. WhatsApp, phone, email. Sapanca, Sakarya."
     },
+    "rules": {
+      "title": "House Rules — Hat Naturel Resort Sapanca",
+      "description": "Facility rules, accommodation terms, and general information. Important details for our guests."
+    },
     "reservation": {
       "title": "Reservation — Hat Naturel Resort Sapanca",
       "description": "Discover available bungalows and lodges at Sapanca Hat Naturel Resort. Price and availability based on dates and guest count."
@@ -59,8 +63,16 @@
     "gallery": "Gallery",
     "virtualTour": "Virtual Tour",
     "restaurant": "Restaurant",
+    "rules": "Rules",
     "contact": "Contact",
     "reservation": "Reservation"
+  },
+  "rules": {
+    "badge": "Facility Info",
+    "heroTitle": "House",
+    "heroTitleItalic": "Rules",
+    "heroLead": "At Hat Naturel Resort, we have a few important rules to ensure a peaceful and secure holiday for all guests.",
+    "placeholder": "Rules will be added here soon."
   },
   "home": {
     "heroTitle": "Your Sanctuary in Sapanca",
