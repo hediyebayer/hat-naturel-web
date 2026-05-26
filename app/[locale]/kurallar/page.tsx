@@ -79,6 +79,7 @@ const RULES: ReadonlyArray<RuleItem> = [
   { key: 'identityWarning', type: 'warning' },
   { key: 'guests', type: 'info' },
   { key: 'guestsWarning', type: 'warning' },
+  { key: 'pets', type: 'info' },
   { key: 'trash', type: 'info' },
   { key: 'furniture', type: 'info' },
   { key: 'pool', type: 'info' },
