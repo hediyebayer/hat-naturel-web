@@ -4,7 +4,16 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Waves, Flame, ArrowRight, Users, Bed, Bath, Bath as BathIcon } from 'lucide-react';
+import {
+  Waves,
+  Flame,
+  ArrowRight,
+  Users,
+  Bed,
+  Bath,
+  Bath as BathIcon,
+  Sparkle,
+} from 'lucide-react';
 import { ROOMS, type Room } from '@/lib/data/rooms';
 
 interface RoomGridDisplayProps {
@@ -64,6 +73,8 @@ export function RoomDisplayCard({
   const hasSauna = room.amenities.includes('sauna');
   const hasJacuzzi = room.amenities.includes('jacuzzi');
   const hasSummerPool = room.amenities.includes('pool');
+  const hasFireplace = room.amenities.includes('fireplace');
+  const hasFirePit = room.amenities.includes('firePit');
   const count = room.count ?? 1;
 
   return (
@@ -135,6 +146,18 @@ export function RoomDisplayCard({
               <span className="inline-flex items-center gap-1 rounded-full border border-cyan-300/50 bg-cyan-500/90 px-2.5 py-1 text-[10px] font-bold text-white shadow-[0_0_12px_rgba(127,229,245,0.5)] backdrop-blur-md">
                 <Waves className="h-2.5 w-2.5" />
                 Yaz Havuzlu
+              </span>
+            )}
+            {hasFireplace && (
+              <span className="inline-flex items-center gap-1 rounded-full border border-amber-300/60 bg-gradient-to-r from-amber-600 to-orange-700 px-2.5 py-1 text-[10px] font-bold text-white shadow-[0_0_15px_rgba(217,119,6,0.55)] backdrop-blur-md">
+                <Flame className="h-2.5 w-2.5" />
+                Şömine
+              </span>
+            )}
+            {hasFirePit && (
+              <span className="inline-flex items-center gap-1 rounded-full border border-red-400/60 bg-gradient-to-r from-red-500 to-orange-600 px-2.5 py-1 text-[10px] font-bold text-white shadow-[0_0_15px_rgba(239,68,68,0.55)] backdrop-blur-md">
+                <Sparkle className="h-2.5 w-2.5" />
+                Ateş Çukuru
               </span>
             )}
           </div>
