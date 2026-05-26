@@ -16,7 +16,7 @@ import { SITE_CONFIG } from '@/lib/constants';
 import { buildWhatsAppUrl } from '@/lib/utils/whatsapp';
 
 // Yeni animasyonlu bileşenler
-import { ContactHeroVideo } from '@/components/iletisim/contact-hero-video';
+import { ContactHero } from '@/components/iletisim/contact-hero';
 import { WhatsappCtaCard } from '@/components/iletisim/whatsapp-cta-card';
 import { AnimatedContactCard } from '@/components/iletisim/animated-contact-card';
 import { AnimatedFormWrapper } from '@/components/iletisim/animated-form-wrapper';
@@ -96,14 +96,12 @@ export default async function ContactPage({
         }}
       />
 
-      {/* ─── HERO VİDEO — ana sayfa hero tarzı yazılar + animasyonlar ─── */}
-      <ContactHeroVideo
-        locale={params.locale}
+      {/* ─── HERO — animasyonlu lacivert + altın particles + orbit rings ─── */}
+      <ContactHero
         title={t('title')}
+        heroLeadShort={t('heroLeadShort')}
         heroLead={t('heroLead')}
-        scrollCueLabel={t('scrollCue')}
-        whatsappCta={t('whatsappCta')}
-        callCta={t('callCta')}
+        quickResponse={t('quickResponse')}
       />
 
       {/* ─── FORM + İLETİŞİM KARTLARI — floating glow background ─── */}
