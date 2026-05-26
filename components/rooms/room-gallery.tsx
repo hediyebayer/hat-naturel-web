@@ -91,7 +91,7 @@ export function RoomGallery({ images, alt }: RoomGalleryProps) {
           ref={mainImageRef}
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
-          className="group relative h-[42vh] max-h-[320px] overflow-hidden rounded-2xl bg-neutral-100 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.25)] sm:h-auto sm:max-h-none sm:aspect-[4/3] md:aspect-[16/10] md:rounded-3xl"
+          className="group relative aspect-[4/3] overflow-hidden rounded-2xl bg-neutral-100 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.25)] sm:aspect-[4/3] md:aspect-[16/10] md:rounded-3xl"
           style={{ perspective: '1200px' }}
         >
           {/* ⚡ FIX: key by image URL+index, not just active number */}
@@ -121,7 +121,7 @@ export function RoomGallery({ images, alt }: RoomGalleryProps) {
                   style={{
                     x: imageX,
                     y: imageY,
-                    scale: 1.12,
+                    scale: 1.04,
                   }}
                 >
                   <Image
@@ -157,31 +157,31 @@ export function RoomGallery({ images, alt }: RoomGalleryProps) {
           <button
             onClick={prev}
             aria-label="Önceki görsel"
-            className="absolute left-4 top-1/2 inline-flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/40 bg-white/85 text-neutral-800 shadow-lg backdrop-blur-md transition-all hover:scale-110 hover:bg-white"
+            className="absolute left-2 top-1/2 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-white/40 bg-white/85 text-neutral-800 shadow-lg backdrop-blur-md transition-all hover:scale-110 hover:bg-white sm:left-4 sm:h-12 sm:w-12"
           >
-            <ChevronLeft className="h-5 w-5" />
+            <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5" />
           </button>
           <button
             onClick={next}
             aria-label="Sonraki görsel"
-            className="absolute right-4 top-1/2 inline-flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/40 bg-white/85 text-neutral-800 shadow-lg backdrop-blur-md transition-all hover:scale-110 hover:bg-white"
+            className="absolute right-2 top-1/2 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-white/40 bg-white/85 text-neutral-800 shadow-lg backdrop-blur-md transition-all hover:scale-110 hover:bg-white sm:right-4 sm:h-12 sm:w-12"
           >
-            <ChevronRight className="h-5 w-5" />
+            <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5" />
           </button>
 
           {/* Expand button */}
           <button
             onClick={() => setLightbox(true)}
             aria-label="Tam ekran görüntüle"
-            className="absolute bottom-4 right-4 inline-flex items-center gap-2 rounded-full border border-white/20 bg-black/55 px-4 py-2 text-xs font-semibold text-white backdrop-blur-md transition-all hover:scale-105 hover:bg-black/75"
+            className="absolute bottom-2 right-2 inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-black/55 px-2.5 py-1 text-[10px] font-semibold text-white backdrop-blur-md transition-all hover:scale-105 hover:bg-black/75 sm:bottom-4 sm:right-4 sm:gap-2 sm:px-4 sm:py-2 sm:text-xs"
           >
-            <Expand className="h-3.5 w-3.5" />
+            <Expand className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
             Tam Ekran
           </button>
 
           {/* Counter — left bottom */}
-          <div className="absolute bottom-4 left-4 inline-flex items-center gap-2 rounded-full border border-white/20 bg-black/55 px-3.5 py-1.5 text-xs font-bold text-white backdrop-blur-md">
-            <Camera className="h-3 w-3 text-accent" />
+          <div className="absolute bottom-2 left-2 inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-black/55 px-2.5 py-1 text-[10px] font-bold text-white backdrop-blur-md sm:bottom-4 sm:left-4 sm:gap-2 sm:px-3.5 sm:py-1.5 sm:text-xs">
+            <Camera className="h-2.5 w-2.5 text-accent sm:h-3 sm:w-3" />
             <span className="tabular-nums">
               {String(active + 1).padStart(2, '0')}
               <span className="mx-1 text-white/50">/</span>
