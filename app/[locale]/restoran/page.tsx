@@ -165,7 +165,6 @@ export default function RestoranPage({
           poster="/videos/cay-tea-poster.jpg"
           aria-hidden="true"
         >
-          <source src="/videos/cay-tea.webm" type="video/webm" />
           <source src="/videos/cay-tea.mp4" type="video/mp4" />
         </video>
         {/* Karartma overlay — yazıların okunması için */}
