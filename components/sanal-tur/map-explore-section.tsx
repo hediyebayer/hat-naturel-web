@@ -99,34 +99,33 @@ export function MapExploreSection() {
                       />
 
                       {/* Center play */}
-                      <div className="relative z-10 flex flex-col items-center gap-4">
+                      <div className="relative z-10 flex flex-col items-center gap-2 sm:gap-4">
                         <motion.div
                           whileHover={{ scale: 1.15 }}
-                          className="relative flex h-24 w-24 items-center justify-center rounded-full bg-accent text-primary-900 shadow-[0_15px_50px_rgba(212,175,55,0.6)] transition-all"
+                          className="relative flex h-14 w-14 items-center justify-center rounded-full bg-accent text-primary-900 shadow-[0_15px_50px_rgba(212,175,55,0.6)] transition-all sm:h-20 sm:w-20 md:h-24 md:w-24"
                         >
                           {/* Pulse rings */}
                           <span className="absolute inset-0 animate-ping rounded-full bg-accent opacity-30" />
                           <span
-                            className="absolute -inset-4 rounded-full border border-accent/30"
+                            className="absolute -inset-3 rounded-full border border-accent/30 sm:-inset-4"
                             style={{
                               animation: 'led-corner-pulse 2.5s ease-in-out infinite',
                             }}
                           />
                           <Play
-                            size={36}
+                            className="h-5 w-5 translate-x-0.5 sm:h-7 sm:w-7 md:h-9 md:w-9"
                             fill="currentColor"
-                            className="translate-x-1"
                           />
                         </motion.div>
                         <div className="text-center text-white">
-                          <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-[10px] font-semibold uppercase tracking-[0.25em] backdrop-blur-md">
-                            <Compass size={12} />
+                          <div className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/10 px-2.5 py-1 text-[8px] font-semibold uppercase tracking-[0.2em] backdrop-blur-md sm:gap-2 sm:px-4 sm:py-1.5 sm:text-[10px] sm:tracking-[0.25em]">
+                            <Compass className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
                             360° Etkileşimli
                           </div>
-                          <p className="mt-4 font-serif text-2xl italic md:text-3xl">
+                          <p className="mt-2 font-serif text-base italic sm:mt-3 sm:text-xl md:mt-4 md:text-2xl lg:text-3xl">
                             İçeri Buyurun
                           </p>
-                          <p className="mt-2 text-sm text-white/70">
+                          <p className="mt-1 text-[10px] text-white/70 sm:mt-2 sm:text-xs md:text-sm">
                             Tıkla, 360° dön, her yeri keşfet
                           </p>
                         </div>
@@ -166,9 +165,9 @@ export function MapExploreSection() {
           </div>
 
           {/* Alt meta */}
-          <p className="mt-6 flex items-center justify-center gap-2 text-center text-xs text-neutral-500">
-            <Eye size={12} className="text-accent" />
-            Tam ekran için sağ üst köşedeki ikona tıklayın
+          <p className="mt-4 flex items-center justify-center gap-1.5 text-center text-[11px] text-neutral-500 sm:mt-6 sm:gap-2 sm:text-xs">
+            <Eye className="h-3 w-3 text-accent" />
+            Sanal tura tıkla, 360° döndürerek tesisi gez
           </p>
         </motion.div>
       </div>
