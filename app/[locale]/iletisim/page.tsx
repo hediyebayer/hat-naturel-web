@@ -16,7 +16,6 @@ import { SITE_CONFIG } from '@/lib/constants';
 import { buildWhatsAppUrl } from '@/lib/utils/whatsapp';
 
 // Yeni animasyonlu bileşenler
-import { ContactHero } from '@/components/iletisim/contact-hero';
 import { WhatsappCtaCard } from '@/components/iletisim/whatsapp-cta-card';
 import { AnimatedContactCard } from '@/components/iletisim/animated-contact-card';
 import { AnimatedFormWrapper } from '@/components/iletisim/animated-form-wrapper';
@@ -96,10 +95,10 @@ export default async function ContactPage({
         }}
       />
 
-      {/* ─── ÜST VİDEO BANNER ─── */}
+      {/* ─── HERO VİDEO — full ekran, ana sayfa hero tarzı ─── */}
       <section
-        className="relative h-[50vh] min-h-[360px] w-full overflow-hidden bg-primary-900 md:h-[65vh]"
-        aria-hidden="true"
+        className="relative h-[100svh] min-h-[560px] w-full overflow-hidden bg-primary-900"
+        aria-label={t('title')}
       >
         <video
           className="absolute inset-0 h-full w-full object-cover"
@@ -112,20 +111,7 @@ export default async function ContactPage({
         >
           <source src="/videos/iletisim-bg.mp4" type="video/mp4" />
         </video>
-        {/* Alt gradient — ContactHero'ya yumuşak geçiş */}
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent via-primary-900/60 to-primary-900"
-        />
       </section>
-
-      {/* ─── HERO — animasyonlu lacivert + altın particles + orbit rings ─── */}
-      <ContactHero
-        title={t('title')}
-        heroLeadShort={t('heroLeadShort')}
-        heroLead={t('heroLead')}
-        quickResponse={t('quickResponse')}
-      />
 
       {/* ─── FORM + İLETİŞİM KARTLARI — floating glow background ─── */}
       <section className="relative overflow-hidden bg-gradient-to-b from-white via-neutral-50 to-white py-20 md:py-28">
