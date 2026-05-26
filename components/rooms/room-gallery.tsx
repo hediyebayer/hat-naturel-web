@@ -35,9 +35,19 @@ export function RoomGallery({ images, alt }: RoomGalleryProps) {
   const rotateX = useTransform(springY, [-1, 1], [-6, 6]);
 
   const mainImageRef = useRef<HTMLDivElement>(null);
+  // Mobilde parallax/3D efektleri kapalı (touch'ta hiçbir anlamı yok, sadece bozuyor)
+  const [isDesktop, setIsDesktop] = useState<boolean>(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 768px)');
+    setIsDesktop(mq.matches);
+    const onChange = (e: MediaQueryListEvent): void => setIsDesktop(e.matches);
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, []);
 
   const handleMouseMove = (e: React.MouseEvent) => {
-    if (!mainImageRef.current) return;
+    if (!isDesktop || !mainImageRef.current) return;
     const rect = mainImageRef.current.getBoundingClientRect();
     const x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
     const y = ((e.clientY - rect.top) / rect.height) * 2 - 1;
@@ -105,23 +115,23 @@ export function RoomGallery({ images, alt }: RoomGalleryProps) {
               className="absolute inset-0"
               style={{ transformStyle: 'preserve-3d' }}
             >
-              {/* 3D tilt wrapper — mouse yönüne göre eğilir */}
+              {/* 3D tilt wrapper — mouse yönüne göre eğilir (sadece desktop) */}
               <motion.div
                 className="absolute inset-0"
                 style={{
-                  rotateX,
-                  rotateY,
+                  rotateX: isDesktop ? rotateX : 0,
+                  rotateY: isDesktop ? rotateY : 0,
                   transformStyle: 'preserve-3d',
                   transformOrigin: 'center center',
                 }}
               >
-                {/* Parallax wrapper — mouse yönüne göre kayar */}
+                {/* Parallax wrapper — mouse yönüne göre kayar (sadece desktop) */}
                 <motion.div
                   className="absolute inset-0"
                   style={{
-                    x: imageX,
-                    y: imageY,
-                    scale: 1.04,
+                    x: isDesktop ? imageX : 0,
+                    y: isDesktop ? imageY : 0,
+                    scale: isDesktop ? 1.04 : 1,
                   }}
                 >
                   <Image
@@ -157,14 +167,14 @@ export function RoomGallery({ images, alt }: RoomGalleryProps) {
           <button
             onClick={prev}
             aria-label="Önceki görsel"
-            className="absolute left-2 top-1/2 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-white/40 bg-white/85 text-neutral-800 shadow-lg backdrop-blur-md transition-all hover:scale-110 hover:bg-white sm:left-4 sm:h-12 sm:w-12"
+            className="absolute left-3 top-1/2 inline-flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-white/40 bg-white/85 text-neutral-800 shadow-lg backdrop-blur-md transition-all hover:scale-110 hover:bg-white sm:left-4 sm:h-12 sm:w-12"
           >
             <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5" />
           </button>
           <button
             onClick={next}
             aria-label="Sonraki görsel"
-            className="absolute right-2 top-1/2 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-white/40 bg-white/85 text-neutral-800 shadow-lg backdrop-blur-md transition-all hover:scale-110 hover:bg-white sm:right-4 sm:h-12 sm:w-12"
+            className="absolute right-3 top-1/2 inline-flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-white/40 bg-white/85 text-neutral-800 shadow-lg backdrop-blur-md transition-all hover:scale-110 hover:bg-white sm:right-4 sm:h-12 sm:w-12"
           >
             <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5" />
           </button>
