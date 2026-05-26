@@ -66,40 +66,40 @@ export function ReservationBar({ locale }: ReservationBarProps): React.ReactElem
 
   return (
     <section
-      className="relative z-20 -mt-20 px-4 pb-12 sm:-mt-24 lg:-mt-28"
+      className="relative z-20 -mt-14 px-3 pb-10 sm:-mt-20 sm:px-4 sm:pb-12 lg:-mt-28"
       aria-label="Rezervasyon Arama"
     >
       <div className="mx-auto max-w-6xl">
         <form
           onSubmit={handleSubmit}
-          className="rounded-full bg-white/95 p-2 shadow-2xl ring-1 ring-black/5 backdrop-blur sm:rounded-full sm:p-2"
+          className="rounded-2xl bg-white/95 p-1.5 shadow-2xl ring-1 ring-black/5 backdrop-blur sm:rounded-full sm:p-2"
         >
-          <div className="grid grid-cols-1 gap-2 sm:grid-cols-[1fr_1fr_auto_auto] sm:gap-1">
+          <div className="grid grid-cols-2 gap-1 sm:grid-cols-[1fr_1fr_auto_auto] sm:gap-1">
             {/* Tarih seçici (giriş + çıkış birlikte) */}
-            <div ref={pickerRef} className="relative col-span-1 sm:col-span-2">
+            <div ref={pickerRef} className="relative col-span-2 sm:col-span-2">
               <button
                 type="button"
                 onClick={() => setIsDatePickerOpen((v) => !v)}
-                className="flex w-full items-center gap-3 rounded-full px-5 py-2.5 text-left transition hover:bg-neutral-50 focus:bg-neutral-50 focus:outline-none"
+                className="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-left transition hover:bg-neutral-50 focus:bg-neutral-50 focus:outline-none sm:gap-3 sm:rounded-full sm:px-5 sm:py-2.5"
               >
                 <CalendarDays
-                  className="h-5 w-5 flex-shrink-0 text-primary-600"
+                  className="h-4 w-4 flex-shrink-0 text-primary-600 sm:h-5 sm:w-5"
                   aria-hidden
                 />
                 <div className="grid flex-1 grid-cols-2 gap-2">
                   <div>
-                    <div className="text-[10px] font-semibold uppercase tracking-wider text-neutral-500">
+                    <div className="text-[9px] font-semibold uppercase tracking-wider text-neutral-500 sm:text-[10px]">
                       Giriş
                     </div>
-                    <div className="text-sm font-medium text-neutral-900">
+                    <div className="text-xs font-medium text-neutral-900 sm:text-sm">
                       {range?.from ? formatDate(range.from) : 'Tarih seç'}
                     </div>
                   </div>
                   <div className="border-l border-neutral-200 pl-2">
-                    <div className="text-[10px] font-semibold uppercase tracking-wider text-neutral-500">
+                    <div className="text-[9px] font-semibold uppercase tracking-wider text-neutral-500 sm:text-[10px]">
                       Çıkış
                     </div>
-                    <div className="text-sm font-medium text-neutral-900">
+                    <div className="text-xs font-medium text-neutral-900 sm:text-sm">
                       {range?.to ? formatDate(range.to) : 'Tarih seç'}
                     </div>
                   </div>
@@ -107,7 +107,7 @@ export function ReservationBar({ locale }: ReservationBarProps): React.ReactElem
               </button>
 
               {isDatePickerOpen && (
-                <div className="absolute left-0 right-0 top-full z-30 mt-2 overflow-hidden rounded-xl bg-white p-2 shadow-2xl ring-1 ring-black/10 sm:left-auto sm:right-auto sm:w-auto sm:min-w-[640px]">
+                <div className="absolute left-0 right-0 top-full z-30 mt-2 overflow-x-auto rounded-xl bg-white p-2 shadow-2xl ring-1 ring-black/10 sm:left-auto sm:right-auto sm:w-auto sm:min-w-[640px] sm:overflow-hidden">
                   <DayPicker
                     mode="range"
                     selected={range}
@@ -118,7 +118,7 @@ export function ReservationBar({ locale }: ReservationBarProps): React.ReactElem
                       }
                     }}
                     locale={tr}
-                    numberOfMonths={2}
+                    numberOfMonths={typeof window !== 'undefined' && window.innerWidth < 640 ? 1 : 2}
                     disabled={(date) => isBefore(date, today)}
                     defaultMonth={range?.from ?? today}
                     fromDate={today}
@@ -156,16 +156,16 @@ export function ReservationBar({ locale }: ReservationBarProps): React.ReactElem
             </div>
 
             {/* Kişi sayısı */}
-            <div className="relative min-w-[160px] sm:border-l sm:border-neutral-200">
-              <div className="flex items-center gap-3 rounded-full px-5 py-2.5 transition hover:bg-neutral-50 focus-within:bg-neutral-50">
+            <div className="relative sm:min-w-[160px] sm:border-l sm:border-neutral-200">
+              <div className="flex items-center gap-2 rounded-xl px-3 py-2 transition hover:bg-neutral-50 focus-within:bg-neutral-50 sm:gap-3 sm:rounded-full sm:px-5 sm:py-2.5">
                 <Users
-                  className="h-5 w-5 flex-shrink-0 text-primary-600"
+                  className="h-4 w-4 flex-shrink-0 text-primary-600 sm:h-5 sm:w-5"
                   aria-hidden
                 />
                 <div className="flex-1">
                   <label
                     htmlFor="guests"
-                    className="block text-[10px] font-semibold uppercase tracking-wider text-neutral-500"
+                    className="block text-[9px] font-semibold uppercase tracking-wider text-neutral-500 sm:text-[10px]"
                   >
                     Kişi
                   </label>
@@ -173,7 +173,7 @@ export function ReservationBar({ locale }: ReservationBarProps): React.ReactElem
                     id="guests"
                     value={guests}
                     onChange={(e) => setGuests(Number(e.target.value))}
-                    className="block w-full cursor-pointer appearance-none border-0 bg-transparent p-0 text-sm font-medium text-neutral-900 focus:outline-none focus:ring-0"
+                    className="block w-full cursor-pointer appearance-none border-0 bg-transparent p-0 text-xs font-medium text-neutral-900 focus:outline-none focus:ring-0 sm:text-sm"
                   >
                     {Array.from({ length: MAX_GUESTS }, (_, i) => i + 1).map(
                       (n) => (
@@ -191,15 +191,16 @@ export function ReservationBar({ locale }: ReservationBarProps): React.ReactElem
             <button
               type="submit"
               disabled={!isValid}
-              className="flex items-center justify-center gap-2 rounded-full bg-primary-600 px-7 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-primary-700 disabled:cursor-not-allowed disabled:opacity-50"
+              className="flex items-center justify-center gap-1.5 rounded-xl bg-primary-600 px-3 py-2 text-xs font-semibold text-white shadow-sm transition hover:bg-primary-700 disabled:cursor-not-allowed disabled:opacity-50 sm:gap-2 sm:rounded-full sm:px-7 sm:py-3 sm:text-sm"
             >
-              <Search className="h-4 w-4" aria-hidden />
-              <span>Müsaitlik Sorgula</span>
+              <Search className="h-3.5 w-3.5 sm:h-4 sm:w-4" aria-hidden />
+              <span className="sm:hidden">Sorgula</span>
+              <span className="hidden sm:inline">Müsaitlik Sorgula</span>
             </button>
           </div>
 
           {nights > 0 && (
-            <div className="mt-2 px-5 text-xs text-neutral-500">
+            <div className="mt-1.5 px-3 text-[11px] text-neutral-500 sm:mt-2 sm:px-5 sm:text-xs">
               {nights} gece konaklama
             </div>
           )}

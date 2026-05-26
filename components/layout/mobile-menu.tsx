@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
@@ -20,9 +21,15 @@ export function MobileMenu({
   isOpen,
   onClose,
   locale,
-}: MobileMenuProps): React.ReactElement {
+}: MobileMenuProps): React.ReactElement | null {
   const t = useTranslations('nav');
   const tCommon = useTranslations('common');
+  const [mounted, setMounted] = useState(false);
+
+  // Portal sadece client'ta render edilebilir
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -39,7 +46,9 @@ export function MobileMenu({
     };
   }, [isOpen, onClose]);
 
-  return (
+  if (!mounted) return null;
+
+  const menu = (
     <div
       className={cn(
         'fixed inset-0 z-[60] lg:hidden',
@@ -114,4 +123,6 @@ export function MobileMenu({
       </aside>
     </div>
   );
+
+  return createPortal(menu, document.body);
 }
