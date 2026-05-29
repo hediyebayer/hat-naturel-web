@@ -106,6 +106,19 @@ describe('availability', () => {
 
       expect(result.isValidQuery).toBe(false);
     });
+
+    it('returns isValidQuery=false when guests exceeds upper bound (URL manipulation guard)', async () => {
+      const query: AvailabilityQuery = {
+        checkIn: '2026-06-01',
+        checkOut: '2026-06-04',
+        guests: 999,
+      };
+
+      const result = await getAvailability(query);
+
+      expect(result.isValidQuery).toBe(false);
+      expect(result.errorMessage).toContain('en fazla');
+    });
   });
 
   describe('getAvailability - Happy Path', () => {
@@ -260,13 +273,13 @@ describe('availability', () => {
       const query: AvailabilityQuery = {
         checkIn: '2026-06-01',
         checkOut: '2026-06-04',
-        guests: 20, // Çok fazla misafir
+        guests: 9, // Tüm odaların maxCapacity'sini aşan ama MAX_GUESTS'i (10) aşmayan
       };
 
       const result = await getAvailability(query);
 
       expect(result.isFallback).toBe(true);
-      // Tüm odalar müsait olmayacak (maxCapacity 7)
+      // Tüm odalar müsait olmayacak (en büyük oda 8 kişilik, 9 kapasiteyi aşar)
       const allUnavailable = result.rooms.every((r) => !r.isAvailable);
       expect(allUnavailable).toBe(true);
 
