@@ -120,7 +120,7 @@ export function generateOrganizationSchema(): unknown {
     '@type': 'Organization',
     name: SITE_CONFIG.legalName,
     url: BASE_URL,
-    logo: `${BASE_URL}/images/brand/og-default.jpg`,
+    logo: `${BASE_URL}/images/brand/logo-transparent.png`,
     contactPoint: {
       '@type': 'ContactPoint',
       telephone: SITE_CONFIG.contact.phoneRaw,
