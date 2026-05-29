@@ -103,22 +103,33 @@ export function MobileMenu({
             className="absolute right-0 top-0 flex h-full w-80 max-w-[85vw] flex-col bg-white shadow-2xl"
           >
             {/* ─── Header: Logo + Kapat ─── */}
-            <div className="relative flex items-center justify-between border-b border-neutral-100 px-5 py-4">
-              <Image
-                src="/images/brand/logo-header.png"
-                alt="Hat Naturel Sapanca Bungalov"
-                width={600}
-                height={437}
-                className="h-12 w-auto"
-              />
-              <button
-                type="button"
-                onClick={onClose}
-                aria-label={tCommon('closeMenu')}
-                className="rounded-full p-2 text-neutral-400 transition-colors hover:bg-neutral-100 hover:text-neutral-700"
-              >
-                <X size={20} />
-              </button>
+            <div className="relative overflow-hidden bg-primary-900 px-5 pb-5 pt-6">
+              {/* Dekoratif dağ/dalga arka plan */}
+              <div aria-hidden className="absolute -bottom-6 -right-6 h-28 w-28 rounded-full bg-primary-800/40" />
+              <div aria-hidden className="absolute -right-3 -top-3 h-16 w-16 rounded-full bg-primary-800/30" />
+
+              <div className="relative flex items-start justify-between">
+                <Image
+                  src="/images/brand/logo-header.png"
+                  alt="Hat Naturel Sapanca Bungalov"
+                  width={600}
+                  height={437}
+                  className="h-20 w-auto drop-shadow-lg"
+                />
+                <button
+                  type="button"
+                  onClick={onClose}
+                  aria-label={tCommon('closeMenu')}
+                  className="rounded-full bg-white/10 p-2 text-white/70 backdrop-blur-sm transition-colors hover:bg-white/20 hover:text-white"
+                >
+                  <X size={18} />
+                </button>
+              </div>
+
+              {/* Hoş geldin yazısı */}
+              <p className="relative mt-3 text-xs font-light tracking-wide text-white/50">
+                Sapanca&#39;da Doğayla İç İçe
+              </p>
             </div>
 
             {/* ─── Navigation ─── */}
