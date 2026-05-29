@@ -10,7 +10,9 @@
  */
 
 const REQUEST_TIMEOUT_MS = 8000;
+const REVALIDATE_SECONDS = 60;
 const PUBLIC_KEY_HEADER = 'X-Public-Key';
+const ERROR_TEXT_MAX_LENGTH = 200;
 
 export interface HatoperasyonRoom {
   bungalowId: string;
@@ -68,18 +70,30 @@ export async function fetchHatoperasyonAvailability(
     const res = await fetch(url.toString(), {
       headers: { [PUBLIC_KEY_HEADER]: apiKey },
       signal: controller.signal,
-      cache: 'no-store',
+      // 60sn ISR cache — müsaitlik dakika hassasiyetinde yeterli, backend'i korur.
+      // Booking confirm flow eklenirse o adım için ayrıca no-store kullanılmalı.
+      next: { revalidate: REVALIDATE_SECONDS },
     });
 
     if (!res.ok) {
-      const text = await res.text().catch(() => '');
+      // API key leak riskine karşı backend response text'ini ÇAĞIRANA döndürme.
+      // (Önceden slice(0, 200) ile dahil ediliyordu — silindi.)
+      // Diagnostic için sadece server logu yeterli.
+      await res.text().catch(() => '');
       return {
         ok: false,
-        error: `Hatoperasyon ${res.status}: ${text.slice(0, 200)}`,
+        error: `Hatoperasyon ${res.status}`,
       };
     }
 
-    const data = (await res.json()) as HatoperasyonAvailabilityResponse;
+    const data: unknown = await res.json();
+    if (!isAvailabilityResponse(data)) {
+      return {
+        ok: false,
+        error: 'Hatoperasyon geçersiz yanıt döndü.',
+      };
+    }
+
     return { ok: true, rooms: data.rooms, nights: data.query.nights };
   } catch (e: unknown) {
     const message = e instanceof Error ? e.message : 'Bilinmeyen hata.';
@@ -87,6 +101,21 @@ export async function fetchHatoperasyonAvailability(
   } finally {
     clearTimeout(timeoutId);
   }
+}
+
+/**
+ * Runtime type guard — backend response'unun beklenen şemaya uyduğunu doğrular.
+ * Schema değişirse veya backend bozuk JSON dönerse crash yerine ok=false döner.
+ */
+function isAvailabilityResponse(
+  data: unknown,
+): data is HatoperasyonAvailabilityResponse {
+  if (!data || typeof data !== 'object') return false;
+  const obj = data as Record<string, unknown>;
+  if (!Array.isArray(obj.rooms)) return false;
+  if (!obj.query || typeof obj.query !== 'object') return false;
+  const query = obj.query as Record<string, unknown>;
+  return typeof query.nights === 'number' && query.nights >= 0;
 }
 
 /**
@@ -113,7 +142,7 @@ export function mapBungalowToSlug(bungalowName: string): string | null {
   if (name === 'TK13') return 'turkuaz';
   if (name === 'MAK14') return 'mavi';
 
-  // B1-B9 üçgen — kapasiteye göre kategorize edilir (availability.ts içinde)
+  // B1-B9 üçgen — kapasiteye göre kategorize edilir (availability.ts içinde).
   if (/^B\d+$/.test(name)) {
     // Burada kapasiteye bakmadığımız için varsayılan: 1+1
     // (availability.ts pickBestForCategory'de capacity ile filter eder)

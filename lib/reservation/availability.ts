@@ -17,6 +17,9 @@ import {
   type HatoperasyonRoom,
 } from '@/lib/reservation/hatoperasyon-client';
 
+// URL manipulation'a karşı korunmak için guests üst sınırı
+const MAX_GUESTS = 10;
+
 // Hatoperasyon erişilemezse kullanılacak fallback fiyatlar
 const FALLBACK_BASE_PRICES: Record<string, number> = {
   'ucgen-2-1': 8500,
@@ -83,6 +86,14 @@ function validateQuery(query: AvailabilityQuery): {
 
   if (query.guests < 1) {
     return { isValid: false, nights, error: 'En az 1 misafir olmalı.' };
+  }
+
+  if (query.guests > MAX_GUESTS) {
+    return {
+      isValid: false,
+      nights,
+      error: `Misafir sayısı en fazla ${MAX_GUESTS} olabilir.`,
+    };
   }
 
   return { isValid: true, nights };

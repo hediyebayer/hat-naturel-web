@@ -207,7 +207,9 @@ describe('hatoperasyon-client', () => {
         expect(result.ok).toBe(false);
         if (!result.ok) {
           expect(result.error).toContain('401');
-          expect(result.error).toContain('Unauthorized');
+          // Backend response text'i error mesajına DAHİL EDİLMEMELİ
+          // (API key leak riski — backend hata text'inde key echo edebilir).
+          expect(result.error).not.toContain('Unauthorized');
         }
       });
 
@@ -279,6 +281,77 @@ describe('hatoperasyon-client', () => {
         expect(result.ok).toBe(false);
         if (!result.ok) {
           expect(result.error).toContain('Invalid JSON');
+        }
+      });
+
+      it('returns ok=false when response schema is invalid (rooms not array)', async () => {
+        process.env.HATOPERASYON_API_URL = 'https://api.example.com';
+        process.env.HATOPERASYON_PUBLIC_API_KEY = 'key';
+
+        const mockFetch = vi.fn(() =>
+          Promise.resolve({
+            ok: true,
+            json: () => Promise.resolve({ query: { nights: 3 }, rooms: null }),
+          } as Response),
+        );
+        vi.stubGlobal('fetch', mockFetch);
+
+        const result = await fetchHatoperasyonAvailability({
+          from: '2026-06-01',
+          to: '2026-06-04',
+          guests: 2,
+        });
+
+        expect(result.ok).toBe(false);
+        if (!result.ok) {
+          expect(result.error).toContain('geçersiz');
+        }
+      });
+
+      it('returns ok=false when response schema is invalid (query missing)', async () => {
+        process.env.HATOPERASYON_API_URL = 'https://api.example.com';
+        process.env.HATOPERASYON_PUBLIC_API_KEY = 'key';
+
+        const mockFetch = vi.fn(() =>
+          Promise.resolve({
+            ok: true,
+            json: () => Promise.resolve({ rooms: [] }),
+          } as Response),
+        );
+        vi.stubGlobal('fetch', mockFetch);
+
+        const result = await fetchHatoperasyonAvailability({
+          from: '2026-06-01',
+          to: '2026-06-04',
+          guests: 2,
+        });
+
+        expect(result.ok).toBe(false);
+      });
+
+      it('returns ok=true when response has valid schema with empty rooms array', async () => {
+        process.env.HATOPERASYON_API_URL = 'https://api.example.com';
+        process.env.HATOPERASYON_PUBLIC_API_KEY = 'key';
+
+        const mockFetch = vi.fn(() =>
+          Promise.resolve({
+            ok: true,
+            json: () =>
+              Promise.resolve({ query: { nights: 3 }, rooms: [] }),
+          } as Response),
+        );
+        vi.stubGlobal('fetch', mockFetch);
+
+        const result = await fetchHatoperasyonAvailability({
+          from: '2026-06-01',
+          to: '2026-06-04',
+          guests: 2,
+        });
+
+        expect(result.ok).toBe(true);
+        if (result.ok) {
+          expect(result.rooms).toEqual([]);
+          expect(result.nights).toBe(3);
         }
       });
 
