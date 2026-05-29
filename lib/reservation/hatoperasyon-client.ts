@@ -10,9 +10,7 @@
  */
 
 const REQUEST_TIMEOUT_MS = 8000;
-const REVALIDATE_SECONDS = 60;
 const PUBLIC_KEY_HEADER = 'X-Public-Key';
-const ERROR_TEXT_MAX_LENGTH = 200;
 
 export interface HatoperasyonRoom {
   bungalowId: string;
@@ -70,9 +68,10 @@ export async function fetchHatoperasyonAvailability(
     const res = await fetch(url.toString(), {
       headers: { [PUBLIC_KEY_HEADER]: apiKey },
       signal: controller.signal,
-      // 60sn ISR cache — müsaitlik dakika hassasiyetinde yeterli, backend'i korur.
-      // Booking confirm flow eklenirse o adım için ayrıca no-store kullanılmalı.
-      next: { revalidate: REVALIDATE_SECONDS },
+      // no-store: Hatoperasyon admin panelinden yapılan fiyat güncellemeleri
+      // anında web sitesine yansısın. Cache yok, her request taze veri.
+      // Trafik artarsa burada revalidate: N saniye düşünülebilir.
+      cache: 'no-store',
     });
 
     if (!res.ok) {
