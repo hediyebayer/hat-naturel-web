@@ -50,9 +50,12 @@ export async function fetchHatoperasyonAvailability(
   const apiKey = process.env.HATOPERASYON_PUBLIC_API_KEY;
 
   if (!baseUrl || !apiKey) {
+    console.error(
+      '[hatoperasyon-client] Missing env variables: HATOPERASYON_API_URL or HATOPERASYON_PUBLIC_API_KEY not set.',
+    );
     return {
       ok: false,
-      error: 'Hatoperasyon env değişkenleri tanımlı değil.',
+      error: 'Müsaitlik bilgisi şu an alınamıyor, lütfen tekrar deneyin.',
     };
   }
 
@@ -76,27 +79,35 @@ export async function fetchHatoperasyonAvailability(
 
     if (!res.ok) {
       // API key leak riskine karşı backend response text'ini ÇAĞIRANA döndürme.
-      // (Önceden slice(0, 200) ile dahil ediliyordu — silindi.)
-      // Diagnostic için sadece server logu yeterli.
-      await res.text().catch(() => '');
+      // Teknik detayı yalnızca sunucu loguna yaz.
+      const responseText = await res.text().catch(() => '');
+      console.error(
+        `[hatoperasyon-client] API error: HTTP ${res.status}`,
+        responseText ? `(response: ${responseText.slice(0, 200)})` : '',
+      );
       return {
         ok: false,
-        error: `Hatoperasyon ${res.status}`,
+        error: 'Müsaitlik bilgisi şu an alınamıyor, lütfen tekrar deneyin.',
       };
     }
 
     const data: unknown = await res.json();
     if (!isAvailabilityResponse(data)) {
+      console.error(
+        '[hatoperasyon-client] Invalid response schema received from API.',
+        JSON.stringify(data).slice(0, 200),
+      );
       return {
         ok: false,
-        error: 'Hatoperasyon geçersiz yanıt döndü.',
+        error: 'Müsaitlik bilgisi şu an alınamıyor, lütfen tekrar deneyin.',
       };
     }
 
     return { ok: true, rooms: data.rooms, nights: data.query.nights };
   } catch (e: unknown) {
     const message = e instanceof Error ? e.message : 'Bilinmeyen hata.';
-    return { ok: false, error: `Fetch hatası: ${message}` };
+    console.error(`[hatoperasyon-client] Fetch error: ${message}`);
+    return { ok: false, error: 'Müsaitlik bilgisi şu an alınamıyor, lütfen tekrar deneyin.' };
   } finally {
     clearTimeout(timeoutId);
   }
@@ -152,11 +163,16 @@ export function mapBungalowToSlug(bungalowName: string): string | null {
 }
 
 /**
- * mapBungalowToSlug fonksiyonunun gelişmiş versiyonu — kapasiteye göre
- * üçgen 1+1 / 2+1 ayrımı yapar.
+ * mapBungalowToSlug + kapasite versiyonu.
  *
- * (Şu an availability.ts içinde kullanılmıyor — pickBestForCategory
- * her iki kategori için ayrı match'liyor. İleride lazım olabilir.)
+ * İlişki: mapBungalowToSlug (yukarıdaki) sadece köşk eşleştirmesi yapar,
+ * üçgenler için varsayılan 'ucgen-1-1' döner (kapasite bilmez).
+ * Bu fonksiyon ise capacity parametresi alarak üçgen 1+1 / 2+1 ayrımı yapar.
+ *
+ * Kullanım: availability.ts → pickBestForCategory bu fonksiyonu çağırır
+ * (slug eşleştirmesi + kapasite filtresi birlikte yapılır).
+ *
+ * mapBungalowToSlug sadece test ve fallback senaryolarında kullanılır.
  */
 export function mapBungalowToSlugWithCapacity(
   bungalowName: string,

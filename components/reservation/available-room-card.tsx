@@ -22,6 +22,11 @@ interface AvailableRoomCardProps {
   locale: string;
   /** Detay sayfasına gönderilecek query string (checkIn, checkOut, guests) */
   query: string;
+  /**
+   * Hatoperasyon erişilemediğinde fallback fiyatlar gösteriliyorsa true.
+   * Fiyatın yanında 'tahmini' etiketi gösterilir, rezervasyon butonu pasifleşir.
+   */
+  isFallback?: boolean;
 }
 
 /**
@@ -32,6 +37,7 @@ export function AvailableRoomCard({
   data,
   locale,
   query,
+  isFallback = false,
 }: AvailableRoomCardProps): React.ReactElement {
   const { room, isAvailable, pricePerNight, totalPrice, nights, unavailableReason } = data;
   const t = useTranslations('reservation');
@@ -158,13 +164,20 @@ export function AvailableRoomCard({
           <div className="mt-5 flex flex-col gap-3 border-t border-neutral-100 pt-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <div className="text-xs text-neutral-500">
-                {nights} gece toplam
+                {nights} {t('nightsTotal')}
               </div>
-              <div className="font-serif text-2xl text-neutral-900">
-                {formatPrice(totalPrice)}
+              <div className="flex items-center gap-2">
+                <span className="font-serif text-2xl text-neutral-900">
+                  {formatPrice(totalPrice)}
+                </span>
+                {isFallback && (
+                  <span className="inline-flex items-center rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-semibold text-amber-800 ring-1 ring-amber-300">
+                    {t('estimatedLabel')}
+                  </span>
+                )}
               </div>
               <div className="text-xs text-neutral-500">
-                Gecelik {formatPrice(pricePerNight)}
+                {t('perNight')} {formatPrice(pricePerNight)}
               </div>
             </div>
             <div className="flex gap-2">
@@ -172,14 +185,22 @@ export function AvailableRoomCard({
                 href={`/${locale}/odalar/${room.slug}`}
                 className="rounded-full border border-neutral-300 px-4 py-2 text-sm font-medium text-neutral-700 transition hover:border-neutral-900 hover:text-neutral-900"
               >
-                Detay
+                {t('detailBtn')}
               </Link>
-              {isAvailable && (
+              {isAvailable && !isFallback && (
                 <Link
                   href={`/${locale}/iletisim?room=${room.slug}&${query}`}
                   className="rounded-full bg-primary-600 px-5 py-2 text-sm font-semibold text-white transition hover:bg-primary-700"
                 >
-                  Rezervasyon Yap
+                  {t('reserveBtn')}
+                </Link>
+              )}
+              {isAvailable && isFallback && (
+                <Link
+                  href={`/${locale}/iletisim?room=${room.slug}&${query}`}
+                  className="rounded-full border border-amber-500 bg-amber-50 px-5 py-2 text-sm font-semibold text-amber-800 transition hover:bg-amber-100"
+                >
+                  {t('contactForPrice')}
                 </Link>
               )}
             </div>

@@ -168,7 +168,13 @@
     "searchAriaLabel": "بحث الحجز",
     "unavailable": "غير متاح",
     "bedroomLabel": "غرف نوم",
-    "updateBtn": "تحديث"
+    "updateBtn": "تحديث",
+    "nightsTotal": "ليالي إجمالياً",
+    "perNight": "لليلة",
+    "detailBtn": "التفاصيل",
+    "reserveBtn": "احجز الآن",
+    "estimatedLabel": "تقديري",
+    "contactForPrice": "تواصل للاستفسار عن السعر"
   },
   "contact": {
     "title": "تواصل",
@@ -455,7 +461,13 @@
     "emptyState": "يُرجى اختيار التاريخ وعدد الضيوف من الأعلى.",
     "queryInvalid": "استعلام غير صالح.",
     "fallbackWarning": "⚠️ تعذر استرداد التوفر المباشر. الأسعار المعروضة تقديرية، يُرجى التواصل معنا للحجز.",
-    "resultsCount": "{count} إقامة متاحة لـ {nights} ليالي"
+    "resultsCount": "{count} إقامة متاحة لـ {nights} ليالي",
+    "errorBoundary": {
+      "title": "حدث خطأ ما",
+      "description": "حدث خطأ أثناء تحميل صفحة الحجز. يُرجى المحاولة مرة أخرى أو التواصل معنا.",
+      "retry": "حاول مجدداً",
+      "contact": "تواصل معنا"
+    }
   },
   "roomDescriptions": {
     "bej": {

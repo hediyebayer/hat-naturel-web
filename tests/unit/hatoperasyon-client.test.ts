@@ -155,7 +155,8 @@ describe('hatoperasyon-client', () => {
 
         expect(result.ok).toBe(false);
         if (!result.ok) {
-          expect(result.error).toContain('env değişkenleri');
+          // Teknik detay artık kullanıcıya gösterilmiyor — genel mesaj
+          expect(result.error).toContain('tekrar deneyin');
         }
       });
 
@@ -206,9 +207,9 @@ describe('hatoperasyon-client', () => {
 
         expect(result.ok).toBe(false);
         if (!result.ok) {
-          expect(result.error).toContain('401');
-          // Backend response text'i error mesajına DAHİL EDİLMEMELİ
-          // (API key leak riski — backend hata text'inde key echo edebilir).
+          // Teknik detay (HTTP status, backend text) artık kullanıcıya gösterilmiyor
+          expect(result.error).toContain('tekrar deneyin');
+          expect(result.error).not.toContain('401');
           expect(result.error).not.toContain('Unauthorized');
         }
       });
@@ -234,7 +235,8 @@ describe('hatoperasyon-client', () => {
 
         expect(result.ok).toBe(false);
         if (!result.ok) {
-          expect(result.error).toContain('500');
+          // Teknik detay (HTTP status) artık kullanıcıya gösterilmiyor
+          expect(result.error).toContain('tekrar deneyin');
         }
       });
 
@@ -255,8 +257,9 @@ describe('hatoperasyon-client', () => {
 
         expect(result.ok).toBe(false);
         if (!result.ok) {
-          expect(result.error).toContain('Fetch hatası');
-          expect(result.error).toContain('Network error');
+          // Teknik detay artık kullanıcıya gösterilmiyor — genel mesaj
+          expect(result.error).toContain('tekrar deneyin');
+          expect(result.error).not.toContain('Network error');
         }
       });
 
@@ -280,7 +283,9 @@ describe('hatoperasyon-client', () => {
 
         expect(result.ok).toBe(false);
         if (!result.ok) {
-          expect(result.error).toContain('Invalid JSON');
+          // Teknik detay artık kullanıcıya gösterilmiyor — genel mesaj
+          expect(result.error).toContain('tekrar deneyin');
+          expect(result.error).not.toContain('Invalid JSON');
         }
       });
 
@@ -304,7 +309,8 @@ describe('hatoperasyon-client', () => {
 
         expect(result.ok).toBe(false);
         if (!result.ok) {
-          expect(result.error).toContain('geçersiz');
+          // Geçersiz yanıt — genel mesaj
+          expect(result.error).toContain('tekrar deneyin');
         }
       });
 
@@ -376,8 +382,8 @@ describe('hatoperasyon-client', () => {
 
         expect(result.ok).toBe(false);
         if (!result.ok) {
-          expect(result.error).toContain('500');
-          // text() catch'i boş string döndürüyor
+          // Teknik detay artık kullanıcıya gösterilmiyor
+          expect(result.error).toContain('tekrar deneyin');
         }
       });
 
@@ -403,8 +409,9 @@ describe('hatoperasyon-client', () => {
 
         expect(result.ok).toBe(false);
         if (!result.ok) {
-          // Hatoperasyon 400: <200 karakter>
-          expect(result.error.length).toBeLessThan(250);
+          // Genel kullanıcı mesajı — kısa ve teknik detay içermiyor
+          expect(result.error).toContain('tekrar deneyin');
+          expect(result.error.length).toBeLessThan(100);
         }
       });
     });
@@ -442,7 +449,8 @@ describe('hatoperasyon-client', () => {
         const result = await promise;
         expect(result.ok).toBe(false);
         if (!result.ok) {
-          expect(result.error).toContain('Fetch hatası');
+          // Teknik detay artık kullanıcıya gösterilmiyor — genel mesaj
+          expect(result.error).toContain('tekrar deneyin');
         }
 
         vi.useRealTimers();

@@ -198,7 +198,13 @@
     "searchAriaLabel": "Reservation Search",
     "unavailable": "Not Available",
     "bedroomLabel": "bedroom(s)",
-    "updateBtn": "Update"
+    "updateBtn": "Update",
+    "nightsTotal": "nights total",
+    "perNight": "Per night",
+    "detailBtn": "Details",
+    "reserveBtn": "Book Now",
+    "estimatedLabel": "estimated",
+    "contactForPrice": "Contact for Price"
   },
   "contact": {
     "title": "Contact",
@@ -487,7 +493,13 @@
     "emptyState": "Please select a date and number of guests above.",
     "queryInvalid": "Invalid query.",
     "fallbackWarning": "⚠️ Live availability could not be retrieved. Displayed prices are estimates, please contact us to book.",
-    "resultsCount": "{count} available stays for {nights} night(s)"
+    "resultsCount": "{count} available stays for {nights} night(s)",
+    "errorBoundary": {
+      "title": "Something went wrong",
+      "description": "An error occurred while loading the reservation page. Please try again or contact us.",
+      "retry": "Try Again",
+      "contact": "Contact Us"
+    }
   },
   "roomDescriptions": {
     "bej": {

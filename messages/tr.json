@@ -198,7 +198,13 @@
     "searchAriaLabel": "Rezervasyon Arama",
     "unavailable": "Müsait Değil",
     "bedroomLabel": "yatak odası",
-    "updateBtn": "Güncelle"
+    "updateBtn": "Güncelle",
+    "nightsTotal": "gece toplam",
+    "perNight": "Gecelik",
+    "detailBtn": "Detay",
+    "reserveBtn": "Rezervasyon Yap",
+    "estimatedLabel": "tahmini",
+    "contactForPrice": "Fiyat için İletişime Geçin"
   },
   "contact": {
     "title": "İletişim",
@@ -487,7 +493,13 @@
     "emptyState": "Lütfen yukarıdan tarih ve kişi sayısı seçin.",
     "queryInvalid": "Sorgu geçersiz.",
     "fallbackWarning": "⚠️ Anlık müsaitlik bilgisi alınamadı. Gösterilen fiyatlar tahminidir, lütfen rezervasyon için bizimle iletişime geçin.",
-    "resultsCount": "{nights} gece için {count} müsait konaklama bulundu"
+    "resultsCount": "{nights} gece için {count} müsait konaklama bulundu",
+    "errorBoundary": {
+      "title": "Bir şeyler ters gitti",
+      "description": "Rezervasyon sayfası yüklenirken bir hata oluştu. Lütfen tekrar deneyin veya bizimle iletişime geçin.",
+      "retry": "Tekrar Dene",
+      "contact": "İletişime Geçin"
+    }
   },
   "roomDescriptions": {
     "bej": {

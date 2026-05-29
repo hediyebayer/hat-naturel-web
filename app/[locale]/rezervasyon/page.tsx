@@ -126,6 +126,7 @@ export default async function ReservationPage({
                     data={roomData}
                     locale={params.locale}
                     query={queryString}
+                    isFallback={result.isFallback ?? false}
                   />
                 ))}
               </div>

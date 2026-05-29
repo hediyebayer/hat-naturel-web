@@ -168,7 +168,13 @@
     "searchAriaLabel": "Recherche de réservation",
     "unavailable": "Indisponible",
     "bedroomLabel": "chambre(s)",
-    "updateBtn": "Mettre à jour"
+    "updateBtn": "Mettre à jour",
+    "nightsTotal": "nuits au total",
+    "perNight": "Par nuit",
+    "detailBtn": "Détails",
+    "reserveBtn": "Réserver",
+    "estimatedLabel": "estimé",
+    "contactForPrice": "Contactez-nous pour le prix"
   },
   "contact": {
     "title": "Contact",
@@ -455,7 +461,13 @@
     "emptyState": "Veuillez sélectionner une date et un nombre de personnes ci-dessus.",
     "queryInvalid": "Requête invalide.",
     "fallbackWarning": "⚠️ Disponibilité en direct indisponible. Les prix affichés sont indicatifs, contactez-nous pour réserver.",
-    "resultsCount": "{count} séjours disponibles pour {nights} nuits"
+    "resultsCount": "{count} séjours disponibles pour {nights} nuits",
+    "errorBoundary": {
+      "title": "Quelque chose s'est mal passé",
+      "description": "Une erreur s'est produite lors du chargement de la page de réservation. Veuillez réessayer ou nous contacter.",
+      "retry": "Réessayer",
+      "contact": "Nous contacter"
+    }
   },
   "roomDescriptions": {
     "bej": {
