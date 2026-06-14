@@ -9,7 +9,7 @@ interface Props {
   params: { locale: string };
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata(_: Props): Promise<Metadata> {
   return {
     title: 'Çerez Politikası — Hat Naturel Resort',
     description: 'Hat Naturel Resort Sapanca çerez (cookie) kullanım politikası.',

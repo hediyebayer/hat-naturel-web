@@ -9,7 +9,7 @@ interface Props {
   params: { locale: string };
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata(_: Props): Promise<Metadata> {
   return {
     title: 'İptal & İade Politikası — Hat Naturel Resort',
     description:
