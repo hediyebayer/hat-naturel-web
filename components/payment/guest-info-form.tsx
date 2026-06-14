@@ -304,7 +304,7 @@ export function GuestInfoForm({
 
       {/* Onaylar */}
       <div className="rounded-xl bg-neutral-50 p-4 ring-1 ring-neutral-200">
-        <Consents value={consents} onChange={setConsents} error={consentsError} />
+        <Consents value={consents} onChange={setConsents} error={consentsError} locale={locale} />
       </div>
 
       {/* Submit */}

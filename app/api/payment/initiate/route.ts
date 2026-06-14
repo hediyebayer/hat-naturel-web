@@ -32,6 +32,13 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     const json: unknown = JSON.parse(text);
     const validated = initiatePaymentSchema.parse(json);
 
+    // ⚠️ SECURITY TODO (gerçek provider öncesi zorunlu):
+    // order.totalPrice istemciden geliyor; sunucu tarafında getAvailability() ile
+    // yeniden hesaplanıp karşılaştırılmalı. Aksi takdirde kullanıcı API'ye
+    // doğrudan totalPrice:1 göndererek 1 TL ile rezervasyon yapabilir.
+    // Mock demo için kabul edilebilir; RealVakifBankProvider aktif edilmeden önce düzelt.
+    // Bkz: lib/payment/order.ts → getOrderFromQuery()
+
     // PAN'ı loglamadan önce maskele
     const maskedForLog = maskPan(validated.card.pan);
     // eslint-disable-next-line no-console

@@ -106,6 +106,24 @@ export class MockVakifBankProvider implements PaymentProvider {
       };
     }
 
+    // Idempotency: aynı OTP ikinci kez gelirse işlem tekrarlanmaz
+    if (record.status === 'success') {
+      // eslint-disable-next-line no-console
+      console.info(
+        `[MockVakifBank] verify idempotent (already success) | ref=${input.reservationId}`,
+      );
+      return { ok: true, status: 'success', reservationId: input.reservationId };
+    }
+
+    if (record.status === 'failed') {
+      return {
+        ok: false,
+        status: 'failed',
+        reservationId: input.reservationId,
+        reason: record.failReason ?? 'invalid_otp',
+      };
+    }
+
     // Mock kural: 6 haneli rakam → success
     const otpValid = /^\d{6}$/.test(input.otp);
 

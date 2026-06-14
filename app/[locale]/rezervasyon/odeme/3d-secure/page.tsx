@@ -29,11 +29,14 @@ export default async function ThreeDSecurePage({
   }
 
   // Server-side fetch status
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? 'http://localhost:3000';
+  const baseUrl =
+    process.env.NEXT_PUBLIC_SITE_URL ??
+    process.env.NEXT_PUBLIC_BASE_URL ??
+    'http://localhost:3001';
   let amount = 0;
 
   try {
-    const res = await fetch(`${baseUrl}/api/payment/status?ref=${ref}`, {
+    const res = await fetch(`${baseUrl}/api/payment/status?ref=${encodeURIComponent(ref)}`, {
       cache: 'no-store',
     });
     if (res.ok) {

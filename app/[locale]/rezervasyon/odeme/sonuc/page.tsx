@@ -50,7 +50,10 @@ interface StatusRecord {
 
 async function fetchRecord(ref: string): Promise<StatusRecord | null> {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? 'http://localhost:3000';
+    const baseUrl =
+      process.env.NEXT_PUBLIC_SITE_URL ??
+      process.env.NEXT_PUBLIC_BASE_URL ??
+      'http://localhost:3001';
     const res = await fetch(`${baseUrl}/api/payment/status?ref=${encodeURIComponent(ref)}`, {
       cache: 'no-store',
     });

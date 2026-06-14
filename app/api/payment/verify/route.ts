@@ -32,14 +32,19 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     const json: unknown = JSON.parse(text);
     const validated = verifyPaymentSchema.parse(json);
 
+    // Verify öncesi mevcut durumu kaydet — idempotency için
+    const preVerifyRecord = storeGet(validated.reservationId);
+    const wasAlreadySuccess = preVerifyRecord?.status === 'success';
+
     const provider = getPaymentProvider();
     const result = await provider.verify({
       reservationId: validated.reservationId,
       otp: validated.otp,
     });
 
-    // Başarılı ödeme → email gönder
-    if (result.ok && result.status === 'success') {
+    // Başarılı ödeme VE ilk kez geçiş → email gönder
+    // wasAlreadySuccess=true ise idempotent dönüş, email ikinci kez gönderilmez
+    if (result.ok && result.status === 'success' && !wasAlreadySuccess) {
       const record = storeGet(validated.reservationId);
 
       if (record) {

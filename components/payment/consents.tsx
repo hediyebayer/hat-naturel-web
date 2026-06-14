@@ -12,9 +12,11 @@ interface ConsentsProps {
   value: ConsentValues;
   onChange: (v: ConsentValues) => void;
   error?: string;
+  /** Aktif locale — yasal sayfa linklerini locale'e göre oluşturur (varsayılan: 'tr') */
+  locale?: string;
 }
 
-export function Consents({ value, onChange, error }: ConsentsProps): React.ReactElement {
+export function Consents({ value, onChange, error, locale = 'tr' }: ConsentsProps): React.ReactElement {
   const t = useTranslations('payment.consents');
 
   return (
@@ -33,7 +35,7 @@ export function Consents({ value, onChange, error }: ConsentsProps): React.React
           />
           <span className="text-sm leading-relaxed text-neutral-700">
             <Link
-              href="/tr/gizlilik-kvkk"
+              href={`/${locale}/gizlilik-kvkk`}
               target="_blank"
               rel="noopener noreferrer"
               className="font-medium text-primary-600 underline underline-offset-2 hover:text-primary-800"
@@ -56,7 +58,7 @@ export function Consents({ value, onChange, error }: ConsentsProps): React.React
           />
           <span className="text-sm leading-relaxed text-neutral-700">
             <Link
-              href="/tr/mesafeli-satis-sozlesmesi"
+              href={`/${locale}/mesafeli-satis-sozlesmesi`}
               target="_blank"
               rel="noopener noreferrer"
               className="font-medium text-primary-600 underline underline-offset-2 hover:text-primary-800"

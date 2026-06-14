@@ -18,21 +18,32 @@ const currentYY = currentYear % 100; // 25, 26, ...
 // Guest Info
 // ---------------------------------------------------------------------------
 
-export const guestInfoSchema = z.object({
-  firstName: z.string().trim().min(2, 'Ad en az 2 karakter olmalı'),
-  lastName: z.string().trim().min(2, 'Soyad en az 2 karakter olmalı'),
-  idType: z.enum(['tc', 'passport']),
-  idNumber: z.string().trim().min(6, 'Kimlik no en az 6 karakter olmalı').max(20),
-  email: z.string().trim().email('Geçerli bir e-posta adresi giriniz'),
-  phone: z
-    .string()
-    .trim()
-    .min(10, 'Geçerli bir telefon numarası giriniz')
-    .max(20),
-  address: z.string().trim().min(5, 'Adres en az 5 karakter olmalı'),
-  city: z.string().trim().min(2, 'Şehir en az 2 karakter olmalı'),
-  district: z.string().trim().min(2, 'İlçe en az 2 karakter olmalı'),
-});
+export const guestInfoSchema = z
+  .object({
+    firstName: z.string().trim().min(2, 'Ad en az 2 karakter olmalı'),
+    lastName: z.string().trim().min(2, 'Soyad en az 2 karakter olmalı'),
+    idType: z.enum(['tc', 'passport']),
+    idNumber: z.string().trim().min(6, 'Kimlik no en az 6 karakter olmalı').max(20),
+    email: z.string().trim().email('Geçerli bir e-posta adresi giriniz'),
+    phone: z
+      .string()
+      .trim()
+      .min(10, 'Geçerli bir telefon numarası giriniz')
+      .max(20),
+    address: z.string().trim().min(5, 'Adres en az 5 karakter olmalı'),
+    city: z.string().trim().min(2, 'Şehir en az 2 karakter olmalı'),
+    district: z.string().trim().min(2, 'İlçe en az 2 karakter olmalı'),
+  })
+  .superRefine((data, ctx) => {
+    // T.C. kimlik: tam 11 haneli sayısal olmalı (plan acceptance kriteri)
+    if (data.idType === 'tc' && !/^\d{11}$/.test(data.idNumber)) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ['idNumber'],
+        message: 'T.C. kimlik numarası 11 haneli sayılardan oluşmalıdır',
+      });
+    }
+  });
 
 export type GuestInfoInput = z.infer<typeof guestInfoSchema>;
 
