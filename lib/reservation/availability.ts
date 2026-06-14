@@ -60,7 +60,7 @@ export interface AvailabilityResult {
 /**
  * Sorgu parametrelerini validate eder ve sebebi döndürür.
  */
-function validateQuery(query: AvailabilityQuery): {
+export function validateQuery(query: AvailabilityQuery): {
   isValid: boolean;
   nights: number;
   error?: string;
@@ -92,7 +92,7 @@ function validateQuery(query: AvailabilityQuery): {
  * Fallback hesap — hatoperasyon erişilmediginde devreye girer.
  * Sabit base fiyat × gece sayısı, sadece kapasite kontrolü.
  */
-function calculateFallbackAvailability(
+export function calculateFallbackAvailability(
   room: Room,
   nights: number,
   guests: number,
@@ -125,7 +125,7 @@ function calculateFallbackAvailability(
  * tek bir web kategorisinde (örn "ucgen-1-1") en uygun olana göre birleştirir.
  * En uygun: müsait olan + en düşük fiyatlı.
  */
-function pickBestForCategory(
+export function pickBestForCategory(
   hatoperasyonRooms: HatoperasyonRoom[],
   slug: string,
   guests: number,
