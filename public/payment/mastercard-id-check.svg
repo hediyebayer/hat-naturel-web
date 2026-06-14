@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 90 36" role="img" aria-label="Mastercard ID Check">
+  <rect width="90" height="36" rx="4" fill="#FFFFFF" stroke="#E0E0E0"/>
+  <circle cx="30" cy="18" r="11" fill="#EB001B"/>
+  <circle cx="46" cy="18" r="11" fill="#F79E1B"/>
+  <ellipse cx="38" cy="18" rx="5" ry="11" fill="#FF5F00"/>
+  <text x="60" y="14" font-family="Arial,sans-serif" font-size="7" font-weight="bold" fill="#231F20" text-anchor="middle">ID</text>
+  <text x="60" y="24" font-family="Arial,sans-serif" font-size="7" fill="#231F20" text-anchor="middle">CHECK</text>
+</svg>

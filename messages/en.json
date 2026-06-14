@@ -169,6 +169,7 @@
     "seeDetails": "See Details"
   },
   "reservation": {
+    "bookCta": "Book Now",
     "title": "Book Now",
     "subtitle": "Pick your dates, we'll prepare the rest.",
     "checkIn": "Check-in",
@@ -374,7 +375,14 @@
     "contact": "Contact",
     "followUs": "Follow Us",
     "copyright": "© {year} Hat Naturel Resort. All rights reserved.",
-    "rightsReserved": "All rights reserved."
+    "rightsReserved": "All rights reserved.",
+    "legal": {
+      "distanceSales": "Distance Sales Agreement",
+      "cancellation": "Cancellation & Refund",
+      "privacy": "Privacy & KVKK",
+      "cookies": "Cookie Policy"
+    },
+    "securePayment": "Secure Payment"
   },
   "cookie": {
     "message": "This site uses cookies to improve your experience.",
@@ -552,6 +560,109 @@
         "🛋️ Single sofa-bed in the living area",
         "👪 Up to 7 guests"
       ]
+    }
+  },
+  "payment": {
+    "steps": {
+      "info": "Details",
+      "card": "Card",
+      "verify": "Verify",
+      "result": "Result"
+    },
+    "summary": {
+      "title": "Order Summary",
+      "nights": "{count, plural, =1 {1 night} other {# nights}}",
+      "guests": "{count} guests",
+      "total": "Total",
+      "deposit": "Deposit (30%)",
+      "fullPayment": "Pay in full",
+      "depositOption": "Pay 30% deposit, balance at check-in",
+      "ref": "Reference"
+    },
+    "guest": {
+      "title": "Guest Information",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "idType": "ID Type",
+      "idTc": "Turkish ID",
+      "idPassport": "Passport",
+      "idNumber": "ID / Passport No",
+      "email": "Email",
+      "phone": "Phone",
+      "address": "Address",
+      "city": "City",
+      "district": "District",
+      "submit": "Continue to Payment"
+    },
+    "consents": {
+      "kvkk": "I have read and accept the KVKK Privacy Notice.",
+      "distance": "I have read and accept the Distance Sales Agreement.",
+      "required": "You must provide consent to continue."
+    },
+    "card": {
+      "title": "Card Details",
+      "number": "Card Number",
+      "expiry": "Expiry (MM/YY)",
+      "cvv": "CVV",
+      "holder": "Name on Card",
+      "submit": "Complete Payment",
+      "securedBy": "Payment secured by 3D Secure",
+      "errors": {
+        "invalidPan": "Invalid card number",
+        "expired": "Card expiry date has passed",
+        "invalidCvv": "Invalid CVV",
+        "required": "This field is required"
+      }
+    },
+    "threeDS": {
+      "title": "3D Secure Verification",
+      "intro": "Enter the 6-digit code sent to your phone to confirm this transaction.",
+      "merchant": "Merchant",
+      "amount": "Amount",
+      "phoneMasked": "Phone",
+      "expiresIn": "Time left: {seconds}s",
+      "expired": "Time expired",
+      "resend": "Resend",
+      "approve": "Confirm",
+      "cancel": "Cancel",
+      "demoNotice": "DEMO — enter any 6-digit code"
+    },
+    "result": {
+      "successTitle": "Reservation Confirmed",
+      "successBody": "A confirmation email has been sent to {email}. Your reference: {ref}",
+      "failTitle": "Payment Could Not Be Completed",
+      "failBody": "Your transaction was not approved by your bank. Please try again or use a different card.",
+      "retry": "Try Again",
+      "home": "Back to Home",
+      "contact": "Contact Us"
+    }
+  },
+  "legal": {
+    "distanceSales": {
+      "title": "Distance Sales Agreement",
+      "lastUpdated": "Last updated: {date}"
+    },
+    "cancellation": {
+      "title": "Cancellation & Refund Policy",
+      "lastUpdated": "Last updated: {date}"
+    },
+    "privacy": {
+      "title": "Privacy & KVKK Notice",
+      "lastUpdated": "Last updated: {date}"
+    },
+    "cookies": {
+      "title": "Cookie Policy",
+      "lastUpdated": "Last updated: {date}"
+    },
+    "company": {
+      "legalName": "Company Name",
+      "taxOffice": "Tax Office",
+      "taxNo": "Tax Number",
+      "mersis": "MERSIS No",
+      "address": "Address",
+      "phone": "Phone",
+      "email": "Email",
+      "kep": "KEP Address"
     }
   }
 }

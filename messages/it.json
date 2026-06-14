@@ -139,6 +139,7 @@
     "seeDetails": "Vedi dettagli"
   },
   "reservation": {
+    "bookCta": "Rezervasyon Yap",
     "title": "Prenota ora",
     "subtitle": "Scegli le date, al resto pensiamo noi.",
     "checkIn": "Check-in",
@@ -279,7 +280,14 @@
     "contact": "Contatti",
     "followUs": "Seguici",
     "copyright": "© {year} Hat Naturel Resort. Tutti i diritti riservati.",
-    "rightsReserved": "Tutti i diritti riservati."
+    "rightsReserved": "Tutti i diritti riservati.",
+    "legal": {
+      "distanceSales": "Mesafeli Satış Sözleşmesi",
+      "cancellation": "İptal & İade",
+      "privacy": "Gizlilik & KVKK",
+      "cookies": "Çerez Politikası"
+    },
+    "securePayment": "Güvenli Ödeme"
   },
   "cookie": {
     "message": "Questo sito usa i cookie per migliorare la tua esperienza.",
@@ -549,6 +557,109 @@
       "fire": "Portare il braciere o l'attrezzatura per barbecue sulla veranda è pericoloso e vietato. Vi preghiamo di usarli solo nella vostra area giardino designata.",
       "breakfast": "La colazione è servita nel nostro bar tra le 09:30 e le 11:30. Non offriamo il servizio in camera.",
       "reservation": "Non offriamo cancellazioni di prenotazione né rimborsi di caparra. Potete riprogrammare il vostro soggiorno fino a 7 giorni prima della data di check-in. Cambi di data entro 1–2 giorni dal check-in non sono possibili — indipendentemente da motivi personali, meteo o cambi di programma."
+    }
+  },
+  "payment": {
+    "steps": {
+      "info": "Bilgiler",
+      "card": "Kart",
+      "verify": "Doğrulama",
+      "result": "Sonuç"
+    },
+    "summary": {
+      "title": "Sipariş Özeti",
+      "nights": "{count, plural, =1 {1 gece} other {# gece}}",
+      "guests": "{count} misafir",
+      "total": "Toplam",
+      "deposit": "Kapora (%30)",
+      "fullPayment": "Tamamını öde",
+      "depositOption": "%30 kapora öde, kalanı tesiste",
+      "ref": "Referans No"
+    },
+    "guest": {
+      "title": "Misafir Bilgileri",
+      "firstName": "Ad",
+      "lastName": "Soyad",
+      "idType": "Kimlik Türü",
+      "idTc": "T.C. Kimlik",
+      "idPassport": "Pasaport",
+      "idNumber": "Kimlik / Pasaport No",
+      "email": "E-posta",
+      "phone": "Telefon",
+      "address": "Adres",
+      "city": "Şehir",
+      "district": "İlçe",
+      "submit": "Ödemeye Geç"
+    },
+    "consents": {
+      "kvkk": "KVKK Aydınlatma Metni'ni okudum ve kabul ediyorum.",
+      "distance": "Mesafeli Satış Sözleşmesi'ni okudum ve onaylıyorum.",
+      "required": "Devam etmek için onay vermelisiniz."
+    },
+    "card": {
+      "title": "Kart Bilgileri",
+      "number": "Kart Numarası",
+      "expiry": "Son Kullanma (AA/YY)",
+      "cvv": "CVV",
+      "holder": "Kart Üzerindeki İsim",
+      "submit": "Ödemeyi Tamamla",
+      "securedBy": "3D Secure ile korumalı ödeme",
+      "errors": {
+        "invalidPan": "Geçersiz kart numarası",
+        "expired": "Kartın son kullanma tarihi geçmiş",
+        "invalidCvv": "Geçersiz CVV",
+        "required": "Bu alan zorunlu"
+      }
+    },
+    "threeDS": {
+      "title": "3D Secure Doğrulama",
+      "intro": "İşleminizi onaylamak için telefonunuza gönderilen 6 haneli kodu girin.",
+      "merchant": "İşyeri",
+      "amount": "Tutar",
+      "phoneMasked": "Telefon",
+      "expiresIn": "Kalan süre: {seconds}s",
+      "expired": "Süre doldu",
+      "resend": "Yeniden gönder",
+      "approve": "Onayla",
+      "cancel": "İptal",
+      "demoNotice": "DEMO — herhangi 6 haneli kod girebilirsiniz"
+    },
+    "result": {
+      "successTitle": "Rezervasyonunuz Onaylandı",
+      "successBody": "Onay e-postanız {email} adresine gönderildi. Referans numaranız: {ref}",
+      "failTitle": "Ödeme Tamamlanamadı",
+      "failBody": "İşleminiz bankanız tarafından onaylanmadı. Lütfen tekrar deneyin veya başka bir kart kullanın.",
+      "retry": "Tekrar Dene",
+      "home": "Ana Sayfaya Dön",
+      "contact": "İletişime Geç"
+    }
+  },
+  "legal": {
+    "distanceSales": {
+      "title": "Mesafeli Satış Sözleşmesi",
+      "lastUpdated": "Son güncelleme: {date}"
+    },
+    "cancellation": {
+      "title": "İptal & İade Politikası",
+      "lastUpdated": "Son güncelleme: {date}"
+    },
+    "privacy": {
+      "title": "Gizlilik & KVKK Aydınlatma Metni",
+      "lastUpdated": "Son güncelleme: {date}"
+    },
+    "cookies": {
+      "title": "Çerez Politikası",
+      "lastUpdated": "Son güncelleme: {date}"
+    },
+    "company": {
+      "legalName": "Şirket Ünvanı",
+      "taxOffice": "Vergi Dairesi",
+      "taxNo": "Vergi No",
+      "mersis": "MERSİS No",
+      "address": "Adres",
+      "phone": "Telefon",
+      "email": "E-posta",
+      "kep": "KEP Adresi"
     }
   }
 }

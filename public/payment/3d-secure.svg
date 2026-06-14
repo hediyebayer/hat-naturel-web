@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 90 36" role="img" aria-label="3D Secure">
+  <rect width="90" height="36" rx="4" fill="#003087"/>
+  <text x="6" y="16" font-family="Arial,sans-serif" font-size="13" font-weight="bold" fill="#FFFFFF">3D</text>
+  <text x="26" y="16" font-family="Arial,sans-serif" font-size="8" fill="#FFD700">SECURE</text>
+  <text x="6" y="29" font-family="Arial,sans-serif" font-size="8" fill="#99B3CC">v2.0</text>
+  <path d="M68 8 L78 12 L78 22 Q78 28 68 30 Q58 28 58 22 L58 12 Z" fill="none" stroke="#FFD700" stroke-width="1.5"/>
+  <path d="M63 19 L66 22 L73 15" stroke="#FFD700" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

@@ -111,10 +111,10 @@ export function AvailableRoomCard({
               </Link>
               {isAvailable && (
                 <Link
-                  href={`/${locale}/iletisim?room=${room.slug}&${query}`}
+                  href={`/${locale}/rezervasyon/odeme?room=${room.slug}&${query}`}
                   className="rounded-full bg-primary-600 px-5 py-2 text-sm font-semibold text-white transition hover:bg-primary-700"
                 >
-                  Rezervasyon Yap
+                  {t('bookCta') ?? 'Rezervasyon Yap'}
                 </Link>
               )}
             </div>

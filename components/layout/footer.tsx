@@ -5,6 +5,22 @@ import { Instagram, Facebook, Mail, Phone, MapPin, Video } from 'lucide-react';
 import { NAVIGATION, SITE_CONFIG } from '@/lib/constants';
 import { Container } from '@/components/ui/container';
 
+// Placeholder güven rozeti SVG bileşeni
+function PaymentBadge({ src, alt }: { src: string; alt: string }): React.ReactElement {
+  return (
+    <div className="flex h-8 items-center justify-center overflow-hidden rounded border border-white/20 bg-white/10 px-2">
+      <Image
+        src={src}
+        alt={alt}
+        width={60}
+        height={28}
+        className="h-6 w-auto object-contain"
+        unoptimized
+      />
+    </div>
+  );
+}
+
 interface FooterProps {
   locale: string;
 }
@@ -115,7 +131,51 @@ export function Footer({ locale }: FooterProps): React.ReactElement {
           </div>
         </div>
 
-        <div className="mt-12 border-t border-primary-700/40 pt-6 text-center text-xs text-primary-200/60">
+        {/* Güvenli Ödeme Rozetleri */}
+        <div className="mt-10 border-t border-primary-700/40 pt-8">
+          <p className="mb-3 text-center text-xs font-semibold uppercase tracking-wider text-primary-300/70">
+            {tFooter('securePayment')}
+          </p>
+          <div className="flex flex-wrap justify-center gap-3">
+            <PaymentBadge src="/payment/visa-secure.svg" alt="Visa Secure" />
+            <PaymentBadge src="/payment/mastercard-id-check.svg" alt="Mastercard ID Check" />
+            <PaymentBadge src="/payment/troy.svg" alt="Troy" />
+            <PaymentBadge src="/payment/3d-secure.svg" alt="3D Secure" />
+            <PaymentBadge src="/payment/ssl-badge.svg" alt="SSL Secured" />
+          </div>
+        </div>
+
+        {/* Yasal Linkler + Copyright */}
+        <div className="mt-6 border-t border-primary-700/40 pt-6 text-center text-xs text-primary-200/60">
+          <nav aria-label="Yasal sayfalar" className="mb-3 flex flex-wrap justify-center gap-x-4 gap-y-1">
+            <Link
+              href={`/${locale}/mesafeli-satis-sozlesmesi`}
+              className="text-primary-200/70 transition-colors hover:text-white"
+            >
+              {tFooter('legal.distanceSales')}
+            </Link>
+            <span aria-hidden="true" className="text-primary-600">·</span>
+            <Link
+              href={`/${locale}/iptal-iade`}
+              className="text-primary-200/70 transition-colors hover:text-white"
+            >
+              {tFooter('legal.cancellation')}
+            </Link>
+            <span aria-hidden="true" className="text-primary-600">·</span>
+            <Link
+              href={`/${locale}/gizlilik-kvkk`}
+              className="text-primary-200/70 transition-colors hover:text-white"
+            >
+              {tFooter('legal.privacy')}
+            </Link>
+            <span aria-hidden="true" className="text-primary-600">·</span>
+            <Link
+              href={`/${locale}/cerez-politikasi`}
+              className="text-primary-200/70 transition-colors hover:text-white"
+            >
+              {tFooter('legal.cookies')}
+            </Link>
+          </nav>
           {tFooter('copyright', { year })}
         </div>
       </Container>

@@ -92,6 +92,44 @@ Site, rezervasyon talebini `/api/reservations` endpoint'ine gönderir. Bu endpoi
 - [ ] **M4** — Rezervasyon formu + (mock) backend bağlantısı
 - [ ] **M5** — SEO + performans + a11y + Vercel deploy
 
+## Ödeme Akışı (Mock VPOS)
+
+### Lokal Test Adımları
+
+1. `.env.local`'a ekleyin: `PAYMENT_PROVIDER=mock`
+2. Rezervasyon sayfasına gidin: `/tr/rezervasyon`
+3. Tarih ve kişi sayısı seçin → bir oda kartında **"Rezervasyon Yap"** tıklayın
+4. Misafir bilgilerini doldurun, KVKK + Mesafeli onaylarını işaretle
+5. Kart formunda demo kart bilgilerini girin:
+   - **Kart No:** `4111 1111 1111 1111` (Visa, Luhn-geçerli)
+   - **Son Kullanma:** `12/30`
+   - **CVV:** `123`
+   - **Kart Sahibi:** `TEST USER`
+6. 3D Secure ekranında herhangi **6 haneli rakam** girin (örn. `123456`) → başarılı
+7. Sonuç sayfasında referans numarası ve onay görünür
+
+### Mock Kuralı
+- OTP `^٠١-٩{6}$` (6 haneli rakam) → success
+- OTP herhangi başka şey → failed
+- Luhn-geçersiz kart no → form gönderimi engellenir
+
+### API Endpoint’leri
+| Endpoint | Métod | Açıklama |
+|---|---|---|
+| `/api/payment/initiate` | POST | Ödeme başlat, reservationId üret |
+| `/api/payment/verify` | POST | 3DS OTP doğrula |
+| `/api/payment/status?ref=HN-...` | GET | Rezervasyon durumu |
+
+### Banka Denetimi Yol Haritası
+1. Mock aklış banka denetçisine gösterilir (demo kart + OTP)
+2. VakıfBank credential teslimi sonrası `lib/payment/real-vakifbank-provider.ts` yazılır
+3. `PAYMENT_PROVIDER=vakifbank` env set edilir
+4. Callback URL&apos;ler banka panelinden whitelist eklenir
+5. Test kartlarıyla sank test ortamında doğrulama yapılır
+6. Banka `live` onayı sonrası `VAKIFBANK_ENV=prod` geçişi
+
+Detaylı checklist: `docs/BANK_CHECKLIST.md`
+
 ## Lisans
 
 Özel mülkiyet. Tüm hakları Hat Naturel Resort'a aittir.

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 90 36" role="img" aria-label="Troy">
+  <rect width="90" height="36" rx="4" fill="#00205B"/>
+  <rect x="2" y="26" width="86" height="8" rx="0 0 4 4" fill="#E30613"/>
+  <text x="45" y="21" font-family="Arial,sans-serif" font-size="14" font-weight="bold" fill="#FFFFFF" text-anchor="middle">TROY</text>
+</svg>
