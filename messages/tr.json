@@ -55,7 +55,8 @@
     "nextImage": "Sonraki görsel",
     "closeMenu": "Menüyü kapat",
     "previous": "Önceki",
-    "next": "Sonraki"
+    "next": "Sonraki",
+    "tryAgain": "Tekrar dene"
   },
   "nav": {
     "home": "Anasayfa",
@@ -224,8 +225,6 @@
     "whatsappTitle": "Hızlı iletişim",
     "whatsappLead": "WhatsApp üzerinden anında yanıt alın.",
     "whatsappCta": "WhatsApp'tan Yaz",
-    "callCta": "Hemen Ara",
-    "scrollCue": "Keşfedin",
     "orDivider": "veya",
     "addressLabel": "Adres",
     "phoneLabel": "Telefon",
@@ -577,7 +576,10 @@
       "deposit": "Kapora (%30)",
       "fullPayment": "Tamamını öde",
       "depositOption": "%30 kapora öde, kalanı tesiste",
-      "ref": "Referans No"
+      "ref": "Referans No",
+      "payAtProperty": "Tesiste ödenecek",
+      "payNow": "Şimdi ödenecek",
+      "ariaLabel": "Sipariş özeti"
     },
     "guest": {
       "title": "Misafir Bilgileri",
@@ -592,7 +594,16 @@
       "address": "Adres",
       "city": "Şehir",
       "district": "İlçe",
-      "submit": "Ödemeye Geç"
+      "submit": "Ödemeye Geç",
+      "subtitle": "Ödeme sayfasına geçmek için lütfen bilgilerinizi doldurun.",
+      "depositLabel": "Ödeme Seçeneği",
+      "placeholderFirstName": "Adınız",
+      "placeholderLastName": "Soyadınız",
+      "placeholderEmail": "ornek@email.com",
+      "placeholderPhone": "+90 5XX XXX XX XX",
+      "placeholderAddress": "Sokak, mahalle, kapı no...",
+      "placeholderCity": "İstanbul",
+      "placeholderDistrict": "Kadıköy"
     },
     "consents": {
       "kvkk": "KVKK Aydınlatma Metni'ni okudum ve kabul ediyorum.",

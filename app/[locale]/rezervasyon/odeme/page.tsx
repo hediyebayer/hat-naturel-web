@@ -64,12 +64,12 @@ export default async function OdemePage({
             {t('title')}
           </Heading>
           <Text variant="small" muted className="mb-6">
-            Ödeme sayfasına geçmek için lütfen bilgilerinizi doldurun.
+            {t('subtitle')}
           </Text>
 
           {/* Kapora seçimi */}
           <div className="mb-6 rounded-xl bg-white p-4 shadow-sm ring-1 ring-neutral-200">
-            <p className="mb-3 text-sm font-semibold text-neutral-700">Ödeme Seçeneği</p>
+            <p className="mb-3 text-sm font-semibold text-neutral-700">{t('depositLabel')}</p>
             <div className="space-y-2">
               <label className="flex cursor-pointer items-start gap-3 rounded-lg p-2 hover:bg-neutral-50">
                 <input

@@ -55,7 +55,8 @@
     "nextImage": "الصورة التالية",
     "closeMenu": "إغلاق القائمة",
     "previous": "السابق",
-    "next": "التالي"
+    "next": "التالي",
+    "tryAgain": "حاول مرة أخرى"
   },
   "nav": {
     "home": "الرئيسية",
@@ -64,7 +65,8 @@
     "virtualTour": "جولة افتراضية",
     "restaurant": "المطعم",
     "contact": "تواصل",
-    "reservation": "حجز"
+    "reservation": "حجز",
+    "rules": "القواعد"
   },
   "home": {
     "heroTitle": "ملاذك في سابانجا",
@@ -574,7 +576,10 @@
       "deposit": "Kapora (%30)",
       "fullPayment": "Tamamını öde",
       "depositOption": "%30 kapora öde, kalanı tesiste",
-      "ref": "Referans No"
+      "ref": "Referans No",
+      "payAtProperty": "يُدفع في الفندق",
+      "payNow": "يُدفع الآن",
+      "ariaLabel": "ملخص الطلب"
     },
     "guest": {
       "title": "Misafir Bilgileri",
@@ -589,7 +594,16 @@
       "address": "Adres",
       "city": "Şehir",
       "district": "İlçe",
-      "submit": "Ödemeye Geç"
+      "submit": "Ödemeye Geç",
+      "subtitle": "يرجى ملء بياناتك للمتابعة إلى الدفع.",
+      "depositLabel": "خيار الدفع",
+      "placeholderFirstName": "الاسم الأول",
+      "placeholderLastName": "اسم العائلة",
+      "placeholderEmail": "example@email.com",
+      "placeholderPhone": "+90 5XX XXX XX XX",
+      "placeholderAddress": "الشارع، الحي، رقم المبنى…",
+      "placeholderCity": "المدينة",
+      "placeholderDistrict": "المنطقة"
     },
     "consents": {
       "kvkk": "KVKK Aydınlatma Metni'ni okudum ve kabul ediyorum.",

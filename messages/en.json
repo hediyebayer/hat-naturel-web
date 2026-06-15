@@ -55,7 +55,8 @@
     "nextImage": "Next image",
     "closeMenu": "Close menu",
     "previous": "Previous",
-    "next": "Next"
+    "next": "Next",
+    "tryAgain": "Try again"
   },
   "nav": {
     "home": "Home",
@@ -224,8 +225,6 @@
     "whatsappTitle": "Quick contact",
     "whatsappLead": "Get an instant reply via WhatsApp.",
     "whatsappCta": "Chat on WhatsApp",
-    "callCta": "Call Now",
-    "scrollCue": "Discover",
     "orDivider": "or",
     "addressLabel": "Address",
     "phoneLabel": "Phone",
@@ -577,7 +576,10 @@
       "deposit": "Deposit (30%)",
       "fullPayment": "Pay in full",
       "depositOption": "Pay 30% deposit, balance at check-in",
-      "ref": "Reference"
+      "ref": "Reference",
+      "payAtProperty": "Pay at property",
+      "payNow": "Pay now",
+      "ariaLabel": "Order summary"
     },
     "guest": {
       "title": "Guest Information",
@@ -592,7 +594,16 @@
       "address": "Address",
       "city": "City",
       "district": "District",
-      "submit": "Continue to Payment"
+      "submit": "Continue to Payment",
+      "subtitle": "Please fill in your details to proceed to payment.",
+      "depositLabel": "Payment Option",
+      "placeholderFirstName": "Your first name",
+      "placeholderLastName": "Your last name",
+      "placeholderEmail": "example@email.com",
+      "placeholderPhone": "+1 555 555 5555",
+      "placeholderAddress": "Street, neighborhood, building no…",
+      "placeholderCity": "City",
+      "placeholderDistrict": "District"
     },
     "consents": {
       "kvkk": "I have read and accept the KVKK Privacy Notice.",

@@ -55,7 +55,8 @@
     "nextImage": "Image suivante",
     "closeMenu": "Fermer le menu",
     "previous": "Précédent",
-    "next": "Suivant"
+    "next": "Suivant",
+    "tryAgain": "Réessayer"
   },
   "nav": {
     "home": "Accueil",
@@ -64,7 +65,8 @@
     "virtualTour": "Visite virtuelle",
     "restaurant": "Restaurant",
     "contact": "Contact",
-    "reservation": "Réservation"
+    "reservation": "Réservation",
+    "rules": "Règles"
   },
   "home": {
     "heroTitle": "Votre Refuge à Sapanca",
@@ -574,7 +576,10 @@
       "deposit": "Kapora (%30)",
       "fullPayment": "Tamamını öde",
       "depositOption": "%30 kapora öde, kalanı tesiste",
-      "ref": "Referans No"
+      "ref": "Referans No",
+      "payAtProperty": "À régler sur place",
+      "payNow": "À régler maintenant",
+      "ariaLabel": "Récapitulatif de la commande"
     },
     "guest": {
       "title": "Misafir Bilgileri",
@@ -589,7 +594,16 @@
       "address": "Adres",
       "city": "Şehir",
       "district": "İlçe",
-      "submit": "Ödemeye Geç"
+      "submit": "Ödemeye Geç",
+      "subtitle": "Veuillez remplir vos informations pour passer au paiement.",
+      "depositLabel": "Option de paiement",
+      "placeholderFirstName": "Votre prénom",
+      "placeholderLastName": "Votre nom",
+      "placeholderEmail": "exemple@email.com",
+      "placeholderPhone": "+33 6 XX XX XX XX",
+      "placeholderAddress": "Rue, quartier, numéro…",
+      "placeholderCity": "Ville",
+      "placeholderDistrict": "Arrondissement"
     },
     "consents": {
       "kvkk": "KVKK Aydınlatma Metni'ni okudum ve kabul ediyorum.",

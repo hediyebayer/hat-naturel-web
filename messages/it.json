@@ -55,7 +55,8 @@
     "nextImage": "Immagine successiva",
     "closeMenu": "Chiudi menu",
     "previous": "Precedente",
-    "next": "Successivo"
+    "next": "Successivo",
+    "tryAgain": "Riprova"
   },
   "nav": {
     "home": "Home",
@@ -64,7 +65,8 @@
     "virtualTour": "Tour Virtuale",
     "restaurant": "Ristorante",
     "contact": "Contatti",
-    "reservation": "Prenotazione"
+    "reservation": "Prenotazione",
+    "rules": "Regole"
   },
   "home": {
     "heroTitle": "Il Tuo Rifugio a Sapanca",
@@ -574,7 +576,10 @@
       "deposit": "Kapora (%30)",
       "fullPayment": "Tamamını öde",
       "depositOption": "%30 kapora öde, kalanı tesiste",
-      "ref": "Referans No"
+      "ref": "Referans No",
+      "payAtProperty": "Da pagare in struttura",
+      "payNow": "Da pagare ora",
+      "ariaLabel": "Riepilogo ordine"
     },
     "guest": {
       "title": "Misafir Bilgileri",
@@ -589,7 +594,16 @@
       "address": "Adres",
       "city": "Şehir",
       "district": "İlçe",
-      "submit": "Ödemeye Geç"
+      "submit": "Ödemeye Geç",
+      "subtitle": "Compili i suoi dati per procedere al pagamento.",
+      "depositLabel": "Opzione di pagamento",
+      "placeholderFirstName": "Il tuo nome",
+      "placeholderLastName": "Il tuo cognome",
+      "placeholderEmail": "esempio@email.com",
+      "placeholderPhone": "+39 3XX XXX XXXX",
+      "placeholderAddress": "Via, quartiere, numero…",
+      "placeholderCity": "Città",
+      "placeholderDistrict": "Distretto"
     },
     "consents": {
       "kvkk": "KVKK Aydınlatma Metni'ni okudum ve kabul ediyorum.",

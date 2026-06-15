@@ -52,7 +52,7 @@ export async function OrderSummary({
   return (
     <aside
       className="overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-neutral-200 md:sticky md:top-24"
-      aria-label="Sipariş özeti"
+      aria-label={t('ariaLabel')}
     >
       {/* Oda görseli */}
       {!compact && (
@@ -111,7 +111,7 @@ export async function OrderSummary({
                 <span>{formatPrice(depositAmount)}</span>
               </div>
               <div className="flex items-center justify-between text-neutral-500">
-                <span>Tesiste ödenecek</span>
+                <span>{t('payAtProperty')}</span>
                 <span>{formatPrice(remainingAmount)}</span>
               </div>
             </>
@@ -119,7 +119,7 @@ export async function OrderSummary({
 
           <div className="flex items-center justify-between border-t border-neutral-200 pt-3">
             <span className="font-semibold text-neutral-900">
-              {depositMode === 'deposit' ? 'Şimdi ödenecek' : t('total')}
+              {depositMode === 'deposit' ? t('payNow') : t('total')}
             </span>
             <span className="text-lg font-bold text-primary-700">
               {formatPrice(chargedAmount)}

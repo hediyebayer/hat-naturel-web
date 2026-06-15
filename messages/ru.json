@@ -55,7 +55,8 @@
     "nextImage": "Следующее изображение",
     "closeMenu": "Закрыть меню",
     "previous": "Назад",
-    "next": "Далее"
+    "next": "Далее",
+    "tryAgain": "Попробовать снова"
   },
   "nav": {
     "home": "Главная",
@@ -64,7 +65,8 @@
     "virtualTour": "Виртуальный тур",
     "restaurant": "Ресторан",
     "contact": "Контакты",
-    "reservation": "Бронирование"
+    "reservation": "Бронирование",
+    "rules": "Правила"
   },
   "home": {
     "heroTitle": "Ваше убежище в Сапандже",
@@ -574,7 +576,10 @@
       "deposit": "Kapora (%30)",
       "fullPayment": "Tamamını öde",
       "depositOption": "%30 kapora öde, kalanı tesiste",
-      "ref": "Referans No"
+      "ref": "Referans No",
+      "payAtProperty": "Оплата на месте",
+      "payNow": "К оплате сейчас",
+      "ariaLabel": "Сводка заказа"
     },
     "guest": {
       "title": "Misafir Bilgileri",
@@ -589,7 +594,16 @@
       "address": "Adres",
       "city": "Şehir",
       "district": "İlçe",
-      "submit": "Ödemeye Geç"
+      "submit": "Ödemeye Geç",
+      "subtitle": "Пожалуйста, заполните свои данные, чтобы перейти к оплате.",
+      "depositLabel": "Способ оплаты",
+      "placeholderFirstName": "Ваше имя",
+      "placeholderLastName": "Ваша фамилия",
+      "placeholderEmail": "example@email.com",
+      "placeholderPhone": "+7 9XX XXX XX XX",
+      "placeholderAddress": "Улица, дом, квартира…",
+      "placeholderCity": "Город",
+      "placeholderDistrict": "Район"
     },
     "consents": {
       "kvkk": "KVKK Aydınlatma Metni'ni okudum ve kabul ediyorum.",

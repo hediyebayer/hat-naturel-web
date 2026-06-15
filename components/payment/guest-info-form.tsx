@@ -105,7 +105,7 @@ export function GuestInfoForm({
             aria-describedby={errors.firstName ? 'firstName-error' : undefined}
             {...register('firstName')}
             className={cn(INPUT_BASE)}
-            placeholder="Adınız"
+            placeholder={t('placeholderFirstName')}
           />
           {errors.firstName && (
             <p id="firstName-error" role="alert" className="mt-1 text-xs text-red-600">
@@ -126,7 +126,7 @@ export function GuestInfoForm({
             aria-describedby={errors.lastName ? 'lastName-error' : undefined}
             {...register('lastName')}
             className={cn(INPUT_BASE)}
-            placeholder="Soyadınız"
+            placeholder={t('placeholderLastName')}
           />
           {errors.lastName && (
             <p id="lastName-error" role="alert" className="mt-1 text-xs text-red-600">
@@ -204,7 +204,7 @@ export function GuestInfoForm({
             aria-describedby={errors.email ? 'email-error' : undefined}
             {...register('email')}
             className={cn(INPUT_BASE)}
-            placeholder="ornek@email.com"
+            placeholder={t('placeholderEmail')}
           />
           {errors.email && (
             <p id="email-error" role="alert" className="mt-1 text-xs text-red-600">
@@ -226,7 +226,7 @@ export function GuestInfoForm({
             aria-describedby={errors.phone ? 'phone-error' : undefined}
             {...register('phone')}
             className={cn(INPUT_BASE)}
-            placeholder="+90 5XX XXX XX XX"
+            placeholder={t('placeholderPhone')}
           />
           {errors.phone && (
             <p id="phone-error" role="alert" className="mt-1 text-xs text-red-600">
@@ -249,7 +249,7 @@ export function GuestInfoForm({
           aria-describedby={errors.address ? 'address-error' : undefined}
           {...register('address')}
           className={cn(INPUT_BASE, 'resize-none')}
-          placeholder="Sokak, mahalle, kapı no..."
+          placeholder={t('placeholderAddress')}
         />
         {errors.address && (
           <p id="address-error" role="alert" className="mt-1 text-xs text-red-600">
@@ -272,7 +272,7 @@ export function GuestInfoForm({
             aria-describedby={errors.city ? 'city-error' : undefined}
             {...register('city')}
             className={cn(INPUT_BASE)}
-            placeholder="İstanbul"
+            placeholder={t('placeholderCity')}
           />
           {errors.city && (
             <p id="city-error" role="alert" className="mt-1 text-xs text-red-600">
@@ -292,7 +292,7 @@ export function GuestInfoForm({
             aria-describedby={errors.district ? 'district-error' : undefined}
             {...register('district')}
             className={cn(INPUT_BASE)}
-            placeholder="Kadıköy"
+            placeholder={t('placeholderDistrict')}
           />
           {errors.district && (
             <p id="district-error" role="alert" className="mt-1 text-xs text-red-600">

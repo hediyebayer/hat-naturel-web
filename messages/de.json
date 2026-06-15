@@ -55,7 +55,8 @@
     "nextImage": "Nächstes Bild",
     "closeMenu": "Menü schließen",
     "previous": "Zurück",
-    "next": "Weiter"
+    "next": "Weiter",
+    "tryAgain": "Erneut versuchen"
   },
   "nav": {
     "home": "Startseite",
@@ -64,7 +65,8 @@
     "virtualTour": "Virtuelle Tour",
     "restaurant": "Restaurant",
     "contact": "Kontakt",
-    "reservation": "Reservierung"
+    "reservation": "Reservierung",
+    "rules": "Hausordnung"
   },
   "home": {
     "heroTitle": "Ihr Rückzugsort in Sapanca",
@@ -574,7 +576,10 @@
       "deposit": "Kapora (%30)",
       "fullPayment": "Tamamını öde",
       "depositOption": "%30 kapora öde, kalanı tesiste",
-      "ref": "Referans No"
+      "ref": "Referans No",
+      "payAtProperty": "Vor Ort zu zahlen",
+      "payNow": "Jetzt zu zahlen",
+      "ariaLabel": "Bestellübersicht"
     },
     "guest": {
       "title": "Misafir Bilgileri",
@@ -589,7 +594,16 @@
       "address": "Adres",
       "city": "Şehir",
       "district": "İlçe",
-      "submit": "Ödemeye Geç"
+      "submit": "Ödemeye Geç",
+      "subtitle": "Bitte geben Sie Ihre Daten ein, um zur Zahlung zu gelangen.",
+      "depositLabel": "Zahlungsoption",
+      "placeholderFirstName": "Ihr Vorname",
+      "placeholderLastName": "Ihr Nachname",
+      "placeholderEmail": "beispiel@email.com",
+      "placeholderPhone": "+49 1XX XXXXXXX",
+      "placeholderAddress": "Straße, Hausnummer…",
+      "placeholderCity": "Stadt",
+      "placeholderDistrict": "Stadtteil"
     },
     "consents": {
       "kvkk": "KVKK Aydınlatma Metni'ni okudum ve kabul ediyorum.",
