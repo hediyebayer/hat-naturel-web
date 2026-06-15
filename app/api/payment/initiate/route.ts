@@ -16,8 +16,10 @@ import { initiatePaymentSchema } from '@/lib/payment/schemas';
 import { validateOrderPricing } from '@/lib/payment/order';
 import { getPaymentProvider } from '@/lib/payment/provider';
 import { maskPan } from '@/lib/payment/card-utils';
+import { getClientIp, getRateLimiter } from '@/lib/security/rate-limit';
 
 const MAX_BODY_SIZE = 20_000; // 20KB
+const INITIATE_RATE_LIMIT = { limit: 5, windowMs: 60_000 };
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
@@ -27,6 +29,26 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       return NextResponse.json(
         { ok: false, message: 'İstek gövdesi çok büyük.' },
         { status: 413 },
+      );
+    }
+
+    const rateLimit = getRateLimiter().consume(
+      `payment:initiate:${getClientIp(request)}`,
+      INITIATE_RATE_LIMIT,
+    );
+
+    if (!rateLimit.allowed) {
+      return NextResponse.json(
+        {
+          ok: false,
+          message: 'Çok fazla ödeme başlatma denemesi. Lütfen bekleyip tekrar deneyin.',
+        },
+        {
+          status: 429,
+          headers: {
+            'Retry-After': String(rateLimit.retryAfterSeconds),
+          },
+        },
       );
     }
 

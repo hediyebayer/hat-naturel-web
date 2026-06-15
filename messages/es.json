@@ -622,8 +622,16 @@
         "invalidPan": "Geçersiz kart numarası",
         "expired": "Kartın son kullanma tarihi geçmiş",
         "invalidCvv": "Geçersiz CVV",
-        "required": "Bu alan zorunlu"
-      }
+        "required": "Bu alan zorunlu",
+        "sessionExpired": "Su sesión ha expirado. Vuelva a introducir los datos del huésped.",
+        "guestMissing": "No se encontraron los datos del huésped. Complete el paso anterior de nuevo.",
+        "network": "Se produjo un error de red. Por favor, inténtelo de nuevo.",
+        "initFailed": "No se pudo iniciar el pago."
+      },
+      "processing": "Procesando...",
+      "holderPlaceholder": "NOMBRE DEL TITULAR",
+      "cvvShow": "Mostrar CVV",
+      "cvvHide": "Ocultar CVV"
     },
     "threeDS": {
       "title": "3D Secure Doğrulama",
@@ -636,7 +644,11 @@
       "resend": "Yeniden gönder",
       "approve": "Onayla",
       "cancel": "İptal",
-      "demoNotice": "DEMO — herhangi 6 haneli kod girebilirsiniz"
+      "demoNotice": "DEMO — herhangi 6 haneli kod girebilirsiniz",
+      "subtitle": "Verificación segura de pago",
+      "connectionError": "Error de conexión. Por favor, inténtelo de nuevo.",
+      "otpGroupLabel": "Código de verificación de 6 dígitos",
+      "otpDigitLabel": "Dígito {index}"
     },
     "result": {
       "successTitle": "Rezervasyonunuz Onaylandı",
@@ -645,7 +657,15 @@
       "failBody": "İşleminiz bankanız tarafından onaylanmadı. Lütfen tekrar deneyin veya başka bir kart kullanın.",
       "retry": "Tekrar Dene",
       "home": "Ana Sayfaya Dön",
-      "contact": "İletişime Geç"
+      "contact": "İletişime Geç",
+      "successBodyShort": "Su reserva ha sido recibida. Se enviará un correo de confirmación a la dirección que proporcionó.",
+      "chargedLabel": "Cobrado",
+      "referenceLabel": "Referencia",
+      "reasons": {
+        "invalidOtp": "El código que introdujo es incorrecto o no es válido.",
+        "expired": "El tiempo de verificación ha expirado.",
+        "cancelled": "La transacción fue cancelada."
+      }
     }
   },
   "legal": {

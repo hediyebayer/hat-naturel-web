@@ -622,8 +622,16 @@
         "invalidPan": "Geçersiz kart numarası",
         "expired": "Kartın son kullanma tarihi geçmiş",
         "invalidCvv": "Geçersiz CVV",
-        "required": "Bu alan zorunlu"
-      }
+        "required": "Bu alan zorunlu",
+        "sessionExpired": "Срок сеанса истёк. Пожалуйста, введите данные гостя заново.",
+        "guestMissing": "Данные гостя не найдены. Пожалуйста, завершите предыдущий шаг повторно.",
+        "network": "Произошла сетевая ошибка. Пожалуйста, попробуйте снова.",
+        "initFailed": "Не удалось начать оплату."
+      },
+      "processing": "Обработка...",
+      "holderPlaceholder": "ИМЯ ВЛАДЕЛЬЦА КАРТЫ",
+      "cvvShow": "Показать CVV",
+      "cvvHide": "Скрыть CVV"
     },
     "threeDS": {
       "title": "3D Secure Doğrulama",
@@ -636,7 +644,11 @@
       "resend": "Yeniden gönder",
       "approve": "Onayla",
       "cancel": "İptal",
-      "demoNotice": "DEMO — herhangi 6 haneli kod girebilirsiniz"
+      "demoNotice": "DEMO — herhangi 6 haneli kod girebilirsiniz",
+      "subtitle": "Безопасная проверка платежа",
+      "connectionError": "Ошибка соединения. Пожалуйста, попробуйте снова.",
+      "otpGroupLabel": "6-значный проверочный код",
+      "otpDigitLabel": "Цифра {index}"
     },
     "result": {
       "successTitle": "Rezervasyonunuz Onaylandı",
@@ -645,7 +657,15 @@
       "failBody": "İşleminiz bankanız tarafından onaylanmadı. Lütfen tekrar deneyin veya başka bir kart kullanın.",
       "retry": "Tekrar Dene",
       "home": "Ana Sayfaya Dön",
-      "contact": "İletişime Geç"
+      "contact": "İletişime Geç",
+      "successBodyShort": "Ваше бронирование получено. Электронное письмо с подтверждением будет отправлено на указанный вами адрес.",
+      "chargedLabel": "Списано",
+      "referenceLabel": "Номер",
+      "reasons": {
+        "invalidOtp": "Введённый код неверен или недействителен.",
+        "expired": "Время проверки истекло.",
+        "cancelled": "Транзакция отменена."
+      }
     }
   },
   "legal": {

@@ -622,8 +622,16 @@
         "invalidPan": "Geçersiz kart numarası",
         "expired": "Kartın son kullanma tarihi geçmiş",
         "invalidCvv": "Geçersiz CVV",
-        "required": "Bu alan zorunlu"
-      }
+        "required": "Bu alan zorunlu",
+        "sessionExpired": "Oturum süresi doldu. Lütfen misafir bilgilerini tekrar girin.",
+        "guestMissing": "Misafir bilgileri bulunamadı. Lütfen önceki adımı tekrar tamamlayın.",
+        "network": "Ağ hatası oluştu. Lütfen tekrar deneyin.",
+        "initFailed": "Ödeme başlatılamadı."
+      },
+      "processing": "İşleniyor...",
+      "holderPlaceholder": "KART ÜZERİNDEKİ İSİM",
+      "cvvShow": "CVV göster",
+      "cvvHide": "CVV gizle"
     },
     "threeDS": {
       "title": "3D Secure Doğrulama",
@@ -636,7 +644,11 @@
       "resend": "Yeniden gönder",
       "approve": "Onayla",
       "cancel": "İptal",
-      "demoNotice": "DEMO — herhangi 6 haneli kod girebilirsiniz"
+      "demoNotice": "DEMO — herhangi 6 haneli kod girebilirsiniz",
+      "subtitle": "Güvenli Ödeme Doğrulaması",
+      "connectionError": "Bağlantı hatası. Lütfen tekrar deneyin.",
+      "otpGroupLabel": "6 haneli doğrulama kodu",
+      "otpDigitLabel": "{index}. rakam"
     },
     "result": {
       "successTitle": "Rezervasyonunuz Onaylandı",
@@ -645,7 +657,15 @@
       "failBody": "İşleminiz bankanız tarafından onaylanmadı. Lütfen tekrar deneyin veya başka bir kart kullanın.",
       "retry": "Tekrar Dene",
       "home": "Ana Sayfaya Dön",
-      "contact": "İletişime Geç"
+      "contact": "İletişime Geç",
+      "successBodyShort": "Rezervasyonunuz alındı. Onay e-postası kayıt sırasında girdiğiniz adrese gönderilecektir.",
+      "chargedLabel": "Tahsilat",
+      "referenceLabel": "Referans",
+      "reasons": {
+        "invalidOtp": "Girdiğiniz kod hatalı veya geçersiz.",
+        "expired": "Doğrulama süresi doldu.",
+        "cancelled": "İşlem iptal edildi."
+      }
     }
   },
   "legal": {

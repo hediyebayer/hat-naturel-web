@@ -622,8 +622,16 @@
         "invalidPan": "Geçersiz kart numarası",
         "expired": "Kartın son kullanma tarihi geçmiş",
         "invalidCvv": "Geçersiz CVV",
-        "required": "Bu alan zorunlu"
-      }
+        "required": "Bu alan zorunlu",
+        "sessionExpired": "La sessione è scaduta. Inserisci nuovamente i dati dell’ospite.",
+        "guestMissing": "Dati dell’ospite non trovati. Completa nuovamente il passaggio precedente.",
+        "network": "Si è verificato un errore di rete. Riprova.",
+        "initFailed": "Impossibile avviare il pagamento."
+      },
+      "processing": "Elaborazione...",
+      "holderPlaceholder": "NOME DEL TITOLARE",
+      "cvvShow": "Mostra CVV",
+      "cvvHide": "Nascondi CVV"
     },
     "threeDS": {
       "title": "3D Secure Doğrulama",
@@ -636,7 +644,11 @@
       "resend": "Yeniden gönder",
       "approve": "Onayla",
       "cancel": "İptal",
-      "demoNotice": "DEMO — herhangi 6 haneli kod girebilirsiniz"
+      "demoNotice": "DEMO — herhangi 6 haneli kod girebilirsiniz",
+      "subtitle": "Verifica di pagamento sicura",
+      "connectionError": "Errore di connessione. Riprova.",
+      "otpGroupLabel": "Codice di verifica a 6 cifre",
+      "otpDigitLabel": "Cifra {index}"
     },
     "result": {
       "successTitle": "Rezervasyonunuz Onaylandı",
@@ -645,7 +657,15 @@
       "failBody": "İşleminiz bankanız tarafından onaylanmadı. Lütfen tekrar deneyin veya başka bir kart kullanın.",
       "retry": "Tekrar Dene",
       "home": "Ana Sayfaya Dön",
-      "contact": "İletişime Geç"
+      "contact": "İletişime Geç",
+      "successBodyShort": "La tua prenotazione è stata ricevuta. Un’email di conferma sarà inviata all’indirizzo che hai fornito.",
+      "chargedLabel": "Addebito",
+      "referenceLabel": "Riferimento",
+      "reasons": {
+        "invalidOtp": "Il codice inserito è errato o non valido.",
+        "expired": "Il tempo di verifica è scaduto.",
+        "cancelled": "La transazione è stata annullata."
+      }
     }
   },
   "legal": {

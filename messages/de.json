@@ -622,8 +622,16 @@
         "invalidPan": "Geçersiz kart numarası",
         "expired": "Kartın son kullanma tarihi geçmiş",
         "invalidCvv": "Geçersiz CVV",
-        "required": "Bu alan zorunlu"
-      }
+        "required": "Bu alan zorunlu",
+        "sessionExpired": "Ihre Sitzung ist abgelaufen. Bitte geben Sie die Gastdaten erneut ein.",
+        "guestMissing": "Gastdaten nicht gefunden. Bitte schließen Sie den vorherigen Schritt erneut ab.",
+        "network": "Netzwerkfehler aufgetreten. Bitte versuchen Sie es erneut.",
+        "initFailed": "Zahlung konnte nicht gestartet werden."
+      },
+      "processing": "Wird verarbeitet...",
+      "holderPlaceholder": "NAME DES KARTENINHABERS",
+      "cvvShow": "CVV anzeigen",
+      "cvvHide": "CVV verbergen"
     },
     "threeDS": {
       "title": "3D Secure Doğrulama",
@@ -636,7 +644,11 @@
       "resend": "Yeniden gönder",
       "approve": "Onayla",
       "cancel": "İptal",
-      "demoNotice": "DEMO — herhangi 6 haneli kod girebilirsiniz"
+      "demoNotice": "DEMO — herhangi 6 haneli kod girebilirsiniz",
+      "subtitle": "Sichere Zahlungsverifizierung",
+      "connectionError": "Verbindungsfehler. Bitte versuchen Sie es erneut.",
+      "otpGroupLabel": "6-stelliger Verifizierungscode",
+      "otpDigitLabel": "Ziffer {index}"
     },
     "result": {
       "successTitle": "Rezervasyonunuz Onaylandı",
@@ -645,7 +657,15 @@
       "failBody": "İşleminiz bankanız tarafından onaylanmadı. Lütfen tekrar deneyin veya başka bir kart kullanın.",
       "retry": "Tekrar Dene",
       "home": "Ana Sayfaya Dön",
-      "contact": "İletişime Geç"
+      "contact": "İletişime Geç",
+      "successBodyShort": "Ihre Reservierung wurde empfangen. Eine Bestätigungs-E-Mail wird an die von Ihnen angegebene Adresse gesendet.",
+      "chargedLabel": "Abgebucht",
+      "referenceLabel": "Referenz",
+      "reasons": {
+        "invalidOtp": "Der eingegebene Code ist falsch oder ungültig.",
+        "expired": "Die Verifizierungszeit ist abgelaufen.",
+        "cancelled": "Die Transaktion wurde abgebrochen."
+      }
     }
   },
   "legal": {

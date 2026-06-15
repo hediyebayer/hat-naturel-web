@@ -135,7 +135,7 @@ export function CardForm({ locale, order }: CardFormProps): React.ReactElement {
             expiresAt: number;
           };
           if (Date.now() > draft.expiresAt) {
-            setApiError('Oturum süresi doldu. Lütfen misafir bilgilerini tekrar girin.');
+            setApiError(tErrors('sessionExpired'));
             setIsSubmitting(false);
             return;
           }
@@ -148,7 +148,7 @@ export function CardForm({ locale, order }: CardFormProps): React.ReactElement {
       }
 
       if (!guest) {
-        setApiError('Misafir bilgileri bulunamadı. Lütfen önceki adımı tekrar tamamlayın.');
+        setApiError(tErrors('guestMissing'));
         setIsSubmitting(false);
         return;
       }
@@ -180,7 +180,7 @@ export function CardForm({ locale, order }: CardFormProps): React.ReactElement {
           | { ok: false; message: string };
 
         if (!response.ok || !json.ok) {
-          setApiError((json as { ok: false; message: string }).message ?? 'Ödeme başlatılamadı.');
+          setApiError((json as { ok: false; message: string }).message ?? tErrors('initFailed'));
           return;
         }
 
@@ -198,12 +198,12 @@ export function CardForm({ locale, order }: CardFormProps): React.ReactElement {
 
         router.push(json.redirectUrl);
       } catch {
-        setApiError('Ağ hatası oluştu. Lütfen tekrar deneyin.');
+        setApiError(tErrors('network'));
       } finally {
         setIsSubmitting(false);
       }
     },
-    [order, locale, router],
+    [order, locale, router, tErrors],
   );
 
   return (
@@ -236,7 +236,7 @@ export function CardForm({ locale, order }: CardFormProps): React.ReactElement {
             register('holder').onChange(e);
           }}
           className={cn(INPUT_BASE, 'uppercase tracking-wide')}
-          placeholder="KART ÜZERİNDEKİ İSİM"
+          placeholder={t('holderPlaceholder')}
         />
         {errors.holder && (
           <p id="holder-error" role="alert" className="mt-1 text-xs text-red-600">
@@ -330,7 +330,7 @@ export function CardForm({ locale, order }: CardFormProps): React.ReactElement {
             <button
               type="button"
               onClick={() => setShowCvv((v) => !v)}
-              aria-label={showCvv ? 'CVV gizle' : 'CVV göster'}
+              aria-label={showCvv ? t('cvvHide') : t('cvvShow')}
               className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-600"
             >
               {showCvv ? <EyeOff size={16} /> : <Eye size={16} />}
@@ -363,7 +363,7 @@ export function CardForm({ locale, order }: CardFormProps): React.ReactElement {
         loading={isSubmitting}
         className="mt-2"
       >
-        {isSubmitting ? 'İşleniyor...' : t('submit')}
+        {isSubmitting ? t('processing') : t('submit')}
       </Button>
     </form>
   );

@@ -49,10 +49,11 @@ async function fetchRecord(ref: string): Promise<StatusRecord | null> {
   }
 }
 
-const REASON_LABELS: Record<string, string> = {
-  invalid_otp: 'Girdiğiniz kod hatalı veya geçersiz.',
-  expired: 'Doğrulama süresi doldu.',
-  cancelled: 'İşlem iptal edildi.',
+// Sebep kodu -> i18n anahtar eşleştirmesi (payment.result.reasons.*)
+const REASON_KEY_MAP: Record<string, 'invalidOtp' | 'expired' | 'cancelled'> = {
+  invalid_otp: 'invalidOtp',
+  expired: 'expired',
+  cancelled: 'cancelled',
 };
 
 export default async function SonucPage({
@@ -83,7 +84,7 @@ export default async function SonucPage({
               {t('successTitle')}
             </Heading>
             <Text variant="body" muted className="mb-2">
-              Rezervasyonunuz alındı. Onay e-postası kayıt sırasında girdiğiniz adrese gönderilecektir.
+              {t('successBodyShort')}
             </Text>
 
             {ref && (
@@ -99,7 +100,7 @@ export default async function SonucPage({
                   {record.brand.toUpperCase()} •••• {record.last4}
                 </p>
                 <p className="mb-6 text-sm font-medium text-neutral-600">
-                  Tahsilat: {new Intl.NumberFormat('tr-TR', {
+                  {t('chargedLabel')}: {new Intl.NumberFormat('tr-TR', {
                     style: 'currency',
                     currency: 'TRY',
                     maximumFractionDigits: 0,
@@ -127,15 +128,15 @@ export default async function SonucPage({
               {t('failBody')}
             </Text>
 
-            {reason && REASON_LABELS[reason] && (
+            {reason && REASON_KEY_MAP[reason] && (
               <div className="mb-6 rounded-xl bg-red-50 px-5 py-3 text-sm text-red-700 ring-1 ring-red-200">
-                {REASON_LABELS[reason]}
+                {t(`reasons.${REASON_KEY_MAP[reason]}`)}
               </div>
             )}
 
             {ref && (
               <p className="mb-6 text-xs text-neutral-400">
-                Referans: <span className="font-mono">{ref}</span>
+                {t('referenceLabel')}: <span className="font-mono">{ref}</span>
               </p>
             )}
 

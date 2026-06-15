@@ -622,8 +622,16 @@
         "invalidPan": "Geçersiz kart numarası",
         "expired": "Kartın son kullanma tarihi geçmiş",
         "invalidCvv": "Geçersiz CVV",
-        "required": "Bu alan zorunlu"
-      }
+        "required": "Bu alan zorunlu",
+        "sessionExpired": "Votre session a expiré. Veuillez saisir à nouveau les informations du client.",
+        "guestMissing": "Informations du client introuvables. Veuillez compléter à nouveau l’étape précédente.",
+        "network": "Une erreur réseau s’est produite. Veuillez réessayer.",
+        "initFailed": "Le paiement n’a pas pu être lancé."
+      },
+      "processing": "Traitement en cours...",
+      "holderPlaceholder": "NOM DU TITULAIRE",
+      "cvvShow": "Afficher le CVV",
+      "cvvHide": "Masquer le CVV"
     },
     "threeDS": {
       "title": "3D Secure Doğrulama",
@@ -636,7 +644,11 @@
       "resend": "Yeniden gönder",
       "approve": "Onayla",
       "cancel": "İptal",
-      "demoNotice": "DEMO — herhangi 6 haneli kod girebilirsiniz"
+      "demoNotice": "DEMO — herhangi 6 haneli kod girebilirsiniz",
+      "subtitle": "Vérification sécurisée du paiement",
+      "connectionError": "Erreur de connexion. Veuillez réessayer.",
+      "otpGroupLabel": "Code de vérification à 6 chiffres",
+      "otpDigitLabel": "Chiffre {index}"
     },
     "result": {
       "successTitle": "Rezervasyonunuz Onaylandı",
@@ -645,7 +657,15 @@
       "failBody": "İşleminiz bankanız tarafından onaylanmadı. Lütfen tekrar deneyin veya başka bir kart kullanın.",
       "retry": "Tekrar Dene",
       "home": "Ana Sayfaya Dön",
-      "contact": "İletişime Geç"
+      "contact": "İletişime Geç",
+      "successBodyShort": "Votre réservation a été reçue. Un e-mail de confirmation sera envoyé à l’adresse que vous avez indiquée.",
+      "chargedLabel": "Débité",
+      "referenceLabel": "Référence",
+      "reasons": {
+        "invalidOtp": "Le code saisi est incorrect ou invalide.",
+        "expired": "Le délai de vérification a expiré.",
+        "cancelled": "La transaction a été annulée."
+      }
     }
   },
   "legal": {

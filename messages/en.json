@@ -622,8 +622,16 @@
         "invalidPan": "Invalid card number",
         "expired": "Card expiry date has passed",
         "invalidCvv": "Invalid CVV",
-        "required": "This field is required"
-      }
+        "required": "This field is required",
+        "sessionExpired": "Your session has expired. Please re-enter your guest details.",
+        "guestMissing": "Guest details not found. Please complete the previous step again.",
+        "network": "A network error occurred. Please try again.",
+        "initFailed": "Payment could not be started."
+      },
+      "processing": "Processing...",
+      "holderPlaceholder": "CARDHOLDER NAME",
+      "cvvShow": "Show CVV",
+      "cvvHide": "Hide CVV"
     },
     "threeDS": {
       "title": "3D Secure Verification",
@@ -636,7 +644,11 @@
       "resend": "Resend",
       "approve": "Confirm",
       "cancel": "Cancel",
-      "demoNotice": "DEMO — enter any 6-digit code"
+      "demoNotice": "DEMO — enter any 6-digit code",
+      "subtitle": "Secure Payment Verification",
+      "connectionError": "Connection error. Please try again.",
+      "otpGroupLabel": "6-digit verification code",
+      "otpDigitLabel": "Digit {index}"
     },
     "result": {
       "successTitle": "Reservation Confirmed",
@@ -645,7 +657,15 @@
       "failBody": "Your transaction was not approved by your bank. Please try again or use a different card.",
       "retry": "Try Again",
       "home": "Back to Home",
-      "contact": "Contact Us"
+      "contact": "Contact Us",
+      "successBodyShort": "Your reservation has been received. A confirmation email will be sent to the address you provided.",
+      "chargedLabel": "Charged",
+      "referenceLabel": "Reference",
+      "reasons": {
+        "invalidOtp": "The code you entered is incorrect or invalid.",
+        "expired": "The verification time has expired.",
+        "cancelled": "The transaction was cancelled."
+      }
     }
   },
   "legal": {

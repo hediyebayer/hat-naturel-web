@@ -132,11 +132,11 @@ export function ThreeDSecureScreen({
         );
       }
     } catch {
-      setError('Bağlantı hatası. Lütfen tekrar deneyin.');
+      setError(t('connectionError'));
     } finally {
       setIsLoading(false);
     }
-  }, [otpComplete, expired, reservationId, otpValue, locale, router]);
+  }, [otpComplete, expired, reservationId, otpValue, locale, router, t]);
 
   const handleCancel = useCallback(() => {
     router.push(
@@ -160,7 +160,7 @@ export function ThreeDSecureScreen({
           <Shield size={24} className="text-accent" />
           <div>
             <p className="text-sm font-semibold tracking-wide">VakıfBank 3D Secure</p>
-            <p className="text-xs text-primary-200/80">Güvenli Ödeme Doğrulaması</p>
+            <p className="text-xs text-primary-200/80">{t('subtitle')}</p>
           </div>
         </div>
       </div>
@@ -190,7 +190,7 @@ export function ThreeDSecureScreen({
         {/* OTP inputları */}
         <div
           role="group"
-          aria-label="6 haneli doğrulama kodu"
+          aria-label={t('otpGroupLabel')}
           className="mb-4 flex justify-center gap-2 sm:gap-3"
         >
           {otp.map((digit, idx) => (
@@ -207,7 +207,7 @@ export function ThreeDSecureScreen({
                 e.preventDefault();
                 handleOtpChange(idx, e.clipboardData.getData('text'));
               }}
-              aria-label={`${idx + 1}. rakam`}
+              aria-label={t('otpDigitLabel', { index: idx + 1 })}
               disabled={expired || isLoading}
               className={cn(
                 'h-12 w-10 sm:h-14 sm:w-12 rounded-lg border-0 text-center text-lg font-bold tabular-nums text-neutral-900',
