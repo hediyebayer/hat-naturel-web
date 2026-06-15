@@ -9,6 +9,8 @@
 
 import type { PaymentRecord } from './types';
 
+export const MAX_VERIFY_ATTEMPTS = 3;
+
 const TTL_MS = 60 * 60 * 1_000; // 1 saat
 
 interface StoreEntry {
@@ -85,4 +87,31 @@ export function storeUpdate(
 export function storeSize(): number {
   cleanup();
   return getStore().size;
+}
+
+/** Başarısız verify denemesini sayar; limit aşılırsa kaydı kilitler */
+export function storeIncrementVerifyAttempt(reservationId: string): {
+  updated: boolean;
+  attempts: number;
+  locked: boolean;
+} {
+  const entry = getStore().get(reservationId);
+  if (!entry) {
+    return { updated: false, attempts: 0, locked: false };
+  }
+
+  const attempts = entry.record.verifyAttempts + 1;
+  const locked = attempts >= MAX_VERIFY_ATTEMPTS;
+
+  getStore().set(reservationId, {
+    record: {
+      ...entry.record,
+      verifyAttempts: attempts,
+      status: locked ? 'failed' : entry.record.status,
+      failReason: locked ? 'invalid_otp' : entry.record.failReason,
+    },
+    expiresAt: entry.expiresAt,
+  });
+
+  return { updated: true, attempts, locked };
 }

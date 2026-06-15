@@ -66,6 +66,7 @@ export interface PaymentRecord {
   amountCharged: number;
   currency: 'TRY';
   createdAt: Date;
+  verifyAttempts: number;
   paidAt?: Date;
   failReason?: 'invalid_otp' | 'expired' | 'cancelled';
 }

@@ -148,7 +148,10 @@ export type InitiatePaymentInput = z.infer<typeof initiatePaymentSchema>;
 export const verifyPaymentSchema = z.object({
   reservationId: z
     .string()
-    .regex(/^HN-\d+-[A-Z0-9]{6}$/, 'Geçersiz rezervasyon ID formatı'),
+    .regex(
+      /^HN-[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}$/,
+      'Geçersiz rezervasyon ID formatı',
+    ),
   otp: z
     .string()
     .regex(/^\d{6}$/, 'OTP 6 haneli sayı olmalı'),

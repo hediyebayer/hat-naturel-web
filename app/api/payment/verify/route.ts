@@ -15,8 +15,10 @@ import { verifyPaymentSchema } from '@/lib/payment/schemas';
 import { getPaymentProvider } from '@/lib/payment/provider';
 import { sendReservationEmails } from '@/lib/payment/emails';
 import { storeGet } from '@/lib/payment/store';
+import { getRateLimiter } from '@/lib/security/rate-limit';
 
 const MAX_BODY_SIZE = 2_000; // 2KB
+const VERIFY_RATE_LIMIT = { limit: 5, windowMs: 60_000 };
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
@@ -31,6 +33,26 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
     const json: unknown = JSON.parse(text);
     const validated = verifyPaymentSchema.parse(json);
+
+    const rateLimit = getRateLimiter().consume(
+      `payment:verify:${validated.reservationId}`,
+      VERIFY_RATE_LIMIT,
+    );
+
+    if (!rateLimit.allowed) {
+      return NextResponse.json(
+        {
+          ok: false,
+          message: 'Çok fazla doğrulama denemesi. Lütfen bekleyip tekrar deneyin.',
+        },
+        {
+          status: 429,
+          headers: {
+            'Retry-After': String(rateLimit.retryAfterSeconds),
+          },
+        },
+      );
+    }
 
     // Verify öncesi mevcut durumu kaydet — idempotency için
     const preVerifyRecord = storeGet(validated.reservationId);

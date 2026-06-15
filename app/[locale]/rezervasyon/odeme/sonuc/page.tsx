@@ -4,9 +4,7 @@ import { CheckCircle2, XCircle } from 'lucide-react';
 import { Heading } from '@/components/ui/heading';
 import { Text } from '@/components/ui/text';
 import { ButtonLink } from '@/components/ui/button';
-import { OrderSummary } from '@/components/payment/order-summary';
 import { StepIndicator } from '@/components/payment/step-indicator';
-import { getOrderFromQuery } from '@/lib/payment/order';
 
 interface PageProps {
   params: { locale: string };
@@ -25,27 +23,10 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 interface StatusRecord {
-  reservationId: string;
   status: string;
   amountCharged: number;
-  currency: string;
-  paidAt: string | null;
-  maskedPan: string;
   last4: string;
   brand: string;
-  failReason: string | null;
-  order: {
-    roomSlug: string;
-    roomName: string;
-    checkIn: string;
-    checkOut: string;
-    guests: number;
-    nights: number;
-    totalPrice: number;
-    depositAmount: number;
-    depositMode: 'full' | 'deposit';
-  };
-  guest: { firstName: string; lastName: string; email: string };
 }
 
 async function fetchRecord(ref: string): Promise<StatusRecord | null> {
@@ -54,9 +35,12 @@ async function fetchRecord(ref: string): Promise<StatusRecord | null> {
       process.env.NEXT_PUBLIC_SITE_URL ??
       process.env.NEXT_PUBLIC_BASE_URL ??
       'http://localhost:3001';
-    const res = await fetch(`${baseUrl}/api/payment/status?ref=${encodeURIComponent(ref)}`, {
-      cache: 'no-store',
-    });
+    const res = await fetch(
+      `${baseUrl}/api/payment/status?ref=${encodeURIComponent(ref)}`,
+      {
+        cache: 'no-store',
+      },
+    );
     if (!res.ok) return null;
     const data = (await res.json()) as { ok: boolean; record?: StatusRecord };
     return data.ok && data.record ? data.record : null;
@@ -85,29 +69,7 @@ export default async function SonucPage({
   const t = await getTranslations({ locale, namespace: 'payment.result' });
 
   const record = ref ? await fetchRecord(ref) : null;
-
   const isSuccess = status === 'success' && !!record && record.status === 'success';
-
-  // Başarılı: oda verisi çek
-  let availableRoom = null;
-  if (record) {
-    const orderResult = await getOrderFromQuery({
-      roomSlug: record.order.roomSlug,
-      checkIn: record.order.checkIn,
-      checkOut: record.order.checkOut,
-      guests: record.order.guests,
-    });
-    availableRoom = orderResult?.availableRoom ?? null;
-  }
-
-  const retryQuery = record
-    ? new URLSearchParams({
-        room: record.order.roomSlug,
-        checkIn: record.order.checkIn,
-        checkOut: record.order.checkOut,
-        guests: String(record.order.guests),
-      }).toString()
-    : '';
 
   return (
     <>
@@ -115,43 +77,35 @@ export default async function SonucPage({
 
       <div className="mx-auto max-w-2xl">
         {isSuccess ? (
-          /* ─── SUCCESS ─── */
-          <div className="rounded-2xl bg-white p-8 shadow-sm ring-1 ring-neutral-200 text-center">
+          <div className="rounded-2xl bg-white p-8 text-center shadow-sm ring-1 ring-neutral-200">
             <CheckCircle2 size={56} className="mx-auto mb-4 text-green-500" />
             <Heading level={1} visualLevel={3} className="mb-3">
               {t('successTitle')}
             </Heading>
             <Text variant="body" muted className="mb-2">
-              {t('successBody', {
-                email: record!.guest.email,
-                ref: record!.reservationId,
-              })}
+              Rezervasyonunuz alındı. Onay e-postası kayıt sırasında girdiğiniz adrese gönderilecektir.
             </Text>
 
-            {/* Referans no */}
-            <div className="my-6 inline-flex items-center gap-2 rounded-full bg-green-50 px-5 py-2 text-sm font-mono font-semibold text-green-700 ring-1 ring-green-200">
-              <span className="text-green-400">#</span>
-              {record!.reservationId}
-            </div>
-
-            {/* Kart özeti */}
-            <p className="text-xs text-neutral-400 mb-6">
-              {record!.brand.toUpperCase()} •••• {record!.last4}
-            </p>
-
-            {/* Oda özeti */}
-            {availableRoom && (
-              <div className="mb-8 text-left">
-                <OrderSummary
-                  room={availableRoom}
-                  checkIn={record!.order.checkIn}
-                  checkOut={record!.order.checkOut}
-                  guests={record!.order.guests}
-                  depositMode={record!.order.depositMode}
-                  locale={locale}
-                  compact
-                />
+            {ref && (
+              <div className="my-6 inline-flex items-center gap-2 rounded-full bg-green-50 px-5 py-2 font-mono text-sm font-semibold text-green-700 ring-1 ring-green-200">
+                <span className="text-green-400">#</span>
+                {ref}
               </div>
+            )}
+
+            {record && (
+              <>
+                <p className="mb-2 text-xs text-neutral-400">
+                  {record.brand.toUpperCase()} •••• {record.last4}
+                </p>
+                <p className="mb-6 text-sm font-medium text-neutral-600">
+                  Tahsilat: {new Intl.NumberFormat('tr-TR', {
+                    style: 'currency',
+                    currency: 'TRY',
+                    maximumFractionDigits: 0,
+                  }).format(record.amountCharged)}
+                </p>
+              </>
             )}
 
             <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">
@@ -164,8 +118,7 @@ export default async function SonucPage({
             </div>
           </div>
         ) : (
-          /* ─── FAIL ─── */
-          <div className="rounded-2xl bg-white p-8 shadow-sm ring-1 ring-neutral-200 text-center">
+          <div className="rounded-2xl bg-white p-8 text-center shadow-sm ring-1 ring-neutral-200">
             <XCircle size={56} className="mx-auto mb-4 text-red-500" />
             <Heading level={1} visualLevel={3} className="mb-3">
               {t('failTitle')}
@@ -187,14 +140,9 @@ export default async function SonucPage({
             )}
 
             <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">
-              {retryQuery && (
-                <ButtonLink
-                  href={`/${locale}/rezervasyon/odeme?${retryQuery}`}
-                  variant="primary"
-                >
-                  {t('retry')}
-                </ButtonLink>
-              )}
+              <ButtonLink href={`/${locale}/rezervasyon`} variant="primary">
+                {t('retry')}
+              </ButtonLink>
               <ButtonLink href={`/${locale}/iletisim`} variant="outline">
                 {t('contact')}
               </ButtonLink>

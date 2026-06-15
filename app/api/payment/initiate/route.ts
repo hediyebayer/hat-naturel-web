@@ -13,6 +13,7 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { ZodError } from 'zod';
 import { initiatePaymentSchema } from '@/lib/payment/schemas';
+import { validateOrderPricing } from '@/lib/payment/order';
 import { getPaymentProvider } from '@/lib/payment/provider';
 import { maskPan } from '@/lib/payment/card-utils';
 
@@ -32,23 +33,29 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     const json: unknown = JSON.parse(text);
     const validated = initiatePaymentSchema.parse(json);
 
-    // ⚠️ SECURITY TODO (gerçek provider öncesi zorunlu):
-    // order.totalPrice istemciden geliyor; sunucu tarafında getAvailability() ile
-    // yeniden hesaplanıp karşılaştırılmalı. Aksi takdirde kullanıcı API'ye
-    // doğrudan totalPrice:1 göndererek 1 TL ile rezervasyon yapabilir.
-    // Mock demo için kabul edilebilir; RealVakifBankProvider aktif edilmeden önce düzelt.
-    // Bkz: lib/payment/order.ts → getOrderFromQuery()
+    const priceValidation = await validateOrderPricing(validated.order);
+    if (!priceValidation.ok || !priceValidation.canonicalOrder) {
+      return NextResponse.json(
+        {
+          ok: false,
+          message: priceValidation.reason === 'price_mismatch'
+            ? 'Fiyat bilgisi güncellendi. Lütfen rezervasyon özetini yeniden kontrol edin.'
+            : 'Seçtiğiniz oda veya tarih bilgisi artık müsait değil.',
+        },
+        { status: 400 },
+      );
+    }
 
     // PAN'ı loglamadan önce maskele
     const maskedForLog = maskPan(validated.card.pan);
     // eslint-disable-next-line no-console
     console.info(
-      `[api/payment/initiate] room=${validated.order.roomSlug} masked=${maskedForLog} mode=${validated.depositMode}`,
+      `[api/payment/initiate] room=${validated.order.roomSlug} masked=${maskedForLog} mode=${validated.depositMode} fallback=${priceValidation.usesFallbackPricing === true}`,
     );
 
     const provider = getPaymentProvider();
     const result = await provider.initiate({
-      order: validated.order,
+      order: priceValidation.canonicalOrder,
       guest: validated.guest,
       card: validated.card,
       consents: validated.consents,

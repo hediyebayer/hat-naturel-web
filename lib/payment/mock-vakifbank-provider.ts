@@ -3,11 +3,11 @@
  * Gerçek banka çağrısı yapmaz — in-memory store üzerinde çalışır.
  *
  * Kural:
- * - initiate()  → reservationId üretir, record 'awaiting_3ds'
- * - verify()    → OTP /^\d{6}$/ ise success, değilse failed
+ * - initiate()  → tahmin edilemez reservationId üretir, record 'awaiting_3ds'
+ * - verify()    → OTP /^\d{6}$/ ise success, 3 başarısız denemeden sonra lockout
  * - getStatus() → store'dan kaydı getirir
  *
- * reservationId formatı: HN-{timestamp}-{RAND6}
+ * reservationId formatı: HN-{UUID}
  */
 
 import type { PaymentProvider } from './provider';
@@ -19,7 +19,12 @@ import type {
   PaymentRecord,
   CardInfo,
 } from './types';
-import { storeSet, storeGet, storeUpdate } from './store';
+import {
+  storeSet,
+  storeGet,
+  storeUpdate,
+  storeIncrementVerifyAttempt,
+} from './store';
 import { maskPan, getLast4, detectBrand } from './card-utils';
 
 // ---------------------------------------------------------------------------
@@ -27,13 +32,7 @@ import { maskPan, getLast4, detectBrand } from './card-utils';
 // ---------------------------------------------------------------------------
 
 function generateReservationId(): string {
-  const ts = Date.now();
-  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // ambiguous chars hariç
-  let rand = '';
-  for (let i = 0; i < 6; i++) {
-    rand += chars[Math.floor(Math.random() * chars.length)];
-  }
-  return `HN-${ts}-${rand}`;
+  return `HN-${crypto.randomUUID().toUpperCase()}`;
 }
 
 function calculateAmountCharged(
@@ -79,6 +78,7 @@ export class MockVakifBankProvider implements PaymentProvider {
       amountCharged,
       currency: 'TRY',
       createdAt: new Date(),
+      verifyAttempts: 0,
     };
 
     storeSet(record);
@@ -140,14 +140,11 @@ export class MockVakifBankProvider implements PaymentProvider {
 
       return { ok: true, status: 'success', reservationId: input.reservationId };
     } else {
-      storeUpdate(input.reservationId, {
-        status: 'failed',
-        failReason: 'invalid_otp',
-      });
+      const attemptResult = storeIncrementVerifyAttempt(input.reservationId);
 
       // eslint-disable-next-line no-console
       console.warn(
-        `[MockVakifBank] verify failed | ref=${input.reservationId} | reason=invalid_otp`,
+        `[MockVakifBank] verify failed | ref=${input.reservationId} | reason=invalid_otp | attempts=${attemptResult.attempts}`,
       );
 
       return {

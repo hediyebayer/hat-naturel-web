@@ -2,11 +2,31 @@ import { NextResponse, type NextRequest } from 'next/server';
 import { ZodError } from 'zod';
 import { contactSchema } from '@/lib/contact/validation';
 import { sendContactEmail } from '@/lib/contact/client';
+import { getClientIp, getRateLimiter } from '@/lib/security/rate-limit';
 
 const MAX_BODY_SIZE = 10_000; // 10KB
+const CONTACT_RATE_LIMIT = { limit: 3, windowMs: 60_000 };
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
+    const ip = getClientIp(request);
+    const rateLimit = getRateLimiter().consume(
+      `contact:${ip}`,
+      CONTACT_RATE_LIMIT,
+    );
+
+    if (!rateLimit.allowed) {
+      return NextResponse.json(
+        { success: false, message: 'Çok fazla mesaj gönderimi. Lütfen tekrar deneyin.' },
+        {
+          status: 429,
+          headers: {
+            'Retry-After': String(rateLimit.retryAfterSeconds),
+          },
+        },
+      );
+    }
+
     const text = await request.text();
     if (text.length > MAX_BODY_SIZE) {
       return NextResponse.json(

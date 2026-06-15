@@ -9,9 +9,30 @@
 
 import { NextResponse, type NextRequest } from 'next/server';
 import { getPaymentProvider } from '@/lib/payment/provider';
+import { getClientIp, getRateLimiter } from '@/lib/security/rate-limit';
+
+const STATUS_RATE_LIMIT = { limit: 10, windowMs: 60_000 };
 
 export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
+    const ip = getClientIp(request);
+    const rateLimit = getRateLimiter().consume(
+      `payment:status:${ip}`,
+      STATUS_RATE_LIMIT,
+    );
+
+    if (!rateLimit.allowed) {
+      return NextResponse.json(
+        { ok: false, message: 'Çok fazla durum sorgusu. Lütfen tekrar deneyin.' },
+        {
+          status: 429,
+          headers: {
+            'Retry-After': String(rateLimit.retryAfterSeconds),
+          },
+        },
+      );
+    }
+
     const ref = request.nextUrl.searchParams.get('ref');
 
     if (!ref) {
@@ -31,25 +52,13 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       );
     }
 
-    // Güvenli yanıt — sadece UI'ın ihtiyacı olanlar
     return NextResponse.json({
       ok: true,
       record: {
-        reservationId: record.reservationId,
         status: record.status,
         amountCharged: record.amountCharged,
-        currency: record.currency,
-        paidAt: record.paidAt?.toISOString() ?? null,
-        maskedPan: record.card.maskedPan,
         last4: record.card.last4,
         brand: record.card.brand,
-        failReason: record.failReason ?? null,
-        order: record.order,
-        guest: {
-          firstName: record.guest.firstName,
-          lastName: record.guest.lastName,
-          email: record.guest.email,
-        },
       },
     });
   } catch (e: unknown) {
