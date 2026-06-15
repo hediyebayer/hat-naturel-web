@@ -5,6 +5,7 @@ import { locales, type Locale } from '@/lib/i18n/config';
 import {
   generateLodgingBusinessSchema,
   generateOrganizationSchema,
+  generateWebSiteSchema,
 } from '@/lib/seo/schema';
 import { Container } from '@/components/ui/container';
 import { Heading } from '@/components/ui/heading';
@@ -49,11 +50,20 @@ export async function generateMetadata({
       description,
       url: `/${params.locale}`,
       type: 'website',
+      images: [
+        {
+          url: '/images/brand/og-default.jpg',
+          width: 1200,
+          height: 1000,
+          alt: 'Hat Naturel Resort Sapanca — doğayla iç içe bungalov tatili',
+        },
+      ],
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
+      images: ['/images/brand/og-default.jpg'],
     },
   };
 }
@@ -64,9 +74,10 @@ export default function HomePage({
   unstable_setRequestLocale(params.locale);
   const t = useTranslations('home');
 
-  // JSON-LD structured data
+  // JSON-LD structured data — LodgingBusiness + Organization + WebSite
   const lodgingSchema = generateLodgingBusinessSchema(params.locale as Locale);
   const orgSchema = generateOrganizationSchema();
+  const websiteSchema = generateWebSiteSchema(params.locale as Locale);
 
   return (
     <>
@@ -74,7 +85,7 @@ export default function HomePage({
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify([lodgingSchema, orgSchema]),
+          __html: JSON.stringify([lodgingSchema, orgSchema, websiteSchema]),
         }}
       />
       {/* Hero — drone manzarası + slow zoom + parallax + stagger fade-in */}

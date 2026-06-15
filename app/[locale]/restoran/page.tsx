@@ -45,11 +45,20 @@ export async function generateMetadata({
       description,
       url: `/${params.locale}/restoran`,
       type: 'website',
+      images: [
+        {
+          url: '/images/restoran/hero-kahvalti.jpg',
+          width: 1200,
+          height: 800,
+          alt: 'Hat Naturel Resort Sapanca — kahvaltı sofrası',
+        },
+      ],
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
+      images: ['/images/restoran/hero-kahvalti.jpg'],
     },
   };
 }

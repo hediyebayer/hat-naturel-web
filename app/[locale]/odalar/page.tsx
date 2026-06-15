@@ -35,11 +35,20 @@ export async function generateMetadata({
       description,
       url: `/${params.locale}/odalar`,
       type: 'website',
+      images: [
+        {
+          url: '/images/brand/og-default.jpg',
+          width: 1200,
+          height: 1000,
+          alt: 'Hat Naturel Resort Sapanca — bungalov ve köşkler',
+        },
+      ],
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
+      images: ['/images/brand/og-default.jpg'],
     },
   };
 }

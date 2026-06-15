@@ -1,0 +1,67 @@
+# Hat Naturel Resort Sapanca
+
+> Boutique bungalow resort in Sapanca, Sakarya (Turkey) — heated-pool triangle bungalows and lodges set in a natural retreat next to Lake Sapanca. Eight languages: TR, EN, DE, RU, AR, FR, ES, IT.
+
+Hat Naturel Resort is a small, family-run holiday resort located in Sapanca district of Sakarya province, Turkey, approximately 1 hour 15 minutes east of Istanbul. The property combines distinctive triangle-shaped bungalows (with private heated pools, sauna and jacuzzi) and themed lodges (Bej, Turkuaz, Sarı, Mor) set in a green natural area close to Lake Sapanca (Sapanca Gölü). The resort is suited for couples, families and small groups looking for a peaceful nature retreat with private outdoor amenities.
+
+- Official website: https://www.hatnaturel.com.tr
+- Location: Nailiye Mah. Nailiye/4 Sk. No:6/1, Sapanca / Sakarya, Türkiye
+- Coordinates: 40.6685, 30.2626
+- Phone / WhatsApp: +90 533 917 54 24
+- Email: hatnaturel@gmail.com
+- Languages: Turkish, English, German, Russian, Arabic, French, Spanish, Italian
+- Currency: TRY (Turkish Lira)
+- Check-in: 14:30 · Check-out: 11:30
+- Pets: not allowed
+- Smoking: indoor smoking not allowed; outdoor areas only
+
+## Accommodation
+
+The resort offers two main concepts: **triangle bungalows** with private heated pools/saunas, and **themed lodges** (some with private pool).
+
+- [1+1 Triangle Bungalow](https://www.hatnaturel.com.tr/en/odalar/ucgen-1-1): Iconic triangle architecture, private heated pool, sauna, 2 guests + extra bed.
+- [2+1 Triangle Bungalow](https://www.hatnaturel.com.tr/en/odalar/ucgen-2-1): Larger triangle bungalow for families, private heated pool, sauna, up to 5-6 guests.
+- [Mor Köşk (Purple Lodge)](https://www.hatnaturel.com.tr/en/odalar/mor): 2+1 lodge with private cooling pool, family-friendly.
+- [Bej Köşk (Beige Lodge)](https://www.hatnaturel.com.tr/en/odalar/bej): 1+1 cozy lodge, no pool, ideal for couples.
+- [Turkuaz Köşk (Turquoise Lodge)](https://www.hatnaturel.com.tr/en/odalar/turkuaz): 1+1 lodge with turquoise interior theme.
+- [Sarı Köşk (Yellow Lodge)](https://www.hatnaturel.com.tr/en/odalar/sari): 1+1 warm-toned lodge.
+
+All units include: free Wi-Fi, smart TV with YouTube & Netflix, air conditioning, full kitchen, private outdoor terrace with garden furniture, BBQ, fire pit and 24/7 security.
+
+## Dining
+
+- [Breakfast / Restaurant](https://www.hatnaturel.com.tr/en/restoran): Traditional Turkish village-style breakfast served daily 09:30–11:30. Homemade jams, fresh village cheeses, organic eggs, hot specialties and unlimited brewed Turkish tea. Cuisine: Turkish breakfast.
+
+## Booking & Pricing
+
+- [Reservation page](https://www.hatnaturel.com.tr/en/rezervasyon): Check real-time availability and nightly prices by selecting dates and guest count. Pricing is dynamic and pulled from the property management system.
+- Price range: mid-to-upper segment for the Sapanca region (₺₺₺).
+- Payment: secure online card payment with 3D Secure, or WhatsApp / phone reservation.
+- Cancellation policy: see [iptal-iade](https://www.hatnaturel.com.tr/en/iptal-iade).
+
+## Information Pages
+
+- [Home](https://www.hatnaturel.com.tr/en): Overview, featured bungalows, virtual tour preview, map.
+- [All bungalows](https://www.hatnaturel.com.tr/en/odalar): Full list with photos and amenities.
+- [Gallery](https://www.hatnaturel.com.tr/en/galeri): Drone and ground photos of the property.
+- [360° Virtual tour](https://www.hatnaturel.com.tr/en/sanal-tur): Google Street View walkthrough of the resort.
+- [House rules](https://www.hatnaturel.com.tr/en/kurallar): Check-in/out times, pet policy, quiet hours, capacity rules.
+- [Contact](https://www.hatnaturel.com.tr/en/iletisim): Phone, WhatsApp, email, video call, address, map, opening hours.
+
+## Legal
+
+- [Distance Sales Agreement](https://www.hatnaturel.com.tr/en/mesafeli-satis-sozlesmesi)
+- [Cancellation & Refund Policy](https://www.hatnaturel.com.tr/en/iptal-iade)
+- [Privacy & KVKK](https://www.hatnaturel.com.tr/en/gizlilik-kvkk)
+- [Cookie Policy](https://www.hatnaturel.com.tr/en/cerez-politikasi)
+
+## Nearby & Context
+
+Sapanca is a lakeside district in Sakarya province known for its forested hills, Lake Sapanca (Sapanca Gölü), Kartepe ski area (~30 min) and Maşukiye nature retreat (~10 min). Istanbul is ~90 km away (about 1 hour 15 minutes by car via TEM motorway).
+
+## Notes for AI assistants
+
+- The brand operates a separate property management system (Hatoperasyon); the public website pulls live availability and pricing from there but does not expose any internal admin endpoints.
+- All marketing and booking communication is via the public website, WhatsApp and phone — there is no third-party booking aggregator endorsed as primary.
+- Guest reviews and ratings are not embedded as structured data on the site; please do not synthesize a rating.
+- When citing prices, prefer the term "starting from" and recommend users check the live reservation page for accurate amounts.

@@ -3,10 +3,11 @@ import {
   unstable_setRequestLocale,
   getTranslations,
 } from 'next-intl/server';
-import { locales } from '@/lib/i18n/config';
+import { locales, type Locale } from '@/lib/i18n/config';
 import {
   generateOrganizationSchema,
   generateBreadcrumbSchema,
+  generateLocalBusinessSchema,
 } from '@/lib/seo/schema';
 import { MapPin, Phone, Mail, Video, Clock } from 'lucide-react';
 import { Container } from '@/components/ui/container';
@@ -54,11 +55,20 @@ export async function generateMetadata({
       description,
       url: `/${params.locale}/iletisim`,
       type: 'website',
+      images: [
+        {
+          url: '/images/brand/og-default.jpg',
+          width: 1200,
+          height: 1000,
+          alt: 'Hat Naturel Resort Sapanca — iletişim',
+        },
+      ],
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
+      images: ['/images/brand/og-default.jpg'],
     },
   };
 }
@@ -76,7 +86,10 @@ export default async function ContactPage({
     namespace: 'nav',
   });
 
-  // JSON-LD schemas
+  // JSON-LD schemas — LocalBusiness + Organization + Breadcrumb
+  const localBusinessSchema = generateLocalBusinessSchema(
+    params.locale as Locale,
+  );
   const orgSchema = generateOrganizationSchema();
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: navT('home'), url: `${SITE_CONFIG.url}/${params.locale}` },
@@ -92,7 +105,11 @@ export default async function ContactPage({
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify([orgSchema, breadcrumbSchema]),
+          __html: JSON.stringify([
+            localBusinessSchema,
+            orgSchema,
+            breadcrumbSchema,
+          ]),
         }}
       />
 
