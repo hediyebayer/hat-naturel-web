@@ -41,6 +41,7 @@ import { POST as initiatePost } from '@/app/api/payment/initiate/route';
 import { POST as verifyPost } from '@/app/api/payment/verify/route';
 import { GET as statusGet } from '@/app/api/payment/status/route';
 import { _resetProviderInstance } from '@/lib/payment/provider';
+import { resetRateLimiterStore } from '@/lib/security/rate-limit';
 
 const futureYY = (new Date().getFullYear() + 5) % 100;
 
@@ -93,6 +94,7 @@ describe('payment API routes', () => {
   beforeEach(() => {
     process.env.PAYMENT_PROVIDER = 'mock';
     Reflect.deleteProperty(globalThis, '__hnPaymentStore');
+    resetRateLimiterStore();
     _resetProviderInstance();
     sendReservationEmails.mockReset();
     sendReservationEmails.mockResolvedValue(undefined);
@@ -171,6 +173,41 @@ describe('payment API routes', () => {
       expect(json.redirectUrl).toContain(
         `/tr/rezervasyon/odeme/3d-secure?ref=${json.reservationId}`,
       );
+    });
+
+    it('aynı IP için 6. initiate isteğinde 429 döner', async () => {
+      const headers = {
+        'content-type': 'application/json',
+        'x-locale': 'tr',
+        'x-forwarded-for': '203.0.113.55',
+      };
+
+      for (let i = 0; i < 5; i += 1) {
+        const response = await initiatePost(
+          makePostRequest(
+            'http://localhost/api/payment/initiate',
+            JSON.stringify(validPayload),
+            headers,
+          ),
+        );
+
+        expect(response.status).toBe(200);
+      }
+
+      const blocked = await initiatePost(
+        makePostRequest(
+          'http://localhost/api/payment/initiate',
+          JSON.stringify(validPayload),
+          headers,
+        ),
+      );
+
+      expect(blocked.status).toBe(429);
+      expect(blocked.headers.get('Retry-After')).toBeTruthy();
+      await expect(blocked.json()).resolves.toMatchObject({
+        ok: false,
+        message: 'Çok fazla ödeme başlatma denemesi. Lütfen bekleyip tekrar deneyin.',
+      });
     });
 
   });
