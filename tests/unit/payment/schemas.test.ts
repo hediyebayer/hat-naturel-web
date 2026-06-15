@@ -192,7 +192,7 @@ describe('initiatePaymentSchema consents', () => {
 describe('verifyPaymentSchema', () => {
   it('geçerli reservationId + 6 haneli OTP kabul edilir', () => {
     const result = verifyPaymentSchema.safeParse({
-      reservationId: 'HN-1718000000000-ABC123',
+      reservationId: 'HN-12345678-1234-1234-1234-1234567890AB',
       otp: '123456',
     });
     expect(result.success).toBe(true);
@@ -200,7 +200,7 @@ describe('verifyPaymentSchema', () => {
 
   it('5 haneli OTP reddedilir', () => {
     const result = verifyPaymentSchema.safeParse({
-      reservationId: 'HN-1718000000000-ABC123',
+      reservationId: 'HN-12345678-1234-1234-1234-1234567890AB',
       otp: '12345',
     });
     expect(result.success).toBe(false);
@@ -208,7 +208,7 @@ describe('verifyPaymentSchema', () => {
 
   it('OTP harf içeriyorsa reddedilir', () => {
     const result = verifyPaymentSchema.safeParse({
-      reservationId: 'HN-1718000000000-ABC123',
+      reservationId: 'HN-12345678-1234-1234-1234-1234567890AB',
       otp: '12345a',
     });
     expect(result.success).toBe(false);

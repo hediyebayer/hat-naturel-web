@@ -1,13 +1,16 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import {
   storeGet,
+  storeIncrementVerifyAttempt,
   storeSet,
   storeSize,
   storeUpdate,
 } from '@/lib/payment/store';
 import type { PaymentRecord } from '@/lib/payment/types';
 
-function makeRecord(reservationId = 'HN-1000-ABC123'): PaymentRecord {
+function makeRecord(
+  reservationId = 'HN-11111111-1111-1111-1111-111111111111',
+): PaymentRecord {
   return {
     reservationId,
     status: 'awaiting_3ds',
@@ -44,6 +47,7 @@ function makeRecord(reservationId = 'HN-1000-ABC123'): PaymentRecord {
     amountCharged: 3900,
     currency: 'TRY',
     createdAt: new Date('2026-01-01T00:00:00.000Z'),
+    verifyAttempts: 0,
   };
 }
 
@@ -79,8 +83,8 @@ describe('payment/store', () => {
   });
 
   it('cleanup yeni yazma sırasında süresi dolmuş kayıtları temizler', () => {
-    const first = makeRecord('HN-1000-AAA111');
-    const second = makeRecord('HN-1000-BBB222');
+    const first = makeRecord('HN-AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA');
+    const second = makeRecord('HN-BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB');
 
     storeSet(first);
     vi.setSystemTime(new Date('2026-01-01T01:00:00.001Z'));
@@ -107,7 +111,36 @@ describe('payment/store', () => {
     });
   });
 
+  it('başarısız verify denemelerini sayar', () => {
+    const record = makeRecord();
+    storeSet(record);
+
+    const first = storeIncrementVerifyAttempt(record.reservationId);
+    const second = storeIncrementVerifyAttempt(record.reservationId);
+
+    expect(first).toEqual({ updated: true, attempts: 1, locked: false });
+    expect(second).toEqual({ updated: true, attempts: 2, locked: false });
+    expect(storeGet(record.reservationId)?.status).toBe('awaiting_3ds');
+    expect(storeGet(record.reservationId)?.verifyAttempts).toBe(2);
+  });
+
+  it('3. başarısız verify denemesinde kaydı kilitler', () => {
+    const record = makeRecord();
+    storeSet(record);
+
+    storeIncrementVerifyAttempt(record.reservationId);
+    storeIncrementVerifyAttempt(record.reservationId);
+    const third = storeIncrementVerifyAttempt(record.reservationId);
+
+    expect(third).toEqual({ updated: true, attempts: 3, locked: true });
+    expect(storeGet(record.reservationId)).toMatchObject({
+      status: 'failed',
+      verifyAttempts: 3,
+      failReason: 'invalid_otp',
+    });
+  });
+
   it('olmayan kayıt update edilirse false döner', () => {
-    expect(storeUpdate('HN-404-NOPE00', { status: 'failed' })).toBe(false);
+    expect(storeUpdate('HN-CCCCCCCC-CCCC-CCCC-CCCC-CCCCCCCCCCCC', { status: 'failed' })).toBe(false);
   });
 });

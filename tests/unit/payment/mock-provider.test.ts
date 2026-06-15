@@ -1,11 +1,7 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import { beforeEach, describe, expect, it } from 'vitest';
 import { MockVakifBankProvider } from '@/lib/payment/mock-vakifbank-provider';
 import { storeSize } from '@/lib/payment/store';
 import type { InitiateInput } from '@/lib/payment/types';
-
-// ---------------------------------------------------------------------------
-// Fixtures
-// ---------------------------------------------------------------------------
 
 const futureYY = (new Date().getFullYear() + 5) % 100;
 
@@ -47,25 +43,24 @@ const validInitiateInput: InitiateInput = {
   locale: 'tr',
 };
 
-// ---------------------------------------------------------------------------
-// Tests
-// ---------------------------------------------------------------------------
-
 describe('MockVakifBankProvider', () => {
   let provider: MockVakifBankProvider;
 
   beforeEach(() => {
+    Reflect.deleteProperty(globalThis, '__hnPaymentStore');
     provider = new MockVakifBankProvider();
   });
 
   describe('initiate()', () => {
-    it('başarılı sonuç döner ve reservationId HN- ile başlar', async () => {
+    it('başarılı sonuç döner ve reservationId HN-UUID formatındadır', async () => {
       const result = await provider.initiate(validInitiateInput);
 
       expect(result.ok).toBe(true);
-      expect(result.reservationId).toMatch(/^HN-\d+-[A-Z0-9]{6}$/);
+      expect(result.reservationId).toMatch(
+        /^HN-[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}$/,
+      );
       expect(result.redirectUrl).toContain('/tr/rezervasyon/odeme/3d-secure?ref=HN-');
-      expect(result.amountCharged).toBe(15000); // full payment
+      expect(result.amountCharged).toBe(15000);
     });
 
     it('%30 kapora modunda amountCharged doğru hesaplanır', async () => {
@@ -89,24 +84,22 @@ describe('MockVakifBankProvider', () => {
 
     it('kart bilgisi store kaydında masked PAN olarak yer alır', async () => {
       const result = await provider.initiate(validInitiateInput);
-      expect(result.ok).toBe(true);
-
       const record = await provider.getStatus(result.reservationId);
+
       expect(record).not.toBeNull();
       expect(record?.card.maskedPan).toBe('411111******1111');
       expect(record?.card.last4).toBe('1111');
       expect(record?.card.brand).toBe('visa');
+      expect(record?.verifyAttempts).toBe(0);
 
-      // PAN tam olarak ASLA store'da olmamalı
       const raw = JSON.stringify(record);
       expect(raw).not.toContain('4111111111111111');
     });
 
     it('initiate sonrası durum awaiting_3ds', async () => {
       const result = await provider.initiate(validInitiateInput);
-      expect(result.ok).toBe(true);
-
       const record = await provider.getStatus(result.reservationId);
+
       expect(record?.status).toBe('awaiting_3ds');
     });
   });
@@ -114,7 +107,6 @@ describe('MockVakifBankProvider', () => {
   describe('verify()', () => {
     it('6 haneli OTP ile success döner', async () => {
       const initiated = await provider.initiate(validInitiateInput);
-      expect(initiated.ok).toBe(true);
 
       const result = await provider.verify({
         reservationId: initiated.reservationId,
@@ -134,36 +126,55 @@ describe('MockVakifBankProvider', () => {
       expect(record?.paidAt).toBeDefined();
     });
 
-    it('harf içeren OTP ile failed döner', async () => {
+    it('geçersiz OTP denemeleri 3 kez olursa kayıt kilitlenir', async () => {
       const initiated = await provider.initiate(validInitiateInput);
 
-      const result = await provider.verify({
-        reservationId: initiated.reservationId,
-        otp: 'abc123',
-      });
+      for (const otp of ['abc123', '12345', '12 345']) {
+        const result = await provider.verify({
+          reservationId: initiated.reservationId,
+          otp,
+        });
 
-      expect(result.ok).toBe(false);
-      expect(result.status).toBe('failed');
-      if (!result.ok) {
-        expect(result.reason).toBe('invalid_otp');
+        expect(result.ok).toBe(false);
+        expect(result.status).toBe('failed');
       }
+
+      const record = await provider.getStatus(initiated.reservationId);
+      expect(record?.verifyAttempts).toBe(3);
+      expect(record?.status).toBe('failed');
+      expect(record?.failReason).toBe('invalid_otp');
     });
 
-    it('5 haneli OTP ile failed döner', async () => {
+    it('ilk iki başarısız denemede kayıt hemen kilitlenmez', async () => {
       const initiated = await provider.initiate(validInitiateInput);
+
+      await provider.verify({ reservationId: initiated.reservationId, otp: 'abc123' });
+      await provider.verify({ reservationId: initiated.reservationId, otp: '12345' });
+
+      const record = await provider.getStatus(initiated.reservationId);
+      expect(record?.verifyAttempts).toBe(2);
+      expect(record?.status).toBe('awaiting_3ds');
+    });
+
+    it('başarı sonrası tekrar verify edilirse idempotent success döner', async () => {
+      const initiated = await provider.initiate(validInitiateInput);
+      await provider.verify({ reservationId: initiated.reservationId, otp: '123456' });
 
       const result = await provider.verify({
         reservationId: initiated.reservationId,
-        otp: '12345',
+        otp: '654321',
       });
 
-      expect(result.ok).toBe(false);
-      expect(result.status).toBe('failed');
+      expect(result).toEqual({
+        ok: true,
+        status: 'success',
+        reservationId: initiated.reservationId,
+      });
     });
 
     it('bilinmeyen reservationId ile expired döner', async () => {
       const result = await provider.verify({
-        reservationId: 'HN-0000000000000-ZZZZZZ',
+        reservationId: 'HN-00000000-0000-0000-0000-000000000000',
         otp: '123456',
       });
 
@@ -185,7 +196,7 @@ describe('MockVakifBankProvider', () => {
     });
 
     it('var olmayan ID için null döner', async () => {
-      const record = await provider.getStatus('HN-0000000000000-XXXXXX');
+      const record = await provider.getStatus('HN-00000000-0000-0000-0000-000000000000');
       expect(record).toBeNull();
     });
   });

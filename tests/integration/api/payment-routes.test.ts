@@ -5,14 +5,22 @@ const { sendReservationEmails } = vi.hoisted(() => ({
   sendReservationEmails: vi.fn(),
 }));
 
+const { validateOrderPricing } = vi.hoisted(() => ({
+  validateOrderPricing: vi.fn(),
+}));
+
 vi.mock('@/lib/payment/emails', () => ({
   sendReservationEmails,
 }));
 
+vi.mock('@/lib/payment/order', () => ({
+  validateOrderPricing,
+}));
+
 vi.mock('@/lib/payment/provider', async () => {
-  const { MockVakifBankProvider } = await vi.importActual<typeof import('@/lib/payment/mock-vakifbank-provider')>(
-    '@/lib/payment/mock-vakifbank-provider',
-  );
+  const { MockVakifBankProvider } = await vi.importActual<
+    typeof import('@/lib/payment/mock-vakifbank-provider')
+  >('@/lib/payment/mock-vakifbank-provider');
 
   let instance: InstanceType<typeof MockVakifBankProvider> | null = null;
 
@@ -88,6 +96,12 @@ describe('payment API routes', () => {
     _resetProviderInstance();
     sendReservationEmails.mockReset();
     sendReservationEmails.mockResolvedValue(undefined);
+    validateOrderPricing.mockReset();
+    validateOrderPricing.mockResolvedValue({
+      ok: true,
+      canonicalOrder: validPayload.order,
+      usesFallbackPricing: false,
+    });
   });
 
   describe('POST /api/payment/initiate', () => {
@@ -140,6 +154,7 @@ describe('payment API routes', () => {
           {
             'content-type': 'application/json',
             'x-locale': 'tr',
+            'x-forwarded-for': '203.0.113.5',
           },
         ),
       );
@@ -150,9 +165,14 @@ describe('payment API routes', () => {
         ok: true,
         amountCharged: 15000,
       });
-      expect(json.reservationId).toMatch(/^HN-\d+-[A-Z0-9]{6}$/);
-      expect(json.redirectUrl).toContain(`/tr/rezervasyon/odeme/3d-secure?ref=${json.reservationId}`);
+      expect(json.reservationId).toMatch(
+        /^HN-[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}$/,
+      );
+      expect(json.redirectUrl).toContain(
+        `/tr/rezervasyon/odeme/3d-secure?ref=${json.reservationId}`,
+      );
     });
+
   });
 
   describe('POST /api/payment/verify', () => {
@@ -164,6 +184,7 @@ describe('payment API routes', () => {
           {
             'content-type': 'application/json',
             'x-locale': 'tr',
+            'x-forwarded-for': '203.0.113.7',
           },
         ),
       );
@@ -234,6 +255,7 @@ describe('payment API routes', () => {
       });
       expect(sendReservationEmails).toHaveBeenCalledTimes(1);
     });
+
   });
 
   describe('GET /api/payment/status', () => {
@@ -245,6 +267,7 @@ describe('payment API routes', () => {
           {
             'content-type': 'application/json',
             'x-locale': 'tr',
+            'x-forwarded-for': '203.0.113.8',
           },
         ),
       );
@@ -273,7 +296,9 @@ describe('payment API routes', () => {
 
     it('olmayan kayıt için 404 döner', async () => {
       const response = await statusGet(
-        new NextRequest('http://localhost/api/payment/status?ref=HN-999-AAAAAA'),
+        new NextRequest(
+          'http://localhost/api/payment/status?ref=HN-11111111-1111-1111-1111-111111111111',
+        ),
       );
 
       expect(response.status).toBe(404);
@@ -283,7 +308,7 @@ describe('payment API routes', () => {
       });
     });
 
-    it('başarılı akışta güvenli record alanlarını döner', async () => {
+    it('başarılı akışta PII içermeyen minimal record döner', async () => {
       const reservationId = await createVerifiedReservation();
 
       const response = await statusGet(
@@ -293,27 +318,13 @@ describe('payment API routes', () => {
       expect(response.status).toBe(200);
       const json = await response.json();
       expect(json.ok).toBe(true);
-      expect(json.record).toMatchObject({
-        reservationId,
+      expect(json.record).toEqual({
         status: 'success',
         amountCharged: 15000,
-        currency: 'TRY',
-        maskedPan: '411111******1111',
         last4: '1111',
         brand: 'visa',
-        order: {
-          roomSlug: 'ucgen-1-1',
-          roomName: '1+1 Üçgen Bungalov',
-        },
-        guest: {
-          firstName: 'Ayşe',
-          lastName: 'Kaya',
-          email: 'ayse@example.com',
-        },
       });
-      expect(json.record.guest.phone).toBeUndefined();
-      expect(json.record.card).toBeUndefined();
-      expect(typeof json.record.paidAt).toBe('string');
     });
+
   });
 });
