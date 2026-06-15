@@ -1,7 +1,8 @@
+import { use } from "react";
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import { unstable_setRequestLocale, getTranslations } from 'next-intl/server';
+import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { locales, type Locale } from '@/lib/i18n/config';
 import { SITE_CONFIG } from '@/lib/constants';
 import {
@@ -15,12 +16,11 @@ import { Text } from '@/components/ui/text';
 import { BreakfastMenu, TeaHighlight } from '@/components/restoran/breakfast-menu';
 
 interface RestoranPageProps {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }
 
-export async function generateMetadata({
-  params,
-}: RestoranPageProps): Promise<Metadata> {
+export async function generateMetadata(props: RestoranPageProps): Promise<Metadata> {
+  const params = await props.params;
   const t = await getTranslations({
     locale: params.locale,
     namespace: 'meta.restaurant',
@@ -97,10 +97,9 @@ async function RestaurantSchema({ locale }: { locale: string }) {
   );
 }
 
-export default function RestoranPage({
-  params,
-}: RestoranPageProps): React.ReactElement {
-  unstable_setRequestLocale(params.locale);
+export default function RestoranPage(props: RestoranPageProps): React.ReactElement {
+  const params = use(props.params);
+  setRequestLocale(params.locale);
   const t = useTranslations('restaurant');
 
   return (

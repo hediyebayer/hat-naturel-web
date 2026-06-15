@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import {
-  unstable_setRequestLocale,
+  setRequestLocale,
   getTranslations,
 } from 'next-intl/server';
 import { locales, type Locale } from '@/lib/i18n/config';
@@ -25,12 +25,11 @@ import { SocialCard } from '@/components/iletisim/social-card';
 import { FloatingDecorations } from '@/components/iletisim/floating-decorations';
 
 interface PageProps {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }
 
-export async function generateMetadata({
-  params,
-}: PageProps): Promise<Metadata> {
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
+  const params = await props.params;
   const t = await getTranslations({
     locale: params.locale,
     namespace: 'meta.contact',
@@ -73,10 +72,9 @@ export async function generateMetadata({
   };
 }
 
-export default async function ContactPage({
-  params,
-}: PageProps): Promise<React.ReactElement> {
-  unstable_setRequestLocale(params.locale);
+export default async function ContactPage(props: PageProps): Promise<React.ReactElement> {
+  const params = await props.params;
+  setRequestLocale(params.locale);
   const t = await getTranslations({
     locale: params.locale,
     namespace: 'contact',

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
-import { getMessages, getTranslations, unstable_setRequestLocale } from 'next-intl/server';
+import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { playfair, inter } from '@/styles/fonts';
 import { locales, type Locale } from '@/lib/i18n/config';
@@ -11,14 +11,15 @@ import '../globals.css';
 
 interface LocaleLayoutProps {
   children: React.ReactNode;
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { locale: string };
-}): Promise<Metadata> {
+export async function generateMetadata(
+  props: {
+    params: Promise<{ locale: string }>;
+  }
+): Promise<Metadata> {
+  const params = await props.params;
   const t = await getTranslations({ locale: params.locale, namespace: 'meta' });
   const title = t('defaultTitle');
   const description = t('defaultDescription');
@@ -78,12 +79,15 @@ export function generateStaticParams(): Array<{ locale: string }> {
   return locales.map((locale) => ({ locale }));
 }
 
-export default async function LocaleLayout({
-  children,
-  params,
-}: LocaleLayoutProps): Promise<React.ReactElement> {
+export default async function LocaleLayout(props: LocaleLayoutProps): Promise<React.ReactElement> {
+  const params = await props.params;
+
+  const {
+    children
+  } = props;
+
   if (!locales.includes(params.locale as Locale)) notFound();
-  unstable_setRequestLocale(params.locale);
+  setRequestLocale(params.locale);
 
   const messages = await getMessages();
 

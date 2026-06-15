@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { redirect } from 'next/navigation';
-import { unstable_setRequestLocale, getTranslations } from 'next-intl/server';
+import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { Heading } from '@/components/ui/heading';
 import { Text } from '@/components/ui/text';
 import { OrderSummary } from '@/components/payment/order-summary';
@@ -12,14 +12,14 @@ import { DEPOSIT_RATIO } from '@/lib/content/legal';
 import type { OrderSummary as OrderSummaryType } from '@/lib/payment/types';
 
 interface PageProps {
-  params: { locale: string };
-  searchParams: {
+  params: Promise<{ locale: string }>;
+  searchParams: Promise<{
     room?: string;
     checkIn?: string;
     checkOut?: string;
     guests?: string;
     deposit?: string;
-  };
+  }>;
 }
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -29,11 +29,10 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default async function KartPage({
-  params,
-  searchParams,
-}: PageProps): Promise<React.ReactElement> {
-  unstable_setRequestLocale(params.locale);
+export default async function KartPage(props: PageProps): Promise<React.ReactElement> {
+  const searchParams = await props.searchParams;
+  const params = await props.params;
+  setRequestLocale(params.locale);
 
   const { locale } = params;
   const roomSlug = searchParams.room ?? '';

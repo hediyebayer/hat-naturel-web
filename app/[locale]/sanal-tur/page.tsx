@@ -1,4 +1,4 @@
-import { unstable_setRequestLocale, getTranslations } from 'next-intl/server';
+import { setRequestLocale, getTranslations } from 'next-intl/server';
 import type { Metadata } from 'next';
 import { locales } from '@/lib/i18n/config';
 import { FloatingIconsBg } from '@/components/sanal-tur/floating-icons-bg';
@@ -9,12 +9,11 @@ import { MapExploreSection } from '@/components/sanal-tur/map-explore-section';
 import { GuestPhotosSection } from '@/components/sanal-tur/guest-photos-section';
 
 interface PageProps {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }
 
-export async function generateMetadata({
-  params,
-}: PageProps): Promise<Metadata> {
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
+  const params = await props.params;
   const t = await getTranslations({
     locale: params.locale,
     namespace: 'meta.virtualTour',
@@ -57,10 +56,9 @@ export async function generateMetadata({
   };
 }
 
-export default function VirtualTourPage({
-  params,
-}: PageProps): React.ReactElement {
-  unstable_setRequestLocale(params.locale);
+export default async function VirtualTourPage(props: PageProps): Promise<React.ReactElement> {
+  const params = await props.params;
+  setRequestLocale(params.locale);
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-white text-neutral-900">

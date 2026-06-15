@@ -1,12 +1,12 @@
 import type { Metadata } from 'next';
-import { unstable_setRequestLocale, getTranslations } from 'next-intl/server';
+import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { Container } from '@/components/ui/container';
 import { Heading } from '@/components/ui/heading';
 import { Text } from '@/components/ui/text';
 import { COMPANY_INFO, LAST_UPDATED } from '@/lib/content/legal';
 
 interface Props {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }
 
 export async function generateMetadata(_: Props): Promise<Metadata> {
@@ -18,8 +18,9 @@ export async function generateMetadata(_: Props): Promise<Metadata> {
   };
 }
 
-export default async function MesafeliSatisSozlesmesiPage({ params }: Props): Promise<React.ReactElement> {
-  unstable_setRequestLocale(params.locale);
+export default async function MesafeliSatisSozlesmesiPage(props: Props): Promise<React.ReactElement> {
+  const params = await props.params;
+  setRequestLocale(params.locale);
   const t = await getTranslations({ locale: params.locale, namespace: 'legal.distanceSales' });
 
   return (

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { unstable_setRequestLocale, getTranslations } from 'next-intl/server';
+import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { useTranslations } from 'next-intl';
 import { locales } from '@/lib/i18n/config';
 import { Camera } from 'lucide-react';
@@ -9,12 +9,11 @@ import { HeroPhotoCarousel } from '@/components/gallery/hero-photo-carousel';
 import { GALLERY_IMAGES } from '@/lib/data/gallery';
 
 interface PageProps {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }
 
-export async function generateMetadata({
-  params,
-}: PageProps): Promise<Metadata> {
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
+  const params = await props.params;
   const t = await getTranslations({
     locale: params.locale,
     namespace: 'meta.gallery',
@@ -64,10 +63,9 @@ export async function generateMetadata({
  *  1. Hero (lacivert, dot pattern + gold radial + altın pulse badge + 2 satır italic başlık)
  *  2. GalleryGrid (client) — filtre chip'leri + masonry + lightbox
  */
-export default function GalleriPage({
-  params,
-}: PageProps): React.ReactElement {
-  unstable_setRequestLocale(params.locale);
+export default async function GalleriPage(props: PageProps): Promise<React.ReactElement> {
+  const params = await props.params;
+  setRequestLocale(params.locale);
 
   return (
     <>

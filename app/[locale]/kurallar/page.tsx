@@ -1,17 +1,16 @@
 import type { Metadata } from 'next';
-import { unstable_setRequestLocale, getTranslations } from 'next-intl/server';
+import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { useTranslations } from 'next-intl';
 import { ScrollText, AlertTriangle, LogIn, LogOut } from 'lucide-react';
 import { locales } from '@/lib/i18n/config';
 import { Container } from '@/components/ui/container';
 
 interface PageProps {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }
 
-export async function generateMetadata({
-  params,
-}: PageProps): Promise<Metadata> {
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
+  const params = await props.params;
   const t = await getTranslations({
     locale: params.locale,
     namespace: 'meta.rules',
@@ -62,10 +61,9 @@ export async function generateMetadata({
  *  3. Giriş/Çıkış saatleri — 2 kart (LogIn/LogOut)
  *  4. Teşekkür notu (gold accent)
  */
-export default function KurallarPage({
-  params,
-}: PageProps): React.ReactElement {
-  unstable_setRequestLocale(params.locale);
+export default async function KurallarPage(props: PageProps): Promise<React.ReactElement> {
+  const params = await props.params;
+  setRequestLocale(params.locale);
 
   return (
     <main className="bg-white">

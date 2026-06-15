@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
 import { redirect } from 'next/navigation';
-import { unstable_setRequestLocale } from 'next-intl/server';
+import { setRequestLocale } from 'next-intl/server';
 import { ThreeDSecureScreen } from '@/components/payment/three-d-secure-screen';
 
 interface PageProps {
-  params: { locale: string };
-  searchParams: { ref?: string };
+  params: Promise<{ locale: string }>;
+  searchParams: Promise<{ ref?: string }>;
 }
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -15,11 +15,10 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default async function ThreeDSecurePage({
-  params,
-  searchParams,
-}: PageProps): Promise<React.ReactElement> {
-  unstable_setRequestLocale(params.locale);
+export default async function ThreeDSecurePage(props: PageProps): Promise<React.ReactElement> {
+  const searchParams = await props.searchParams;
+  const params = await props.params;
+  setRequestLocale(params.locale);
 
   const { locale } = params;
   const ref = searchParams.ref;

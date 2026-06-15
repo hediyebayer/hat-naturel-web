@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { unstable_setRequestLocale, getTranslations } from 'next-intl/server';
+import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { CheckCircle2, XCircle } from 'lucide-react';
 import { Heading } from '@/components/ui/heading';
 import { Text } from '@/components/ui/text';
@@ -7,12 +7,12 @@ import { ButtonLink } from '@/components/ui/button';
 import { StepIndicator } from '@/components/payment/step-indicator';
 
 interface PageProps {
-  params: { locale: string };
-  searchParams: {
+  params: Promise<{ locale: string }>;
+  searchParams: Promise<{
     status?: string;
     ref?: string;
     reason?: string;
-  };
+  }>;
 }
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -56,11 +56,10 @@ const REASON_KEY_MAP: Record<string, 'invalidOtp' | 'expired' | 'cancelled'> = {
   cancelled: 'cancelled',
 };
 
-export default async function SonucPage({
-  params,
-  searchParams,
-}: PageProps): Promise<React.ReactElement> {
-  unstable_setRequestLocale(params.locale);
+export default async function SonucPage(props: PageProps): Promise<React.ReactElement> {
+  const searchParams = await props.searchParams;
+  const params = await props.params;
+  setRequestLocale(params.locale);
 
   const { locale } = params;
   const status = searchParams.status;

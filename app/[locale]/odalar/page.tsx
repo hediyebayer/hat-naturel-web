@@ -1,5 +1,6 @@
+import { use } from "react";
 import type { Metadata } from 'next';
-import { unstable_setRequestLocale, getTranslations } from 'next-intl/server';
+import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { locales } from '@/lib/i18n/config';
 import { Container } from '@/components/ui/container';
 import { RoomsHero } from '@/components/rooms/rooms-hero';
@@ -8,9 +9,8 @@ import { ButtonLink } from '@/components/ui/button';
 import { RESERVATION_HREF } from '@/lib/constants';
 import { useTranslations } from 'next-intl';
 
-export async function generateMetadata({
-  params,
-}: RoomsPageProps): Promise<Metadata> {
+export async function generateMetadata(props: RoomsPageProps): Promise<Metadata> {
+  const params = await props.params;
   const t = await getTranslations({
     locale: params.locale,
     namespace: 'meta.rooms',
@@ -54,25 +54,24 @@ export async function generateMetadata({
 }
 
 interface RoomsPageProps {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }
 
-export default function RoomsPage({ params }: RoomsPageProps) {
-  unstable_setRequestLocale(params.locale);
+export default function RoomsPage(props: RoomsPageProps) {
+  const params = use(props.params);
+  setRequestLocale(params.locale);
   const t = useTranslations('rooms');
 
   return (
     // Tam beyaz arka plan
     <main className="min-h-screen bg-white text-neutral-900 selection:bg-accent/30">
       <RoomsHero />
-
       {/* Odalar grid — her oda/kategori bir kart, köşelerden LED ışık */}
       <section className="relative bg-white py-20 md:py-28">
         <Container size="xl" className="relative">
           <RoomGridDisplay locale={params.locale} />
         </Container>
       </section>
-
       {/* CTA strip — beyaz tema */}
       <section className="relative overflow-hidden border-t border-neutral-200 bg-gradient-to-b from-white to-neutral-50 py-20 text-neutral-900">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(212,175,55,0.08),transparent_50%)]" />

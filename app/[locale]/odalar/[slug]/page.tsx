@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { unstable_setRequestLocale, getTranslations } from 'next-intl/server';
+import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { locales, type Locale } from '@/lib/i18n/config';
 import { SITE_CONFIG } from '@/lib/constants';
 import {
@@ -24,16 +24,15 @@ import {
 } from 'lucide-react';
 
 interface PageProps {
-  params: { locale: string; slug: string };
+  params: Promise<{ locale: string; slug: string }>;
 }
 
 export function generateStaticParams() {
   return ROOMS.map((r) => ({ slug: r.slug }));
 }
 
-export async function generateMetadata({
-  params,
-}: PageProps): Promise<Metadata> {
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
+  const params = await props.params;
   const room = getRoomBySlug(params.slug);
   if (!room) {
     const tnf = await getTranslations({ locale: params.locale, namespace: 'roomDetail' });
@@ -87,8 +86,9 @@ export async function generateMetadata({
   };
 }
 
-export default async function RoomDetailPage({ params }: PageProps) {
-  unstable_setRequestLocale(params.locale);
+export default async function RoomDetailPage(props: PageProps) {
+  const params = await props.params;
+  setRequestLocale(params.locale);
   const room = getRoomBySlug(params.slug);
   if (!room) notFound();
 

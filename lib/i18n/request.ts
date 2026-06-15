@@ -1,6 +1,6 @@
 import { getRequestConfig } from 'next-intl/server';
 import { notFound } from 'next/navigation';
-import { locales, FALLBACK_LOCALE, type Locale } from './config';
+import { locales, defaultLocale, FALLBACK_LOCALE, type Locale } from './config';
 
 /**
  * 8 dilin hepsi için mesaj dosyası mevcut:
@@ -39,8 +39,18 @@ function resolveByPath(
   return typeof current === 'string' ? current : undefined;
 }
 
-export default getRequestConfig(async ({ locale }) => {
-  if (!locales.includes(locale as Locale)) notFound();
+export default getRequestConfig(async ({ requestLocale }) => {
+  // next-intl v4: callback artık `locale` yerine `requestLocale` (Promise) alır.
+  // requested locale undefined olabilir (örn. statik render öncesi) → defaultLocale'e düş.
+  const requested = await requestLocale;
+  const locale: Locale = locales.includes(requested as Locale)
+    ? (requested as Locale)
+    : defaultLocale;
+
+  // Geçersiz (locale listesinde olmayan) bir segment geldiyse 404.
+  if (requested !== undefined && !locales.includes(requested as Locale)) {
+    notFound();
+  }
 
   let messages;
   try {

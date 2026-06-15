@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { unstable_setRequestLocale, getTranslations } from 'next-intl/server';
+import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { Container } from '@/components/ui/container';
 import { Heading } from '@/components/ui/heading';
 import { Text } from '@/components/ui/text';
@@ -8,17 +8,16 @@ import { AvailableRoomCard } from '@/components/reservation/available-room-card'
 import { getAvailability } from '@/lib/reservation/availability';
 
 interface ReservationPageProps {
-  params: { locale: string };
-  searchParams: {
+  params: Promise<{ locale: string }>;
+  searchParams: Promise<{
     checkIn?: string;
     checkOut?: string;
     guests?: string;
-  };
+  }>;
 }
 
-export async function generateMetadata({
-  params,
-}: ReservationPageProps): Promise<Metadata> {
+export async function generateMetadata(props: ReservationPageProps): Promise<Metadata> {
+  const params = await props.params;
   const tMeta = await getTranslations({ locale: params.locale, namespace: 'meta.reservation' });
   return {
     title: tMeta('title'),
@@ -30,11 +29,10 @@ export async function generateMetadata({
   };
 }
 
-export default async function ReservationPage({
-  params,
-  searchParams,
-}: ReservationPageProps): Promise<React.ReactElement> {
-  unstable_setRequestLocale(params.locale);
+export default async function ReservationPage(props: ReservationPageProps): Promise<React.ReactElement> {
+  const searchParams = await props.searchParams;
+  const params = await props.params;
+  setRequestLocale(params.locale);
 
   const t = await getTranslations({ locale: params.locale, namespace: 'reservationPage' });
 

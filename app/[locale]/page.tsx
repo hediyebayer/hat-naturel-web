@@ -1,6 +1,7 @@
+import { use } from "react";
 import type { Metadata } from 'next';
 import { useTranslations } from 'next-intl';
-import { unstable_setRequestLocale, getTranslations } from 'next-intl/server';
+import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { locales, type Locale } from '@/lib/i18n/config';
 import {
   generateLodgingBusinessSchema,
@@ -20,12 +21,11 @@ import { ROOMS, type Room } from '@/lib/data/rooms';
 import { RoomDisplayCard } from '@/components/rooms/room-grid-display';
 
 interface HomePageProps {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }
 
-export async function generateMetadata({
-  params,
-}: HomePageProps): Promise<Metadata> {
+export async function generateMetadata(props: HomePageProps): Promise<Metadata> {
+  const params = await props.params;
   const t = await getTranslations({
     locale: params.locale,
     namespace: 'meta.home',
@@ -68,10 +68,9 @@ export async function generateMetadata({
   };
 }
 
-export default function HomePage({
-  params,
-}: HomePageProps): React.ReactElement {
-  unstable_setRequestLocale(params.locale);
+export default function HomePage(props: HomePageProps): React.ReactElement {
+  const params = use(props.params);
+  setRequestLocale(params.locale);
   const t = useTranslations('home');
 
   // JSON-LD structured data — LodgingBusiness + Organization + WebSite
