@@ -59,7 +59,7 @@ export default async function KartPage({
   // Build the OrderSummary type for API
   const order: OrderSummaryType = {
     roomSlug,
-    roomName: availableRoom.room.slug, // locale-agnostic key; server translates
+    roomName: availableRoom.room.name, // gerçek oda adı — e-posta/ödeme kaydında görünür (UI ayrıca roomNames i18n ile çevirir)
     checkIn,
     checkOut,
     guests,

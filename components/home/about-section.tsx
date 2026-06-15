@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import { Container } from '@/components/ui/container';
 import { TreePine, Waves, Home, Heart } from 'lucide-react';
+import { fadeInUp, withDelay } from '@/lib/motion/variants';
 
 /**
  * Anasayfa "Hakkımızda / Neden Hat Naturel" bölümü.
@@ -27,13 +28,7 @@ export function AboutSection() {
       <div className="pointer-events-none absolute left-1/2 top-0 h-96 w-[40rem] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(212,175,55,0.06)_0%,transparent_70%)]" />
 
       <Container size="lg" className="relative">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.8, ease: [0.25, 1, 0.5, 1] }}
-          className="text-center"
-        >
+        <motion.div {...fadeInUp} className="text-center">
           {/* Kicker */}
           <span className="inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/5 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.25em] text-accent-dark">
             <span className="h-1 w-1 rounded-full bg-accent" />
@@ -54,13 +49,7 @@ export function AboutSection() {
         </motion.div>
 
         {/* Ana paragraf */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.8, delay: 0.2, ease: [0.25, 1, 0.5, 1] }}
-          className="mx-auto mt-14 max-w-3xl"
-        >
+        <motion.div {...withDelay(fadeInUp, 0.2)} className="mx-auto mt-14 max-w-3xl">
           <p className="text-center text-lg leading-relaxed text-neutral-700 md:text-xl md:leading-[1.8]">
             {t('aboutBodyP1Pre')}{' '}
             <strong className="font-semibold text-neutral-900">
