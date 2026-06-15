@@ -15,7 +15,7 @@ import {
   Bath as BathIcon,
   Sparkle,
 } from 'lucide-react';
-import { ROOMS, type Room } from '@/lib/data/rooms';
+import { getOrderedRooms, type Room } from '@/lib/data/rooms';
 import { useTranslatedRoom } from '@/lib/data/use-translated-room';
 
 interface RoomGridDisplayProps {
@@ -33,19 +33,8 @@ interface RoomGridDisplayProps {
  * Her kartta köşelerden LED ışık efekti (hover'da yoğunlaşır).
  */
 export function RoomGridDisplay({ locale }: RoomGridDisplayProps) {
-  // ROOMS sırasını manuel kontrol et:
-  // önce üçgen kategoriler (havuzlu+sauna), sonra Mor (yaz havuzlu), sonra havuzsuz köşkler
-  const displayOrder = [
-    'ucgen-2-1',
-    'ucgen-1-1',
-    'mor',
-    'sari',
-    'bej',
-    'turkuaz',
-  ];
-  const orderedRooms = displayOrder
-    .map((slug) => ROOMS.find((r) => r.slug === slug))
-    .filter(Boolean) as Room[];
+  // Sıra: lib/data/rooms.ts'teki ROOMS_DISPLAY_ORDER — üçgenler önde, köşkler arkada
+  const orderedRooms: Room[] = getOrderedRooms();
 
   return (
     <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
@@ -192,7 +181,7 @@ export function RoomDisplayCard({
               <span className="h-1 w-1 rounded-full bg-neutral-300" />
               <span className="inline-flex items-center gap-1">
                 <Users className="h-3 w-3" />
-                {room.specs.guests}+{room.specs.extraGuests} Kişi
+                {room.specs.guests + room.specs.extraGuests} Kişi
               </span>
               <span className="h-1 w-1 rounded-full bg-neutral-300" />
               <span className="inline-flex items-center gap-1">

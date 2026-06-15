@@ -5,6 +5,9 @@ export default createMiddleware({
   locales: [...locales],
   defaultLocale,
   localePrefix: 'always',
+  // Browser Accept-Language header'ına göre otomatik dil seçimi kapalı.
+  // İlk ziyarette her zaman Türkçe açılır, kullanıcı dil değiştiriciyle seçer.
+  localeDetection: false,
 });
 
 export const config = {

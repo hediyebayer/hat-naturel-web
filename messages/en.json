@@ -76,8 +76,8 @@
     "sectionGeneral": "General Rules",
     "sectionCheckIn": "Check-in & Check-out Hours",
     "checkInTitle": "Check-in",
-    "checkInTime": "14:00",
-    "checkInDesc": "You may check in any time after 14:00. Please let us know your arrival time in advance. Bungalows are cleaned between 11:30 and 14:00 prior to check-in.",
+    "checkInTime": "14:30",
+    "checkInDesc": "You may check in any time after 14:30. Please let us know your arrival time in advance. Bungalows are cleaned between 11:30 and 14:30 prior to check-in.",
     "checkOutTitle": "Check-out",
     "checkOutTime": "11:30",
     "checkOutDesc": "Please be ready to check out at 11:30. Early check-out is possible, but we cannot extend the check-out time.",
@@ -200,7 +200,13 @@
     "searchAriaLabel": "Reservation Search",
     "unavailable": "Not Available",
     "bedroomLabel": "bedroom(s)",
-    "updateBtn": "Update"
+    "updateBtn": "Update",
+    "nightsTotal": "nights total",
+    "perNight": "Per night",
+    "detailBtn": "Details",
+    "reserveBtn": "Book Now",
+    "estimatedLabel": "estimated",
+    "contactForPrice": "Contact for Price"
   },
   "contact": {
     "title": "Contact",
@@ -323,7 +329,7 @@
     "instagramSubtitle": "Latest photos and stories",
     "instagramCta": "Follow",
     "whatsappKicker": "Live Video",
-    "whatsappTitle": "WhatsApp Video",
+    "whatsappTitle": "WhatsApp",
     "whatsappSubtitle": "Instant live video tour experience",
     "whatsappCta": "Connect Live",
     "whatsappBadge": "Recommended",
@@ -494,7 +500,13 @@
     "emptyState": "Please select a date and number of guests above.",
     "queryInvalid": "Invalid query.",
     "fallbackWarning": "⚠️ Live availability could not be retrieved. Displayed prices are estimates, please contact us to book.",
-    "resultsCount": "{count} available stays for {nights} night(s)"
+    "resultsCount": "{count} available stays for {nights} night(s)",
+    "errorBoundary": {
+      "title": "Something went wrong",
+      "description": "An error occurred while loading the reservation page. Please try again or contact us.",
+      "retry": "Try Again",
+      "contact": "Contact Us"
+    }
   },
   "roomDescriptions": {
     "bej": {

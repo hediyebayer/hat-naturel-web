@@ -200,7 +200,7 @@ export default async function RoomDetailPage(props: PageProps) {
             <SpecBig
               icon={<Users className="h-5 w-5" />}
               label={t('specCapacity')}
-              value={`${room.specs.guests} ${t('guestsUnit')}`}
+              value={`${room.specs.guests + room.specs.extraGuests} ${t('guestsUnit')}`}
             />
             <SpecBig
               icon={<UserPlus className="h-5 w-5" />}

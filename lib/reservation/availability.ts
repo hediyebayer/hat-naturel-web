@@ -9,13 +9,20 @@
  * fallback mock fiyat gösterir ('isFallback' true ile işaretlenir).
  */
 
-import { differenceInCalendarDays, parseISO, isValid } from 'date-fns';
-import { ROOMS, type Room } from '@/lib/data/rooms';
+import { differenceInCalendarDays, parseISO, isValid, startOfDay } from 'date-fns';
+import { toZonedTime } from 'date-fns-tz';
+
+/** Timezone — backend (hatoperasyon) ile aynı TZ kullanımı */
+const TZ = 'Europe/Istanbul';
+import { getOrderedRooms, type Room } from '@/lib/data/rooms';
 import {
   fetchHatoperasyonAvailability,
   mapBungalowToSlugWithCapacity,
   type HatoperasyonRoom,
 } from '@/lib/reservation/hatoperasyon-client';
+
+// URL manipulation'a karşı korunmak için guests üst sınırı
+const MAX_GUESTS = 10;
 
 // Hatoperasyon erişilemezse kullanılacak fallback fiyatlar
 const FALLBACK_BASE_PRICES: Record<string, number> = {
@@ -65,8 +72,10 @@ export function validateQuery(query: AvailabilityQuery): {
   nights: number;
   error?: string;
 } {
-  const checkInDate = parseISO(query.checkIn);
-  const checkOutDate = parseISO(query.checkOut);
+  // TZ-safe parse: YYYY-MM-DD string'ini Istanbul TZ'de startOfDay olarak çöz
+  // Böylece lokal sunucu TZ'sinden bağımsız olur (1 günlük kayma riskini önler)
+  const checkInDate = startOfDay(toZonedTime(parseISO(query.checkIn), TZ));
+  const checkOutDate = startOfDay(toZonedTime(parseISO(query.checkOut), TZ));
 
   if (!isValid(checkInDate) || !isValid(checkOutDate)) {
     return { isValid: false, nights: 0, error: 'Geçersiz tarih formatı.' };
@@ -83,6 +92,14 @@ export function validateQuery(query: AvailabilityQuery): {
 
   if (query.guests < 1) {
     return { isValid: false, nights, error: 'En az 1 misafir olmalı.' };
+  }
+
+  if (query.guests > MAX_GUESTS) {
+    return {
+      isValid: false,
+      nights,
+      error: `Misafir sayısı en fazla ${MAX_GUESTS} olabilir.`,
+    };
   }
 
   return { isValid: true, nights };
@@ -178,7 +195,12 @@ export async function getAvailability(
 
   // Erişim hatası — fallback'e düş
   if (!hatoperasyonResult.ok) {
-    const fallbackRooms = ROOMS.map((room) =>
+    // Teknik detayı sunucu loguna yaz; kullanıcıya genel mesaj gösterilir.
+    console.error(
+      '[availability] Hatoperasyon erişilemiyor, fallback fiyatlar kullanılıyor.',
+      `Hata: ${hatoperasyonResult.error}`,
+    );
+    const fallbackRooms = getOrderedRooms().map((room) =>
       calculateFallbackAvailability(room, validation.nights, query.guests),
     );
     return {
@@ -190,8 +212,12 @@ export async function getAvailability(
     };
   }
 
+  // Hatoperasyon boş array döndüyse (hiç oda yok) — özel mesajla fallback'e düş
+  const backendEmpty = hatoperasyonResult.rooms.length === 0;
+
   // Her web oda kategorisi için hatoperasyon'dan en uygun bungalovu seç
-  const rooms = ROOMS.map<AvailableRoom>((room) => {
+  // Üçgen bungalovlar önde, köşkler arkada (getOrderedRooms)
+  const rooms = getOrderedRooms().map<AvailableRoom>((room) => {
     const match = pickBestForCategory(
       hatoperasyonResult.rooms,
       room.slug,
@@ -199,14 +225,17 @@ export async function getAvailability(
     );
 
     if (!match) {
-      // Web'de tanımlı ama hatoperasyon'da yok — müsait değil göster
+      // Web'de tanımlı ama hatoperasyon'da eşleşme yok
+      const reason = backendEmpty
+        ? 'Şu an müsaitlik bilgisi alınamıyor, lütfen bizimle iletişime geçin.'
+        : 'Bu tarihler için müsait değil.';
       return {
         room,
         isAvailable: false,
         pricePerNight: 0,
         totalPrice: 0,
         nights: validation.nights,
-        unavailableReason: 'Bu tarihler için müsait değil.',
+        unavailableReason: reason,
       };
     }
 

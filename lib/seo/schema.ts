@@ -233,12 +233,7 @@ export function generateOrganizationSchema(): unknown {
     name: SITE_CONFIG.name,
     legalName: SITE_CONFIG.legalName,
     url: BASE_URL,
-    logo: {
-      '@type': 'ImageObject',
-      url: `${BASE_URL}/images/brand/logo-navy.png`,
-      width: 512,
-      height: 512,
-    },
+    logo: `${BASE_URL}/images/brand/logo-transparent.png`,
     image: `${BASE_URL}/images/brand/og-default.jpg`,
     contactPoint: [
       {

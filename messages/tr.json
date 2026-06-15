@@ -76,8 +76,8 @@
     "sectionGeneral": "Genel Kurallar",
     "sectionCheckIn": "Giriş & Çıkış Saatleri",
     "checkInTitle": "Bungalova Giriş",
-    "checkInTime": "14:00",
-    "checkInDesc": "14:00 itibariyle dilediğiniz saatte giriş yapabilirsiniz. Giriş yapacağınız saati bize bildirmenizi rica ederiz. Evlerimiz giriş öncesi 11:30-14:00 arasında temizlenmektedir.",
+    "checkInTime": "14:30",
+    "checkInDesc": "14:30 itibariyle dilediğiniz saatte giriş yapabilirsiniz. Giriş yapacağınız saati bize bildirmenizi rica ederiz. Evlerimiz giriş öncesi 11:30-14:30 arasında temizlenmektedir.",
     "checkOutTitle": "Bungalovdan Çıkış",
     "checkOutTime": "11:30",
     "checkOutDesc": "11:30'da çıkış için hazır olmanız gerekmektedir. Öncesinde çıkış yapmanız mümkündür fakat çıkış saatinde esneme yapmamız mümkün değildir.",
@@ -200,7 +200,13 @@
     "searchAriaLabel": "Rezervasyon Arama",
     "unavailable": "Müsait Değil",
     "bedroomLabel": "yatak odası",
-    "updateBtn": "Güncelle"
+    "updateBtn": "Güncelle",
+    "nightsTotal": "gece toplam",
+    "perNight": "Gecelik",
+    "detailBtn": "Detay",
+    "reserveBtn": "Rezervasyon Yap",
+    "estimatedLabel": "tahmini",
+    "contactForPrice": "Fiyat için İletişime Geçin"
   },
   "contact": {
     "title": "İletişim",
@@ -323,7 +329,7 @@
     "instagramSubtitle": "Güncel fotoğraflar ve hikayeler",
     "instagramCta": "Takip Et",
     "whatsappKicker": "Canlı Görüntülü",
-    "whatsappTitle": "WhatsApp Video",
+    "whatsappTitle": "WhatsApp",
     "whatsappSubtitle": "Anlık görüntülü tur deneyimi",
     "whatsappCta": "Canlı Bağlan",
     "whatsappBadge": "Tavsiye Edilen",
@@ -494,7 +500,13 @@
     "emptyState": "Lütfen yukarıdan tarih ve kişi sayısı seçin.",
     "queryInvalid": "Sorgu geçersiz.",
     "fallbackWarning": "⚠️ Anlık müsaitlik bilgisi alınamadı. Gösterilen fiyatlar tahminidir, lütfen rezervasyon için bizimle iletişime geçin.",
-    "resultsCount": "{nights} gece için {count} müsait konaklama bulundu"
+    "resultsCount": "{nights} gece için {count} müsait konaklama bulundu",
+    "errorBoundary": {
+      "title": "Bir şeyler ters gitti",
+      "description": "Rezervasyon sayfası yüklenirken bir hata oluştu. Lütfen tekrar deneyin veya bizimle iletişime geçin.",
+      "retry": "Tekrar Dene",
+      "contact": "İletişime Geçin"
+    }
   },
   "roomDescriptions": {
     "bej": {
