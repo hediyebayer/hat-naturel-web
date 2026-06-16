@@ -70,16 +70,22 @@ export default async function MesafeliSatisSozlesmesiPage(props: Props): Promise
                     <td className="px-4 py-2.5 text-neutral-500">Web</td>
                     <td className="px-4 py-2.5 text-neutral-800">{COMPANY_INFO.web}</td>
                   </tr>
-                  <tr className="border-b border-neutral-100">
-                    <td className="px-4 py-2.5 text-neutral-500">Vergi Dairesi / No</td>
-                    <td className="px-4 py-2.5 text-neutral-800">
-                      {COMPANY_INFO.taxOffice} / {COMPANY_INFO.taxNo}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="px-4 py-2.5 text-neutral-500">MERSİS No</td>
-                    <td className="px-4 py-2.5 text-neutral-800">{COMPANY_INFO.mersis}</td>
-                  </tr>
+                  {(COMPANY_INFO.taxOffice || COMPANY_INFO.taxNo) && (
+                    <tr className="border-b border-neutral-100">
+                      <td className="px-4 py-2.5 text-neutral-500">Vergi Dairesi / No</td>
+                      <td className="px-4 py-2.5 text-neutral-800">
+                        {[COMPANY_INFO.taxOffice, COMPANY_INFO.taxNo]
+                          .filter(Boolean)
+                          .join(' / ')}
+                      </td>
+                    </tr>
+                  )}
+                  {COMPANY_INFO.mersis && (
+                    <tr>
+                      <td className="px-4 py-2.5 text-neutral-500">MERSİS No</td>
+                      <td className="px-4 py-2.5 text-neutral-800">{COMPANY_INFO.mersis}</td>
+                    </tr>
+                  )}
                 </tbody>
               </table>
             </div>
