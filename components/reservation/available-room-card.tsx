@@ -40,6 +40,26 @@ export function AvailableRoomCard({
   isFallback = false,
 }: AvailableRoomCardProps): React.ReactElement {
   const { room, isAvailable, pricePerNight, totalPrice, nights, unavailableReason } = data;
+
+  // MASTER SWITCH: Hatoperasyon rezervasyon KAYDI (takvime düşürme) endpoint'i
+  // henüz yok. Bu yüzden ödeme aşaması tamamen kapalı — müşteri mock ödeme yapıp
+  // 'rezervasyonum oldu' sanmasın. Açıkken HER ZAMAN 'İletişime Geç' gösterilir.
+  // Hatoperasyon rezervasyon kaydı bitince: NEXT_PUBLIC_PAYMENTS_DISABLED=false yapılır.
+  const paymentsDisabled =
+    process.env.NEXT_PUBLIC_PAYMENTS_DISABLED === 'true';
+
+  // GEÇİCİ: Hatoperasyon bağlanana kadar fallback fiyatlarla gerçek ödeme akışını aç.
+  // (paymentsDisabled açıkken bu etkisiz kalır — kill-switch önceliklidir.)
+  const forcePaymentOnFallback =
+    process.env.NEXT_PUBLIC_FORCE_PAYMENT_ON_FALLBACK === 'true';
+  // Ödeme butonu: kill-switch kapalıysa VE (hatoperasyon bağlı ya da force flag açık).
+  const showPaymentButton =
+    !paymentsDisabled && isAvailable && (!isFallback || forcePaymentOnFallback);
+  // 'İletişime Geç' butonu: ödeme butonu YOKken ve oda müsaitken göster.
+  const showContactButton = !showPaymentButton && isAvailable;
+  // 'tahmini' etiketi: fallback modda gösterilir; force flag açıkken gizlenir.
+  const showEstimatedLabel = isFallback && !forcePaymentOnFallback;
+
   const t = useTranslations('reservation');
   const tRooms = useTranslations('rooms');
   const tRoomDetail = useTranslations('roomDetail');
@@ -170,7 +190,7 @@ export function AvailableRoomCard({
                 <span className="font-serif text-2xl text-neutral-900">
                   {formatPrice(totalPrice)}
                 </span>
-                {isFallback && (
+                {showEstimatedLabel && (
                   <span className="inline-flex items-center rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-semibold text-amber-800 ring-1 ring-amber-300">
                     {t('estimatedLabel')}
                   </span>
@@ -187,7 +207,7 @@ export function AvailableRoomCard({
               >
                 {t('detailBtn')}
               </Link>
-              {isAvailable && !isFallback && (
+              {showPaymentButton && (
                 <Link
                   href={`/${locale}/rezervasyon/odeme?room=${room.slug}&${query}`}
                   className="rounded-full bg-primary-600 px-5 py-2 text-sm font-semibold text-white transition hover:bg-primary-700"
@@ -195,7 +215,7 @@ export function AvailableRoomCard({
                   {t('reserveBtn')}
                 </Link>
               )}
-              {isAvailable && isFallback && (
+              {showContactButton && (
                 <Link
                   href={`/${locale}/iletisim?room=${room.slug}&${query}`}
                   className="rounded-full border border-amber-500 bg-amber-50 px-5 py-2 text-sm font-semibold text-amber-800 transition hover:bg-amber-100"

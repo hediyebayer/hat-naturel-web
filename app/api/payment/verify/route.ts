@@ -16,12 +16,21 @@ import { getPaymentProvider } from '@/lib/payment/provider';
 import { sendReservationEmails } from '@/lib/payment/emails';
 import { storeGet } from '@/lib/payment/store';
 import { getRateLimiter } from '@/lib/security/rate-limit';
+import { arePaymentsDisabled } from '@/lib/payment/kill-switch';
 
 const MAX_BODY_SIZE = 2_000; // 2KB
 const VERIFY_RATE_LIMIT = { limit: 5, windowMs: 60_000 };
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
+    // KILL-SWITCH: Ödeme kapalıyken doğrulama isteğini de reddet.
+    if (arePaymentsDisabled()) {
+      return NextResponse.json(
+        { ok: false, message: 'Ödeme alımı geçici olarak kapalı. Lütfen bizimle iletişime geçin.' },
+        { status: 503 },
+      );
+    }
+
     const text = await request.text();
 
     if (text.length > MAX_BODY_SIZE) {

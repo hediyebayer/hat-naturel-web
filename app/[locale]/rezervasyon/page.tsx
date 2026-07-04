@@ -101,7 +101,10 @@ export default async function ReservationPage(props: ReservationPageProps): Prom
 
           {result?.isValidQuery && (
             <>
-              {result.isFallback && (
+              {/* GEÇİCİ: FORCE_PAYMENT_ON_FALLBACK açıkken fallback uyarı banner'ı gizlenir
+                  (gerçek senaryo). Hatoperasyon bağlanınca flag=false → banner geri gelir. */}
+              {result.isFallback
+                && process.env.NEXT_PUBLIC_FORCE_PAYMENT_ON_FALLBACK !== 'true' && (
                 <div className="mb-4 rounded-xl bg-amber-50 p-4 ring-1 ring-amber-200">
                   <Text className="text-sm text-amber-800">
                     {t('fallbackWarning')}
