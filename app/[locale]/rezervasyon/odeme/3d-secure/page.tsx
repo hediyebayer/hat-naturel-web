@@ -2,6 +2,9 @@ import type { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 import { setRequestLocale } from 'next-intl/server';
 import { ThreeDSecureScreen } from '@/components/payment/three-d-secure-screen';
+import { getPaymentProvider, getPaymentProviderType } from '@/lib/payment/provider';
+
+export const dynamic = 'force-dynamic';
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -27,31 +30,52 @@ export default async function ThreeDSecurePage(props: PageProps): Promise<React.
     redirect(`/${locale}/rezervasyon`);
   }
 
-  // Server-side fetch status
-  const baseUrl =
-    process.env.NEXT_PUBLIC_SITE_URL ??
-    process.env.NEXT_PUBLIC_BASE_URL ??
-    'http://localhost:3001';
-  let amount = 0;
+  const provider = getPaymentProvider();
+  const record = await provider.getStatus(ref);
 
-  try {
-    const res = await fetch(`${baseUrl}/api/payment/status?ref=${encodeURIComponent(ref)}`, {
-      cache: 'no-store',
-    });
-    if (res.ok) {
-      const data = (await res.json()) as {
-        ok: boolean;
-        record?: { amountCharged: number };
-      };
-      if (data.ok && data.record) {
-        amount = data.record.amountCharged;
-      }
-    }
-  } catch {
-    // Fetch failed — amount remains 0, UI shows as is
+  if (!record) {
+    redirect(`/${locale}/rezervasyon/odeme/sonuc?status=fail&ref=${encodeURIComponent(ref)}&reason=expired`);
   }
 
-  // Masked phone placeholder (gerçek VakıfBank entegrasyonunda record'dan gelecek)
+  if (getPaymentProviderType() === 'vakifbank') {
+    if (!record.acsUrl || !record.paReq || !record.md || !record.termUrl) {
+      redirect(`/${locale}/rezervasyon/odeme/sonuc?status=fail&ref=${encodeURIComponent(ref)}`);
+    }
+
+    return (
+      <div className="mx-auto flex min-h-[60vh] max-w-xl items-center justify-center px-4 py-10">
+        <div className="w-full rounded-2xl bg-white p-8 shadow-sm ring-1 ring-neutral-200">
+          <div className="mb-6 text-center">
+            <h1 className="mb-2 text-2xl font-semibold text-neutral-900">3D Secure yönlendirmesi hazırlanıyor</h1>
+            <p className="text-sm text-neutral-600">
+              Bankanın güvenli doğrulama ekranına aktarılıyorsunuz. Lütfen sayfayı kapatmayın.
+            </p>
+          </div>
+
+          <form id="vakifbank-acs-form" method="POST" action={record.acsUrl}>
+            <input type="hidden" name="PaReq" value={record.paReq} />
+            <input type="hidden" name="TermUrl" value={record.termUrl} />
+            <input type="hidden" name="MD" value={record.md} />
+            <noscript>
+              <button
+                type="submit"
+                className="inline-flex w-full items-center justify-center rounded-xl bg-primary-700 px-4 py-3 text-sm font-semibold text-white"
+              >
+                Banka ekranına devam et
+              </button>
+            </noscript>
+          </form>
+
+          <script
+            dangerouslySetInnerHTML={{
+              __html: "window.setTimeout(function(){document.getElementById('vakifbank-acs-form')?.submit();}, 50);",
+            }}
+          />
+        </div>
+      </div>
+    );
+  }
+
   const maskedPhone = '***** ** 42';
 
   return (
@@ -59,7 +83,7 @@ export default async function ThreeDSecurePage(props: PageProps): Promise<React.
       <div className="w-full max-w-md">
         <ThreeDSecureScreen
           reservationId={ref}
-          amount={amount}
+          amount={record.amountCharged}
           merchantName="Hat Naturel Resort"
           maskedPhone={maskedPhone}
           locale={locale}

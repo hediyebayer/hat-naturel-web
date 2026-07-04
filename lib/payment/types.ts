@@ -1,6 +1,8 @@
 /**
  * Payment domain — temel tipler.
- * PAN/CVV asla bu tiplerde saklanmaz. Yalnızca masked PAN, last4 ve brand.
+ * PAN/CVV kalıcı olarak saklanmaz.
+ * Yalnızca masked PAN, last4 ve brand tutulur; geçici raw kart verisi
+ * sadece provizyon tamamlanana kadar in-memory store'da şifreli saklanır.
  */
 
 export type PaymentStatus = 'pending' | 'awaiting_3ds' | 'success' | 'failed';
@@ -60,6 +62,7 @@ export interface CardInfo {
 export interface PaymentRecord {
   reservationId: string;
   status: PaymentStatus;
+  locale?: string;
   guest: GuestInfo;
   order: OrderSummary;
   card: CardInfo;
@@ -69,6 +72,33 @@ export interface PaymentRecord {
   verifyAttempts: number;
   paidAt?: Date;
   failReason?: 'invalid_otp' | 'expired' | 'cancelled';
+
+  // VakıfBank 3D alanları
+  acsUrl?: string;
+  paReq?: string;
+  md?: string;
+  termUrl?: string;
+  mpiTransactionId?: string;
+  enrollmentStatus?: string;
+  enrollmentErrorCode?: string;
+  enrollmentErrorMessage?: string;
+  callbackStatus?: string;
+  callbackErrorCode?: string;
+  callbackErrorMessage?: string;
+  cavv?: string;
+  eci?: string;
+  authCode?: string;
+  rrn?: string;
+  provisionTransactionId?: string;
+  provisionResultCode?: string;
+  provisionResultDetail?: string;
+
+  // Geçici hassas kart kasası — yalnızca provizyona kadar tutulur
+  encryptedCard?: {
+    cipherText: string;
+    iv: string;
+    authTag: string;
+  };
 }
 
 // ---------------------------------------------------------------------------
