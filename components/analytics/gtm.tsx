@@ -18,10 +18,16 @@ import type { ReactElement } from 'react';
  * GTM panel'inden yapılır, bu koda dokunmaya gerek yoktur.
  */
 
+// Google Tag Manager container ID'si. Format: GTM-XXXXXXX (harf/rakam).
+// NEXT_PUBLIC_GTM_ID env'inden okunur. Format geçerli değilse (defense-in-depth)
+// hiçbir şey render edilmez — dangerouslySetInnerHTML'e güvenli olmayan değer gitmez.
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
+const isGtmId = (id: string | undefined): id is string =>
+  typeof id === 'string' && /^GTM-[A-Z0-9]{1,20}$/.test(id);
+const SAFE_GTM_ID = isGtmId(GTM_ID) ? GTM_ID : null;
 
 export function GtmHead(): ReactElement | null {
-  if (!GTM_ID) return null;
+  if (!SAFE_GTM_ID) return null;
   return (
     // eslint-disable-next-line @next/next/next-script-for-ga -- GTM resmi snippet'i verbatim (gtm.start timestamp head'de anında yakalanır)
     <script
@@ -30,18 +36,18 @@ export function GtmHead(): ReactElement | null {
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','${GTM_ID}');`,
+})(window,document,'script','dataLayer','${SAFE_GTM_ID}');`,
       }}
     />
   );
 }
 
 export function GtmBody(): ReactElement | null {
-  if (!GTM_ID) return null;
+  if (!SAFE_GTM_ID) return null;
   return (
     <noscript>
       <iframe
-        src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
+        src={`https://www.googletagmanager.com/ns.html?id=${SAFE_GTM_ID}`}
         height="0"
         width="0"
         style={{ display: 'none', visibility: 'hidden' }}
