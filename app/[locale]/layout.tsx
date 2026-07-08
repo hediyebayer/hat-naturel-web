@@ -7,6 +7,7 @@ import { locales, type Locale } from '@/lib/i18n/config';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { WhatsAppFab } from '@/components/layout/whatsapp-fab';
+import { GtmHead, GtmBody } from '@/components/analytics/gtm';
 import '../globals.css';
 
 interface LocaleLayoutProps {
@@ -96,7 +97,11 @@ export default async function LocaleLayout(props: LocaleLayoutProps): Promise<Re
 
   return (
     <html lang={params.locale} dir={dir} className={`${playfair.variable} ${inter.variable}`}>
+      <head>
+        <GtmHead />
+      </head>
       <body className="flex min-h-screen flex-col">
+        <GtmBody />
         <NextIntlClientProvider messages={messages} locale={params.locale}>
           <a href="#main" className="skip-link">
             Ana içeriğe geç
