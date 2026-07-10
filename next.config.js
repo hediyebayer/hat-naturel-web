@@ -15,7 +15,7 @@ function buildCsp({ payment = false } = {}) {
     "font-src 'self' data: https:",
     "connect-src 'self' https:",
     "media-src 'self' blob: https:",
-    "frame-src 'none'",
+    "frame-src 'self' https://www.google.com https://www.google.com/maps https://maps.google.com",
     "frame-ancestors 'none'",
     "object-src 'none'",
     "base-uri 'self'",
