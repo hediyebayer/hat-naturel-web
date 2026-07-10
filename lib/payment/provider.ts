@@ -1,10 +1,12 @@
 /**
  * PaymentProvider interface + factory.
  * Gerçek VakıfBank entegrasyonunda bu interface'i implemente eden
- * RealVakifBankProvider oluşturulacak; UI ve API route'lar değişmeyecek.
+ * VakifBankProvider kullanılır; UI ve API route'lar değişmeden kalır.
  */
 
 import type { PaymentRecord, InitiateInput, InitiateResult, VerifyInput, VerifyResult } from './types';
+
+export type PaymentProviderType = 'mock' | 'vakifbank';
 
 // ---------------------------------------------------------------------------
 // Interface
@@ -40,16 +42,19 @@ let _instance: PaymentProvider | null = null;
 
 /**
  * Singleton factory — PAYMENT_PROVIDER env'ine göre provider döndürür.
- * Şu an yalnızca 'mock' desteklenmekte.
  *
  * @example
  *   const provider = getPaymentProvider();
  *   const result = await provider.initiate(input);
  */
+export function getPaymentProviderType(): PaymentProviderType {
+  return process.env.PAYMENT_PROVIDER === 'vakifbank' ? 'vakifbank' : 'mock';
+}
+
 export function getPaymentProvider(): PaymentProvider {
   if (_instance) return _instance;
 
-  const providerType = process.env.PAYMENT_PROVIDER ?? 'mock';
+  const providerType = getPaymentProviderType();
 
   if (providerType === 'mock') {
     // Lazy import — circular dependency riskini önler
@@ -61,14 +66,17 @@ export function getPaymentProvider(): PaymentProvider {
     return _instance;
   }
 
-  // TODO: Gerçek VakıfBank provider
-  // if (providerType === 'vakifbank') {
-  //   const { RealVakifBankProvider } = require('./real-vakifbank-provider');
-  //   _instance = new RealVakifBankProvider();
-  //   return _instance;
-  // }
+  if (providerType === 'vakifbank') {
+    // Lazy import — runtime'da env'e göre yüklenir
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const { VakifBankProvider } = require('./vakifbank-provider') as {
+      VakifBankProvider: new () => PaymentProvider;
+    };
+    _instance = new VakifBankProvider();
+    return _instance;
+  }
 
-  throw new Error(`Bilinmeyen payment provider: "${providerType}". Geçerli değerler: mock`);
+  throw new Error(`Bilinmeyen payment provider: "${providerType}". Geçerli değerler: mock, vakifbank`);
 }
 
 /** Test ortamında singleton'ı sıfırlamak için */

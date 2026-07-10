@@ -48,19 +48,38 @@ export default async function GizlilikKvkkPage(props: Props): Promise<React.Reac
             </Heading>
             <div className="rounded-lg border border-neutral-200 bg-neutral-50 p-4">
               <Text>
-                <strong>{COMPANY_INFO.legalName}</strong>
-                <br />
+                {COMPANY_INFO.legalName && (
+                  <>
+                    <strong>{COMPANY_INFO.legalName}</strong>
+                    <br />
+                  </>
+                )}
                 Adres: {COMPANY_INFO.address}
                 <br />
                 Telefon: {COMPANY_INFO.phone}
                 <br />
                 E-posta: {COMPANY_INFO.email}
-                <br />
-                KEP: {COMPANY_INFO.kep}
-                <br />
-                Vergi Dairesi / No: {COMPANY_INFO.taxOffice} / {COMPANY_INFO.taxNo}
-                <br />
-                MERSİS No: {COMPANY_INFO.mersis}
+                {COMPANY_INFO.kep && (
+                  <>
+                    <br />
+                    KEP: {COMPANY_INFO.kep}
+                  </>
+                )}
+                {(COMPANY_INFO.taxOffice || COMPANY_INFO.taxNo) && (
+                  <>
+                    <br />
+                    Vergi Dairesi / No:{' '}
+                    {[COMPANY_INFO.taxOffice, COMPANY_INFO.taxNo]
+                      .filter(Boolean)
+                      .join(' / ')}
+                  </>
+                )}
+                {COMPANY_INFO.mersis && (
+                  <>
+                    <br />
+                    MERSİS No: {COMPANY_INFO.mersis}
+                  </>
+                )}
               </Text>
             </div>
           </section>
@@ -276,8 +295,12 @@ export default async function GizlilikKvkkPage(props: Props): Promise<React.Reac
                 <a href={`mailto:${COMPANY_INFO.email}`} className="text-primary-700 underline">
                   {COMPANY_INFO.email}
                 </a>
-                <br />
-                <strong>KEP:</strong> {COMPANY_INFO.kep}
+                {COMPANY_INFO.kep && (
+                  <>
+                    <br />
+                    <strong>KEP:</strong> {COMPANY_INFO.kep}
+                  </>
+                )}
                 <br />
                 <strong>Posta:</strong> {COMPANY_INFO.address}
               </Text>

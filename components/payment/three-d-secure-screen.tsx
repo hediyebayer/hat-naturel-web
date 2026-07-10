@@ -7,6 +7,7 @@ import { Shield, AlertTriangle } from 'lucide-react';
 import { cn } from '@/lib/utils/cn';
 import { Button } from '@/components/ui/button';
 import { formatPrice } from '@/lib/reservation/availability';
+import { showDemoBadges } from '@/lib/payment/mode';
 
 const OTP_LENGTH = 6;
 const COUNTDOWN_SECONDS = 180;
@@ -28,6 +29,7 @@ export function ThreeDSecureScreen({
 }: ThreeDSecureScreenProps): React.ReactElement {
   const t = useTranslations('payment.threeDS');
   const router = useRouter();
+  const demoMode = showDemoBadges();
 
   const [otp, setOtp] = useState<string[]>(Array(OTP_LENGTH).fill(''));
   const [timeLeft, setTimeLeft] = useState(COUNTDOWN_SECONDS);
@@ -146,13 +148,15 @@ export function ThreeDSecureScreen({
 
   return (
     <div className="relative overflow-hidden rounded-2xl bg-white shadow-md ring-1 ring-neutral-200">
-      {/* DEMO filigranı */}
-      <div
-        className="pointer-events-none absolute right-4 top-4 select-none font-bold text-2xl text-red-300/70 rotate-12 z-10"
-        aria-hidden="true"
-      >
-        DEMO
-      </div>
+      {/* DEMO filigranı — yalnızca demo modunda */}
+      {demoMode && (
+        <div
+          className="pointer-events-none absolute right-4 top-4 select-none font-bold text-2xl text-red-300/70 rotate-12 z-10"
+          aria-hidden="true"
+        >
+          DEMO
+        </div>
+      )}
 
       {/* Banka header */}
       <div className="bg-primary-700 px-6 py-4 text-white">
@@ -257,10 +261,12 @@ export function ThreeDSecureScreen({
           </div>
         )}
 
-        {/* Demo notu */}
-        <div className="mb-5 rounded-lg bg-amber-50 px-4 py-2.5 text-center text-xs text-amber-700 ring-1 ring-amber-200">
-          <strong>DEMO:</strong> {t('demoNotice')}
-        </div>
+        {/* Demo notu — yalnızca demo modunda */}
+        {demoMode && (
+          <div className="mb-5 rounded-lg bg-amber-50 px-4 py-2.5 text-center text-xs text-amber-700 ring-1 ring-amber-200">
+            <strong>DEMO:</strong> {t('demoNotice')}
+          </div>
+        )}
 
         {/* Butonlar */}
         <div className="flex flex-col gap-3 sm:flex-row-reverse">

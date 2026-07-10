@@ -33,6 +33,7 @@ export default async function OdemePage(props: PageProps): Promise<React.ReactEl
   setRequestLocale(params.locale);
 
   const { locale } = params;
+  // NOT: Ödeme kill-switch guard'ı layout.tsx'te (tüm /odeme/* alt sayfaları korunur).
   const roomSlug = searchParams.room ?? '';
   const checkIn = searchParams.checkIn ?? '';
   const checkOut = searchParams.checkOut ?? '';
