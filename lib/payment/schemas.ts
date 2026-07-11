@@ -112,6 +112,7 @@ export type ConsentsInput = z.infer<typeof consentsSchema>;
 export const orderSummarySchema = z.object({
   roomSlug: z.string().min(1),
   roomName: z.string().min(1),
+  bungalowId: z.string().trim().min(1).optional(),
   checkIn: z
     .string()
     .regex(/^\d{4}-\d{2}-\d{2}$/, 'Giriş tarihi yyyy-MM-dd formatında olmalı'),

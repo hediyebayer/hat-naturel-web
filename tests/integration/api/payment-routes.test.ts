@@ -1,17 +1,34 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { NextRequest } from 'next/server';
 
-const { sendReservationEmails } = vi.hoisted(() => ({
+const { sendReservationEmails, sendHatoperasyonSyncFailureAlert } = vi.hoisted(() => ({
   sendReservationEmails: vi.fn(),
+  sendHatoperasyonSyncFailureAlert: vi.fn(),
 }));
 
 const { validateOrderPricing } = vi.hoisted(() => ({
   validateOrderPricing: vi.fn(),
 }));
 
+const { createReservation } = vi.hoisted(() => ({
+  createReservation: vi.fn(),
+}));
+
 vi.mock('@/lib/payment/emails', () => ({
   sendReservationEmails,
+  sendHatoperasyonSyncFailureAlert,
 }));
+
+vi.mock('@/lib/reservation/hatoperasyon-client', async () => {
+  const actual = await vi.importActual<typeof import('@/lib/reservation/hatoperasyon-client')>(
+    '@/lib/reservation/hatoperasyon-client',
+  );
+
+  return {
+    ...actual,
+    createReservation,
+  };
+});
 
 vi.mock('@/lib/payment/order', () => ({
   validateOrderPricing,
@@ -49,6 +66,7 @@ const validPayload = {
   order: {
     roomSlug: 'ucgen-1-1',
     roomName: '1+1 Üçgen Bungalov',
+    bungalowId: 'B1',
     checkIn: '2027-03-10',
     checkOut: '2027-03-13',
     guests: 2,
@@ -98,6 +116,10 @@ describe('payment API routes', () => {
     _resetProviderInstance();
     sendReservationEmails.mockReset();
     sendReservationEmails.mockResolvedValue(undefined);
+    sendHatoperasyonSyncFailureAlert.mockReset();
+    sendHatoperasyonSyncFailureAlert.mockResolvedValue(undefined);
+    createReservation.mockReset();
+    createReservation.mockResolvedValue({ ok: true, remoteReservationId: 'REMOTE-123' });
     validateOrderPricing.mockReset();
     validateOrderPricing.mockResolvedValue({
       ok: true,
@@ -262,7 +284,7 @@ describe('payment API routes', () => {
       expect(json.fieldErrors.otp).toContain('OTP 6 haneli sayı olmalı');
     });
 
-    it('başarılı verify akışı success döner ve email yalnızca bir kez tetiklenir', async () => {
+    it('başarılı verify akışı success döner, email ve hatoperasyon sync yalnızca bir kez tetiklenir', async () => {
       const reservationId = await initiateReservation();
 
       const firstResponse = await verifyPost(
@@ -291,6 +313,50 @@ describe('payment API routes', () => {
         reservationId,
       });
       expect(sendReservationEmails).toHaveBeenCalledTimes(1);
+      expect(createReservation).toHaveBeenCalledTimes(1);
+      expect(createReservation).toHaveBeenCalledWith(
+        expect.objectContaining({
+          bungalowId: 'B1',
+          guestName: 'Ayşe Kaya',
+          guestEmail: 'ayse@example.com',
+          guestPhone: '+905001234567',
+          guestCount: 2,
+          checkIn: '2027-03-10',
+          checkOut: '2027-03-13',
+          depositMode: 'full',
+          paidAmount: 15000,
+          source: 'website',
+        }),
+      );
+      expect(sendHatoperasyonSyncFailureAlert).not.toHaveBeenCalled();
+    });
+
+    it('hatoperasyon sync başarısız olsa bile ödeme sonucunu success döndürür ve alert gönderir', async () => {
+      createReservation.mockResolvedValueOnce({ ok: false, error: 'Hatoperasyon down' });
+      const reservationId = await initiateReservation();
+
+      const response = await verifyPost(
+        makePostRequest(
+          'http://localhost/api/payment/verify',
+          JSON.stringify({ reservationId, otp: '123456' }),
+          { 'content-type': 'application/json' },
+        ),
+      );
+
+      await expect(response.json()).resolves.toMatchObject({
+        ok: true,
+        status: 'success',
+        reservationId,
+      });
+      expect(createReservation).toHaveBeenCalledTimes(1);
+      expect(sendHatoperasyonSyncFailureAlert).toHaveBeenCalledTimes(1);
+      expect(sendHatoperasyonSyncFailureAlert).toHaveBeenCalledWith(
+        expect.objectContaining({
+          reservationId,
+          error: 'Hatoperasyon down',
+          paidAmount: 15000,
+        }),
+      );
     });
 
   });

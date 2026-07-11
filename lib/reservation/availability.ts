@@ -42,6 +42,7 @@ export interface AvailabilityQuery {
 
 export interface AvailableRoom {
   room: Room;
+  bungalowId?: string;
   isAvailable: boolean;
   /** Geceleme başı ortalama fiyat (TL) */
   pricePerNight: number;
@@ -241,6 +242,7 @@ export async function getAvailability(
 
     return {
       room,
+      bungalowId: match.bungalowId,
       isAvailable: match.isAvailable,
       pricePerNight: match.pricePerNight,
       totalPrice: match.totalPrice,

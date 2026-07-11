@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import {
+  createReservation,
   fetchHatoperasyonAvailability,
   mapBungalowToSlug,
   mapBungalowToSlugWithCapacity,
@@ -455,6 +456,87 @@ describe('hatoperasyon-client', () => {
 
         vi.useRealTimers();
       });
+    });
+  });
+
+  describe('createReservation', () => {
+    const validPayload = {
+      bungalowId: 'SK10',
+      guestName: 'Ayşe Kaya',
+      guestPhone: '+905001112233',
+      guestEmail: 'ayse@example.com',
+      guestCount: 2,
+      checkIn: '2026-06-01',
+      checkOut: '2026-06-03',
+      depositMode: 'deposit' as const,
+      paidAmount: 4500,
+      source: 'website' as const,
+    };
+
+    it('POST /api/public/reservations çağırır ve X-Public-Key header gönderir', async () => {
+      process.env.HATOPERASYON_API_URL = 'https://api.example.com/';
+      process.env.HATOPERASYON_PUBLIC_API_KEY = 'public-key';
+
+      const mockFetch = vi.fn(() =>
+        Promise.resolve({
+          ok: true,
+          json: () => Promise.resolve({ ok: true, reservationId: 'R-123' }),
+        } as Response),
+      );
+      vi.stubGlobal('fetch', mockFetch);
+
+      const result = await createReservation(validPayload);
+
+      expect(result).toEqual({ ok: true, remoteReservationId: 'R-123' });
+      expect(mockFetch).toHaveBeenCalledWith(
+        'https://api.example.com/api/public/reservations',
+        expect.objectContaining({
+          method: 'POST',
+          headers: {
+            'X-Public-Key': 'public-key',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(validPayload),
+        }),
+      );
+    });
+
+    it('HTTP hata durumunda ok=false döner', async () => {
+      process.env.HATOPERASYON_API_URL = 'https://api.example.com';
+      process.env.HATOPERASYON_PUBLIC_API_KEY = 'public-key';
+
+      vi.stubGlobal('fetch', vi.fn(() =>
+        Promise.resolve({
+          ok: false,
+          status: 503,
+          text: () => Promise.resolve('down'),
+        } as Response),
+      ));
+
+      const result = await createReservation(validPayload);
+
+      expect(result).toEqual({ ok: false, error: 'Hatoperasyon reservation create HTTP 503' });
+    });
+
+    it('timeout olduğunda throw etmez, ok=false döner', async () => {
+      process.env.HATOPERASYON_API_URL = 'https://api.example.com';
+      process.env.HATOPERASYON_PUBLIC_API_KEY = 'public-key';
+
+      vi.useFakeTimers();
+      vi.stubGlobal('fetch', vi.fn((_url: string, options?: { signal?: AbortSignal }) =>
+        new Promise((_, reject) => {
+          options?.signal?.addEventListener('abort', () => {
+            reject(new DOMException('Aborted', 'AbortError'));
+          });
+        }),
+      ));
+
+      const promise = createReservation(validPayload);
+      await vi.advanceTimersByTimeAsync(8000);
+      const result = await promise;
+
+      expect(result).toEqual({ ok: false, error: 'Hatoperasyon reservation create timeout' });
+      vi.useRealTimers();
     });
   });
 

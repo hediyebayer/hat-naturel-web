@@ -99,6 +99,7 @@ export async function validateOrderPricing(
 
   const canonicalOrder: OrderSummaryInput = {
     ...order,
+    bungalowId: match.bungalowId,
     nights: match.nights,
     totalPrice: match.totalPrice,
     depositAmount: Math.round(match.totalPrice * DEPOSIT_RATIO),

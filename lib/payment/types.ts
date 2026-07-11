@@ -32,6 +32,7 @@ export interface GuestInfo {
 export interface OrderSummary {
   roomSlug: string;
   roomName: string;
+  bungalowId?: string;
   checkIn: string;  // yyyy-MM-dd
   checkOut: string; // yyyy-MM-dd
   guests: number;
