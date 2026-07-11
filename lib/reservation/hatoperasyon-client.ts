@@ -52,6 +52,12 @@ export interface CreateReservationPayload {
   depositMode: 'full' | 'deposit';
   paidAmount: number;
   source: 'website';
+  /**
+   * Idempotency anahtarı — web ödemesinin reservationId (UUID)'si.
+   * Aynı değerle 2. çağrı (retry) hatoperasyon'da çift kayıt yaratmaz,
+   * mevcut rezervasyonu döndürür.
+   */
+  externalId: string;
 }
 
 export type CreateReservationResult =

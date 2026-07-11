@@ -158,6 +158,9 @@ async function syncReservationToHatoperasyon(
     depositMode: record.order.depositMode,
     paidAmount: record.amountCharged,
     source: 'website',
+    // Idempotency: web ödemesinin reservationId'si. Retry'da hatoperasyon
+    // çift kayıt yaratmaz, mevcut rezervasyonu döndürür.
+    externalId: record.reservationId,
   });
 
   if (syncResult.ok) {

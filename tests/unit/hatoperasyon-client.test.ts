@@ -471,6 +471,7 @@ describe('hatoperasyon-client', () => {
       depositMode: 'deposit' as const,
       paidAmount: 4500,
       source: 'website' as const,
+      externalId: 'test-uuid-1234',
     };
 
     it('POST /api/public/reservations çağırır ve X-Public-Key header gönderir', async () => {
