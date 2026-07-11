@@ -4,18 +4,38 @@ const withNextIntl = createNextIntlPlugin('./lib/i18n/request.ts');
 
 const isDev = process.env.NODE_ENV !== 'production';
 
+// Google ölçüm sistemleri için izin verilen kaynaklar.
+// GTM (googletagmanager.com) + GA4 (google-analytics.com) ikilisi:
+//  - script-src-elem: GTM bootstrap script (gtm.js) + GA4 gtag.js yüklemesi
+//  - img-src: GA4 pixel tracking / Measurement Protocol pixel'leri
+//  - connect-src: GA4 collect endpoint'leri (event gönderimi)
+//  - frame-src: GTM <noscript> iframe fallback'i (ns.html)
+//
+// Kubilay (reklamcı) talebi: WhatsApp dönüşüm takibi için GTM + GA4 çalışmalı.
+// CSP bunları blokladığı için conversion event'leri tetiklenmiyordu.
+const GOOGLE_ANALYTICS_SOURCES = {
+  script: 'https://www.googletagmanager.com',
+  img: 'https://www.google-analytics.com https://www.googletagmanager.com',
+  connect:
+    'https://www.google-analytics.com https://www.googletagmanager.com https://region1.google-analytics.com',
+  frame: 'https://www.googletagmanager.com',
+};
+
 function buildCsp({ payment = false } = {}) {
   const directives = [
     "default-src 'self'",
-    payment
-      ? "script-src 'self' 'unsafe-inline'"
-      : `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ''}`,
+    // Ödeme sayfasında 'unsafe-eval' kapalı kalır (VPOS güvenliği),
+    // ama GTM script'i her sayfada yüklü olduğu için izin verilmeli.
+    `script-src 'self' 'unsafe-inline'${payment ? '' : isDev ? " 'unsafe-eval'" : ''} ${GOOGLE_ANALYTICS_SOURCES.script}`,
+    // script-src-elem ayrıca belirtiliyor: tarayıcılar script yüklemelerinde
+    // script-src yerine script-src-elem'i tercih eder. GTM script'i burada izinli olmazsa bloklanır.
+    `script-src-elem 'self' 'unsafe-inline' ${GOOGLE_ANALYTICS_SOURCES.script}`,
     "style-src 'self' 'unsafe-inline'",
-    "img-src 'self' data: blob: https:",
+    `img-src 'self' data: blob: https: ${GOOGLE_ANALYTICS_SOURCES.img}`,
     "font-src 'self' data: https:",
-    "connect-src 'self' https:",
+    `connect-src 'self' https: ${GOOGLE_ANALYTICS_SOURCES.connect}`,
     "media-src 'self' blob: https:",
-    "frame-src 'self' https://www.google.com https://www.google.com/maps https://maps.google.com",
+    `frame-src 'self' https://www.google.com https://www.google.com/maps https://maps.google.com ${GOOGLE_ANALYTICS_SOURCES.frame}`,
     "frame-ancestors 'none'",
     "object-src 'none'",
     "base-uri 'self'",
