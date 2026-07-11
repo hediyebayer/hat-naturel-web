@@ -61,9 +61,11 @@ jobs:
 
             # Server-internal health check: PM2 + Next.js gerçekten ayakta mı?
             # localhost:3001 üzerinden kontrol → Nginx/domain bağımsız en güvenilir doğrulama.
+            # PM2 reload sonrası Next.js 1-2sn warm-up istediği için önce 3sn beklenir.
+            sleep 3
             echo "🏥 Server-internal health check (localhost:3001)..."
             for i in 1 2 3 4 5; do
-              STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:3001/tr || echo "000")
+              STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:3001/tr)
               if [ "$STATUS" = "200" ] || [ "$STATUS" = "307" ]; then
                 echo "  ✅ Next.js ayakta (localhost:3001/tr → HTTP $STATUS)"
                 break
@@ -71,7 +73,7 @@ jobs:
               echo "  Deneme $i: HTTP $STATUS — 3sn bekleyip tekrar..."
               sleep 3
               if [ "$i" = "5" ]; then
-                echo "  ❌ Next.js cevap vermiyor! PM2 log:\n"
+                echo "  ❌ Next.js cevap vermiyor! PM2 log:"
                 pm2 logs hat-naturel-web --lines 30 --nostream
                 exit 1
               fi
@@ -88,7 +90,7 @@ jobs:
           URL="https://hatnaturel.com.tr/tr"
           echo "🏥 Site canlı mı kontrol: $URL"
           for i in 1 2 3 4 5; do
-            STATUS=$(curl -sL -o /dev/null -w "%{http_code}" "$URL" || echo "000")
+            STATUS=$(curl -sL -o /dev/null -w "%{http_code}" "$URL")
             if [ "$STATUS" = "200" ]; then
               echo "✅ Site canlıda (HTTP $STATUS)"
               exit 0
