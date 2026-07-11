@@ -2,7 +2,9 @@ import type { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 import { setRequestLocale } from 'next-intl/server';
 import { ThreeDSecureScreen } from '@/components/payment/three-d-secure-screen';
+import { VakifbankAcsForm } from '@/components/payment/vakifbank-acs-form';
 import { getPaymentProvider, getPaymentProviderType } from '@/lib/payment/provider';
+import { getPaymentCallbackUrl } from '@/lib/payment/site-url';
 
 export const dynamic = 'force-dynamic';
 
@@ -16,6 +18,14 @@ export async function generateMetadata(): Promise<Metadata> {
     title: '3D Secure Doğrulama | Hat Naturel',
     robots: { index: false, follow: false },
   };
+}
+
+function toAbsoluteUrl(value: string): string | null {
+  try {
+    return new URL(value).toString();
+  } catch {
+    return null;
+  }
 }
 
 export default async function ThreeDSecurePage(props: PageProps): Promise<React.ReactElement> {
@@ -38,7 +48,14 @@ export default async function ThreeDSecurePage(props: PageProps): Promise<React.
   }
 
   if (getPaymentProviderType() === 'vakifbank') {
-    if (!record.acsUrl || !record.paReq || !record.md || !record.termUrl) {
+    if (!record.acsUrl || !record.paReq || !record.md) {
+      redirect(`/${locale}/rezervasyon/odeme/sonuc?status=fail&ref=${encodeURIComponent(ref)}`);
+    }
+
+    const acsUrl = toAbsoluteUrl(record.acsUrl);
+    const termUrl = getPaymentCallbackUrl();
+
+    if (!acsUrl || !termUrl.startsWith('http')) {
       redirect(`/${locale}/rezervasyon/odeme/sonuc?status=fail&ref=${encodeURIComponent(ref)}`);
     }
 
@@ -52,24 +69,11 @@ export default async function ThreeDSecurePage(props: PageProps): Promise<React.
             </p>
           </div>
 
-          <form id="vakifbank-acs-form" method="POST" action={record.acsUrl}>
-            <input type="hidden" name="PaReq" value={record.paReq} />
-            <input type="hidden" name="TermUrl" value={record.termUrl} />
-            <input type="hidden" name="MD" value={record.md} />
-            <noscript>
-              <button
-                type="submit"
-                className="inline-flex w-full items-center justify-center rounded-xl bg-primary-700 px-4 py-3 text-sm font-semibold text-white"
-              >
-                Banka ekranına devam et
-              </button>
-            </noscript>
-          </form>
-
-          <script
-            dangerouslySetInnerHTML={{
-              __html: "window.setTimeout(function(){document.getElementById('vakifbank-acs-form')?.submit();}, 50);",
-            }}
+          <VakifbankAcsForm
+            actionUrl={acsUrl}
+            paReq={record.paReq}
+            termUrl={termUrl}
+            md={record.md}
           />
         </div>
       </div>

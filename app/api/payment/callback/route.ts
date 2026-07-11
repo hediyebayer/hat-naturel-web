@@ -9,13 +9,22 @@ import { NextResponse, type NextRequest } from 'next/server';
 import { getPaymentProvider, getPaymentProviderType } from '@/lib/payment/provider';
 import { VakifBankProvider } from '@/lib/payment/vakifbank-provider';
 import { sendReservationEmails } from '@/lib/payment/emails';
+import { syncReservationToHatoperasyon } from '@/lib/payment/hatoperasyon-sync';
+import { getSiteBaseUrl } from '@/lib/payment/site-url';
 import { storeGet } from '@/lib/payment/store';
 import { getClientIp } from '@/lib/security/rate-limit';
+import { locales, defaultLocale, type Locale } from '@/lib/i18n/config';
 
 const RESERVATION_ID_REGEX = /^HN-[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}$/;
 
-function getRedirectUrl(request: NextRequest, locale: string, search: URLSearchParams): URL {
-  return new URL(`/${locale}/rezervasyon/odeme/sonuc?${search.toString()}`, request.url);
+// Open-redirect koruması: locale yalnızca whitelist'ten gelebilir. Aksi halde
+// stored locale (ör. `/evil.com`) `new URL()` içinde host'u ele geçirebilirdi.
+function safeLocale(value: string | undefined): Locale {
+  return (locales as readonly string[]).includes(value ?? '') ? (value as Locale) : defaultLocale;
+}
+
+function getRedirectUrl(_request: NextRequest, locale: string, search: URLSearchParams): URL {
+  return new URL(`/${safeLocale(locale)}/rezervasyon/odeme/sonuc?${search.toString()}`, getSiteBaseUrl());
 }
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
@@ -88,6 +97,10 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       }).catch((error: unknown) => {
         // eslint-disable-next-line no-console
         console.error('[api/payment/callback] email gönderim hatası:', error);
+      });
+
+      syncReservationToHatoperasyon(updatedRecord, 'api/payment/callback').catch((error: unknown) => {
+        console.error('[api/payment/callback] hatoperasyon sync unexpected wrapper error:', error);
       });
     }
   }

@@ -13,25 +13,14 @@ import { NextResponse, type NextRequest } from 'next/server';
 import { ZodError } from 'zod';
 import { verifyPaymentSchema } from '@/lib/payment/schemas';
 import { getPaymentProvider } from '@/lib/payment/provider';
-import {
-  sendHatoperasyonSyncFailureAlert,
-  sendReservationEmails,
-} from '@/lib/payment/emails';
+import { sendReservationEmails } from '@/lib/payment/emails';
+import { syncReservationToHatoperasyon } from '@/lib/payment/hatoperasyon-sync';
 import { storeGet } from '@/lib/payment/store';
 import { getRateLimiter } from '@/lib/security/rate-limit';
 import { arePaymentsDisabled } from '@/lib/payment/kill-switch';
-import { createReservation } from '@/lib/reservation/hatoperasyon-client';
 
 const MAX_BODY_SIZE = 2_000; // 2KB
 const VERIFY_RATE_LIMIT = { limit: 5, windowMs: 60_000 };
-
-const SLUG_TO_FALLBACK_BUNGALOW_ID: Partial<Record<string, string>> = {
-  sari: 'SK10',
-  mor: 'MOK11',
-  bej: 'BK12',
-  turkuaz: 'TK13',
-  mavi: 'MAK14',
-};
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
@@ -97,7 +86,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
           console.error('[api/payment/verify] email gönderim hatası:', err);
         });
 
-        syncReservationToHatoperasyon(record).catch((err: unknown) => {
+        syncReservationToHatoperasyon(record, 'api/payment/verify').catch((err: unknown) => {
           console.error('[api/payment/verify] hatoperasyon sync unexpected wrapper error:', err);
         });
       } else {
@@ -135,83 +124,3 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   }
 }
 
-async function syncReservationToHatoperasyon(
-  record: NonNullable<ReturnType<typeof storeGet>>,
-): Promise<void> {
-  const bungalowId = resolveBungalowId(record.order.bungalowId, record.order.roomSlug);
-
-  if (!bungalowId) {
-    const error = `Bungalow ID çözümlenemedi (roomSlug=${record.order.roomSlug})`;
-    console.error(`[api/payment/verify] ${error} | ref=${record.reservationId}`);
-    await notifyHatoperasyonSyncFailure(record, error);
-    return;
-  }
-
-  const syncResult = await createReservation({
-    bungalowId,
-    guestName: `${record.guest.firstName} ${record.guest.lastName}`.trim(),
-    guestPhone: record.guest.phone,
-    guestEmail: record.guest.email,
-    guestCount: record.order.guests,
-    checkIn: record.order.checkIn,
-    checkOut: record.order.checkOut,
-    depositMode: record.order.depositMode,
-    paidAmount: record.amountCharged,
-    source: 'website',
-    // Idempotency: web ödemesinin reservationId'si. Retry'da hatoperasyon
-    // çift kayıt yaratmaz, mevcut rezervasyonu döndürür.
-    externalId: record.reservationId,
-  });
-
-  if (syncResult.ok) {
-    console.info(
-      `[api/payment/verify] hatoperasyon reservation sync success | ref=${record.reservationId}${syncResult.remoteReservationId ? ` | remote=${syncResult.remoteReservationId}` : ''}`,
-    );
-    return;
-  }
-
-  console.error(
-    `[api/payment/verify] hatoperasyon reservation sync failed | ref=${record.reservationId} | error=${syncResult.error}`,
-  );
-  await notifyHatoperasyonSyncFailure(record, syncResult.error, bungalowId);
-}
-
-function resolveBungalowId(
-  storedBungalowId: string | undefined,
-  roomSlug: string,
-): string | undefined {
-  if (storedBungalowId && storedBungalowId.trim().length > 0) {
-    return storedBungalowId;
-  }
-
-  return SLUG_TO_FALLBACK_BUNGALOW_ID[roomSlug];
-}
-
-async function notifyHatoperasyonSyncFailure(
-  record: NonNullable<ReturnType<typeof storeGet>>,
-  error: string,
-  bungalowId?: string,
-): Promise<void> {
-  try {
-    await sendHatoperasyonSyncFailureAlert({
-      reservationId: record.reservationId,
-      guestName: `${record.guest.firstName} ${record.guest.lastName}`.trim(),
-      guestPhone: record.guest.phone,
-      guestEmail: record.guest.email,
-      roomName: record.order.roomName,
-      roomSlug: record.order.roomSlug,
-      bungalowId: bungalowId ?? record.order.bungalowId,
-      checkIn: record.order.checkIn,
-      checkOut: record.order.checkOut,
-      guestCount: record.order.guests,
-      paidAmount: record.amountCharged,
-      depositMode: record.order.depositMode,
-      error,
-    });
-  } catch (alertError: unknown) {
-    console.error(
-      '[api/payment/verify] hatoperasyon sync failure alert gönderim hatası:',
-      alertError,
-    );
-  }
-}

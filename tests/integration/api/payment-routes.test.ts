@@ -38,26 +38,41 @@ vi.mock('@/lib/payment/provider', async () => {
   const { MockVakifBankProvider } = await vi.importActual<
     typeof import('@/lib/payment/mock-vakifbank-provider')
   >('@/lib/payment/mock-vakifbank-provider');
+  const { VakifBankProvider } = await vi.importActual<
+    typeof import('@/lib/payment/vakifbank-provider')
+  >('@/lib/payment/vakifbank-provider');
 
-  let instance: InstanceType<typeof MockVakifBankProvider> | null = null;
+  let mockInstance: InstanceType<typeof MockVakifBankProvider> | null = null;
+  let vakifInstance: InstanceType<typeof VakifBankProvider> | null = null;
 
   return {
     getPaymentProvider: () => {
-      if (!instance) {
-        instance = new MockVakifBankProvider();
+      if (process.env.PAYMENT_PROVIDER === 'vakifbank') {
+        if (!vakifInstance) {
+          vakifInstance = new VakifBankProvider();
+        }
+        return vakifInstance;
       }
-      return instance;
+
+      if (!mockInstance) {
+        mockInstance = new MockVakifBankProvider();
+      }
+      return mockInstance;
     },
+    getPaymentProviderType: () => (process.env.PAYMENT_PROVIDER === 'vakifbank' ? 'vakifbank' : 'mock'),
     _resetProviderInstance: () => {
-      instance = null;
+      mockInstance = null;
+      vakifInstance = null;
     },
   };
 });
 
 import { POST as initiatePost } from '@/app/api/payment/initiate/route';
 import { POST as verifyPost } from '@/app/api/payment/verify/route';
+import { POST as callbackPost } from '@/app/api/payment/callback/route';
 import { GET as statusGet } from '@/app/api/payment/status/route';
 import { _resetProviderInstance } from '@/lib/payment/provider';
+import { storeGet } from '@/lib/payment/store';
 import { resetRateLimiterStore } from '@/lib/security/rate-limit';
 
 const futureYY = (new Date().getFullYear() + 5) % 100;
@@ -111,6 +126,11 @@ function makePostRequest(url: string, body: string, headers?: HeadersInit): Next
 describe('payment API routes', () => {
   beforeEach(() => {
     process.env.PAYMENT_PROVIDER = 'mock';
+    process.env.SITE_URL = 'https://hatnaturel.com.tr';
+    process.env.VAKIFBANK_ENV = 'test';
+    process.env.VAKIFBANK_MERCHANT_ID = '000000056376791';
+    process.env.VAKIFBANK_TERMINAL_NO = 'V3761339';
+    process.env.VAKIFBANK_MERCHANT_PASSWORD = 'secret-pass';
     Reflect.deleteProperty(globalThis, '__hnPaymentStore');
     resetRateLimiterStore();
     _resetProviderInstance();
@@ -359,6 +379,92 @@ describe('payment API routes', () => {
       );
     });
 
+  });
+
+  describe('POST /api/payment/callback', () => {
+    it('başarılı vakıfbank callback akışında localhost yerine site URL\'ine redirect eder ve hatoperasyon sync\'i bir kez tetikler', async () => {
+      process.env.PAYMENT_PROVIDER = 'vakifbank';
+      global.fetch = vi
+        .fn()
+        .mockResolvedValueOnce({
+          ok: true,
+          status: 200,
+          text: async () => `
+            <IPaySecure>
+              <Message>
+                <VERes>
+                  <Status>Y</Status>
+                  <PaReq>PA-REQ-DATA</PaReq>
+                  <ACSUrl>https://inbound.apigateway.vakifbank.com.tr:443/threeDGateway/startThreeDFlow</ACSUrl>
+                  <TermUrl>https://hatnaturel.com.tr/api/payment/callback</TermUrl>
+                  <MD>md-token</MD>
+                  <MessageErrorCode>200</MessageErrorCode>
+                </VERes>
+              </Message>
+            </IPaySecure>
+          `,
+        })
+        .mockResolvedValueOnce({
+          ok: true,
+          status: 200,
+          text: async () => `
+            <VposResponse>
+              <ResultCode>0000</ResultCode>
+              <ResultDetail>Approved</ResultDetail>
+              <AuthCode>AUTH1</AuthCode>
+              <Rrn>RRN1</Rrn>
+              <TransactionId>TX1</TransactionId>
+            </VposResponse>
+          `,
+        }) as typeof fetch;
+
+      const initiateResponse = await initiatePost(
+        makePostRequest(
+          'http://localhost/api/payment/initiate',
+          JSON.stringify(validPayload),
+          {
+            'content-type': 'application/json',
+            'x-locale': 'tr',
+            'x-forwarded-for': '203.0.113.9',
+          },
+        ),
+      );
+      const initiated = await initiateResponse.json();
+
+      const response = await callbackPost(
+        makePostRequest(
+          'http://localhost:3001/api/payment/callback',
+          new URLSearchParams({
+            Status: 'Y',
+            VerifyEnrollmentRequestId: initiated.reservationId,
+            MpiTransactionId: initiated.reservationId,
+            CAVV: 'cavv-data',
+            ECI: '05',
+          }).toString(),
+          { 'content-type': 'application/x-www-form-urlencoded' },
+        ),
+      );
+
+      expect(response.status).toBe(302);
+      expect(response.headers.get('location')).toBe(
+        `https://hatnaturel.com.tr/tr/rezervasyon/odeme/sonuc?status=success&ref=${initiated.reservationId}`,
+      );
+      expect(sendReservationEmails).toHaveBeenCalledTimes(1);
+      expect(createReservation).toHaveBeenCalledTimes(1);
+      expect(createReservation).toHaveBeenCalledWith(
+        expect.objectContaining({
+          externalId: initiated.reservationId,
+          bungalowId: 'B1',
+          paidAmount: 15000,
+          depositMode: 'full',
+        }),
+      );
+      expect(sendHatoperasyonSyncFailureAlert).not.toHaveBeenCalled();
+      expect(storeGet(initiated.reservationId)).toMatchObject({
+        status: 'success',
+        provisionResultCode: '0000',
+      });
+    });
   });
 
   describe('GET /api/payment/status', () => {

@@ -25,6 +25,7 @@ import type {
   VerifyResult,
 } from './types';
 import { detectBrand, getLast4, maskPan } from './card-utils';
+import { getPaymentCallbackUrl } from './site-url';
 import { storeGet, storeSet, storeUpdate } from './store';
 
 const VAKIFBANK_CURRENCY_CODE = '949';
@@ -101,15 +102,6 @@ function calculateAmountCharged(totalPrice: number, depositMode: 'full' | 'depos
   if (depositMode === 'full') return totalPrice;
   const ratio = parseFloat(process.env.NEXT_PUBLIC_DEPOSIT_RATIO ?? '0.3');
   return Math.round(totalPrice * ratio);
-}
-
-function getSiteBaseUrl(): string {
-  return (
-    process.env.SITE_URL
-    ?? process.env.NEXT_PUBLIC_SITE_URL
-    ?? process.env.NEXT_PUBLIC_BASE_URL
-    ?? 'http://localhost:3001'
-  ).replace(/\/$/, '');
 }
 
 function getVakifBankEnv(): VakifBankEnv {
@@ -277,7 +269,7 @@ export class VakifBankProvider implements PaymentProvider {
     const reservationId = generateReservationId();
     const amountCharged = calculateAmountCharged(input.order.totalPrice, input.depositMode);
     const card = buildMaskedCard(input.card);
-    const callbackUrl = `${getSiteBaseUrl()}/api/payment/callback`;
+    const callbackUrl = getPaymentCallbackUrl();
     const enrollmentResponse = await this.callEnrollment({
       reservationId,
       input,
@@ -513,17 +505,40 @@ export class VakifBankProvider implements PaymentProvider {
       SessionInfo: args.reservationId,
     });
 
-    const response = await fetch(ENROLLMENT_ENDPOINTS[getVakifBankEnv()], {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: body.toString(),
-      cache: 'no-store',
-    });
+    // Timeout: banka cevap vermezse sonsuz beklemeyi önle (30s).
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 30_000);
+    const startedAt = Date.now();
+
+    let response: Response;
+    try {
+      response = await fetch(ENROLLMENT_ENDPOINTS[getVakifBankEnv()], {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: body.toString(),
+        cache: 'no-store',
+        signal: controller.signal,
+      });
+    } catch (e: unknown) {
+      const msg = e instanceof Error ? e.message : String(e);
+      // eslint-disable-next-line no-console
+      console.error(
+        `[vakifbank/enrollment] fetch HATA | ref=${args.reservationId} | süre=${Date.now() - startedAt}ms | ${msg}`,
+      );
+      throw new Error(`Enrollment bağlantı hatası: ${msg}`);
+    } finally {
+      clearTimeout(timeoutId);
+    }
 
     const text = await response.text();
     const parsed = parseEnrollmentResponseXml(text);
+
+    // eslint-disable-next-line no-console
+    console.info(
+      `[vakifbank/enrollment] cevap | ref=${args.reservationId} | HTTP=${response.status} | süre=${Date.now() - startedAt}ms | Status=${parsed.status} | errCode=${parsed.messageErrorCode ?? '-'} | errMsg=${parsed.messageErrorDescription ?? '-'} | acsUrl=${parsed.acsUrl ? 'VAR' : 'YOK'}`,
+    );
 
     if (!response.ok) {
       throw new Error(`Enrollment HTTP ${response.status}: ${parsed.messageErrorDescription ?? text}`);

@@ -164,8 +164,9 @@ describe('VakifBankProvider', () => {
   });
 
   it('initiate enrollment sonrası ACS alanlarını ve şifreli kart kasasını store eder', async () => {
-    global.fetch = vi.fn().mockResolvedValue({
+    const fetchMock = vi.fn().mockResolvedValue({
       ok: true,
+      status: 200,
       text: async () => `
         <IPaySecure>
           <Message>
@@ -180,27 +181,32 @@ describe('VakifBankProvider', () => {
           </Message>
         </IPaySecure>
       `,
-    }) as typeof fetch;
+    });
+    global.fetch = fetchMock as typeof fetch;
 
     const provider = new VakifBankProvider();
     const result = await provider.initiate(validInitiateInput);
     const record = storeGet(result.reservationId);
-
-    expect(result.redirectUrl).toBe(`/${validInitiateInput.locale}/rezervasyon/odeme/3d-secure?ref=${result.reservationId}`);
-    expect(record).toMatchObject({
-      reservationId: result.reservationId,
-      status: 'awaiting_3ds',
-      acsUrl: 'https://acs.example.com',
-      paReq: 'PA-REQ-DATA',
-      md: 'md-token',
-      termUrl: 'https://mpi.example.com/term',
-    });
-    expect(record?.encryptedCard).toBeDefined();
-    const serializedRecord = JSON.stringify(record);
-    expect(serializedRecord).not.toContain(validInitiateInput.card.pan);
-    expect(serializedRecord).not.toContain(`\"pan\":\"${validInitiateInput.card.pan}\"`);
-    expect(serializedRecord).not.toContain(`\"cvv\":\"${validInitiateInput.card.cvv}\"`);
-  });
+    const enrollmentRequest = fetchMock.mock.calls[0];
+    const enrollmentBody = new URLSearchParams(String(enrollmentRequest?.[1]?.body));
+ 
+     expect(result.redirectUrl).toBe(`/${validInitiateInput.locale}/rezervasyon/odeme/3d-secure?ref=${result.reservationId}`);
+     expect(record).toMatchObject({
+       reservationId: result.reservationId,
+       status: 'awaiting_3ds',
+       acsUrl: 'https://acs.example.com',
+       paReq: 'PA-REQ-DATA',
+       md: 'md-token',
+       termUrl: 'https://mpi.example.com/term',
+     });
+    expect(enrollmentBody.get('SuccessUrl')).toBe('https://example.com/api/payment/callback');
+    expect(enrollmentBody.get('FailureUrl')).toBe('https://example.com/api/payment/callback');
+     expect(record?.encryptedCard).toBeDefined();
+     const serializedRecord = JSON.stringify(record);
+     expect(serializedRecord).not.toContain(validInitiateInput.card.pan);
+     expect(serializedRecord).not.toContain(`\"pan\":\"${validInitiateInput.card.pan}\"`);
+     expect(serializedRecord).not.toContain(`\"cvv\":\"${validInitiateInput.card.cvv}\"`);
+   });
 
   it('callback provizyonu başarılıysa kaydı success yapar ve hassas kart verisini temizler', async () => {
     global.fetch = vi

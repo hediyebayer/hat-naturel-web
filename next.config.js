@@ -39,7 +39,10 @@ function buildCsp({ payment = false } = {}) {
     "frame-ancestors 'none'",
     "object-src 'none'",
     "base-uri 'self'",
-    "form-action 'self'",
+    // form-action: 3D Secure akışında ACS formu bankanın domainine POST eder.
+    // VakıfBank ACS/gateway domainleri eklenmezse CSP form submit'i engeller
+    // → kullanıcı '3D Secure hazırlanıyor' ekranında takılı kalır.
+    "form-action 'self' https://*.vakifbank.com.tr https://3dsecure.vakifbank.com.tr https://inbound.apigateway.vakifbank.com.tr https://inbound.apigatewaytest.vakifbank.com.tr",
   ];
 
   return directives.join('; ');
