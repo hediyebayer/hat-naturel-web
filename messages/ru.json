@@ -101,7 +101,16 @@
     "highlight4": "Уголок, который встречает вас с той же теплотой при каждом приезде.",
     "ctaQuoteOpen": "Ваш уголок готов.",
     "ctaQuoteEm": "Выберите дату, остальное мы сделаем.",
-    "seeAllRooms": "Все бунгало и ложи →"
+    "seeAllRooms": "Все бунгало и ложи →",
+    "reviews": {
+      "kicker": "Отзывы Google",
+      "title": "Отзывы гостей",
+      "subtitle": "Что говорят наши гости",
+      "countLabel": "{count} отзывов Google",
+      "onGoogle": "на Google",
+      "cta": "Все отзывы",
+      "ctaCount": "Все {count} отзывов"
+    }
   },
   "rooms": {
     "title": "Наши бунгало",

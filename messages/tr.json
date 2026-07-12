@@ -130,7 +130,16 @@
     "highlight4": "Her gelişinizde aynı sıcaklıkla karşılayan bir köşe.",
     "ctaQuoteOpen": "Sizin köşeniz hazır.",
     "ctaQuoteEm": "Bir tarih seçin, gerisini biz halledelim.",
-    "seeAllRooms": "Tüm Bungalov & Köşkleri Gör →"
+    "seeAllRooms": "Tüm Bungalov & Köşkleri Gör →",
+    "reviews": {
+      "kicker": "Google Yorumları",
+      "title": "Misafir Yorumları",
+      "subtitle": "Misafirlerimiz deneyimlerini paylaşıyor",
+      "countLabel": "{count} Google Yorumu",
+      "onGoogle": "Google üzerinde",
+      "cta": "Tüm yorumları gör",
+      "ctaCount": "487 değerlendirmenin tamamı"
+    }
   },
   "rooms": {
     "title": "Bungalov Evlerimiz",

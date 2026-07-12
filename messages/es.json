@@ -101,7 +101,16 @@
     "highlight4": "Un rincón que te recibe con la misma calidez en cada visita.",
     "ctaQuoteOpen": "Tu rincón está listo.",
     "ctaQuoteEm": "Elige una fecha, nosotros nos ocupamos del resto.",
-    "seeAllRooms": "Ver todos los bungalós y cabañas →"
+    "seeAllRooms": "Ver todos los bungalós y cabañas →",
+    "reviews": {
+      "kicker": "Reseñas de Google",
+      "title": "Opiniones de huéspedes",
+      "subtitle": "Lo que dicen nuestros huéspedes",
+      "countLabel": "{count} reseñas en Google",
+      "onGoogle": "en Google",
+      "cta": "Ver todas las opiniones",
+      "ctaCount": "Las {count} opiniones"
+    }
   },
   "rooms": {
     "title": "Nuestros Bungalós",

@@ -101,7 +101,16 @@
     "highlight4": "ركن يستقبلكم بنفس الدفء في كل زيارة.",
     "ctaQuoteOpen": "ركنكم جاهز.",
     "ctaQuoteEm": "اختاروا تاريخاً، نتولى الباقي.",
-    "seeAllRooms": "عرض جميع البنغلات والنزل ←"
+    "seeAllRooms": "عرض جميع البنغلات والنزل ←",
+    "reviews": {
+      "kicker": "تقييمات Google",
+      "title": "آراء النزلاء",
+      "subtitle": "ما يقوله ضيوفنا",
+      "countLabel": "{count} تقييم على Google",
+      "onGoogle": "على Google",
+      "cta": "عرض كل التقييمات",
+      "ctaCount": "كل التقييمات البالغ عددها {count}"
+    }
   },
   "rooms": {
     "title": "بنغلاتنا",
