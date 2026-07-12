@@ -101,7 +101,16 @@
     "highlight4": "Eine Ecke, die Sie bei jedem Besuch mit derselben Wärme empfängt.",
     "ctaQuoteOpen": "Ihre Ecke ist bereit.",
     "ctaQuoteEm": "Wählen Sie ein Datum, den Rest erledigen wir.",
-    "seeAllRooms": "Alle Bungalows & Lodges ansehen →"
+    "seeAllRooms": "Alle Bungalows & Lodges ansehen →",
+    "reviews": {
+      "kicker": "Google Bewertungen",
+      "title": "Gästebewertungen",
+      "subtitle": "Was unsere Gäste über uns sagen",
+      "countLabel": "{count} Google Bewertungen",
+      "onGoogle": "auf Google",
+      "cta": "Alle Bewertungen ansehen",
+      "ctaCount": "Alle {count} Bewertungen"
+    }
   },
   "rooms": {
     "title": "Unsere Bungalows",

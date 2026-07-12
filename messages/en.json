@@ -130,7 +130,16 @@
     "highlight4": "A corner that welcomes you with the same warmth every visit.",
     "ctaQuoteOpen": "Your corner is ready.",
     "ctaQuoteEm": "Pick a date, we'll handle the rest.",
-    "seeAllRooms": "See All Bungalows & Lodges →"
+    "seeAllRooms": "See All Bungalows & Lodges →",
+    "reviews": {
+      "kicker": "Google Reviews",
+      "title": "Guest Reviews",
+      "subtitle": "What our guests say about us",
+      "countLabel": "{count} Google Reviews",
+      "onGoogle": "on Google",
+      "cta": "See all reviews",
+      "ctaCount": "All {count} reviews"
+    }
   },
   "rooms": {
     "title": "Our Bungalows",

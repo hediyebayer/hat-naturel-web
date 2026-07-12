@@ -15,6 +15,7 @@ import { ButtonLink } from '@/components/ui/button';
 import { HeroSection } from '@/components/home/hero-section';
 import { ReservationBar } from '@/components/reservation/reservation-bar';
 import { AboutSection } from '@/components/home/about-section';
+import { ReviewsSection } from '@/components/home/reviews-section';
 import { MapSection } from '@/components/home/map-section';
 import { VirtualTourSection } from '@/components/home/virtual-tour-section';
 import { ROOMS, type Room } from '@/lib/data/rooms';
@@ -133,6 +134,9 @@ export default function HomePage(props: HomePageProps): React.ReactElement {
           </div>
         </Container>
       </section>
+
+      {/* Misafir Yorumları — Google'dan seçilmiş gerçek yorumlar */}
+      <ReviewsSection />
 
       {/* 360° Sanal Tur */}
       <VirtualTourSection locale={params.locale} preview />

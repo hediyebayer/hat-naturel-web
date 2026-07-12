@@ -101,7 +101,16 @@
     "highlight4": "Un coin qui vous accueille avec la même chaleur à chaque visite.",
     "ctaQuoteOpen": "Votre coin est prêt.",
     "ctaQuoteEm": "Choisissez une date, nous nous occupons du reste.",
-    "seeAllRooms": "Voir tous les bungalows & lodges →"
+    "seeAllRooms": "Voir tous les bungalows & lodges →",
+    "reviews": {
+      "kicker": "Avis Google",
+      "title": "Avis clients",
+      "subtitle": "Ce que disent nos clients",
+      "countLabel": "{count} avis Google",
+      "onGoogle": "sur Google",
+      "cta": "Voir tous les avis",
+      "ctaCount": "Tous les {count} avis"
+    }
   },
   "rooms": {
     "title": "Nos Bungalows",

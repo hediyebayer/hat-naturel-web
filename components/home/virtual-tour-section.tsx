@@ -124,20 +124,20 @@ export function VirtualTourSection({
                     <span className="absolute bottom-1 right-1 h-1.5 w-1.5 rounded-full bg-accent" />
                   </span>
 
-                  {/* Alt orta — bungalov label */}
-                  <div className="pointer-events-none absolute -bottom-3 left-1/2 z-20 -translate-x-1/2 whitespace-nowrap rounded-full border border-accent/40 bg-primary-900 px-3 py-1 text-[9px] font-semibold uppercase tracking-[0.25em] text-accent shadow-md">
+                  {/* Üst orta — Hat Naturel Bungalov etiketi (görselin üstünde, floating) */}
+                  <div className="pointer-events-none absolute left-1/2 top-3 z-30 -translate-x-1/2 whitespace-nowrap rounded-full border border-accent/50 bg-primary-900/95 px-3.5 py-1 text-[10px] font-semibold tracking-[0.15em] text-accent shadow-lg backdrop-blur-sm">
                     {t('bungalovLabel')}
                   </div>
 
                   {/* iframe */}
-                  <div className="relative aspect-video">
+                  <div className="relative aspect-video bg-primary-900">
                     <iframe
                       src={SITE_CONFIG.virtualTour.embedUrl}
                       title={t('iframeTitle')}
-                      loading="lazy"
+                      loading="eager"
                       referrerPolicy="no-referrer-when-downgrade"
                       allowFullScreen
-                      className="absolute inset-0 h-full w-full border-0"
+                      className="absolute inset-0 z-10 h-full w-full border-0"
                     />
                   </div>
                 </div>
@@ -236,13 +236,18 @@ export function VirtualTourSection({
                     <span className="absolute bottom-1.5 right-1.5 h-1.5 w-1.5 rounded-full bg-accent" />
                   </span>
 
+                  {/* Üst orta — Hat Naturel Bungalov etiketi (full mode) */}
+                  <div className="pointer-events-none absolute left-1/2 top-4 z-30 -translate-x-1/2 whitespace-nowrap rounded-full border border-accent/50 bg-primary-900/95 px-4 py-1.5 text-[11px] font-semibold tracking-[0.15em] text-accent shadow-lg backdrop-blur-sm">
+                    {t('bungalovLabel')}
+                  </div>
+
                   <iframe
                     src={SITE_CONFIG.virtualTour.embedUrl}
                     title={t('iframeTitle')}
-                    loading="lazy"
+                    loading="eager"
                     referrerPolicy="no-referrer-when-downgrade"
                     allowFullScreen
-                    className="h-[78vh] min-h-[560px] w-full border-0"
+                    className="relative z-10 h-[78vh] min-h-[560px] w-full border-0"
                   />
                 </div>
 

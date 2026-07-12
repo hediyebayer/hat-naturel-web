@@ -101,7 +101,16 @@
     "highlight4": "Un angolo che vi accoglie con lo stesso calore ad ogni visita.",
     "ctaQuoteOpen": "Il vostro angolo è pronto.",
     "ctaQuoteEm": "Scegliete una data, al resto pensiamo noi.",
-    "seeAllRooms": "Vedi tutti i bungalow e lodge →"
+    "seeAllRooms": "Vedi tutti i bungalow e lodge →",
+    "reviews": {
+      "kicker": "Recensioni Google",
+      "title": "Recensioni degli ospiti",
+      "subtitle": "Cosa dicono i nostri ospiti",
+      "countLabel": "{count} recensioni Google",
+      "onGoogle": "su Google",
+      "cta": "Vedi tutte le recensioni",
+      "ctaCount": "Tutte le {count} recensioni"
+    }
   },
   "rooms": {
     "title": "I Nostri Bungalow",
