@@ -4,6 +4,7 @@ import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { Heading } from '@/components/ui/heading';
 import { Text } from '@/components/ui/text';
 import { OrderSummary } from '@/components/payment/order-summary';
+import { DepositSelector } from '@/components/payment/deposit-selector';
 import { StepIndicator } from '@/components/payment/step-indicator';
 import { GuestInfoForm } from '@/components/payment/guest-info-form';
 import { SecurityBadges } from '@/components/payment/security-badges';
@@ -51,7 +52,6 @@ export default async function OdemePage(props: PageProps): Promise<React.ReactEl
   }
 
   const t = await getTranslations({ locale, namespace: 'payment.guest' });
-  const tSummary = await getTranslations({ locale, namespace: 'payment.summary' });
 
   return (
     <>
@@ -67,40 +67,8 @@ export default async function OdemePage(props: PageProps): Promise<React.ReactEl
             {t('subtitle')}
           </Text>
 
-          {/* Kapora seçimi */}
-          <div className="mb-6 rounded-xl bg-white p-4 shadow-sm ring-1 ring-neutral-200">
-            <p className="mb-3 text-sm font-semibold text-neutral-700">{t('depositLabel')}</p>
-            <div className="space-y-2">
-              <label className="flex cursor-pointer items-start gap-3 rounded-lg p-2 hover:bg-neutral-50">
-                <input
-                  type="radio"
-                  name="depositModeDisplay"
-                  value="full"
-                  defaultChecked={depositMode === 'full'}
-                  form="deposit-form"
-                  className="mt-0.5 text-primary-600 focus:ring-primary-500"
-                  readOnly
-                />
-                <span className="text-sm text-neutral-700">
-                  <strong>{tSummary('fullPayment')}</strong>
-                </span>
-              </label>
-              <label className="flex cursor-pointer items-start gap-3 rounded-lg p-2 hover:bg-neutral-50">
-                <input
-                  type="radio"
-                  name="depositModeDisplay"
-                  value="deposit"
-                  defaultChecked={depositMode === 'deposit'}
-                  form="deposit-form"
-                  className="mt-0.5 text-primary-600 focus:ring-primary-500"
-                  readOnly
-                />
-                <span className="text-sm text-neutral-700">
-                  <strong>{tSummary('depositOption')}</strong>
-                </span>
-              </label>
-            </div>
-          </div>
+          {/* Kapora seçimi — interaktif: URL ?deposit= parametresini günceller */}
+          <DepositSelector value={depositMode} />
 
           <div className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-neutral-200 sm:p-8">
             <GuestInfoForm
