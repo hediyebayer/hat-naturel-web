@@ -716,5 +716,14 @@
       "email": "E-posta",
       "kep": "KEP Adresi"
     }
+  },
+  "baglan": {
+    "kicker": "KONTAKTIEREN SIE UNS",
+    "title": "Willkommen bei Hat Naturel",
+    "subtitle": "Erreichen Sie uns über die folgenden Kanäle",
+    "web": "Webseite",
+    "instagram": "Instagram",
+    "whatsapp": "Per WhatsApp schreiben",
+    "footer": "Hat Naturel Sapanca"
   }
 }
