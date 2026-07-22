@@ -716,5 +716,14 @@
       "email": "Email",
       "kep": "KEP Address"
     }
+  },
+  "baglan": {
+    "kicker": "GET IN TOUCH",
+    "title": "Welcome to Hat Naturel",
+    "subtitle": "Reach us through the channels below",
+    "web": "Website",
+    "instagram": "Instagram",
+    "whatsapp": "Message on WhatsApp",
+    "footer": "Hat Naturel Sapanca"
   }
 }

@@ -716,5 +716,14 @@
       "email": "E-posta",
       "kep": "KEP Adresi"
     }
+  },
+  "baglan": {
+    "kicker": "BİZE ULAŞIN",
+    "title": "Hat Naturel'e Hoş Geldiniz",
+    "subtitle": "Aşağıdaki kanallardan bize ulaşın",
+    "web": "Web Sitesi",
+    "instagram": "Instagram",
+    "whatsapp": "WhatsApp ile Yazın",
+    "footer": "Hat Naturel Sapanca"
   }
 }
