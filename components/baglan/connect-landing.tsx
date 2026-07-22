@@ -156,8 +156,8 @@ export function ConnectLanding({
 
         {/* Footer */}
         <motion.div variants={itemVariants} className="mt-10 text-center">
-          <p className="text-xs text-white/30">{footer}</p>
-          <p className="mt-1 text-xs text-white/20">{SITE_CONFIG.contact.addressShort}</p>
+          <p className="text-xs text-white/60">{footer}</p>
+          <p className="mt-1 text-xs text-white/50">{SITE_CONFIG.contact.addressShort}</p>
         </motion.div>
       </motion.div>
 

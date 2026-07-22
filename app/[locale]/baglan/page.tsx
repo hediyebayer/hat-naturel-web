@@ -7,7 +7,7 @@ interface PageProps {
 }
 
 export const metadata: Metadata = {
-  title: 'Bağlan | Hat Naturel Sapanca',
+  title: { absolute: 'Bağlan | Hat Naturel Sapanca' },
   robots: { index: false, follow: false },
 };
 
