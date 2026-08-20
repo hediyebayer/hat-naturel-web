@@ -1,45 +1,27 @@
 import type { ContactFormData } from './types';
+import { sendEmail } from '@/lib/email/send';
 
-const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const CONTACT_EMAIL_TO = process.env.CONTACT_EMAIL_TO ?? 'hatnaturel@gmail.com';
 const CONTACT_EMAIL_FROM = process.env.CONTACT_EMAIL_FROM ?? 'noreply@hatnaturel.com.tr';
 
 /**
  * İletişim formunu email olarak gönderir.
- * - RESEND_API_KEY tanımlıysa Resend API'ye POST eder.
- * - Tanımlı değilse fallback olarak console.log (geliştirme).
+ * Transport zinciri lib/email/send.ts içinde: Resend → SMTP (Gmail) → mock.
  *
  * Hata fırlatırsa caller 500 dönecek.
  */
 export async function sendContactEmail(data: ContactFormData): Promise<void> {
-  if (!RESEND_API_KEY) {
-    // eslint-disable-next-line no-console
-    console.warn('[contact] RESEND_API_KEY yok, mock gönderim:', data);
-    return;
-  }
-
   const subject = `Yeni İletişim Mesajı — ${data.name}`;
   const html = buildEmailHtml(data);
 
-  const response = await fetch('https://api.resend.com/emails', {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${RESEND_API_KEY}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      from: `Hat Naturel Web <${CONTACT_EMAIL_FROM}>`,
-      to: [CONTACT_EMAIL_TO],
-      reply_to: data.email,
-      subject,
-      html,
-    }),
+  await sendEmail({
+    fromName: 'Hat Naturel Web',
+    fromAddress: CONTACT_EMAIL_FROM,
+    to: CONTACT_EMAIL_TO,
+    replyTo: data.email,
+    subject,
+    html,
   });
-
-  if (!response.ok) {
-    const text = await response.text();
-    throw new Error(`Resend hatası: ${response.status} — ${text}`);
-  }
 }
 
 function buildEmailHtml(data: ContactFormData): string {

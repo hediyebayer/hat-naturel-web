@@ -76,6 +76,9 @@ const nextConfig = {
   reactStrictMode: true,
   experimental: {
     optimizePackageImports: ['lucide-react', 'date-fns'],
+    // nodemailer route handler'lar içinde native socket kullanır — bundle etme,
+    // Node'un kendi modülünü kullan (build hatalarını önler).
+    serverComponentsExternalPackages: ['nodemailer'],
   },
   images: {
     remotePatterns: [
