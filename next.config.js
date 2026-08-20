@@ -74,11 +74,13 @@ const commonSecurityHeaders = [
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  // nodemailer route handler'lar içinde native socket kullanır — bundle etme,
+  // Node'un kendi modülünü kullan (build hatalarını önler).
+  // (Next 15: eski adı experimental.serverComponentsExternalPackages idi;
+  //  otomatik taşınıyordu ama deprecation uyarısı basıyordu — stable key'e geçildi.)
+  serverExternalPackages: ['nodemailer'],
   experimental: {
     optimizePackageImports: ['lucide-react', 'date-fns'],
-    // nodemailer route handler'lar içinde native socket kullanır — bundle etme,
-    // Node'un kendi modülünü kullan (build hatalarını önler).
-    serverComponentsExternalPackages: ['nodemailer'],
   },
   images: {
     remotePatterns: [
