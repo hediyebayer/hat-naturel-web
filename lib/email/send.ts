@@ -13,6 +13,8 @@
 import nodemailer, { type Transporter } from 'nodemailer';
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
+const GMAIL_SCRIPT_URL = process.env.GMAIL_SCRIPT_URL;
+const GMAIL_SCRIPT_TOKEN = process.env.GMAIL_SCRIPT_TOKEN;
 const SMTP_USER = process.env.SMTP_USER;
 const SMTP_PASS = process.env.SMTP_PASS;
 
@@ -27,10 +29,13 @@ export interface EmailPayload {
   html: string;
 }
 
-export type EmailTransport = 'resend' | 'smtp' | 'mock';
+export type EmailTransport = 'resend' | 'gmail_script' | 'smtp' | 'mock';
 
 export function getEmailTransport(): EmailTransport {
   if (RESEND_API_KEY) return 'resend';
+  // Gmail Apps Script köprüsü: HTTPS 443 üzerinden gerçek Gmail gönderimi.
+  // DigitalOcean outbound SMTP (25/465/587) bloğu nedeniyle SMTP'ye tercih edilir.
+  if (GMAIL_SCRIPT_URL && GMAIL_SCRIPT_TOKEN) return 'gmail_script';
   if (SMTP_USER && SMTP_PASS) return 'smtp';
   return 'mock';
 }
@@ -53,8 +58,9 @@ function getSmtpTransporter(): Transporter {
 }
 
 /**
- * Email gönderir. Aktif transport'a göre Resend veya SMTP kullanılır;
- * hiçbiri yapılandırılmamışsa mock olarak loglar (hata fırlatmaz).
+ * Email gönderir. Aktif transport'a göre Resend, Gmail Apps Script köprüsü
+ * (HTTPS) veya SMTP kullanılır; hiçbiri yapılandırılmamışsa mock olarak loglar
+ * (hata fırlatmaz).
  */
 export async function sendEmail(payload: EmailPayload): Promise<void> {
   const transport = getEmailTransport();
@@ -78,6 +84,27 @@ export async function sendEmail(payload: EmailPayload): Promise<void> {
     if (!response.ok) {
       const text = await response.text();
       throw new Error(`Resend hatası: ${response.status} — ${text}`);
+    }
+    return;
+  }
+
+  if (transport === 'gmail_script') {
+    const response = await fetch(GMAIL_SCRIPT_URL!, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        token: GMAIL_SCRIPT_TOKEN,
+        fromName: payload.fromName,
+        to: payload.to,
+        replyTo: payload.replyTo,
+        subject: payload.subject,
+        html: payload.html,
+      }),
+      signal: AbortSignal.timeout(15_000),
+    });
+    const text = await response.text();
+    if (!response.ok || !text.includes('"ok":true')) {
+      throw new Error(`Gmail script hatası: ${response.status} — ${text.slice(0, 200)}`);
     }
     return;
   }
