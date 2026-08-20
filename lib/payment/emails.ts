@@ -1,13 +1,12 @@
 /**
  * Rezervasyon e-posta gönderimleri.
- * lib/contact/client.ts paterni baz alınır:
- *   - RESEND_API_KEY yoksa console.log fallback
+ * Gönderim lib/email/send.ts üzerinden: Resend → SMTP (Gmail) → mock zinciri.
  *   - PAYMENT_EMAIL_TO env'inden işletme adresi
  */
 
 import type { GuestInfo, OrderSummary, CardInfo } from './types';
+import { sendEmail } from '@/lib/email/send';
 
-const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const PAYMENT_EMAIL_TO =
   process.env.PAYMENT_EMAIL_TO ?? 'rezervasyon@hatnaturel.com.tr';
 const CONTACT_EMAIL_FROM =
@@ -40,16 +39,7 @@ interface HatoperasyonSyncFailureAlertData {
 export async function sendReservationEmails(
   data: ReservationEmailData,
 ): Promise<void> {
-  if (!RESEND_API_KEY) {
-    // eslint-disable-next-line no-console
-    console.warn('[payment/emails] RESEND_API_KEY yok — email mock:', {
-      reservationId: data.reservationId,
-      guestEmail: data.guest.email,
-      amountCharged: data.amountCharged,
-    });
-    return;
-  }
-
+  // Transport zinciri lib/email/send.ts içinde: Resend → SMTP → mock.
   await Promise.all([
     sendGuestConfirmation(data),
     sendBusinessNotification(data),
@@ -59,16 +49,11 @@ export async function sendReservationEmails(
 export async function sendHatoperasyonSyncFailureAlert(
   data: HatoperasyonSyncFailureAlertData,
 ): Promise<void> {
-  if (!RESEND_API_KEY) {
-    // eslint-disable-next-line no-console
-    console.warn('[payment/emails] RESEND_API_KEY yok — hatoperasyon sync alert mock:', data);
-    return;
-  }
-
-  await sendViaResend({
-    from: `Hat Naturel Rezervasyon <${CONTACT_EMAIL_FROM}>`,
-    to: [PAYMENT_EMAIL_TO],
-    reply_to: data.guestEmail,
+  await sendEmail({
+    fromName: 'Hat Naturel Rezervasyon',
+    fromAddress: CONTACT_EMAIL_FROM,
+    to: PAYMENT_EMAIL_TO,
+    replyTo: data.guestEmail,
     subject: `⚠️ Manuel Rezervasyon Girişi Gerekli — ${data.reservationId}`,
     html: buildHatoperasyonSyncFailureHtml(data),
   });
@@ -79,36 +64,15 @@ export async function sendHatoperasyonSyncFailureAlert(
   );
 }
 
-async function sendViaResend(payload: {
-  from: string;
-  to: string[];
-  reply_to?: string;
-  subject: string;
-  html: string;
-}): Promise<void> {
-  const response = await fetch('https://api.resend.com/emails', {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${RESEND_API_KEY}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(payload),
-  });
-
-  if (!response.ok) {
-    const text = await response.text();
-    throw new Error(`Resend hatası: ${response.status} — ${text}`);
-  }
-}
-
 async function sendGuestConfirmation(data: ReservationEmailData): Promise<void> {
   const { guest, order, reservationId, amountCharged } = data;
   const subject = `Rezervasyonunuz Onaylandı — ${reservationId}`;
   const html = buildGuestConfirmationHtml({ guest, order, reservationId, amountCharged });
 
-  await sendViaResend({
-    from: `Hat Naturel Resort <${CONTACT_EMAIL_FROM}>`,
-    to: [guest.email],
+  await sendEmail({
+    fromName: 'Hat Naturel Resort',
+    fromAddress: CONTACT_EMAIL_FROM,
+    to: guest.email,
     subject,
     html,
   });
@@ -122,10 +86,11 @@ async function sendBusinessNotification(data: ReservationEmailData): Promise<voi
   const subject = `🏨 Yeni Rezervasyon — ${reservationId}`;
   const html = buildBusinessNotificationHtml({ guest, order, card, reservationId, amountCharged });
 
-  await sendViaResend({
-    from: `Hat Naturel Rezervasyon <${CONTACT_EMAIL_FROM}>`,
-    to: [PAYMENT_EMAIL_TO],
-    reply_to: guest.email,
+  await sendEmail({
+    fromName: 'Hat Naturel Rezervasyon',
+    fromAddress: CONTACT_EMAIL_FROM,
+    to: PAYMENT_EMAIL_TO,
+    replyTo: guest.email,
     subject,
     html,
   });
