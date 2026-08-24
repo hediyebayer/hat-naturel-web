@@ -84,9 +84,12 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
   const hashVerification = verifyVakifBankCallbackHash(callbackFields);
   if (!hashVerification.ok) {
+    // TEŞHİS: hangi alanlar geldi (SADECE İSİMLER, değer YOK — hassas veri sızmaz).
+    // reason=missing_fields ise doğru field-set'i tespit etmek için alan adları gerekir.
+    const availableFieldNames = Object.keys(callbackFields).sort().join(',');
     // eslint-disable-next-line no-console
     console.warn(
-      `[api/payment/callback] HashData doğrulaması başarısız ref=${reservationId} reason=${hashVerification.reason ?? 'unknown'}`,
+      `[api/payment/callback] HashData doğrulaması başarısız ref=${reservationId} reason=${hashVerification.reason ?? 'unknown'} | gelen-alanlar=[${availableFieldNames}]`,
     );
     return NextResponse.redirect(
       getRedirectUrl(

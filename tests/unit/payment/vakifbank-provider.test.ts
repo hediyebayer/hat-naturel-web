@@ -157,22 +157,25 @@ describe('VakifBankProvider helperları', () => {
   });
 
   it('callback HashData doğrulamasını geçerli imzada kabul eder', () => {
+    // VakıfBank/PayFlex 3DS callback'inin gerçekte gönderdiği alanlar (İnnova MPI).
     const fields = {
       MerchantId: '000000056376791',
-      VerifyEnrollmentRequestId: 'HN-11111111-1111-1111-1111-111111111111',
-      PurchaseAmount: '15000.00',
-      Currency: '949',
+      Xid: 'g23linxf3k0ipqf4xbe2',
+      PurchAmount: '15000.00',
+      PurchCurrency: '949',
+      SessionInfo: 'HN-11111111-1111-1111-1111-111111111111',
       Status: 'Y',
       Eci: '05',
       Cavv: 'cavv-data',
     };
-    const fieldSet = ['MerchantId', 'VerifyEnrollmentRequestId', 'PurchaseAmount', 'Currency', 'Status', 'Eci', 'Cavv'] as const;
+    // Default field-set'lerden biri: ['Xid', 'PurchAmount', 'SessionInfo', 'Status']
+    const fieldSet = ['Xid', 'PurchAmount', 'SessionInfo', 'Status'] as const;
     const hash = buildVakifBankCallbackHash(fields, 'store-key-123', fieldSet);
 
     expect(hash).toBeTruthy();
     const result = verifyVakifBankCallbackHash({
       ...fields,
-      HashData: hash!,
+      Hash: hash!,
     });
 
     expect(result).toMatchObject({
@@ -186,13 +189,14 @@ describe('VakifBankProvider helperları', () => {
   it('callback HashData doğrulamasını geçersiz imzada reddeder', () => {
     const result = verifyVakifBankCallbackHash({
       MerchantId: '000000056376791',
-      VerifyEnrollmentRequestId: 'HN-11111111-1111-1111-1111-111111111111',
-      PurchaseAmount: '15000.00',
-      Currency: '949',
+      Xid: 'g23linxf3k0ipqf4xbe2',
+      PurchAmount: '15000.00',
+      PurchCurrency: '949',
+      SessionInfo: 'HN-11111111-1111-1111-1111-111111111111',
       Status: 'Y',
       Eci: '05',
       Cavv: 'cavv-data',
-      HashData: 'invalid-hash',
+      Hash: 'invalid-hash',
     });
 
     expect(result).toMatchObject({

@@ -45,12 +45,19 @@ const VPOSREQ_ENDPOINTS = {
   prod: 'https://apigw.vakifbank.com.tr:8443/virtualPos/Vposreq',
 } as const;
 const DEFAULT_CALLBACK_HASH_FIELD_SETS = [
-  ['MerchantId', 'VerifyEnrollmentRequestId', 'PurchaseAmount', 'Currency', 'Status', 'Eci', 'Cavv'],
-  ['MerchantId', 'TransactionId', 'PurchaseAmount', 'Currency', 'Status', 'Eci', 'Cavv'],
-  ['MerchantId', 'MpiTransactionId', 'PurchaseAmount', 'Currency', 'Status', 'Eci', 'Cavv'],
-  ['MerchantId', 'VerifyEnrollmentRequestId', 'CurrencyAmount', 'CurrencyCode', 'Status', 'Eci', 'Cavv'],
-  ['MerchantId', 'TransactionId', 'CurrencyAmount', 'CurrencyCode', 'Status', 'Eci', 'Cavv'],
-  ['MerchantId', 'MpiTransactionId', 'CurrencyAmount', 'CurrencyCode', 'Status', 'Eci', 'Cavv'],
+  // VakıfBank/PayFlex (İnnova) 3D Secure callback gerçekte şu alanları gönderir:
+  //   Cavv, Eci, Hash, MerchantId, Pan, PurchAmount, PurchCurrency, SessionInfo, Status, Xid ...
+  // İnnova MPI standart hash formülü: Base64(SHA256(Xid + PurchAmount + SessionInfo + Status + StoreKey)).
+  // Banka versiyonuna göre alan sırası değişebildiğinden en olası varyasyonlar sırayla denenir;
+  // gönderilen Hash ile eşleşen ilk set kullanılır.
+  ['Xid', 'PurchAmount', 'SessionInfo', 'Status'],
+  ['Xid', 'PurchAmount', 'PurchCurrency', 'SessionInfo', 'Status'],
+  ['MerchantId', 'Xid', 'PurchAmount', 'PurchCurrency', 'SessionInfo', 'Status'],
+  ['SessionInfo', 'Xid', 'PurchAmount', 'PurchCurrency', 'Status'],
+  ['MerchantId', 'Xid', 'PurchAmount', 'SessionInfo', 'Status'],
+  ['Pan', 'Xid', 'PurchAmount', 'PurchCurrency', 'SessionInfo', 'Status'],
+  // Eski/alternatif enrollment-tabanlı varyasyonlar (geriye dönük deneme):
+  ['MerchantId', 'VerifyEnrollmentRequestId', 'PurchAmount', 'PurchCurrency', 'Status', 'Eci', 'Cavv'],
 ] as const satisfies readonly (readonly string[])[];
 const CALLBACK_FIELD_ALIASES: Readonly<Record<string, readonly string[]>> = {
   HashData: ['HashData', 'hashdata', 'Hash', 'hash'],
@@ -69,6 +76,12 @@ const CALLBACK_FIELD_ALIASES: Readonly<Record<string, readonly string[]>> = {
   Status: ['Status', 'status'],
   Eci: ['Eci', 'ECI', 'eci'],
   Cavv: ['Cavv', 'CAVV', 'cavv'],
+  // VakıfBank/PayFlex 3DS callback alanları (İnnova MPI):
+  Xid: ['Xid', 'xid', 'XID'],
+  PurchAmount: ['PurchAmount', 'purchamount', 'PurchaseAmount', 'purchaseamount'],
+  PurchCurrency: ['PurchCurrency', 'purchcurrency', 'Currency', 'currency'],
+  SessionInfo: ['SessionInfo', 'sessioninfo', 'Sessioninfo'],
+  Pan: ['Pan', 'pan', 'PanEncrypted', 'panencrypted'],
 } as const;
 
 type VakifBankEnv = keyof typeof ENROLLMENT_ENDPOINTS;
