@@ -7,7 +7,7 @@
 
 import { NextResponse, type NextRequest } from 'next/server';
 import { getPaymentProvider, getPaymentProviderType } from '@/lib/payment/provider';
-import { VakifBankProvider } from '@/lib/payment/vakifbank-provider';
+import { VakifBankProvider, verifyVakifBankCallbackHash } from '@/lib/payment/vakifbank-provider';
 import { sendReservationEmails } from '@/lib/payment/emails';
 import { syncReservationToHatoperasyon } from '@/lib/payment/hatoperasyon-sync';
 import { getSiteBaseUrl } from '@/lib/payment/site-url';
@@ -27,12 +27,21 @@ function getRedirectUrl(_request: NextRequest, locale: string, search: URLSearch
   return new URL(`/${safeLocale(locale)}/rezervasyon/odeme/sonuc?${search.toString()}`, getSiteBaseUrl());
 }
 
+function shouldLogVerboseDebug(): boolean {
+  return process.env.NODE_ENV !== 'production';
+}
+
 export async function POST(request: NextRequest): Promise<NextResponse> {
   const formData = await request.formData();
+  const callbackFields: Record<string, string> = {};
 
-  const status = String(formData.get('Status') ?? '').trim();
-  const verifyEnrollmentRequestId = String(formData.get('VerifyEnrollmentRequestId') ?? '').trim();
-  const mpiTransactionId = String(formData.get('MpiTransactionId') ?? '').trim();
+  for (const [key, value] of formData.entries()) {
+    callbackFields[key] = String(value).trim();
+  }
+
+  const status = callbackFields.Status ?? callbackFields.status ?? '';
+  const verifyEnrollmentRequestId = callbackFields.VerifyEnrollmentRequestId ?? '';
+  const mpiTransactionId = callbackFields.MpiTransactionId ?? '';
   const reservationId = verifyEnrollmentRequestId || mpiTransactionId;
 
   if (!RESERVATION_ID_REGEX.test(reservationId)) {
@@ -73,15 +82,50 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     );
   }
 
+  const hashVerification = verifyVakifBankCallbackHash(callbackFields);
+  if (!hashVerification.ok) {
+    // eslint-disable-next-line no-console
+    console.warn(
+      `[api/payment/callback] HashData doğrulaması başarısız ref=${reservationId} reason=${hashVerification.reason ?? 'unknown'}`,
+    );
+    return NextResponse.redirect(
+      getRedirectUrl(
+        request,
+        locale,
+        new URLSearchParams({ status: 'fail', ref: reservationId, reason: 'hash_mismatch' }),
+      ),
+      { status: 302 },
+    );
+  }
+
+  if (hashVerification.mode === 'skipped') {
+    // eslint-disable-next-line no-console
+    console.warn(
+      `[api/payment/callback] HashData doğrulaması atlandı ref=${reservationId} reason=${hashVerification.reason ?? 'config'}`,
+    );
+  } else if (shouldLogVerboseDebug()) {
+    // eslint-disable-next-line no-console
+    console.info(
+      `[api/payment/callback] HashData doğrulandı ref=${reservationId} fields=${hashVerification.matchedFieldSet?.join(',') ?? '-'}`,
+    );
+  }
+
+  // VakıfBank alan adları: Cavv/Eci (büyük-küçük harf duyarlı). Banka 'Cavv',
+  // 'Eci' gönderiyor; bazen 'CAVV'/'ECI' de olabilir — iki varyantı da dene.
+  const cavvRaw = callbackFields.Cavv || callbackFields.CAVV || '';
+  const eciRaw = callbackFields.Eci || callbackFields.ECI || '';
+
   const wasAlreadySuccess = record.status === 'success';
   const result = await provider.finalizeCallback({
     reservationId,
     status,
-    cavv: String(formData.get('CAVV') ?? '').trim() || undefined,
-    eci: String(formData.get('ECI') ?? '').trim() || undefined,
-    mpiTransactionId: mpiTransactionId || verifyEnrollmentRequestId || undefined,
-    errorCode: String(formData.get('ErrorCode') ?? '').trim() || undefined,
-    errorMessage: String(formData.get('ErrorMessage') ?? '').trim() || undefined,
+    cavv: cavvRaw || undefined,
+    eci: eciRaw || undefined,
+    // reservationId/VerifyEnrollmentRequestId (0012 alıyordu ama banka MPI'yı
+    // buluyordu; Xid ile 1115 'bulunamıyor' — yani doğru referans bu).
+    mpiTransactionId: verifyEnrollmentRequestId || mpiTransactionId || undefined,
+    errorCode: callbackFields.ErrorCode || undefined,
+    errorMessage: callbackFields.ErrorMessage || undefined,
     clientIp: getClientIp(request),
   });
 

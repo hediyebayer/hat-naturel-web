@@ -3,8 +3,10 @@
  * globalThis singleton — Next.js HMR'da store sıfırlanmaz.
  * TTL: 1 saat. Her yazma işleminde eski kayıtlar temizlenir.
  *
- * NOT: Serverless cold-start sonrası store kaybolur — demo için kabul.
- * Gerçek entegrasyonda PostgreSQL + Prisma kullanılacak.
+ * KRİTİK: Bu store process-memory içindedir; deploy/restart/cold-start sonrası
+ * kayıtlar kaybolur. CANLI ortam için kalıcı store (PostgreSQL/Redis) gerekir.
+ * Geçici risk kabulü gerekiyorsa PAYMENT_STORE_ACKNOWLEDGE_IN_MEMORY_RISK=true
+ * ile bilinçli olarak onaylayın; yine de bu teknik borç ortadan kalkmaz.
  */
 
 import type { PaymentRecord } from './types';
@@ -22,9 +24,25 @@ interface StoreEntry {
 declare global {
   // eslint-disable-next-line no-var
   var __hnPaymentStore: Map<string, StoreEntry> | undefined;
+  // eslint-disable-next-line no-var
+  var __hnPaymentStoreRiskWarned: boolean | undefined;
+}
+
+function warnInMemoryStoreRiskOnce(): void {
+  if (process.env.NODE_ENV !== 'production') return;
+  if (process.env.PAYMENT_STORE_ACKNOWLEDGE_IN_MEMORY_RISK === 'true') return;
+  if (globalThis.__hnPaymentStoreRiskWarned) return;
+
+  globalThis.__hnPaymentStoreRiskWarned = true;
+  // eslint-disable-next-line no-console
+  console.warn(
+    '[payment/store] In-memory ödeme store aktif. Process restart/cold-start sonrası ödeme kayıtları kaybolur. CANLI için kalıcı DB/Redis store gereklidir.',
+  );
 }
 
 function getStore(): Map<string, StoreEntry> {
+  warnInMemoryStoreRiskOnce();
+
   if (!globalThis.__hnPaymentStore) {
     globalThis.__hnPaymentStore = new Map<string, StoreEntry>();
   }

@@ -71,6 +71,7 @@ import { POST as initiatePost } from '@/app/api/payment/initiate/route';
 import { POST as verifyPost } from '@/app/api/payment/verify/route';
 import { POST as callbackPost } from '@/app/api/payment/callback/route';
 import { GET as statusGet } from '@/app/api/payment/status/route';
+import { buildVakifBankCallbackHash } from '@/lib/payment/vakifbank-provider';
 import { _resetProviderInstance } from '@/lib/payment/provider';
 import { storeGet } from '@/lib/payment/store';
 import { resetRateLimiterStore } from '@/lib/security/rate-limit';
@@ -131,6 +132,8 @@ describe('payment API routes', () => {
     process.env.VAKIFBANK_MERCHANT_ID = '000000056376791';
     process.env.VAKIFBANK_TERMINAL_NO = 'V3761339';
     process.env.VAKIFBANK_MERCHANT_PASSWORD = 'secret-pass';
+    process.env.VAKIFBANK_STORE_KEY = 'store-key-123';
+    process.env.VAKIFBANK_CALLBACK_HASH_REQUIRED = 'true';
     Reflect.deleteProperty(globalThis, '__hnPaymentStore');
     resetRateLimiterStore();
     _resetProviderInstance();
@@ -382,8 +385,9 @@ describe('payment API routes', () => {
   });
 
   describe('POST /api/payment/callback', () => {
-    it('başarılı vakıfbank callback akışında localhost yerine site URL\'ine redirect eder ve hatoperasyon sync\'i bir kez tetikler', async () => {
+    it('başarılı vakıfbank callback akışında HashData doğrular, localhost yerine site URL\'ine redirect eder ve hatoperasyon sync\'i bir kez tetikler', async () => {
       process.env.PAYMENT_PROVIDER = 'vakifbank';
+      const infoSpy = vi.spyOn(console, 'info').mockImplementation(() => undefined);
       global.fetch = vi
         .fn()
         .mockResolvedValueOnce({
@@ -430,25 +434,43 @@ describe('payment API routes', () => {
         ),
       );
       const initiated = await initiateResponse.json();
+      const callbackFields = {
+        MerchantId: process.env.VAKIFBANK_MERCHANT_ID ?? '',
+        VerifyEnrollmentRequestId: initiated.reservationId as string,
+        PurchaseAmount: '15000.00',
+        Currency: '949',
+        Status: 'Y',
+        Xid: 'bank-xid-should-not-be-used',
+        Cavv: 'cavv-data',
+        Eci: '05',
+      };
+      const hashData = buildVakifBankCallbackHash(
+        callbackFields,
+        process.env.VAKIFBANK_STORE_KEY ?? '',
+        ['MerchantId', 'VerifyEnrollmentRequestId', 'PurchaseAmount', 'Currency', 'Status', 'Eci', 'Cavv'],
+      );
 
       const response = await callbackPost(
         makePostRequest(
           'http://localhost:3001/api/payment/callback',
           new URLSearchParams({
-            Status: 'Y',
-            VerifyEnrollmentRequestId: initiated.reservationId,
-            MpiTransactionId: initiated.reservationId,
-            CAVV: 'cavv-data',
-            ECI: '05',
+            ...callbackFields,
+            HashData: hashData ?? '',
           }).toString(),
           { 'content-type': 'application/x-www-form-urlencoded' },
         ),
       );
 
+      const provisionRequest = (global.fetch as ReturnType<typeof vi.fn>).mock.calls[1]?.[1];
+      const provisionXml = String(provisionRequest?.body ?? '');
+      const combinedLogs = infoSpy.mock.calls.flat().join(' ');
+
       expect(response.status).toBe(302);
       expect(response.headers.get('location')).toBe(
         `https://hatnaturel.com.tr/tr/rezervasyon/odeme/sonuc?status=success&ref=${initiated.reservationId}`,
       );
+      expect(provisionXml).toContain(`<MpiTransactionId>${initiated.reservationId}</MpiTransactionId>`);
+      expect(provisionXml).not.toContain('bank-xid-should-not-be-used');
       expect(sendReservationEmails).toHaveBeenCalledTimes(1);
       expect(createReservation).toHaveBeenCalledTimes(1);
       expect(createReservation).toHaveBeenCalledWith(
@@ -464,6 +486,77 @@ describe('payment API routes', () => {
         status: 'success',
         provisionResultCode: '0000',
       });
+      expect(combinedLogs).not.toContain('callback-raw');
+      expect(combinedLogs).not.toContain('/tmp/last-3ds-callback.json');
+    });
+
+    it('geçersiz HashData callback\'ini reddeder ve provizyon çağırmaz', async () => {
+      process.env.PAYMENT_PROVIDER = 'vakifbank';
+      const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => undefined);
+      global.fetch = vi
+        .fn()
+        .mockResolvedValueOnce({
+          ok: true,
+          status: 200,
+          text: async () => `
+            <IPaySecure>
+              <Message>
+                <VERes>
+                  <Status>Y</Status>
+                  <PaReq>PA-REQ-DATA</PaReq>
+                  <ACSUrl>https://inbound.apigateway.vakifbank.com.tr:443/threeDGateway/startThreeDFlow</ACSUrl>
+                  <TermUrl>https://hatnaturel.com.tr/api/payment/callback</TermUrl>
+                  <MD>md-token</MD>
+                  <MessageErrorCode>200</MessageErrorCode>
+                </VERes>
+              </Message>
+            </IPaySecure>
+          `,
+        }) as typeof fetch;
+
+      const initiateResponse = await initiatePost(
+        makePostRequest(
+          'http://localhost/api/payment/initiate',
+          JSON.stringify(validPayload),
+          {
+            'content-type': 'application/json',
+            'x-locale': 'tr',
+            'x-forwarded-for': '203.0.113.9',
+          },
+        ),
+      );
+      const initiated = await initiateResponse.json();
+
+      const response = await callbackPost(
+        makePostRequest(
+          'http://localhost:3001/api/payment/callback',
+          new URLSearchParams({
+            MerchantId: process.env.VAKIFBANK_MERCHANT_ID ?? '',
+            VerifyEnrollmentRequestId: initiated.reservationId,
+            PurchaseAmount: '15000.00',
+            Currency: '949',
+            Status: 'Y',
+            Cavv: 'cavv-data',
+            Eci: '05',
+            HashData: 'invalid-hash',
+          }).toString(),
+          { 'content-type': 'application/x-www-form-urlencoded' },
+        ),
+      );
+
+      expect(response.status).toBe(302);
+      expect(response.headers.get('location')).toBe(
+        `https://hatnaturel.com.tr/tr/rezervasyon/odeme/sonuc?status=fail&ref=${initiated.reservationId}&reason=hash_mismatch`,
+      );
+      expect((global.fetch as ReturnType<typeof vi.fn>).mock.calls).toHaveLength(1);
+      expect(sendReservationEmails).not.toHaveBeenCalled();
+      expect(createReservation).not.toHaveBeenCalled();
+      expect(storeGet(initiated.reservationId)).toMatchObject({
+        status: 'awaiting_3ds',
+      });
+      expect(warnSpy).toHaveBeenCalledWith(
+        expect.stringContaining('HashData doğrulaması başarısız'),
+      );
     });
   });
 

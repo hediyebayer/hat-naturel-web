@@ -1,9 +1,14 @@
+import { createHash } from 'node:crypto';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import {
   VakifBankProvider,
+  buildVakifBankCallbackHash,
   buildVposXml,
+  deriveEncryptionKey,
+  parseCardEncryptionKey,
   parseEnrollmentResponseXml,
   parseProvisionResponseXml,
+  verifyVakifBankCallbackHash,
 } from '@/lib/payment/vakifbank-provider';
 import { storeGet } from '@/lib/payment/store';
 import type { InitiateInput } from '@/lib/payment/types';
@@ -55,10 +60,13 @@ describe('VakifBankProvider helperları', () => {
     Reflect.deleteProperty(globalThis, '__hnPaymentStore');
     process.env = {
       ...originalEnv,
+      NODE_ENV: 'test',
       VAKIFBANK_ENV: 'test',
       VAKIFBANK_MERCHANT_ID: '000000056376791',
       VAKIFBANK_TERMINAL_NO: 'V3761339',
       VAKIFBANK_MERCHANT_PASSWORD: 'secret-pass',
+      VAKIFBANK_STORE_KEY: 'store-key-123',
+      VAKIFBANK_CALLBACK_HASH_REQUIRED: 'true',
       SITE_URL: 'https://example.com',
     };
   });
@@ -100,7 +108,7 @@ describe('VakifBankProvider helperları', () => {
   it('Vpos XML gövdesini beklenen alanlarla üretir', () => {
     const xml = buildVposXml({
       reservationId: 'HN-11111111-1111-1111-1111-111111111111',
-      amount: '10.50',
+      amount: '10.5',
       pan: '4111111111111111',
       expiry: '203012',
       cvv: '123',
@@ -109,15 +117,22 @@ describe('VakifBankProvider helperları', () => {
       mpiTransactionId: 'HN-11111111-1111-1111-1111-111111111111',
       orderId: 'HN-11111111-1111-1111-1111-111111111111',
       clientIp: '203.0.113.10',
+      holder: 'AYSE KAYA',
     });
 
+    expect(xml).toContain('<?xml version="1.0" encoding="UTF-8"?>');
+    expect(xml).toContain('<VposRequest>');
     expect(xml).toContain('<MerchantId>000000056376791</MerchantId>');
     expect(xml).toContain('<TerminalNo>V3761339</TerminalNo>');
     expect(xml).toContain('<TransactionType>Sale</TransactionType>');
     expect(xml).toContain('<CurrencyAmount>10.50</CurrencyAmount>');
-    expect(xml).toContain('<Expiry>203012</Expiry>');
     expect(xml).toContain('<ECI>05</ECI>');
+    expect(xml).toContain('<CAVV>cavv-data</CAVV>');
+    expect(xml).toContain('<MpiTransactionId>HN-11111111-1111-1111-1111-111111111111</MpiTransactionId>');
     expect(xml).toContain('<TransactionDeviceSource>0</TransactionDeviceSource>');
+    expect(xml).toContain('<CardHoldersName>AYSE KAYA</CardHoldersName>');
+    expect(xml).toContain('<Pan>4111111111111111</Pan>');
+    expect(xml).toContain('<Expiry>203012</Expiry>');
   });
 
   it('provizyon XML cevabını parse eder', () => {
@@ -140,17 +155,92 @@ describe('VakifBankProvider helperları', () => {
       currencyAmount: undefined,
     });
   });
+
+  it('callback HashData doğrulamasını geçerli imzada kabul eder', () => {
+    const fields = {
+      MerchantId: '000000056376791',
+      VerifyEnrollmentRequestId: 'HN-11111111-1111-1111-1111-111111111111',
+      PurchaseAmount: '15000.00',
+      Currency: '949',
+      Status: 'Y',
+      Eci: '05',
+      Cavv: 'cavv-data',
+    };
+    const fieldSet = ['MerchantId', 'VerifyEnrollmentRequestId', 'PurchaseAmount', 'Currency', 'Status', 'Eci', 'Cavv'] as const;
+    const hash = buildVakifBankCallbackHash(fields, 'store-key-123', fieldSet);
+
+    expect(hash).toBeTruthy();
+    const result = verifyVakifBankCallbackHash({
+      ...fields,
+      HashData: hash!,
+    });
+
+    expect(result).toMatchObject({
+      ok: true,
+      required: true,
+      mode: 'verified',
+      matchedFieldSet: fieldSet,
+    });
+  });
+
+  it('callback HashData doğrulamasını geçersiz imzada reddeder', () => {
+    const result = verifyVakifBankCallbackHash({
+      MerchantId: '000000056376791',
+      VerifyEnrollmentRequestId: 'HN-11111111-1111-1111-1111-111111111111',
+      PurchaseAmount: '15000.00',
+      Currency: '949',
+      Status: 'Y',
+      Eci: '05',
+      Cavv: 'cavv-data',
+      HashData: 'invalid-hash',
+    });
+
+    expect(result).toMatchObject({
+      ok: false,
+      required: true,
+      reason: 'hash_mismatch',
+    });
+  });
+
+  it('CARD_ENCRYPTION_KEY varsa explicit base64 key kullanır', () => {
+    const explicitKey = Buffer.alloc(32, 7).toString('base64');
+    process.env.CARD_ENCRYPTION_KEY = explicitKey;
+
+    expect(deriveEncryptionKey()).toEqual(Buffer.alloc(32, 7));
+  });
+
+  it('CARD_ENCRYPTION_KEY hex formatını parse eder', () => {
+    const explicitKey = Buffer.alloc(32, 9).toString('hex');
+
+    expect(parseCardEncryptionKey(explicitKey)).toEqual(Buffer.alloc(32, 9));
+  });
+
+  it('CARD_ENCRYPTION_KEY yoksa legacy türetmeye fallback eder', () => {
+    delete process.env.CARD_ENCRYPTION_KEY;
+
+    const expected = getLegacyKey();
+
+    expect(deriveEncryptionKey()).toEqual(expected);
+  });
 });
+
+function getLegacyKey(): Buffer {
+  return createHash('sha256')
+    .update('secret-pass|000000056376791|V3761339')
+    .digest();
+}
 
 describe('VakifBankProvider', () => {
   beforeEach(() => {
     Reflect.deleteProperty(globalThis, '__hnPaymentStore');
     process.env = {
       ...originalEnv,
+      NODE_ENV: 'test',
       VAKIFBANK_ENV: 'test',
       VAKIFBANK_MERCHANT_ID: '000000056376791',
       VAKIFBANK_TERMINAL_NO: 'V3761339',
       VAKIFBANK_MERCHANT_PASSWORD: 'secret-pass',
+      VAKIFBANK_STORE_KEY: 'store-key-123',
       SITE_URL: 'https://example.com',
       NEXT_PUBLIC_DEPOSIT_RATIO: '0.3',
     };
@@ -189,27 +279,28 @@ describe('VakifBankProvider', () => {
     const record = storeGet(result.reservationId);
     const enrollmentRequest = fetchMock.mock.calls[0];
     const enrollmentBody = new URLSearchParams(String(enrollmentRequest?.[1]?.body));
- 
-     expect(result.redirectUrl).toBe(`/${validInitiateInput.locale}/rezervasyon/odeme/3d-secure?ref=${result.reservationId}`);
-     expect(record).toMatchObject({
-       reservationId: result.reservationId,
-       status: 'awaiting_3ds',
-       acsUrl: 'https://acs.example.com',
-       paReq: 'PA-REQ-DATA',
-       md: 'md-token',
-       termUrl: 'https://mpi.example.com/term',
-     });
+
+    expect(result.redirectUrl).toBe(`/${validInitiateInput.locale}/rezervasyon/odeme/3d-secure?ref=${result.reservationId}`);
+    expect(record).toMatchObject({
+      reservationId: result.reservationId,
+      status: 'awaiting_3ds',
+      acsUrl: 'https://acs.example.com',
+      paReq: 'PA-REQ-DATA',
+      md: 'md-token',
+      termUrl: 'https://mpi.example.com/term',
+    });
+    expect(enrollmentBody.get('PurchaseAmount')).toBe('15000.00');
     expect(enrollmentBody.get('SuccessUrl')).toBe('https://example.com/api/payment/callback');
     expect(enrollmentBody.get('FailureUrl')).toBe('https://example.com/api/payment/callback');
-     expect(record?.encryptedCard).toBeDefined();
-     const serializedRecord = JSON.stringify(record);
-     expect(serializedRecord).not.toContain(validInitiateInput.card.pan);
-     expect(serializedRecord).not.toContain(`\"pan\":\"${validInitiateInput.card.pan}\"`);
-     expect(serializedRecord).not.toContain(`\"cvv\":\"${validInitiateInput.card.cvv}\"`);
-   });
+    expect(record?.encryptedCard).toBeDefined();
+    const serializedRecord = JSON.stringify(record);
+    expect(serializedRecord).not.toContain(validInitiateInput.card.pan);
+    expect(serializedRecord).not.toContain(`\"pan\":\"${validInitiateInput.card.pan}\"`);
+    expect(serializedRecord).not.toContain(`\"cvv\":\"${validInitiateInput.card.cvv}\"`);
+  });
 
   it('callback provizyonu başarılıysa kaydı success yapar ve hassas kart verisini temizler', async () => {
-    global.fetch = vi
+    const fetchMock = vi
       .fn()
       .mockResolvedValueOnce({
         ok: true,
@@ -239,7 +330,8 @@ describe('VakifBankProvider', () => {
             <TransactionId>TX1</TransactionId>
           </VposResponse>
         `,
-      }) as typeof fetch;
+      });
+    global.fetch = fetchMock as typeof fetch;
 
     const provider = new VakifBankProvider();
     const initiated = await provider.initiate(validInitiateInput);
@@ -253,7 +345,17 @@ describe('VakifBankProvider', () => {
       clientIp: '203.0.113.10',
     });
 
+    const provisionRequest = fetchMock.mock.calls[1]?.[1];
+    const provisionXml = String(provisionRequest?.body ?? '');
     const record = storeGet(initiated.reservationId);
+
+    expect(provisionRequest?.headers).toMatchObject({
+      'Content-Type': 'text/xml; charset=utf-8',
+    });
+    expect(provisionXml).toContain('<?xml version="1.0" encoding="UTF-8"?>');
+    expect(provisionXml).toContain('<CurrencyAmount>15000.00</CurrencyAmount>');
+    expect(provisionXml).toContain(`<MpiTransactionId>${initiated.reservationId}</MpiTransactionId>`);
+    expect(provisionXml).toContain('<CardHoldersName>AYSE KAYA</CardHoldersName>');
 
     expect(result).toEqual({
       ok: true,
@@ -268,5 +370,58 @@ describe('VakifBankProvider', () => {
       provisionTransactionId: 'TX1',
     });
     expect(record?.encryptedCard).toBeUndefined();
+  });
+
+  it('verbose debug loglarında cavv tail veya raw callback dump basmaz', async () => {
+    const infoSpy = vi.spyOn(console, 'info').mockImplementation(() => undefined);
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce({
+        ok: true,
+        text: async () => `
+          <IPaySecure>
+            <Message>
+              <VERes>
+                <Status>Y</Status>
+                <PaReq>PA-REQ-DATA</PaReq>
+                <ACSUrl>https://acs.example.com</ACSUrl>
+                <TermUrl>https://mpi.example.com/term</TermUrl>
+                <MD>md-token</MD>
+                <MessageErrorCode>200</MessageErrorCode>
+              </VERes>
+            </Message>
+          </IPaySecure>
+        `,
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        text: async () => `
+          <VposResponse>
+            <ResultCode>0000</ResultCode>
+            <ResultDetail>Approved</ResultDetail>
+            <AuthCode>AUTH1</AuthCode>
+            <Rrn>RRN1</Rrn>
+            <TransactionId>TX1</TransactionId>
+          </VposResponse>
+        `,
+      });
+    global.fetch = fetchMock as typeof fetch;
+
+    const provider = new VakifBankProvider();
+    const initiated = await provider.initiate(validInitiateInput);
+
+    await provider.finalizeCallback({
+      reservationId: initiated.reservationId,
+      status: 'Y',
+      cavv: 'cavv-data',
+      eci: '05',
+      mpiTransactionId: initiated.reservationId,
+      clientIp: '203.0.113.10',
+    });
+
+    const combinedLogs = infoSpy.mock.calls.flat().join(' ');
+    expect(combinedLogs).not.toContain('cavvTail');
+    expect(combinedLogs).not.toContain('callback-raw');
+    expect(combinedLogs).not.toContain('/tmp/last-3ds-callback.json');
   });
 });

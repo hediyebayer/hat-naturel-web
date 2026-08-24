@@ -13,7 +13,13 @@
  * - Log'larda asla raw PAN/CVV yer almaz
  */
 
-import { createCipheriv, createDecipheriv, createHash, randomBytes } from 'node:crypto';
+import {
+  createCipheriv,
+  createDecipheriv,
+  createHash,
+  randomBytes,
+  timingSafeEqual,
+} from 'node:crypto';
 import type { PaymentProvider } from './provider';
 import type {
   CardBrand,
@@ -29,6 +35,7 @@ import { getPaymentCallbackUrl } from './site-url';
 import { storeGet, storeSet, storeUpdate } from './store';
 
 const VAKIFBANK_CURRENCY_CODE = '949';
+const PROVISION_SUCCESS_CODE = '0000';
 const ENROLLMENT_ENDPOINTS = {
   test: 'https://inbound.apigatewaytest.vakifbank.com.tr:8443/threeDGateway/Enrollment',
   prod: 'https://inbound.apigateway.vakifbank.com.tr:8443/threeDGateway/Enrollment',
@@ -36,6 +43,32 @@ const ENROLLMENT_ENDPOINTS = {
 const VPOSREQ_ENDPOINTS = {
   test: 'https://apiportalprep.vakifbank.com.tr:8443/virtualPos/Vposreq',
   prod: 'https://apigw.vakifbank.com.tr:8443/virtualPos/Vposreq',
+} as const;
+const DEFAULT_CALLBACK_HASH_FIELD_SETS = [
+  ['MerchantId', 'VerifyEnrollmentRequestId', 'PurchaseAmount', 'Currency', 'Status', 'Eci', 'Cavv'],
+  ['MerchantId', 'TransactionId', 'PurchaseAmount', 'Currency', 'Status', 'Eci', 'Cavv'],
+  ['MerchantId', 'MpiTransactionId', 'PurchaseAmount', 'Currency', 'Status', 'Eci', 'Cavv'],
+  ['MerchantId', 'VerifyEnrollmentRequestId', 'CurrencyAmount', 'CurrencyCode', 'Status', 'Eci', 'Cavv'],
+  ['MerchantId', 'TransactionId', 'CurrencyAmount', 'CurrencyCode', 'Status', 'Eci', 'Cavv'],
+  ['MerchantId', 'MpiTransactionId', 'CurrencyAmount', 'CurrencyCode', 'Status', 'Eci', 'Cavv'],
+] as const satisfies readonly (readonly string[])[];
+const CALLBACK_FIELD_ALIASES: Readonly<Record<string, readonly string[]>> = {
+  HashData: ['HashData', 'hashdata', 'Hash', 'hash'],
+  MerchantId: ['MerchantId', 'merchantid', 'MerchantID'],
+  VerifyEnrollmentRequestId: [
+    'VerifyEnrollmentRequestId',
+    'verifyenrollmentrequestid',
+    'VerifyEnrollmentReqId',
+  ],
+  TransactionId: ['TransactionId', 'transactionid'],
+  MpiTransactionId: ['MpiTransactionId', 'mpitransactionid'],
+  PurchaseAmount: ['PurchaseAmount', 'purchaseamount'],
+  Currency: ['Currency', 'currency'],
+  CurrencyAmount: ['CurrencyAmount', 'currencyamount'],
+  CurrencyCode: ['CurrencyCode', 'currencycode'],
+  Status: ['Status', 'status'],
+  Eci: ['Eci', 'ECI', 'eci'],
+  Cavv: ['Cavv', 'CAVV', 'cavv'],
 } as const;
 
 type VakifBankEnv = keyof typeof ENROLLMENT_ENDPOINTS;
@@ -64,6 +97,7 @@ interface ProvisionRequestInput {
   mpiTransactionId: string;
   orderId: string;
   clientIp: string;
+  holder: string;
 }
 
 interface ProvisionResponse {
@@ -92,6 +126,14 @@ interface FinalizeCallbackInput {
   errorCode?: string;
   errorMessage?: string;
   clientIp: string;
+}
+
+export interface CallbackHashVerificationResult {
+  ok: boolean;
+  required: boolean;
+  mode: 'verified' | 'skipped';
+  reason?: 'missing_store_key' | 'missing_hash' | 'missing_fields' | 'hash_mismatch';
+  matchedFieldSet?: readonly string[];
 }
 
 function generateReservationId(): string {
@@ -129,8 +171,14 @@ function getBrandCode(brand: CardBrand): string {
   }
 }
 
-function formatAmount(amount: number): string {
-  return amount.toFixed(2);
+function formatCurrencyAmount(amount: number | string): string {
+  const normalized = typeof amount === 'number' ? amount : Number(amount.replace(',', '.'));
+
+  if (!Number.isFinite(normalized)) {
+    throw new Error(`Geçersiz tutar formatı: ${amount}`);
+  }
+
+  return normalized.toFixed(2);
 }
 
 function formatEnrollmentExpiry(month: number, year: number): string {
@@ -152,6 +200,27 @@ function escapeXml(value: string): string {
     .replaceAll("'", '&apos;');
 }
 
+/**
+ * Kart sahibi adını VakifBank için temizler: Türkçe karakterleri ASCII'ye
+ * çevirir (İ→I, Ş→S, Ğ→G, Ü→U, Ö→O, Ç→C), büyük harfe çevirir,
+ * sadece A-Z ve boşluk bırakır. VakifBank Türkçe karakterli isimde 0012
+ * (geçersiz işlem) verebiliyor — kart üzerindeki isim de ASCII yazılı.
+ */
+function sanitizeCardHolderName(value: string): string {
+  const trMap: Record<string, string> = {
+    'İ': 'I', 'ı': 'I', 'Ş': 'S', 'ş': 'S', 'Ğ': 'G', 'ğ': 'G',
+    'Ü': 'U', 'ü': 'U', 'Ö': 'O', 'ö': 'O', 'Ç': 'C', 'ç': 'C',
+  };
+  return value
+    .replace(/[İıŞşĞğÜüÖöÇç]/g, (ch) => trMap[ch] ?? ch)
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toUpperCase()
+    .replace(/[^A-Z ]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
 function getXmlTagValue(xml: string, tagName: string): string | undefined {
   const regex = new RegExp(`<${tagName}>([\\s\\S]*?)<\\/${tagName}>`, 'i');
   const match = xml.match(regex);
@@ -169,7 +238,38 @@ function buildMaskedCard(input: InitiateInput['card']): CardInfo {
   };
 }
 
-function deriveEncryptionKey(): Buffer {
+function isNonProduction(): boolean {
+  return process.env.NODE_ENV !== 'production';
+}
+
+function logVerbosePaymentDebug(message: string): void {
+  if (isNonProduction()) {
+    // eslint-disable-next-line no-console
+    console.info(message);
+  }
+}
+
+export function parseCardEncryptionKey(value: string): Buffer {
+  const trimmed = value.trim();
+
+  if (/^[0-9a-fA-F]{64}$/.test(trimmed)) {
+    return Buffer.from(trimmed, 'hex');
+  }
+
+  const base64Buffer = Buffer.from(trimmed, 'base64');
+  if (base64Buffer.length === 32) {
+    return base64Buffer;
+  }
+
+  throw new Error('CARD_ENCRYPTION_KEY 32 byte olmalı (hex veya base64).');
+}
+
+export function deriveEncryptionKey(): Buffer {
+  const explicitKey = process.env.CARD_ENCRYPTION_KEY?.trim();
+  if (explicitKey) {
+    return parseCardEncryptionKey(explicitKey);
+  }
+
   const material = [
     getRequiredEnv('VAKIFBANK_MERCHANT_PASSWORD'),
     getRequiredEnv('VAKIFBANK_MERCHANT_ID'),
@@ -218,6 +318,108 @@ function decryptCardPayload(record: PaymentRecord): EncryptedCardPayload {
   return JSON.parse(decrypted.toString('utf8')) as EncryptedCardPayload;
 }
 
+function getCallbackField(fields: Record<string, string>, fieldName: string): string | undefined {
+  const aliases = CALLBACK_FIELD_ALIASES[fieldName] ?? [fieldName];
+  const normalizedEntries = Object.entries(fields).map(([key, value]) => [key.toLowerCase(), value] as const);
+
+  for (const alias of aliases) {
+    const directValue = fields[alias];
+    if (typeof directValue === 'string' && directValue.length > 0) {
+      return directValue;
+    }
+
+    const matched = normalizedEntries.find(([key]) => key === alias.toLowerCase())?.[1];
+    if (matched) {
+      return matched;
+    }
+  }
+
+  return undefined;
+}
+
+function getCallbackHashFieldSets(): readonly (readonly string[])[] {
+  const fromEnv = process.env.VAKIFBANK_CALLBACK_HASH_FIELDS?.trim();
+  if (!fromEnv) {
+    return DEFAULT_CALLBACK_HASH_FIELD_SETS;
+  }
+
+  const configuredFields = fromEnv
+    .split(',')
+    .map((field) => field.trim())
+    .filter(Boolean);
+
+  return configuredFields.length > 0 ? [configuredFields] : DEFAULT_CALLBACK_HASH_FIELD_SETS;
+}
+
+function timingSafeBase64Equal(left: string, right: string): boolean {
+  const leftBuffer = Buffer.from(left, 'utf8');
+  const rightBuffer = Buffer.from(right, 'utf8');
+
+  return leftBuffer.length === rightBuffer.length && timingSafeEqual(leftBuffer, rightBuffer);
+}
+
+export function buildVakifBankCallbackHash(
+  fields: Record<string, string>,
+  storeKey: string,
+  fieldSet: readonly string[],
+): string | null {
+  const values: string[] = [];
+
+  for (const fieldName of fieldSet) {
+    const value = getCallbackField(fields, fieldName);
+    if (!value) {
+      return null;
+    }
+    values.push(value);
+  }
+
+  return createHash('sha256').update(`${values.join('')}${storeKey}`, 'utf8').digest('base64');
+}
+
+export function verifyVakifBankCallbackHash(fields: Record<string, string>): CallbackHashVerificationResult {
+  const required = process.env.VAKIFBANK_CALLBACK_HASH_REQUIRED?.trim() !== 'false';
+  const storeKey = process.env.VAKIFBANK_STORE_KEY?.trim();
+
+  if (!storeKey) {
+    return required
+      ? { ok: false, required, mode: 'verified', reason: 'missing_store_key' }
+      : { ok: true, required, mode: 'skipped', reason: 'missing_store_key' };
+  }
+
+  const receivedHash = getCallbackField(fields, 'HashData');
+  if (!receivedHash) {
+    return required
+      ? { ok: false, required, mode: 'verified', reason: 'missing_hash' }
+      : { ok: true, required, mode: 'skipped', reason: 'missing_hash' };
+  }
+
+  let foundEligibleFieldSet = false;
+
+  for (const fieldSet of getCallbackHashFieldSets()) {
+    const expectedHash = buildVakifBankCallbackHash(fields, storeKey, fieldSet);
+    if (!expectedHash) {
+      continue;
+    }
+
+    foundEligibleFieldSet = true;
+    if (timingSafeBase64Equal(expectedHash, receivedHash)) {
+      return {
+        ok: true,
+        required,
+        mode: 'verified',
+        matchedFieldSet: fieldSet,
+      };
+    }
+  }
+
+  return {
+    ok: false,
+    required,
+    mode: 'verified',
+    reason: foundEligibleFieldSet ? 'hash_mismatch' : 'missing_fields',
+  };
+}
+
 export function parseEnrollmentResponseXml(xml: string): EnrollmentResponse {
   return {
     status: getXmlTagValue(xml, 'Status') ?? 'E',
@@ -243,23 +445,25 @@ export function parseProvisionResponseXml(xml: string): ProvisionResponse {
 
 export function buildVposXml(input: ProvisionRequestInput): string {
   return [
+    '<?xml version="1.0" encoding="UTF-8"?>',
     '<VposRequest>',
     `<MerchantId>${escapeXml(getRequiredEnv('VAKIFBANK_MERCHANT_ID'))}</MerchantId>`,
     `<Password>${escapeXml(getRequiredEnv('VAKIFBANK_MERCHANT_PASSWORD'))}</Password>`,
     `<TerminalNo>${escapeXml(getRequiredEnv('VAKIFBANK_TERMINAL_NO'))}</TerminalNo>`,
     '<TransactionType>Sale</TransactionType>',
     `<TransactionId>${escapeXml(input.reservationId)}</TransactionId>`,
-    `<CurrencyAmount>${escapeXml(input.amount)}</CurrencyAmount>`,
+    `<CurrencyAmount>${escapeXml(formatCurrencyAmount(input.amount))}</CurrencyAmount>`,
     `<CurrencyCode>${VAKIFBANK_CURRENCY_CODE}</CurrencyCode>`,
-    `<Pan>${escapeXml(input.pan)}</Pan>`,
-    `<Expiry>${escapeXml(input.expiry)}</Expiry>`,
-    `<Cvv>${escapeXml(input.cvv)}</Cvv>`,
     `<ECI>${escapeXml(input.eci)}</ECI>`,
     `<CAVV>${escapeXml(input.cavv)}</CAVV>`,
     `<MpiTransactionId>${escapeXml(input.mpiTransactionId)}</MpiTransactionId>`,
     `<OrderId>${escapeXml(input.orderId)}</OrderId>`,
     `<ClientIp>${escapeXml(input.clientIp)}</ClientIp>`,
     '<TransactionDeviceSource>0</TransactionDeviceSource>',
+    `<CardHoldersName>${escapeXml(sanitizeCardHolderName(input.holder))}</CardHoldersName>`,
+    `<Cvv>${escapeXml(input.cvv)}</Cvv>`,
+    `<Pan>${escapeXml(input.pan)}</Pan>`,
+    `<Expiry>${escapeXml(input.expiry)}</Expiry>`,
     '</VposRequest>',
   ].join('');
 }
@@ -310,6 +514,7 @@ export class VakifBankProvider implements PaymentProvider {
       currency: 'TRY',
       createdAt: new Date(),
       verifyAttempts: 0,
+      clientIp: input.clientIp,
       acsUrl: enrollmentResponse.acsUrl,
       paReq: enrollmentResponse.paReq,
       md: enrollmentResponse.md,
@@ -403,7 +608,14 @@ export class VakifBankProvider implements PaymentProvider {
       eci: input.eci,
     });
 
+    // eslint-disable-next-line no-console
+    console.info(
+      `[vakifbank/callback] ref=${input.reservationId} | 3dStatus=${input.status} | cavv=${input.cavv ? 'VAR' : 'YOK'} | eci=${input.eci ?? '-'} | errCode=${input.errorCode ?? '-'} | errMsg=${input.errorMessage ?? '-'}`,
+    );
+
     if (!['Y', 'A'].includes(input.status)) {
+      // eslint-disable-next-line no-console
+      console.warn(`[vakifbank/callback] 3D Secure BAŞARISIZ ref=${input.reservationId} status=${input.status} — banka doğrulaması geçmedi`);
       this.clearSensitiveCardData(input.reservationId);
       storeUpdate(input.reservationId, {
         status: 'failed',
@@ -418,6 +630,8 @@ export class VakifBankProvider implements PaymentProvider {
     }
 
     if (!input.cavv || !input.eci) {
+      // eslint-disable-next-line no-console
+      console.warn(`[vakifbank/callback] CAVV/ECI EKSİK ref=${input.reservationId} — banka 3DS verisi göndermedi (cavv=${!!input.cavv} eci=${!!input.eci})`);
       this.clearSensitiveCardData(input.reservationId);
       storeUpdate(input.reservationId, {
         status: 'failed',
@@ -432,10 +646,15 @@ export class VakifBankProvider implements PaymentProvider {
     }
 
     const sensitiveCard = decryptCardPayload(record);
+
+    logVerbosePaymentDebug(
+      `[vakifbank/provizyon-req] ref=${record.reservationId} | amount=${formatCurrencyAmount(record.amountCharged)} | expiry=${formatProvisionExpiry(sensitiveCard.expMonth, sensitiveCard.expYear)} | panLen=${sensitiveCard.pan.replace(/\D/g, '').length} | cvvLen=${sensitiveCard.cvv.length} | eci=${input.eci} | cavvLen=${input.cavv.length} | cavvHasPlus=${input.cavv.includes('+')} | cavvHasSpace=${input.cavv.includes(' ')} | mpiTxnId=${mpiTransactionId} | orderIdLen=${record.reservationId.length} | holderSanitized="${sanitizeCardHolderName(sensitiveCard.holder)}"`,
+    );
+
     const provisionResponse = await this.callVposreq(
       buildVposXml({
         reservationId: record.reservationId,
-        amount: formatAmount(record.amountCharged),
+        amount: formatCurrencyAmount(record.amountCharged),
         pan: sensitiveCard.pan,
         expiry: formatProvisionExpiry(sensitiveCard.expMonth, sensitiveCard.expYear),
         cvv: sensitiveCard.cvv,
@@ -443,13 +662,19 @@ export class VakifBankProvider implements PaymentProvider {
         eci: input.eci,
         mpiTransactionId,
         orderId: record.reservationId,
-        clientIp: input.clientIp,
+        clientIp: record.clientIp || input.clientIp,
+        holder: sensitiveCard.holder,
       }),
     );
 
     this.clearSensitiveCardData(input.reservationId);
 
-    if (provisionResponse.resultCode === '0000') {
+    // eslint-disable-next-line no-console
+    console.info(
+      `[vakifbank/provizyon] ref=${input.reservationId} | resultCode=${provisionResponse.resultCode} | detail=${provisionResponse.resultDetail ?? '-'} | authCode=${provisionResponse.authCode ?? '-'} | rrn=${provisionResponse.rrn ?? '-'}`,
+    );
+
+    if (provisionResponse.resultCode === PROVISION_SUCCESS_CODE) {
       storeUpdate(input.reservationId, {
         status: 'success',
         paidAt: new Date(),
@@ -497,7 +722,7 @@ export class VakifBankProvider implements PaymentProvider {
       VerifyEnrollmentRequestId: args.reservationId,
       Pan: args.input.card.pan.replace(/\D/g, ''),
       ExpiryDate: formatEnrollmentExpiry(args.input.card.expMonth, args.input.card.expYear),
-      PurchaseAmount: formatAmount(args.amountCharged),
+      PurchaseAmount: formatCurrencyAmount(args.amountCharged),
       Currency: VAKIFBANK_CURRENCY_CODE,
       BrandName: getBrandCode(args.cardBrand),
       SuccessUrl: args.callbackUrl,
@@ -505,7 +730,6 @@ export class VakifBankProvider implements PaymentProvider {
       SessionInfo: args.reservationId,
     });
 
-    // Timeout: banka cevap vermezse sonsuz beklemeyi önle (30s).
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 30_000);
     const startedAt = Date.now();
@@ -548,17 +772,36 @@ export class VakifBankProvider implements PaymentProvider {
   }
 
   private async callVposreq(xml: string): Promise<ProvisionResponse> {
-    const response = await fetch(VPOSREQ_ENDPOINTS[getVakifBankEnv()], {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: new URLSearchParams({ prmtstr: xml }).toString(),
-      cache: 'no-store',
-    });
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 30_000);
+    const startedAt = Date.now();
+
+    let response: Response;
+    try {
+      response = await fetch(VPOSREQ_ENDPOINTS[getVakifBankEnv()], {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'text/xml; charset=utf-8',
+        },
+        body: xml,
+        cache: 'no-store',
+        signal: controller.signal,
+      });
+    } catch (e: unknown) {
+      const msg = e instanceof Error ? e.message : String(e);
+      // eslint-disable-next-line no-console
+      console.error(`[vakifbank/vposreq] fetch HATA | süre=${Date.now() - startedAt}ms | ${msg}`);
+      throw new Error(`Vposreq bağlantı hatası: ${msg}`);
+    } finally {
+      clearTimeout(timeoutId);
+    }
 
     const text = await response.text();
     const parsed = parseProvisionResponseXml(text);
+
+    logVerbosePaymentDebug(
+      `[vakifbank/vposreq] HTTP=${response.status} | süre=${Date.now() - startedAt}ms | resultCode=${parsed.resultCode ?? '-'} | detail=${parsed.resultDetail ?? '-'}`,
+    );
 
     if (!response.ok) {
       throw new Error(`Vposreq HTTP ${response.status}: ${parsed.resultDetail ?? text}`);

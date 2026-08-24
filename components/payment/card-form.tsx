@@ -232,7 +232,10 @@ export function CardForm({ locale, order }: CardFormProps): React.ReactElement {
           aria-describedby={errors.holder ? 'holder-error' : undefined}
           {...register('holder')}
           onChange={(e) => {
-            e.target.value = e.target.value.toUpperCase();
+            // Kullanıcı ne yazarsa yazsın büyük harfe çevir (Türkçe locale ile
+            // doğru: i→İ, ı→I). ASCII dönüşümü backend'de sanitizeCardHolderName
+            // yapıyor — burada kullanıcı girdisine dokunmuyoruz, sadece büyükhâne.
+            e.target.value = e.target.value.toLocaleUpperCase('tr-TR');
             register('holder').onChange(e);
           }}
           className={cn(INPUT_BASE, 'uppercase tracking-wide')}

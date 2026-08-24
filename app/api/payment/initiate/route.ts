@@ -92,6 +92,9 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       consents: validated.consents,
       depositMode: validated.depositMode,
       locale: request.headers.get('x-locale') ?? undefined,
+      // Müşterinin gerçek IP'si — initiate'i MÜŞTERİ atıyor, doğru IP.
+      // Provizyonda kullanılacak (callback'i banka atıyor, o IP yanlış olur).
+      clientIp: getClientIp(request),
     });
 
     return NextResponse.json(result, { status: 200 });

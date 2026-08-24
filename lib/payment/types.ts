@@ -73,6 +73,8 @@ export interface PaymentRecord {
   verifyAttempts: number;
   paidAt?: Date;
   failReason?: 'invalid_otp' | 'expired' | 'cancelled';
+  /** Müşterinin gerçek IP'si (initiate anında yakalanır, provizyonda kullanılır) */
+  clientIp?: string;
 
   // VakıfBank 3D alanları
   acsUrl?: string;
@@ -123,6 +125,8 @@ export interface InitiateInput {
   depositMode: DepositMode;
   /** Redirect URL'deki locale segmenti (default 'tr') */
   locale?: string;
+  /** Müşterinin gerçek IP'si (provizyon ClientIp için) */
+  clientIp?: string;
 }
 
 export interface VerifyInput {

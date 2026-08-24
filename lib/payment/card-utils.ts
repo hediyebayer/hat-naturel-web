@@ -52,8 +52,10 @@ export function detectBrand(pan: string): CardBrand {
   const digits = pan.replace(/\D/g, '');
   if (!digits) return 'unknown';
 
-  // Troy: 9792
+  // Troy (yerli kart) BIN'leri: 9792xx ve 65xxxx (ör. 650170).
+  // Not: 6011 (Discover) HARİÇ — o troy değil.
   if (/^9792/.test(digits)) return 'troy';
+  if (/^65/.test(digits)) return 'troy';
 
   // Amex: 34 veya 37
   if (/^3[47]/.test(digits)) return 'amex';

@@ -120,6 +120,11 @@ Site, rezervasyon talebini `/api/reservations` endpoint'ine gönderir. Bu endpoi
 | `/api/payment/verify` | POST | 3DS OTP doğrula |
 | `/api/payment/status?ref=HN-...` | GET | Rezervasyon durumu |
 
+### Ödeme Güvenliği Notları
+- VakıfBank callback'lerinde `HashData`/imza doğrulaması varsayılan olarak **zorunludur**. Gerekli env'ler: `VAKIFBANK_STORE_KEY`, opsiyonel override `VAKIFBANK_CALLBACK_HASH_FIELDS`.
+- `CARD_ENCRYPTION_KEY` tanımlanırsa geçici kart kasası bununla şifrelenir. Tanımlı değilse sistem geriye uyumluluk için legacy merchant credential türetmesine düşer; canlıda ayrı key önerilir.
+- `lib/payment/store.ts` hâlâ **in-memory** çalışır. Deploy/restart/cold-start sonrası ödeme kaydı kaybolabilir. CANLI için kalıcı DB/Redis store'a geçilmelidir.
+
 ### Banka Denetimi Yol Haritası
 1. Mock aklış banka denetçisine gösterilir (demo kart + OTP)
 2. VakıfBank credential teslimi sonrası `lib/payment/real-vakifbank-provider.ts` yazılır
