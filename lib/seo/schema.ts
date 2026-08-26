@@ -32,7 +32,7 @@ const LODGING_AMENITIES = [
   { name: 'Jacuzzi', value: true },
   { name: 'Free parking', value: true },
   { name: 'Free Wi-Fi', value: true },
-  { name: 'Smart TV with Netflix and YouTube', value: true },
+  { name: 'Smart TV', value: true },
   { name: 'Air conditioning', value: true },
   { name: 'Kitchen', value: true },
   { name: 'Barbecue grill', value: true },
