@@ -31,7 +31,7 @@ export type Amenity =
   | 'jacuzzi'           // 🛁 Jakuzi (üçgen bungalovlarda)
   | 'sunbed'            // Şezlong (havuz başı)
   | 'doubleSwing'       // Çift kişilik yataklı salıncak
-  | 'streamingTv'       // 📺 TV + YouTube & Netflix
+  | 'streamingTv'       // 📺 TV
   | 'coolingPool'       // 🏊 Özel serinleme havuzu (Mor Köşk için)
   // Tesis içi olanaklar (ortak)
   | 'cafe'              // ☕ Kafe
@@ -331,7 +331,7 @@ export const ROOMS: Room[] = [
       '95 m² genişlikte, 2+1 tasarımıyla ferah ortam — özel yaz havuzlu aile köşkü.',
     longDescription:
       'Tesisin en dikkat çeken köşklerinden Mor Köşk, 2+1 yapısı ve 95 m² genişliğiyle ferah bir ortam sağlar. Yaz sezonunda kullanıma açılan özel serinleme havuzu, havuz başı şezlong ve çift kişilik yataklı büyük salıncağı sayesinde sıcak günlerde ailecek serinleme keyfini bahçenizde yaşayabilirsiniz. Şömine konforu ile kış aylarında da aynı sıcak atmosfer; doğanın sessizliği eşliğinde ailecek huzurlu bir tatil deneyimi için ideal tercih.',
-    specs: { area: 95, guests: 4, extraGuests: 3, bedrooms: 2, bathrooms: 2 },
+    specs: { area: 95, guests: 4, extraGuests: 3, bedrooms: 2, bathrooms: 1 },
     amenities: MOR_KOSK_AMENITIES,
     images: [
       '01.jpg',
@@ -479,9 +479,9 @@ export const AMENITY_META: Record<
   ac:               { label: 'Klima',                 labelEn: 'Air Conditioning', icon: 'Wind' },
   wifi:             { label: 'Ücretsiz Wi-Fi',        labelEn: 'Free Wi-Fi',       icon: 'Wifi' },
   smartTv:          { label: 'Akıllı TV',             labelEn: 'Smart TV',         icon: 'Tv' },
-  streamingTv:      { label: 'TV (YouTube & Netflix)', labelEn: 'TV (YouTube & Netflix)', icon: 'Tv' },
+  streamingTv:      { label: 'TV',                     labelEn: 'TV',               icon: 'Tv' },
   kitchen:          { label: 'Tam Donanımlı Mutfak',  labelEn: 'Full Kitchen',     icon: 'ChefHat' },
-  fridge:           { label: 'Buzdolabı',             labelEn: 'Refrigerator',     icon: 'Refrigerator' },
+  fridge:           { label: 'Mini Buzdolabı',        labelEn: 'Mini Refrigerator', icon: 'Refrigerator' },
   fireplace:        { label: 'Şömine',                labelEn: 'Fireplace',        icon: 'Flame' },
   hairDryer:        { label: 'Saç Kurutma Makinesi',  labelEn: 'Hair Dryer',       icon: 'Wind' },
   wardrobe:         { label: 'Elbise Dolabı',         labelEn: 'Wardrobe',         icon: 'Shirt' },
