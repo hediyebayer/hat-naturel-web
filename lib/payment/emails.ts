@@ -163,7 +163,7 @@ function buildGuestConfirmationHtml(data: Omit<ReservationEmailData, 'card'>): s
               <tr><td style="padding:10px 16px;color:#78716c;font-size:14px;border-top:1px solid #f0ede8;">Telefon</td><td style="padding:10px 16px;color:#292524;border-top:1px solid #f0ede8;font-size:14px;">${safe(guest.phone)}</td></tr>
             </table>
             <div style="background:#f0f7f0;border-left:3px solid #1a6b3a;padding:14px 16px;border-radius:0 6px 6px 0;margin-bottom:24px;">
-              <p style="margin:0;font-size:14px;color:#1a3a2a;"><strong>Giriş saatiniz:</strong> 14:00'dan itibaren. Giriş yapmadan önce lütfen kimliğinizi/pasaportunuzu hazırlayın.</p>
+              <p style="margin:0;font-size:14px;color:#1a3a2a;"><strong>Giriş saatiniz:</strong> 14:30'dan itibaren • <strong>Çıkış saatiniz:</strong> 11:30'a kadar. Giriş yapmadan önce lütfen kimliğinizi/pasaportunuzu hazırlayın.</p>
             </div>
             <p style="font-size:14px;color:#78716c;">Sorularınız için WhatsApp: <strong>+90 533 917 54 24</strong><br/>veya e-posta: <strong>hatnaturel@gmail.com</strong></p>
           </td>
