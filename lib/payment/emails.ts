@@ -122,6 +122,11 @@ function buildGuestConfirmationHtml(data: Omit<ReservationEmailData, 'card'>): s
       ? `<strong>Kapora (%30)</strong> — kalan tutar tesiste ödenecektir.`
       : `<strong>Tam ödeme</strong> yapılmıştır.`;
 
+  const dueAtPropertyRow =
+    order.depositMode === 'deposit'
+      ? `<tr><td style="padding:10px 16px;color:#78716c;font-size:14px;border-top:1px solid #f0ede8;">Tesiste Ödenecek</td><td style="padding:10px 16px;font-weight:700;color:#b45309;border-top:1px solid #f0ede8;font-size:14px;">${safe(formatTRY(order.totalPrice - amountCharged))}</td></tr>`
+      : '';
+
   return `
 <!DOCTYPE html>
 <html lang="tr">
@@ -152,6 +157,7 @@ function buildGuestConfirmationHtml(data: Omit<ReservationEmailData, 'card'>): s
               <tr><td style="padding:10px 16px;color:#78716c;font-size:14px;border-top:1px solid #f0ede8;">Misafir</td><td style="padding:10px 16px;color:#292524;border-top:1px solid #f0ede8;font-size:14px;">${safe(order.guests)} kişi</td></tr>
               <tr><td style="padding:10px 16px;color:#78716c;font-size:14px;border-top:1px solid #f0ede8;">Toplam</td><td style="padding:10px 16px;color:#292524;border-top:1px solid #f0ede8;font-size:14px;">${safe(formatTRY(order.totalPrice))}</td></tr>
               <tr><td style="padding:10px 16px;color:#78716c;font-size:14px;border-top:1px solid #f0ede8;">Tahsil Edilen</td><td style="padding:10px 16px;font-weight:700;color:#1a6b3a;border-top:1px solid #f0ede8;font-size:14px;">${safe(formatTRY(amountCharged))}</td></tr>
+              ${dueAtPropertyRow}
               <tr><td style="padding:10px 16px;color:#78716c;font-size:14px;border-top:1px solid #f0ede8;">Ödeme Türü</td><td style="padding:10px 16px;color:#292524;border-top:1px solid #f0ede8;font-size:14px;">${depositLabel}</td></tr>
             </table>
             <table width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #e7e5e4;border-radius:8px;overflow:hidden;margin-bottom:24px;">
@@ -210,6 +216,7 @@ function buildBusinessNotificationHtml(data: ReservationEmailData): string {
               <tr><td style="padding:10px 16px;color:#78716c;font-size:14px;border-top:1px solid #f0ede8;">Misafir</td><td style="padding:10px 16px;color:#292524;border-top:1px solid #f0ede8;font-size:14px;">${safe(order.guests)} kişi</td></tr>
               <tr><td style="padding:10px 16px;color:#78716c;font-size:14px;border-top:1px solid #f0ede8;">Toplam</td><td style="padding:10px 16px;color:#292524;border-top:1px solid #f0ede8;font-size:14px;">${safe(formatTRY(order.totalPrice))}</td></tr>
               <tr><td style="padding:10px 16px;color:#78716c;font-size:14px;border-top:1px solid #f0ede8;">Tahsil</td><td style="padding:10px 16px;font-weight:700;color:#1a6b3a;border-top:1px solid #f0ede8;font-size:14px;">${safe(formatTRY(amountCharged))} (${order.depositMode === 'deposit' ? 'Kapora %30' : 'Tam Ödeme'})</td></tr>
+              ${order.depositMode === 'deposit' ? `<tr><td style="padding:10px 16px;color:#78716c;font-size:14px;border-top:1px solid #f0ede8;">Tesiste Ödenecek</td><td style="padding:10px 16px;font-weight:700;color:#b45309;border-top:1px solid #f0ede8;font-size:14px;">${safe(formatTRY(order.totalPrice - amountCharged))}</td></tr>` : ''}
             </table>
             <table width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #e7e5e4;border-radius:8px;overflow:hidden;margin-bottom:20px;">
               <tr style="background:#eef2fb;">
