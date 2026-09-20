@@ -384,7 +384,7 @@
   },
   "amenities": {
     "pool": "Piscina (verano)",
-    "heatedPool": "Piscina privada climatizada",
+    "heatedPool": "Piscina privada climatizada (30-32°C)",
     "coolingPool": "Piscina de refresco",
     "sauna": "Sauna",
     "jacuzzi": "Jacuzzi",
@@ -520,8 +520,8 @@
       ]
     },
     "ucgen-1-1": {
-      "description": "Una de las estructuras más populares — piscina climatizada privada, sauna y diseño triangular icónico. 4 unidades.",
-      "longDescription": "Nuestros Bungalós Triangulares 1+1 están entre las estructuras más preferidas del resort, con 4 unidades en total. La arquitectura triangular icónica y las texturas cálidas de madera ofrecen un ambiente único en el corazón de la naturaleza. Dentro de cada bungaló encontrará una piscina climatizada privada, jacuzzi, sauna y tumbonas junto a la piscina más un columpio doble — para disfrutar del spa todo el año. Con cama doble en el altillo y sofá cama doble más sofá cama individual en el salón, pueden alojarse hasta 5 personas.",
+      "description": "Una de las estructuras más populares — piscina climatizada privada (30-32°C), sauna y diseño triangular icónico. 4 unidades.",
+      "longDescription": "Nuestros Bungalós Triangulares 1+1 están entre las estructuras más preferidas del resort, con 4 unidades en total. La arquitectura triangular icónica y las texturas cálidas de madera ofrecen un ambiente único en el corazón de la naturaleza. Dentro de cada bungaló encontrará una piscina climatizada privada (agua mantenida a 30-32°C durante todo el año), jacuzzi, sauna y tumbonas junto a la piscina más un columpio doble — para disfrutar del spa todo el año. Con cama doble en el altillo y sofá cama doble más sofá cama individual en el salón, pueden alojarse hasta 5 personas.",
       "bedConfig": [
         "🛏️ Cama doble en el altillo",
         "🛋️ Sofá cama doble en el salón",
@@ -562,8 +562,8 @@
       ]
     },
     "ucgen-2-1": {
-      "description": "Bungaló triangular 2+1 de 95 m² — piscina climatizada privada, sauna y confort para familias grandes. 2 unidades.",
-      "longDescription": "En Hat Naturel Resort Sapanca nuestros Bungalós Triangulares 2+1 están diseñados para familias grandes, con 2 unidades en total. En 95 m² ofrecen espacio cómodo para toda la familia y dan a la naturaleza. Cada bungaló incluye piscina climatizada privada, jacuzzi, sauna, tumbonas junto a la piscina y columpio doble — disfrute del spa en cada temporada. La arquitectura triangular icónica crea una atmósfera digna de postal.",
+      "description": "Bungaló triangular 2+1 de 95 m² — piscina climatizada privada (30-32°C), sauna y confort para familias grandes. 2 unidades.",
+      "longDescription": "En Hat Naturel Resort Sapanca nuestros Bungalós Triangulares 2+1 están diseñados para familias grandes, con 2 unidades en total. En 95 m² ofrecen espacio cómodo para toda la familia y dan a la naturaleza. Cada bungaló incluye piscina climatizada privada (agua a temperatura constante de 30-32°C todo el año), jacuzzi, sauna, tumbonas junto a la piscina y columpio doble — disfrute del spa en cada temporada. La arquitectura triangular icónica crea una atmósfera digna de postal.",
       "bedConfig": [
         "🛏️ 1 cama doble en el dormitorio principal",
         "🛏️ 2 camas individuales en el altillo",

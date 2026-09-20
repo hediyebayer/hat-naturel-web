@@ -384,7 +384,7 @@
   },
   "amenities": {
     "pool": "Pool (Sommer)",
-    "heatedPool": "Beheizter Privatpool",
+    "heatedPool": "Beheizter Privatpool (30-32°C)",
     "coolingPool": "Kühlbecken",
     "sauna": "Sauna",
     "jacuzzi": "Whirlpool",
@@ -520,8 +520,8 @@
       ]
     },
     "ucgen-1-1": {
-      "description": "Eines der beliebtesten Gebäude — privater beheizter Pool, Sauna und ikonisches Dreiecksdesign. 4 Einheiten verfügbar.",
-      "longDescription": "Unsere 1+1 Dreiecksbungalows gehören zu den beliebtesten Gebäuden des Resorts, insgesamt 4 Einheiten. Die ikonische Dreiecksarchitektur und warmen Holztexturen bieten eine einzigartige Atmosphäre mitten in der Natur. In jedem Bungalow finden Sie einen privaten beheizten Pool, Whirlpool, Sauna und Poolliegen plus Doppelschaukel — für ganzjährige Spa-Genuss. Mit einem Doppelbett auf der Galerie und einem Doppelschlafsofa plus Einzelschlafsofa im Wohnbereich können bis zu 5 Personen übernachten. Ideal für Paare und kleine Familien.",
+      "description": "Eines der beliebtesten Gebäude — privater beheizter Pool (30-32°C), Sauna und ikonisches Dreiecksdesign. 4 Einheiten verfügbar.",
+      "longDescription": "Unsere 1+1 Dreiecksbungalows gehören zu den beliebtesten Gebäuden des Resorts, insgesamt 4 Einheiten. Die ikonische Dreiecksarchitektur und warmen Holztexturen bieten eine einzigartige Atmosphäre mitten in der Natur. In jedem Bungalow finden Sie einen privaten beheizten Pool (Wassertemperatur konstant 30-32°C), Whirlpool, Sauna und Poolliegen plus Doppelschaukel — für ganzjährigen Spa-Genuss. Mit einem Doppelbett auf der Galerie und einem Doppelschlafsofa plus Einzelschlafsofa im Wohnbereich können bis zu 5 Personen übernachten. Ideal für Paare und kleine Familien.",
       "bedConfig": [
         "🛏️ Doppelbett auf der Galerie",
         "🛋️ Doppel-Schlafsofa im Wohnbereich",
@@ -562,8 +562,8 @@
       ]
     },
     "ucgen-2-1": {
-      "description": "Dreiecksbungalow 2+1 mit 95 m² — privater beheizter Pool, Sauna und komfortabler Wohnraum für große Familien. 2 Einheiten.",
-      "longDescription": "Im Hat Naturel Resort Sapanca wurden unsere 2+1 Dreiecksbungalows für größere Familien konzipiert, insgesamt 2 Einheiten. Auf 95 m² bieten sie komfortablen Raum für eine ganze Familie und blicken auf die Natur. Jeder Bungalow verfügt über einen privaten beheizten Pool, Whirlpool, Sauna, Poolliegen und eine Doppelschaukel — Spa-Genuss in jeder Saison. Die ikonische Dreiecksarchitektur schafft eine bildschöne Atmosphäre.",
+      "description": "Dreiecksbungalow 2+1 mit 95 m² — privater beheizter Pool (30-32°C), Sauna und komfortabler Wohnraum für große Familien. 2 Einheiten.",
+      "longDescription": "Im Hat Naturel Resort Sapanca wurden unsere 2+1 Dreiecksbungalows für größere Familien konzipiert, insgesamt 2 Einheiten. Auf 95 m² bieten sie komfortablen Raum für eine ganze Familie und blicken auf die Natur. Jeder Bungalow verfügt über einen privaten beheizten Pool (Wasser ganzjährig auf 30-32°C gehalten), Whirlpool, Sauna, Poolliegen und eine Doppelschaukel — Spa-Genuss in jeder Saison. Die ikonische Dreiecksarchitektur schafft eine bildschöne Atmosphäre.",
       "bedConfig": [
         "🛏️ 1 Doppelbett im Schlafzimmer",
         "🛏️ 2 Einzelbetten auf der Galerie",
