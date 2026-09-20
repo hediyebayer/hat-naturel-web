@@ -434,6 +434,11 @@
       "shortName": "Triangle 1+1",
       "tagline": "Piscine chauffée + jacuzzi + sauna, triangle iconique"
     },
+    "ucgen-1-1-serinleme": {
+      "name": "Bungalow Triangle 1+1 (Piscine Rafraîchissante)",
+      "shortName": "Triangle 1+1 (Rafraîch.)",
+      "tagline": "Piscine rafraîchissante + jacuzzi + sauna, triangle iconique"
+    },
     "mor": {
       "name": "Lodge Violet 2+1",
       "shortName": "Violet 2+1",
@@ -448,6 +453,11 @@
       "name": "Bungalow Triangle 2+1",
       "shortName": "Triangle 2+1",
       "tagline": "Piscine chauffée + jacuzzi + sauna, grande famille"
+    },
+    "ucgen-2-1-serinleme": {
+      "name": "Bungalow Triangle 2+1 (Piscine Rafraîchissante)",
+      "shortName": "Triangle 2+1 (Rafraîch.)",
+      "tagline": "Piscine rafraîchissante + jacuzzi + sauna, grande famille"
     }
   },
   "roomDetail": {
@@ -510,8 +520,18 @@
       ]
     },
     "ucgen-1-1": {
-      "description": "L'une des structures les plus populaires — piscine chauffée privée, sauna et design triangulaire iconique. 6 unités.",
-      "longDescription": "Nos Bungalows Triangulaires 1+1 figurent parmi les structures les plus prisées du resort, avec 6 unités au total. L'architecture triangulaire iconique et les textures de bois chaleureuses offrent une atmosphère unique au cœur de la nature. À l'intérieur de chaque bungalow vous trouverez une piscine chauffée privée, un jacuzzi, un sauna et des chaises longues au bord de la piscine plus une balançoire double — pour profiter du spa toute l'année. Avec un lit double en mezzanine et un canapé-lit double plus un canapé-lit simple dans le salon, jusqu'à 5 personnes peuvent loger. Idéal pour couples et petites familles.",
+      "description": "L'une des structures les plus populaires — piscine chauffée privée, sauna et design triangulaire iconique. 4 unités.",
+      "longDescription": "Nos Bungalows Triangulaires 1+1 figurent parmi les structures les plus prisées du resort, avec 4 unités au total. L'architecture triangulaire iconique et les textures de bois chaleureuses offrent une atmosphère unique au cœur de la nature. À l'intérieur de chaque bungalow vous trouverez une piscine chauffée privée, un jacuzzi, un sauna et des chaises longues au bord de la piscine plus une balançoire double — pour profiter du spa toute l'année. Avec un lit double en mezzanine et un canapé-lit double plus un canapé-lit simple dans le salon, jusqu'à 5 personnes peuvent loger. Idéal pour couples et petites familles.",
+      "bedConfig": [
+        "🛏️ Lit double en mezzanine",
+        "🛋️ Canapé-lit double dans le salon",
+        "🛋️ Canapé-lit simple supplémentaire",
+        "👪 Jusqu'à 5 personnes"
+      ]
+    },
+    "ucgen-1-1-serinleme": {
+      "description": "Design triangulaire iconique — piscine privée rafraîchissante (non chauffée), jacuzzi et sauna. 2 unités.",
+      "longDescription": "Nos Bungalows Triangulaires 1+1 avec Piscine Rafraîchissante sont présents au resort avec 2 unités. L'architecture triangulaire iconique et les textures de bois chaleureuses offrent une atmosphère unique au cœur de la nature. La piscine privée à l'intérieur du bungalow n'est pas chauffée et est destinée à la fraîcheur — idéale lors des chaudes journées d'été. Le jacuzzi et le sauna, en revanche, sont disponibles toute l'année. Les chaises longues au bord de la piscine et une balançoire double complètent le plaisir du jardin. Avec un lit double en mezzanine et un canapé-lit double plus un canapé-lit simple dans le salon, jusqu'à 5 personnes peuvent loger. Un choix avantageux pour les couples et les petites familles.",
       "bedConfig": [
         "🛏️ Lit double en mezzanine",
         "🛋️ Canapé-lit double dans le salon",
@@ -542,8 +562,19 @@
       ]
     },
     "ucgen-2-1": {
-      "description": "Bungalow triangulaire 2+1 de 95 m² — piscine chauffée privée, sauna et confort pour les grandes familles. 3 unités.",
-      "longDescription": "Au Hat Naturel Resort Sapanca, nos Bungalows Triangulaires 2+1 ont été conçus pour les grandes familles, avec 3 unités au total. Sur 95 m², ils offrent un espace confortable pour toute la famille et donnent sur la nature. Chaque bungalow comprend une piscine chauffée privée, jacuzzi, sauna, chaises longues au bord de la piscine et une balançoire double — plaisir du spa en toutes saisons. L'architecture triangulaire iconique crée une atmosphère digne d'une carte postale.",
+      "description": "Bungalow triangulaire 2+1 de 95 m² — piscine chauffée privée, sauna et confort pour les grandes familles. 2 unités.",
+      "longDescription": "Au Hat Naturel Resort Sapanca, nos Bungalows Triangulaires 2+1 ont été conçus pour les grandes familles, avec 2 unités au total. Sur 95 m², ils offrent un espace confortable pour toute la famille et donnent sur la nature. Chaque bungalow comprend une piscine chauffée privée, jacuzzi, sauna, chaises longues au bord de la piscine et une balançoire double — plaisir du spa en toutes saisons. L'architecture triangulaire iconique crée une atmosphère digne d'une carte postale.",
+      "bedConfig": [
+        "🛏️ 1 lit double dans la chambre principale",
+        "🛏️ 2 lits simples en mezzanine",
+        "🛋️ Canapé-lit double dans le salon",
+        "🛋️ Canapé-lit simple dans le salon",
+        "👪 Jusqu'à 7 personnes"
+      ]
+    },
+    "ucgen-2-1-serinleme": {
+      "description": "Bungalow triangulaire 2+1 de 95 m² — piscine privée rafraîchissante (non chauffée), jacuzzi, sauna et confort pour les grandes familles. 1 unité.",
+      "longDescription": "Au Hat Naturel Resort Sapanca, notre Bungalow Triangulaire 2+1 avec Piscine Rafraîchissante a été conçu pour les grandes familles et est disponible en une seule unité. Sur 95 m², il offre un espace confortable pour toute la famille et donne sur la nature. La piscine privée à l'intérieur du bungalow n'est pas chauffée et est destinée à la fraîcheur lors des journées chaudes. Le jacuzzi et le sauna sont disponibles en toutes saisons. L'architecture triangulaire iconique crée une atmosphère digne d'une carte postale.",
       "bedConfig": [
         "🛏️ 1 lit double dans la chambre principale",
         "🛏️ 2 lits simples en mezzanine",

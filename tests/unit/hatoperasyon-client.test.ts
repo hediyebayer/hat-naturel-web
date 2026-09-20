@@ -565,22 +565,26 @@ describe('hatoperasyon-client', () => {
     });
 
     describe('Happy Path - Üçgen Bungalovlar', () => {
-      it('maps B1 to ucgen-1-1', () => {
-        expect(mapBungalowToSlug('B1')).toBe('ucgen-1-1');
+      it('maps B1 to ucgen-1-1-serinleme (ısıtmasız override)', () => {
+        expect(mapBungalowToSlug('B1')).toBe('ucgen-1-1-serinleme');
       });
 
       it('maps B5 to ucgen-1-1', () => {
         expect(mapBungalowToSlug('B5')).toBe('ucgen-1-1');
       });
 
-      it('maps B9 to ucgen-1-1', () => {
-        expect(mapBungalowToSlug('B9')).toBe('ucgen-1-1');
+      it('maps B9 to ucgen-1-1-serinleme (ısıtmasız override)', () => {
+        expect(mapBungalowToSlug('B9')).toBe('ucgen-1-1-serinleme');
+      });
+
+      it('maps B2 to ucgen-2-1-serinleme (ısıtmasız override)', () => {
+        expect(mapBungalowToSlug('B2')).toBe('ucgen-2-1-serinleme');
       });
     });
 
     describe('Edge Cases - Case insensitive', () => {
       it('handles lowercase input (b1)', () => {
-        expect(mapBungalowToSlug('b1')).toBe('ucgen-1-1');
+        expect(mapBungalowToSlug('b1')).toBe('ucgen-1-1-serinleme');
       });
 
       it('handles lowercase input (sk10)', () => {
@@ -598,7 +602,7 @@ describe('hatoperasyon-client', () => {
       });
 
       it('trims whitespace for bungalow ( B1 )', () => {
-        expect(mapBungalowToSlug(' B1 ')).toBe('ucgen-1-1');
+        expect(mapBungalowToSlug(' B1 ')).toBe('ucgen-1-1-serinleme');
       });
     });
 
@@ -622,35 +626,49 @@ describe('hatoperasyon-client', () => {
   });
 
   describe('mapBungalowToSlugWithCapacity', () => {
-    describe('Happy Path - Üçgen Bungalovlar', () => {
-      it('maps B1 with capacity 5 to ucgen-1-1', () => {
-        expect(mapBungalowToSlugWithCapacity('B1', 5)).toBe('ucgen-1-1');
+    describe('Serinleme (ısıtmasız) üçgen override — isim kapasiteden önce gelir', () => {
+      it('maps B1 with capacity 5 to ucgen-1-1-serinleme', () => {
+        expect(mapBungalowToSlugWithCapacity('B1', 5)).toBe('ucgen-1-1-serinleme');
       });
 
-      it('maps B1 with capacity 7 to ucgen-2-1', () => {
-        expect(mapBungalowToSlugWithCapacity('B1', 7)).toBe('ucgen-2-1');
+      it('maps B1 with capacity 7 to ucgen-1-1-serinleme (override beats capacity)', () => {
+        expect(mapBungalowToSlugWithCapacity('B1', 7)).toBe('ucgen-1-1-serinleme');
+      });
+
+      it('maps B2 with capacity 7 to ucgen-2-1-serinleme (override beats capacity)', () => {
+        expect(mapBungalowToSlugWithCapacity('B2', 7)).toBe('ucgen-2-1-serinleme');
+      });
+
+      it('maps B2 with capacity 5 to ucgen-2-1-serinleme', () => {
+        expect(mapBungalowToSlugWithCapacity('B2', 5)).toBe('ucgen-2-1-serinleme');
+      });
+
+      it('maps B9 with capacity 4 to ucgen-1-1-serinleme', () => {
+        expect(mapBungalowToSlugWithCapacity('B9', 4)).toBe('ucgen-1-1-serinleme');
+      });
+    });
+
+    describe('Happy Path - Isıtmalı Üçgen Bungalovlar', () => {
+      it('maps B5 with capacity 5 to ucgen-1-1', () => {
+        expect(mapBungalowToSlugWithCapacity('B5', 5)).toBe('ucgen-1-1');
       });
 
       it('maps B5 with capacity 8 to ucgen-2-1', () => {
         expect(mapBungalowToSlugWithCapacity('B5', 8)).toBe('ucgen-2-1');
       });
-
-      it('maps B9 with capacity 4 to ucgen-1-1', () => {
-        expect(mapBungalowToSlugWithCapacity('B9', 4)).toBe('ucgen-1-1');
-      });
     });
 
     describe('Edge Cases - Boundary capacity', () => {
       it('treats capacity 6 as ucgen-1-1 (< 7)', () => {
-        expect(mapBungalowToSlugWithCapacity('B1', 6)).toBe('ucgen-1-1');
+        expect(mapBungalowToSlugWithCapacity('B5', 6)).toBe('ucgen-1-1');
       });
 
       it('treats capacity 7 as ucgen-2-1 (>= 7)', () => {
-        expect(mapBungalowToSlugWithCapacity('B1', 7)).toBe('ucgen-2-1');
+        expect(mapBungalowToSlugWithCapacity('B5', 7)).toBe('ucgen-2-1');
       });
 
       it('handles capacity 0 as ucgen-1-1', () => {
-        expect(mapBungalowToSlugWithCapacity('B1', 0)).toBe('ucgen-1-1');
+        expect(mapBungalowToSlugWithCapacity('B5', 0)).toBe('ucgen-1-1');
       });
     });
 

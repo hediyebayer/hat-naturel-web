@@ -124,18 +124,38 @@ describe('reservation/availability', () => {
 
   describe('pickBestForCategory()', () => {
     it('müsait odalar arasından en düşük fiyatlıyı seçer', () => {
+      // B5/B6/B7 ısıtmalı 1+1 üçgenler — override'lı kodlar (B1/B2/B9) serinlemeye gider
       const result = pickBestForCategory(
         [
-          makeRoom({ bungalowId: 'B1', name: 'B1', capacity: 5, isAvailable: true, pricePerNight: 7000 }),
-          makeRoom({ bungalowId: 'B2', name: 'B2', capacity: 5, isAvailable: true, pricePerNight: 6200 }),
-          makeRoom({ bungalowId: 'B3', name: 'B3', capacity: 5, isAvailable: false, pricePerNight: 5000 }),
+          makeRoom({ bungalowId: 'B5', name: 'B5', capacity: 5, isAvailable: true, pricePerNight: 7000 }),
+          makeRoom({ bungalowId: 'B6', name: 'B6', capacity: 5, isAvailable: true, pricePerNight: 6200 }),
+          makeRoom({ bungalowId: 'B7', name: 'B7', capacity: 5, isAvailable: false, pricePerNight: 5000 }),
         ],
         'ucgen-1-1',
         2,
       );
 
-      expect(result?.bungalowId).toBe('B2');
+      expect(result?.bungalowId).toBe('B6');
       expect(result?.pricePerNight).toBe(6200);
+    });
+
+    it('serinleme slugları override kodları eşler (B1/B9 → 1+1, B2 → 2+1)', () => {
+      const result11 = pickBestForCategory(
+        [
+          makeRoom({ bungalowId: 'B1', name: 'B1', capacity: 5, pricePerNight: 5000 }),
+          makeRoom({ bungalowId: 'B9', name: 'B9', capacity: 5, pricePerNight: 5200 }),
+        ],
+        'ucgen-1-1-serinleme',
+        2,
+      );
+      expect(result11?.bungalowId).toBe('B1');
+
+      const result21 = pickBestForCategory(
+        [makeRoom({ bungalowId: 'B2', name: 'B2', capacity: 7, pricePerNight: 6500 })],
+        'ucgen-2-1-serinleme',
+        2,
+      );
+      expect(result21?.bungalowId).toBe('B2');
     });
 
     it('müsait oda yoksa eşleşenler arasından en düşük fiyatlıyı seçer', () => {
@@ -169,8 +189,10 @@ describe('reservation/availability', () => {
         ok: true,
         nights: 2,
         rooms: [
-          makeRoom({ bungalowId: 'B1', name: 'B1', capacity: 5, pricePerNight: 6800, totalPrice: 13600 }),
-          makeRoom({ bungalowId: 'B2', name: 'B2', capacity: 5, pricePerNight: 6200, totalPrice: 12400 }),
+          makeRoom({ bungalowId: 'B1', name: 'B1', capacity: 5, pricePerNight: 5800, totalPrice: 11600 }),
+          makeRoom({ bungalowId: 'B5', name: 'B5', capacity: 5, pricePerNight: 6800, totalPrice: 13600 }),
+          makeRoom({ bungalowId: 'B6', name: 'B6', capacity: 5, pricePerNight: 6200, totalPrice: 12400 }),
+          makeRoom({ bungalowId: 'B2', name: 'B2', capacity: 7, pricePerNight: 9500, totalPrice: 19000 }),
           makeRoom({ bungalowId: 'SK10', name: 'SK10', capacity: 7, pricePerNight: 9000, totalPrice: 18000 }),
           makeRoom({ bungalowId: 'MOK11', name: 'MOK11', capacity: 7, pricePerNight: 11000, totalPrice: 22000, isAvailable: false, unavailableReason: 'Bakımda' }),
           makeRoom({ bungalowId: 'B8', name: 'B8', capacity: 7, pricePerNight: 12000, totalPrice: 24000 }),
@@ -192,6 +214,12 @@ describe('reservation/availability', () => {
       });
 
       const ucgen = result.rooms.find((room) => room.room.slug === 'ucgen-1-1');
+      const ucgen11Serinleme = result.rooms.find(
+        (room) => room.room.slug === 'ucgen-1-1-serinleme',
+      );
+      const ucgen21Serinleme = result.rooms.find(
+        (room) => room.room.slug === 'ucgen-2-1-serinleme',
+      );
       const sari = result.rooms.find((room) => room.room.slug === 'sari');
       const mor = result.rooms.find((room) => room.room.slug === 'mor');
       const bej = result.rooms.find((room) => room.room.slug === 'bej');
@@ -200,6 +228,17 @@ describe('reservation/availability', () => {
         isAvailable: true,
         pricePerNight: 6200,
         totalPrice: 12400,
+      });
+      // B1 override ile serinleme 1+1'e, B2 override ile serinleme 2+1'e gider
+      expect(ucgen11Serinleme).toMatchObject({
+        bungalowId: 'B1',
+        isAvailable: true,
+        pricePerNight: 5800,
+      });
+      expect(ucgen21Serinleme).toMatchObject({
+        bungalowId: 'B2',
+        isAvailable: true,
+        pricePerNight: 9500,
       });
       expect(sari).toMatchObject({
         isAvailable: true,
@@ -236,6 +275,12 @@ describe('reservation/availability', () => {
 
       const ucgen = result.rooms.find((room) => room.room.slug === 'ucgen-1-1');
       const mor = result.rooms.find((room) => room.room.slug === 'mor');
+      const ucgen11Serinleme = result.rooms.find(
+        (room) => room.room.slug === 'ucgen-1-1-serinleme',
+      );
+      const ucgen21Serinleme = result.rooms.find(
+        (room) => room.room.slug === 'ucgen-2-1-serinleme',
+      );
 
       expect(ucgen).toMatchObject({
         isAvailable: true,
@@ -246,6 +291,17 @@ describe('reservation/availability', () => {
         isAvailable: true,
         pricePerNight: 7500,
         totalPrice: 15000,
+      });
+      // Serinleme (ısıtmasız) üçgen fallback fiyatları
+      expect(ucgen11Serinleme).toMatchObject({
+        isAvailable: true,
+        pricePerNight: 5000,
+        totalPrice: 10000,
+      });
+      expect(ucgen21Serinleme).toMatchObject({
+        isAvailable: true,
+        pricePerNight: 6500,
+        totalPrice: 13000,
       });
     });
 

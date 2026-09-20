@@ -434,6 +434,11 @@
       "shortName": "Triangolo 1+1",
       "tagline": "Piscina riscaldata + jacuzzi + sauna, triangolo iconico"
     },
+    "ucgen-1-1-serinleme": {
+      "name": "Bungalow Triangolare 1+1 (Piscina Rinfrescante)",
+      "shortName": "Triangolo 1+1 (Rinfresc.)",
+      "tagline": "Piscina rinfrescante + jacuzzi + sauna, triangolo iconico"
+    },
     "mor": {
       "name": "Lodge Viola 2+1",
       "shortName": "Viola 2+1",
@@ -448,6 +453,11 @@
       "name": "Bungalow Triangolare 2+1",
       "shortName": "Triangolo 2+1",
       "tagline": "Piscina riscaldata + jacuzzi + sauna, grande famiglia"
+    },
+    "ucgen-2-1-serinleme": {
+      "name": "Bungalow Triangolare 2+1 (Piscina Rinfrescante)",
+      "shortName": "Triangolo 2+1 (Rinfresc.)",
+      "tagline": "Piscina rinfrescante + jacuzzi + sauna, grande famiglia"
     }
   },
   "roomDetail": {
@@ -510,8 +520,18 @@
       ]
     },
     "ucgen-1-1": {
-      "description": "Una delle strutture più popolari — piscina riscaldata privata, sauna e iconico design triangolare. 6 unità.",
-      "longDescription": "I nostri Bungalow Triangolari 1+1 sono tra le strutture più amate del resort, con 6 unità totali. L'architettura triangolare iconica e le calde texture in legno offrono un'atmosfera unica nel cuore della natura. All'interno di ogni bungalow troverete una piscina riscaldata privata, jacuzzi, sauna e lettini a bordo piscina più un'altalena doppia — per il piacere della spa tutto l'anno. Con letto matrimoniale nel soppalco e divano letto matrimoniale più divano letto singolo in soggiorno, possono alloggiare fino a 5 persone.",
+      "description": "Una delle strutture più popolari — piscina riscaldata privata, sauna e iconico design triangolare. 4 unità.",
+      "longDescription": "I nostri Bungalow Triangolari 1+1 sono tra le strutture più amate del resort, con 4 unità totali. L'architettura triangolare iconica e le calde texture in legno offrono un'atmosfera unica nel cuore della natura. All'interno di ogni bungalow troverete una piscina riscaldata privata, jacuzzi, sauna e lettini a bordo piscina più un'altalena doppia — per il piacere della spa tutto l'anno. Con letto matrimoniale nel soppalco e divano letto matrimoniale più divano letto singolo in soggiorno, possono alloggiare fino a 5 persone.",
+      "bedConfig": [
+        "🛏️ Letto matrimoniale nel soppalco",
+        "🛋️ Divano letto matrimoniale in soggiorno",
+        "🛋️ Divano letto singolo extra",
+        "👪 Fino a 5 ospiti"
+      ]
+    },
+    "ucgen-1-1-serinleme": {
+      "description": "Design triangolare iconico — piscina privata rinfrescante (non riscaldata), jacuzzi e sauna. 2 unità.",
+      "longDescription": "I nostri Bungalow Triangolari 1+1 con Piscina Rinfrescante sono presenti nel resort con 2 unità. L'architettura triangolare iconica e le calde texture in legno offrono un'atmosfera unica nel cuore della natura. La piscina privata all'interno del bungalow non è riscaldata ed è pensata per rinfrescarsi — ideale nelle giornate estive più calde. Jacuzzi e sauna, al contrario, sono disponibili tutto l'anno. Lettini a bordo piscina e un'altalena doppia completano il piacere del giardino. Con letto matrimoniale nel soppalco e divano letto matrimoniale più divano letto singolo in soggiorno, possono alloggiare fino a 5 persone. Una scelta vantaggiosa per coppie e piccole famiglie.",
       "bedConfig": [
         "🛏️ Letto matrimoniale nel soppalco",
         "🛋️ Divano letto matrimoniale in soggiorno",
@@ -542,8 +562,19 @@
       ]
     },
     "ucgen-2-1": {
-      "description": "Bungalow triangolare 2+1 di 95 m² — piscina riscaldata privata, sauna e comfort per famiglie numerose. 3 unità.",
-      "longDescription": "Al Hat Naturel Resort Sapanca i nostri Bungalow Triangolari 2+1 sono progettati per famiglie numerose, con 3 unità totali. Su 95 m² offrono spazio comodo per tutta la famiglia e si affacciano sulla natura. Ogni bungalow include piscina riscaldata privata, jacuzzi, sauna, lettini a bordo piscina e altalena doppia — godimento spa in ogni stagione. L'iconica architettura triangolare crea un'atmosfera da cartolina.",
+      "description": "Bungalow triangolare 2+1 di 95 m² — piscina riscaldata privata, sauna e comfort per famiglie numerose. 2 unità.",
+      "longDescription": "Al Hat Naturel Resort Sapanca i nostri Bungalow Triangolari 2+1 sono progettati per famiglie numerose, con 2 unità totali. Su 95 m² offrono spazio comodo per tutta la famiglia e si affacciano sulla natura. Ogni bungalow include piscina riscaldata privata, jacuzzi, sauna, lettini a bordo piscina e altalena doppia — godimento spa in ogni stagione. L'iconica architettura triangolare crea un'atmosfera da cartolina.",
+      "bedConfig": [
+        "🛏️ 1 letto matrimoniale nella camera principale",
+        "🛏️ 2 letti singoli nel soppalco",
+        "🛋️ Divano letto matrimoniale in soggiorno",
+        "🛋️ Divano letto singolo in soggiorno",
+        "👪 Fino a 7 ospiti"
+      ]
+    },
+    "ucgen-2-1-serinleme": {
+      "description": "Bungalow triangolare 2+1 di 95 m² — piscina privata rinfrescante (non riscaldata), jacuzzi, sauna e comfort per famiglie numerose. 1 unità.",
+      "longDescription": "Al Hat Naturel Resort Sapanca il nostro Bungalow Triangolare 2+1 con Piscina Rinfrescante è progettato per famiglie numerose ed è disponibile come unità singola. Su 95 m² offre spazio comodo per tutta la famiglia e si affaccia sulla natura. La piscina privata all'interno del bungalow non è riscaldata ed è pensata per rinfrescarsi nelle giornate calde. Jacuzzi e sauna sono disponibili in ogni stagione. L'iconica architettura triangolare crea un'atmosfera da cartolina.",
       "bedConfig": [
         "🛏️ 1 letto matrimoniale nella camera principale",
         "🛏️ 2 letti singoli nel soppalco",
