@@ -24,13 +24,14 @@ import confetti from 'canvas-confetti';
  */
 const CAMPAIGN_ACTIVE = true;
 
-// Marka paleti: gold (accent) + krem + orman yeşili + beyaz.
-// Koyu lacivert hero görseli üstünde açık renkler daha çok parlar.
+// Marka paleti: lacivert (primary) + gold (accent) + kampanya kırmızısı + krem + beyaz.
+// Koyu hero görseli üstünde gold/kırmızı/beyaz parlar, lacivert marka bağını kurar.
 const CAMPAIGN_COLORS = [
+  '#2a4685', // primary lacivert
   '#d4af37', // accent gold
   '#f0d875', // gold light
+  '#e63946', // kampanya kırmızısı
   '#f2ede3', // secondary krem
-  '#a7d7b8', // forest açık
   '#ffffff', // beyaz parıltı
 ];
 
