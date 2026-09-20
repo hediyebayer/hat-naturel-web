@@ -13,6 +13,13 @@ import confetti from 'canvas-confetti';
  * - Kampanya bittiğinde CAMPAIGN_ACTIVE'i false yapman yeterli —
  *   component hiç patlatmaz.
  *
+ * ÖNEMLİ — ana thread render:
+ * canvas-confetti default olarak Worker + OffscreenCanvas kullanır. QA'da
+ * tespit edildi: bazı ortamlarda OffscreenCanvas çıktısı ekrana composit
+ * edilmiyor, konfeti DOM'da canvas oluşmasına rağmen GÖRÜNMÜYOR. Bu yüzden
+ * kendi canvas elementimizi oluşturup `useWorker: false` ile ana thread'e
+ * zorluyoruz — her ortamda garantili görünür render.
+ *
  * Koreografi: sol alt → sağ alt → merkez üst (üç dalga, ~2sn toplam)
  */
 const CAMPAIGN_ACTIVE = true;
@@ -31,14 +38,22 @@ const CAMPAIGN_COLORS = [
 const SESSION_KEY = 'hn-campaign-confetti-v1';
 
 function fireCampaignConfetti(): void {
+  const canvas = document.createElement('canvas');
+  canvas.setAttribute('aria-hidden', 'true');
+  canvas.style.cssText =
+    'position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:90';
+  document.body.appendChild(canvas);
+
+  // Ana thread render — bkz. dosya başındaki not
+  const fire = confetti.create(canvas, { useWorker: false, resize: true });
+
   const shared = {
     colors: CAMPAIGN_COLORS,
     disableForReducedMotion: true,
-    zIndex: 90,
   };
 
   // 1. dalga — sol alt köşeden içeri doğru
-  confetti({
+  fire({
     ...shared,
     particleCount: 90,
     spread: 70,
@@ -50,7 +65,7 @@ function fireCampaignConfetti(): void {
 
   // 2. dalga — sağ alt köşeden içeri doğru (senkron)
   setTimeout(() => {
-    confetti({
+    fire({
       ...shared,
       particleCount: 90,
       spread: 70,
@@ -63,7 +78,7 @@ function fireCampaignConfetti(): void {
 
   // 3. dalga — merkezden yukarı doğru (final vurgusu)
   setTimeout(() => {
-    confetti({
+    fire({
       ...shared,
       particleCount: 60,
       spread: 100,
@@ -73,6 +88,9 @@ function fireCampaignConfetti(): void {
       ticks: 220,
     });
   }, 500);
+
+  // Konfeti bittikten sonra canvas'ı DOM'dan kaldır
+  setTimeout(() => canvas.remove(), 4500);
 }
 
 /**
@@ -83,16 +101,26 @@ export function CampaignConfetti(): null {
   useEffect(() => {
     if (!CAMPAIGN_ACTIVE) return;
 
-    // Aynı oturumda zaten patladıysa tekrar etme
+    // Guard'ı burada SADECE OKU — yazma işini patlatma anına bırakıyoruz.
+    // Sebep: React strict mode (dev) effect'i çift çalıştırır; erken yazsaydık
+    // mount-cleanup-mount dizisinde ikinci mount erken return edip hiç
+    // patlatamazdı.
     try {
       if (sessionStorage.getItem(SESSION_KEY)) return;
-      sessionStorage.setItem(SESSION_KEY, '1');
     } catch {
       // sessionStorage engellenmişse (private mode vb.) sessizce devam et
     }
 
     // Hero'nun stagger fade-in animasyonları otursun diye küçük gecikme
-    const timer = setTimeout(fireCampaignConfetti, 800);
+    const timer = setTimeout(() => {
+      // Konfeti gerçekten tetikleniyor — şimdi guard'ı yaz
+      try {
+        sessionStorage.setItem(SESSION_KEY, '1');
+      } catch {
+        // ignore
+      }
+      fireCampaignConfetti();
+    }, 800);
 
     return () => clearTimeout(timer);
   }, []);
