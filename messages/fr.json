@@ -520,8 +520,8 @@
       ]
     },
     "ucgen-1-1": {
-      "description": "L'une des structures les plus populaires — piscine chauffée privée (30-32°C), sauna et design triangulaire iconique. 4 unités.",
-      "longDescription": "Nos Bungalows Triangulaires 1+1 figurent parmi les structures les plus prisées du resort, avec 4 unités au total. L'architecture triangulaire iconique et les textures de bois chaleureuses offrent une atmosphère unique au cœur de la nature. À l'intérieur de chaque bungalow vous trouverez une piscine chauffée privée (eau maintenue à 30-32°C toute l'année), un jacuzzi, un sauna et des chaises longues au bord de la piscine plus une balançoire double — pour profiter du spa toute l'année. Avec un lit double en mezzanine et un canapé-lit double plus un canapé-lit simple dans le salon, jusqu'à 5 personnes peuvent loger. Idéal pour couples et petites familles.",
+      "description": "L'une des structures les plus populaires — piscine chauffée privée (chauffée à 30-32°C en hiver), sauna et design triangulaire iconique. 4 unités.",
+      "longDescription": "Nos Bungalows Triangulaires 1+1 figurent parmi les structures les plus prisées du resort, avec 4 unités au total. L'architecture triangulaire iconique et les textures de bois chaleureuses offrent une atmosphère unique au cœur de la nature. À l'intérieur de chaque bungalow vous trouverez une piscine chauffée privée, un jacuzzi, un sauna et des chaises longues au bord de la piscine plus une balançoire double — pour profiter du spa pendant la majeure partie de l'année. L'eau est chauffée à 30-32°C en saison hivernale ; le chauffage est éteint en été. Par temps exceptionnellement froid avec risque de gel, le chauffage ne peut être mis en service. Avec un lit double en mezzanine et un canapé-lit double plus un canapé-lit simple dans le salon, jusqu'à 5 personnes peuvent loger. Idéal pour couples et petites familles.",
       "bedConfig": [
         "🛏️ Lit double en mezzanine",
         "🛋️ Canapé-lit double dans le salon",
@@ -562,8 +562,8 @@
       ]
     },
     "ucgen-2-1": {
-      "description": "Bungalow triangulaire 2+1 de 95 m² — piscine chauffée privée (30-32°C), sauna et confort pour les grandes familles. 2 unités.",
-      "longDescription": "Au Hat Naturel Resort Sapanca, nos Bungalows Triangulaires 2+1 ont été conçus pour les grandes familles, avec 2 unités au total. Sur 95 m², ils offrent un espace confortable pour toute la famille et donnent sur la nature. Chaque bungalow comprend une piscine chauffée privée (eau maintenue à une température constante de 30-32°C), jacuzzi, sauna, chaises longues au bord de la piscine et une balançoire double — plaisir du spa en toutes saisons. L'architecture triangulaire iconique crée une atmosphère digne d'une carte postale.",
+      "description": "Bungalow triangulaire 2+1 de 95 m² — piscine chauffée privée (chauffée à 30-32°C en hiver), sauna et confort pour les grandes familles. 2 unités.",
+      "longDescription": "Au Hat Naturel Resort Sapanca, nos Bungalows Triangulaires 2+1 ont été conçus pour les grandes familles, avec 2 unités au total. Sur 95 m², ils offrent un espace confortable pour toute la famille et donnent sur la nature. Chaque bungalow comprend une piscine chauffée privée, jacuzzi, sauna, chaises longues au bord de la piscine et une balançoire double — plaisir du spa pendant la majeure partie de l'année. L'eau est chauffée à 30-32°C en saison hivernale ; le chauffage est éteint en été. Par temps exceptionnellement froid avec risque de gel, le chauffage ne peut être mis en service. L'architecture triangulaire iconique crée une atmosphère digne d'une carte postale.",
       "bedConfig": [
         "🛏️ 1 lit double dans la chambre principale",
         "🛏️ 2 lits simples en mezzanine",

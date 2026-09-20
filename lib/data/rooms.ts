@@ -104,7 +104,7 @@ export const CATEGORIES: CategoryMeta[] = [
     subtitle: 'Geniş aileler için ikonik üçgen mimari — özel ısıtmalı havuz ve sauna',
     totalCount: 2,
     hasPool: true,
-    poolNote: 'Isıtmalı havuz (30-32°C) + sauna her mevsim açık',
+    poolNote: 'Isıtmalı havuz (kışın 30-32°C) + sauna her mevsim açık',
   },
   {
     id: 'ucgen-2-1-serinleme',
@@ -119,10 +119,10 @@ export const CATEGORIES: CategoryMeta[] = [
     id: 'ucgen-1-1',
     title: '1+1 Üçgen Bungalov',
     titleEn: '1+1 Triangle Bungalow',
-    subtitle: 'İkonik üçgen mimari — özel ısıtmalı havuz ve sauna ile yıl boyu spa keyfi',
+    subtitle: 'İkonik üçgen mimari — özel ısıtmalı havuz ve sauna eşliğinde spa keyfi',
     totalCount: 4,
     hasPool: true,
-    poolNote: 'Isıtmalı havuz (30-32°C) + sauna her mevsim açık',
+    poolNote: 'Isıtmalı havuz (kışın 30-32°C) + sauna her mevsim açık',
   },
   {
     id: 'ucgen-1-1-serinleme',
@@ -335,9 +335,9 @@ export const ROOMS: Room[] = [
       '👪 Maksimum 5 kişi konaklayabilir',
     ],
     description:
-      'Tesisin en popüler yapılarından — özel ısıtmalı havuz (30-32°C), sauna ve ikonik üçgen tasarım. Tesisimizde 4 adet bulunur.',
+      'Tesisin en popüler yapılarından — özel ısıtmalı havuz (kışın 30-32°C aralığına ısıtılır), sauna ve ikonik üçgen tasarım. Tesisimizde 4 adet bulunur.',
     longDescription:
-      '1+1 Üçgen Bungalov’larımız tesisimizin en çok tercih edilen yapılarındandır ve toplam 4 adet bulunur. İkonik üçgen mimarisi ve sıcak ahşap dokularıyla doğanın içinde benzersiz bir atmosfer sunar. Bungalov içi özel ısıtmalı havuz (suyu 30-32°C arasında tutulur), jakuzi, sauna ve havuz başı şezlong + çift kişilik yataklı salıncak ile yıl boyu spa keyfi yaşarsınız. Asma katta çift kişilik yatak + ortak alanda çift kişilik çekyat ve tek kişilik çekyat ile maksimum 5 kişi konaklayabilir. Çiftler ve küçük aileler için ideal, hem fiyat hem konfor olarak avantajlı bir seçim.',
+      '1+1 Üçgen Bungalov’larımız tesisimizin en çok tercih edilen yapılarındandır ve toplam 4 adet bulunur. İkonik üçgen mimarisi ve sıcak ahşap dokularıyla doğanın içinde benzersiz bir atmosfer sunar. Bungalov içi özel ısıtmalı havuz, jakuzi, sauna ve havuz başı şezlong + çift kişilik yataklı salıncak ile yılın büyük bölümünde spa keyfi yaşarsınız. Havuz suyu ısıtma sistemiyle kış aylarında 30-32°C aralığına ısıtılır; yaz aylarında ısıtma kapalıdır. Don olaylarının yaşandığı aşırı soğuk günlerde ısıtma yapılamamaktadır. Asma katta çift kişilik yatak + ortak alanda çift kişilik çekyat ve tek kişilik çekyat ile maksimum 5 kişi konaklayabilir. Çiftler ve küçük aileler için ideal, hem fiyat hem konfor olarak avantajlı bir seçim.',
     specs: { area: 85, guests: 2, extraGuests: 3, bedrooms: 1, bathrooms: 1 },
     amenities: TRIANGLE_BUNGALOW_AMENITIES,
     images: [
@@ -457,9 +457,9 @@ export const ROOMS: Room[] = [
       '👪 Maksimum 7 kişi konaklayabilir',
     ],
     description:
-      '95 m² genişliğinde üçgen mimari 2+1 — özel ısıtmalı havuz (30-32°C), sauna ve geniş aileye rahat yaşam alanı. Tesisimizde 2 adet bulunur.',
+      '95 m² genişliğinde üçgen mimari 2+1 — özel ısıtmalı havuz (kışın 30-32°C aralığına ısıtılır), sauna ve geniş aileye rahat yaşam alanı. Tesisimizde 2 adet bulunur.',
     longDescription:
-      'Hat Naturel Resort Sapanca\'da 2+1 Üçgen Bungalov’larımız geniş aile yapısı için tasarlanmıştır ve tesiste toplam 2 adet bulunur. 95 m² büyüklüğünde tam bir aileye rahatça yaşam alanı sunan bungalovlarımız doğa manzaralıdır. Bungalov içi özel ısıtmalı havuz (suyu yıl boyunca 30-32°C arasında sabit sıcaklıkta tutulur), jakuzi, sauna, havuz başı şezlong ve çift kişilik yataklı salıncak ile her mevsim spa keyfi yaşanır. İkonik üçgen mimarisi ile fotoğraflık bir atmosfer yaratır; her biri benzer iç tasarım ve donanıma sahiptir.',
+      'Hat Naturel Resort Sapanca\'da 2+1 Üçgen Bungalov’larımız geniş aile yapısı için tasarlanmıştır ve tesiste toplam 2 adet bulunur. 95 m² büyüklüğünde tam bir aileye rahatça yaşam alanı sunan bungalovlarımız doğa manzaralıdır. Bungalov içi özel ısıtmalı havuz, jakuzi, sauna, havuz başı şezlong ve çift kişilik yataklı salıncak ile spa keyfi yaşanır. Havuz suyu ısıtma sistemiyle kış aylarında 30-32°C aralığına ısıtılır; yaz aylarında ısıtma kapalıdır. Don olaylarının yaşandığı aşırı soğuk günlerde ısıtma yapılamamaktadır. İkonik üçgen mimarisi ile fotoğraflık bir atmosfer yaratır; her biri benzer iç tasarım ve donanıma sahiptir.',
     specs: { area: 95, guests: 4, extraGuests: 3, bedrooms: 2, bathrooms: 1 },
     amenities: TRIANGLE_BUNGALOW_AMENITIES,
     images: [
