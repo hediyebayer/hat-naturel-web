@@ -13,6 +13,7 @@ import { Heading } from '@/components/ui/heading';
 import { Text } from '@/components/ui/text';
 import { ButtonLink } from '@/components/ui/button';
 import { HeroSection } from '@/components/home/hero-section';
+import { CampaignConfetti } from '@/components/home/campaign-confetti';
 import { ReservationBar } from '@/components/reservation/reservation-bar';
 import { AboutSection } from '@/components/home/about-section';
 import { ReviewsSection } from '@/components/home/reviews-section';
@@ -90,6 +91,9 @@ export default function HomePage(props: HomePageProps): React.ReactElement {
       />
       {/* Hero — drone manzarası + slow zoom + parallax + stagger fade-in */}
       <HeroSection locale={params.locale} />
+
+      {/* Kampanya konfetisi — açılışta bir kez patlar (session bazlı) */}
+      <CampaignConfetti />
 
       {/* Rezervasyon barı — hero'nun altına yapışık */}
       <ReservationBar locale={params.locale} />
