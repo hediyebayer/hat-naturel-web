@@ -25,9 +25,12 @@ import {
 const MAX_GUESTS = 10;
 
 // Hatoperasyon erişilemezse kullanılacak fallback fiyatlar
+// (serinleme = ısıtmasız havuzlu üçgenler, ısıtmalıdan daha uygun fiyatlı)
 const FALLBACK_BASE_PRICES: Record<string, number> = {
   'ucgen-2-1': 8500,
   'ucgen-1-1': 6500,
+  'ucgen-2-1-serinleme': 6500,
+  'ucgen-1-1-serinleme': 5000,
   bej: 4500,
   turkuaz: 4500,
   sari: 4500,

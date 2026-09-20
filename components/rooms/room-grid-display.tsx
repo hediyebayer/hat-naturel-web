@@ -24,11 +24,13 @@ interface RoomGridDisplayProps {
 
 /**
  * Tüm odaları/kategorileri tek bir grid'de gösterir.
- * - Üçgen 2+1 → tek kart (count: 3 badge)
- * - Üçgen 1+1 → tek kart (count: 6 badge)
+ * - Üçgen 2+1 → tek kart (count: 2 badge, ısıtmalı)
+ * - Üçgen 2+1 Serinleme → tek kart (count: 1, ısıtmasız havuz)
+ * - Üçgen 1+1 → tek kart (count: 4 badge, ısıtmalı)
+ * - Üçgen 1+1 Serinleme → tek kart (count: 2, ısıtmasız havuz)
  * - Bej, Turkuaz, Sarı, Mor → ayrı ayrı 4 kart
  *
- * Toplam 6 kart. grid-cols: mobile 1, sm 2, lg 3.
+ * Toplam 8 kart. grid-cols: mobile 1, sm 2, lg 3.
  *
  * Her kartta köşelerden LED ışık efekti (hover'da yoğunlaşır).
  */

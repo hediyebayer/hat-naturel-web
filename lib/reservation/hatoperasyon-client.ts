@@ -228,7 +228,9 @@ function isAvailabilityResponse(
  * Hatoperasyon bungalov ismini (B1, SK10, MOK11...) web slug'ına çevirir.
  *
  * Kural:
- * - B1-B9 → ucgen-1-1 veya ucgen-2-1 (kapasiteye göre çağıran ayırır)
+ * - B1, B9 → ucgen-1-1-serinleme (ısıtmasız 1+1 üçgen — isim override'ı kapasiteden önce gelir)
+ * - B2 → ucgen-2-1-serinleme (ısıtmasız 2+1 üçgen)
+ * - Diğer B* → ucgen-1-1 veya ucgen-2-1 (kapasiteye göre çağıran ayırır)
  * - SK10 → sari (Sarı Köşk)
  * - MOK11 → mor (Mor Köşk)
  * - BK12 → bej
@@ -247,6 +249,11 @@ export function mapBungalowToSlug(bungalowName: string): string | null {
   if (name === 'TK13') return 'turkuaz';
   if (name === 'MAK14') return 'mavi';
 
+  // Isıtmasız (serinleme) üçgenler — isim override'ı /^B\d+$/ regex'inden ÖNCE
+  // kontrol edilmeli; yoksa B2 kapasite 7 ile yanlışlıkla ucgen-2-1'e düşer.
+  if (name === 'B1' || name === 'B9') return 'ucgen-1-1-serinleme';
+  if (name === 'B2') return 'ucgen-2-1-serinleme';
+
   if (/^B\d+$/.test(name)) {
     return 'ucgen-1-1';
   }
@@ -256,12 +263,18 @@ export function mapBungalowToSlug(bungalowName: string): string | null {
 
 /**
  * mapBungalowToSlug + kapasite versiyonu.
+ * Serinleme (ısıtmasız) üçgenler isim override'ıyla sabitlenir;
+ * kapasite yalnızca ısıtmalı üçgen ayrımında kullanılır.
  */
 export function mapBungalowToSlugWithCapacity(
   bungalowName: string,
   capacity: number,
 ): string | null {
   const name = bungalowName.toUpperCase().trim();
+
+  // Isım override'ı kapasiteden önce gelir (B2 kapasite 7 olsa bile serinleme 2+1'dir)
+  if (name === 'B1' || name === 'B9') return 'ucgen-1-1-serinleme';
+  if (name === 'B2') return 'ucgen-2-1-serinleme';
 
   if (/^B\d+$/.test(name)) {
     return capacity >= 7 ? 'ucgen-2-1' : 'ucgen-1-1';

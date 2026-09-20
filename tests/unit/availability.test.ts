@@ -167,9 +167,13 @@ describe('availability', () => {
       expect(result.nights).toBe(3);
       expect(result.rooms.length).toBeGreaterThan(0);
 
-      // At least some rooms should be mapped
-      const ucgenRoom = result.rooms.find((r) => r.room.slug === 'ucgen-1-1');
-      expect(ucgenRoom).toBeDefined();
+      // B1 artık serinleme (ısıtmasız) 1+1 üçgene map edilir
+      const serinlemeRoom = result.rooms.find(
+        (r) => r.room.slug === 'ucgen-1-1-serinleme',
+      );
+      expect(serinlemeRoom).toBeDefined();
+      expect(serinlemeRoom?.bungalowId).toBe('b1');
+      expect(serinlemeRoom?.isAvailable).toBe(true);
     });
 
     it('calculates nights correctly (2026-06-01 to 2026-06-04 = 3 nights)', async () => {
@@ -305,12 +309,22 @@ describe('availability', () => {
 
       const result = await getAvailability(query);
 
-      // Fallback prices: ucgen-2-1: 8500, ucgen-1-1: 6500, bej: 4500, etc.
+      // Fallback prices: ucgen-2-1: 8500, ucgen-1-1: 6500, serinleme: 6500/5000, bej: 4500, etc.
       const ucgen21 = result.rooms.find((r) => r.room.slug === 'ucgen-2-1');
       expect(ucgen21?.pricePerNight).toBe(8500);
 
       const ucgen11 = result.rooms.find((r) => r.room.slug === 'ucgen-1-1');
       expect(ucgen11?.pricePerNight).toBe(6500);
+
+      const ucgen21Serinleme = result.rooms.find(
+        (r) => r.room.slug === 'ucgen-2-1-serinleme',
+      );
+      expect(ucgen21Serinleme?.pricePerNight).toBe(6500);
+
+      const ucgen11Serinleme = result.rooms.find(
+        (r) => r.room.slug === 'ucgen-1-1-serinleme',
+      );
+      expect(ucgen11Serinleme?.pricePerNight).toBe(5000);
 
       const bej = result.rooms.find((r) => r.room.slug === 'bej');
       expect(bej?.pricePerNight).toBe(4500);
@@ -341,10 +355,11 @@ describe('availability', () => {
 
   describe('getAvailability - pickBestForCategory logic', () => {
     it('picks available + cheapest room when multiple bungalows match', async () => {
+      // B5/B6/B7 ısıtmalı 1+1 üçgenler (B1/B2/B9 override'lı serinleme sluglarına gider)
       const mockRooms: HatoperasyonRoom[] = [
         {
-          bungalowId: 'b1',
-          name: 'B1',
+          bungalowId: 'b5',
+          name: 'B5',
           capacity: 5,
           type: 'ucgen',
           features: {},
@@ -353,8 +368,8 @@ describe('availability', () => {
           totalPrice: 21000,
         },
         {
-          bungalowId: 'b2',
-          name: 'B2',
+          bungalowId: 'b6',
+          name: 'B6',
           capacity: 5,
           type: 'ucgen',
           features: {},
@@ -363,8 +378,8 @@ describe('availability', () => {
           totalPrice: 19500,
         },
         {
-          bungalowId: 'b3',
-          name: 'B3',
+          bungalowId: 'b7',
+          name: 'B7',
           capacity: 5,
           type: 'ucgen',
           features: {},
@@ -392,14 +407,15 @@ describe('availability', () => {
 
       const ucgen11 = result.rooms.find((r) => r.room.slug === 'ucgen-1-1');
       expect(ucgen11?.isAvailable).toBe(true);
-      expect(ucgen11?.pricePerNight).toBe(6500); // B2 seçildi
+      expect(ucgen11?.pricePerNight).toBe(6500); // B6 seçildi
     });
 
     it('picks cheapest unavailable room if all are unavailable', async () => {
+      // B5/B6 ısıtmalı 1+1 üçgenler (override'lı kodlar serinleme kategorisine gider)
       const mockRooms: HatoperasyonRoom[] = [
         {
-          bungalowId: 'b1',
-          name: 'B1',
+          bungalowId: 'b5',
+          name: 'B5',
           capacity: 5,
           type: 'ucgen',
           features: {},
@@ -409,8 +425,8 @@ describe('availability', () => {
           unavailableReason: 'Booked',
         },
         {
-          bungalowId: 'b2',
-          name: 'B2',
+          bungalowId: 'b6',
+          name: 'B6',
           capacity: 5,
           type: 'ucgen',
           features: {},
@@ -439,7 +455,7 @@ describe('availability', () => {
 
       const ucgen11 = result.rooms.find((r) => r.room.slug === 'ucgen-1-1');
       expect(ucgen11?.isAvailable).toBe(false);
-      expect(ucgen11?.pricePerNight).toBe(7000); // B2 seçildi (en ucuz)
+      expect(ucgen11?.pricePerNight).toBe(7000); // B6 seçildi (en ucuz)
       expect(ucgen11?.unavailableReason).toBe('Booked');
     });
 
@@ -483,9 +499,9 @@ describe('availability', () => {
     it('filters rooms by capacity (guests)', async () => {
       const mockRooms: HatoperasyonRoom[] = [
         {
-          bungalowId: 'b1',
-          name: 'B1',
-          capacity: 5, // Küçük kapasite
+          bungalowId: 'b6',
+          name: 'B6',
+          capacity: 5, // Küçük kapasite (ısıtmalı 1+1)
           type: 'ucgen',
           features: {},
           isAvailable: true,
@@ -520,12 +536,12 @@ describe('availability', () => {
 
       const result = await getAvailability(query);
 
-      // B1 (capacity 5) üçgen-1-1'e eşleşir ama guests=6 > 5 → filtrelenir
+      // B6 (capacity 5) üçgen-1-1'e eşleşir ama guests=6 > 5 → filtrelenir
       // B5 (capacity 7) üçgen-2-1'e eşleşir, guests=6 <= 7 → OK
       const ucgen11 = result.rooms.find((r) => r.room.slug === 'ucgen-1-1');
       const ucgen21 = result.rooms.find((r) => r.room.slug === 'ucgen-2-1');
 
-      // ucgen-1-1 backend'de match yok (B1 filtrelendi)
+      // ucgen-1-1 backend'de match yok (B6 filtrelendi)
       expect(ucgen11?.isAvailable).toBe(false);
 
       // ucgen-2-1 B5 ile eşleşti

@@ -49,7 +49,9 @@ export type Amenity =
  */
 export type RoomCategory =
   | 'ucgen-2-1'
+  | 'ucgen-2-1-serinleme'
   | 'ucgen-1-1'
+  | 'ucgen-1-1-serinleme'
   | 'kosk-1-1-havuzsuz'
   | 'kosk-2-1-havuzlu';
 
@@ -100,18 +102,36 @@ export const CATEGORIES: CategoryMeta[] = [
     title: '2+1 Üçgen Bungalov',
     titleEn: '2+1 Triangle Bungalow',
     subtitle: 'Geniş aileler için ikonik üçgen mimari — özel ısıtmalı havuz ve sauna',
-    totalCount: 3,
+    totalCount: 2,
     hasPool: true,
     poolNote: 'Isıtmalı havuz + sauna her mevsim açık',
+  },
+  {
+    id: 'ucgen-2-1-serinleme',
+    title: '2+1 Üçgen Bungalov (Serinleme Havuzlu)',
+    titleEn: '2+1 Triangle Bungalow (Cooling Pool)',
+    subtitle: 'İkonik üçgen mimari — özel serinleme havuzu (ısıtmasız), jakuzi ve sauna',
+    totalCount: 1,
+    hasPool: true,
+    poolNote: 'Serinleme havuzu (ısıtmasız) + sauna her mevsim açık',
   },
   {
     id: 'ucgen-1-1',
     title: '1+1 Üçgen Bungalov',
     titleEn: '1+1 Triangle Bungalow',
     subtitle: 'İkonik üçgen mimari — özel ısıtmalı havuz ve sauna ile yıl boyu spa keyfi',
-    totalCount: 6,
+    totalCount: 4,
     hasPool: true,
     poolNote: 'Isıtmalı havuz + sauna her mevsim açık',
+  },
+  {
+    id: 'ucgen-1-1-serinleme',
+    title: '1+1 Üçgen Bungalov (Serinleme Havuzlu)',
+    titleEn: '1+1 Triangle Bungalow (Cooling Pool)',
+    subtitle: 'İkonik üçgen mimari — özel serinleme havuzu (ısıtmasız), jakuzi ve sauna',
+    totalCount: 2,
+    hasPool: true,
+    poolNote: 'Serinleme havuzu (ısıtmasız) + sauna her mevsim açık',
   },
   {
     id: 'kosk-1-1-havuzsuz',
@@ -179,6 +199,22 @@ const OUTDOOR_AMENITIES: Amenity[] = [
  */
 const TRIANGLE_BUNGALOW_AMENITIES: Amenity[] = [
   'heatedPool',
+  'jacuzzi',
+  'sauna',
+  'sunbed',
+  'doubleSwing',
+  ...BASE_ROOM_AMENITIES,
+  ...OUTDOOR_AMENITIES,
+  ...FACILITY_AMENITIES,
+];
+
+/**
+ * Serinleme havuzlu üçgen bungalov amenities
+ * (ısıtmasız serinleme havuzu + jakuzi + sauna + şezlong + çift salıncak —
+ * jakuzi ve sauna tüm üçgen bungalovlarda mevcuttur)
+ */
+const SERINLEME_TRIANGLE_AMENITIES: Amenity[] = [
+  'coolingPool',
   'jacuzzi',
   'sauna',
   'sunbed',
@@ -291,7 +327,7 @@ export const ROOMS: Room[] = [
     shortName: '1+1 Üçgen',
     tagline: 'Isıtmalı havuz + jakuzi + sauna, ikonik üçgen',
     category: 'ucgen-1-1',
-    count: 6,
+    count: 4,
     bedConfig: [
       '🛏️ Asma katta çift kişilik yatak',
       '🛋️ Ortak alanda çift kişilik çekyat',
@@ -299,9 +335,9 @@ export const ROOMS: Room[] = [
       '👪 Maksimum 5 kişi konaklayabilir',
     ],
     description:
-      'Tesisin en popüler yapılarından — özel ısıtmalı havuz, sauna ve ikonik üçgen tasarım. Tesisimizde 6 adet bulunur.',
+      'Tesisin en popüler yapılarından — özel ısıtmalı havuz, sauna ve ikonik üçgen tasarım. Tesisimizde 4 adet bulunur.',
     longDescription:
-      '1+1 Üçgen Bungalov’larımız tesisimizin en çok tercih edilen yapılarındandır ve toplam 6 adet bulunur. İkonik üçgen mimarisi ve sıcak ahşap dokularıyla doğanın içinde benzersiz bir atmosfer sunar. Bungalov içi özel ısıtmalı havuz, jakuzi, sauna ve havuz başı şezlong + çift kişilik yataklı salıncak ile yıl boyu spa keyfi yaşarsınız. Asma katta çift kişilik yatak + ortak alanda çift kişilik çekyat ve tek kişilik çekyat ile maksimum 5 kişi konaklayabilir. Çiftler ve küçük aileler için ideal, hem fiyat hem konfor olarak avantajlı bir seçim.',
+      '1+1 Üçgen Bungalov’larımız tesisimizin en çok tercih edilen yapılarındandır ve toplam 4 adet bulunur. İkonik üçgen mimarisi ve sıcak ahşap dokularıyla doğanın içinde benzersiz bir atmosfer sunar. Bungalov içi özel ısıtmalı havuz, jakuzi, sauna ve havuz başı şezlong + çift kişilik yataklı salıncak ile yıl boyu spa keyfi yaşarsınız. Asma katta çift kişilik yatak + ortak alanda çift kişilik çekyat ve tek kişilik çekyat ile maksimum 5 kişi konaklayabilir. Çiftler ve küçük aileler için ideal, hem fiyat hem konfor olarak avantajlı bir seçim.',
     specs: { area: 85, guests: 2, extraGuests: 3, bedrooms: 1, bathrooms: 1 },
     amenities: TRIANGLE_BUNGALOW_AMENITIES,
     images: [
@@ -313,6 +349,34 @@ export const ROOMS: Room[] = [
     accentColor: 'from-orange-300/40 via-amber-200/20 to-transparent',
     theme: 'wood',
     featured: true,
+  },
+  {
+    slug: 'ucgen-1-1-serinleme',
+    name: '1+1 Üçgen Bungalov (Serinleme Havuzlu)',
+    shortName: '1+1 Üçgen (Serinleme)',
+    tagline: 'Serinleme havuzu + jakuzi + sauna, ikonik üçgen',
+    category: 'ucgen-1-1-serinleme',
+    count: 2,
+    bedConfig: [
+      '🛏️ Asma katta çift kişilik yatak',
+      '🛋️ Ortak alanda çift kişilik çekyat',
+      '🛋️ Tek kişilik ek çekyat',
+      '👪 Maksimum 5 kişi konaklayabilir',
+    ],
+    description:
+      'İkonik üçgen tasarım — özel serinleme havuzu (ısıtmasız), jakuzi ve sauna. Tesisimizde 2 adet bulunur.',
+    longDescription:
+      '1+1 Üçgen Bungalov’larımızdan Serinleme Havuzlu olanları tesisimizde toplam 2 adettir. İkonik üçgen mimarisi ve sıcak ahşap dokularıyla doğanın içinde benzersiz bir atmosfer sunar. Bungalov içi özel havuz ısıtmasızdır ve serinleme amaçlıdır; yaz aylarında serinleme keyfi için idealdir. Jakuzi ve sauna ise her mevsim kullanıma açıktır. Havuz başı şezlong ve çift kişilik yataklı salıncak ile bahçe keyfi yaşarsınız. Asma katta çift kişilik yatak + ortak alanda çift kişilik çekyat ve tek kişilik çekyat ile maksimum 5 kişi konaklayabilir. Çiftler ve küçük aileler için avantajlı fiyatlı bir seçim.',
+    specs: { area: 85, guests: 2, extraGuests: 3, bedrooms: 1, bathrooms: 1 },
+    amenities: SERINLEME_TRIANGLE_AMENITIES,
+    images: [
+      '01.jpg', '02.jpg', '03.jpg', '04.jpg', '05.jpg',
+      '06.jpg', '07.jpg', '08.jpg', '09.jpg', '10.jpg', '11.jpg',
+    ].map(
+      (n) => `/images/rooms/ucgen-1-1/${n}`,
+    ),
+    accentColor: 'from-teal-300/40 via-cyan-200/20 to-transparent',
+    theme: 'turquoise',
   },
   {
     slug: 'mor',
@@ -384,7 +448,7 @@ export const ROOMS: Room[] = [
     shortName: 'Üçgen 2+1',
     tagline: 'Isıtmalı havuz + jakuzi + sauna, geniş aile',
     category: 'ucgen-2-1',
-    count: 3,
+    count: 2,
     bedConfig: [
       '🛏️ Ebeveyn odasında 1 adet çift kişilik yatak',
       '🛏️ Asma katta 2 adet tek kişilik yatak',
@@ -393,9 +457,9 @@ export const ROOMS: Room[] = [
       '👪 Maksimum 7 kişi konaklayabilir',
     ],
     description:
-      '95 m² genişliğinde üçgen mimari 2+1 — özel ısıtmalı havuz, sauna ve geniş aileye rahat yaşam alanı. Tesisimizde 3 adet bulunur.',
+      '95 m² genişliğinde üçgen mimari 2+1 — özel ısıtmalı havuz, sauna ve geniş aileye rahat yaşam alanı. Tesisimizde 2 adet bulunur.',
     longDescription:
-      'Hat Naturel Resort Sapanca\'da 2+1 Üçgen Bungalov’larımız geniş aile yapısı için tasarlanmıştır ve tesiste toplam 3 adet bulunur. 95 m² büyüklüğünde tam bir aileye rahatça yaşam alanı sunan bungalovlarımız doğa manzaralıdır. Bungalov içi özel ısıtmalı havuz, jakuzi, sauna, havuz başı şezlong ve çift kişilik yataklı salıncak ile her mevsim spa keyfi yaşanır. İkonik üçgen mimarisi ile fotoğraflık bir atmosfer yaratır; her biri benzer iç tasarım ve donanıma sahiptir.',
+      'Hat Naturel Resort Sapanca\'da 2+1 Üçgen Bungalov’larımız geniş aile yapısı için tasarlanmıştır ve tesiste toplam 2 adet bulunur. 95 m² büyüklüğünde tam bir aileye rahatça yaşam alanı sunan bungalovlarımız doğa manzaralıdır. Bungalov içi özel ısıtmalı havuz, jakuzi, sauna, havuz başı şezlong ve çift kişilik yataklı salıncak ile her mevsim spa keyfi yaşanır. İkonik üçgen mimarisi ile fotoğraflık bir atmosfer yaratır; her biri benzer iç tasarım ve donanıma sahiptir.',
     specs: { area: 95, guests: 4, extraGuests: 3, bedrooms: 2, bathrooms: 1 },
     amenities: TRIANGLE_BUNGALOW_AMENITIES,
     images: [
@@ -416,15 +480,52 @@ export const ROOMS: Room[] = [
     theme: 'green',
     featured: true,
   },
+  {
+    slug: 'ucgen-2-1-serinleme',
+    name: '2+1 Üçgen Bungalov (Serinleme Havuzlu)',
+    shortName: 'Üçgen 2+1 (Serinleme)',
+    tagline: 'Serinleme havuzu + jakuzi + sauna, geniş aile',
+    category: 'ucgen-2-1-serinleme',
+    count: 1,
+    bedConfig: [
+      '🛏️ Ebeveyn odasında 1 adet çift kişilik yatak',
+      '🛏️ Asma katta 2 adet tek kişilik yatak',
+      '🛋️ Ortak alanda çift kişilik çekyat',
+      '🛋️ Ortak alanda tek kişilik çekyat',
+      '👪 Maksimum 7 kişi konaklayabilir',
+    ],
+    description:
+      '95 m² genişliğinde üçgen mimari 2+1 — özel serinleme havuzu (ısıtmasız), jakuzi, sauna ve geniş aileye rahat yaşam alanı. Tesisimizde 1 adet bulunur.',
+    longDescription:
+      'Hat Naturel Resort Sapanca\'da 2+1 Üçgen Bungalov’umuzun Serinleme Havuzlu versiyonu geniş aile yapısı için tasarlanmıştır ve tesiste 1 adet bulunur. 95 m² büyüklüğünde tam bir aileye rahatça yaşam alanı sunan bungalovumuz doğa manzaralıdır. Bungalov içi özel havuz ısıtmasızdır ve serinleme amaçlıdır; sıcak günlerde ailecek serinleme keyfi için idealdir. Jakuzi ve sauna her mevsim kullanıma açıktır. İkonik üçgen mimarisi ile fotoğraflık bir atmosfer yaratır.',
+    specs: { area: 95, guests: 4, extraGuests: 3, bedrooms: 2, bathrooms: 1 },
+    amenities: SERINLEME_TRIANGLE_AMENITIES,
+    images: [
+      '01.jpg',
+      '02.jpg',
+      '03.jpg',
+      '04.jpg',
+      '05.jpg',
+      '06.jpg',
+      '07.jpg',
+      '08.jpg',
+      '09.jpg',
+      '10.jpg',
+      '11.jpg',
+      '12.jpg',
+    ].map((n) => `/images/rooms/ucgen-2-1/${n}`),
+    accentColor: 'from-sky-300/40 via-blue-200/20 to-transparent',
+    theme: 'blue',
+  },
 ];
 
-/** Toplam fiziksel ev adedi (kategorilerdeki count toplamı = 8) */
+/** Toplam fiziksel ev adedi (kategorilerdeki totalCount toplamı = 13) */
 export const TOTAL_HOUSE_COUNT = CATEGORIES.reduce(
   (acc, c) => acc + c.totalCount,
   0,
 );
 
-/** Kategori sayısı (5 demiştik ama 4 kategori var, count'larla 8 ev) */
+/** Kategori sayısı (6 kategori, count'larla 13 ev) */
 export const CATEGORY_COUNT = CATEGORIES.length;
 
 /** Bir kategoriye ait odaları getir */
@@ -435,6 +536,8 @@ export const CATEGORY_COUNT = CATEGORIES.length;
 export const ROOMS_DISPLAY_ORDER: ReadonlyArray<string> = [
   'ucgen-2-1',
   'ucgen-1-1',
+  'ucgen-2-1-serinleme',
+  'ucgen-1-1-serinleme',
   'mor',
   'sari',
   'bej',

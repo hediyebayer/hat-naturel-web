@@ -463,6 +463,11 @@
       "shortName": "1+1 Üçgen",
       "tagline": "Isıtmalı havuz + jakuzi + sauna, ikonik üçgen"
     },
+    "ucgen-1-1-serinleme": {
+      "name": "1+1 Üçgen Bungalov (Serinleme Havuzlu)",
+      "shortName": "1+1 Üçgen (Serinleme)",
+      "tagline": "Serinleme havuzu + jakuzi + sauna, ikonik üçgen"
+    },
     "mor": {
       "name": "2+1 Mor Köşk",
       "shortName": "Mor 2+1",
@@ -477,6 +482,11 @@
       "name": "2+1 Üçgen Bungalov",
       "shortName": "Üçgen 2+1",
       "tagline": "Isıtmalı havuz + jakuzi + sauna, geniş aile"
+    },
+    "ucgen-2-1-serinleme": {
+      "name": "2+1 Üçgen Bungalov (Serinleme Havuzlu)",
+      "shortName": "Üçgen 2+1 (Serinleme)",
+      "tagline": "Serinleme havuzu + jakuzi + sauna, geniş aile"
     }
   },
   "roomDetail": {
@@ -539,8 +549,18 @@
       ]
     },
     "ucgen-1-1": {
-      "description": "Tesisin en popüler yapılarından — özel ısıtmalı havuz, sauna ve ikonik üçgen tasarım. Tesisimizde 6 adet bulunur.",
-      "longDescription": "1+1 Üçgen Bungalov'larımız tesisimizin en çok tercih edilen yapılarındandır ve toplam 6 adet bulunur. İkonik üçgen mimarisi ve sıcak ahşap dokularıyla doğanın içinde benzersiz bir atmosfer sunar. Bungalov içi özel ısıtmalı havuz, jakuzi, sauna ve havuz başı şezlong + çift kişilik yataklı salıncak ile yıl boyu spa keyfi yaşarsınız. Asma katta çift kişilik yatak + ortak alanda çift kişilik çekyat ve tek kişilik çekyat ile maksimum 5 kişi konaklayabilir. Çiftler ve küçük aileler için ideal, hem fiyat hem konfor olarak avantajlı bir seçim.",
+      "description": "Tesisin en popüler yapılarından — özel ısıtmalı havuz, sauna ve ikonik üçgen tasarım. Tesisimizde 4 adet bulunur.",
+      "longDescription": "1+1 Üçgen Bungalov'larımız tesisimizin en çok tercih edilen yapılarındandır ve toplam 4 adet bulunur. İkonik üçgen mimarisi ve sıcak ahşap dokularıyla doğanın içinde benzersiz bir atmosfer sunar. Bungalov içi özel ısıtmalı havuz, jakuzi, sauna ve havuz başı şezlong + çift kişilik yataklı salıncak ile yıl boyu spa keyfi yaşarsınız. Asma katta çift kişilik yatak + ortak alanda çift kişilik çekyat ve tek kişilik çekyat ile maksimum 5 kişi konaklayabilir. Çiftler ve küçük aileler için ideal, hem fiyat hem konfor olarak avantajlı bir seçim.",
+      "bedConfig": [
+        "🛏️ Asma katta çift kişilik yatak",
+        "🛋️ Ortak alanda çift kişilik çekyat",
+        "🛋️ Tek kişilik ek çekyat",
+        "👪 Maksimum 5 kişi konaklayabilir"
+      ]
+    },
+    "ucgen-1-1-serinleme": {
+      "description": "İkonik üçgen tasarım — özel serinleme havuzu (ısıtmasız), jakuzi ve sauna. Tesisimizde 2 adet bulunur.",
+      "longDescription": "1+1 Üçgen Bungalov'larımızdan Serinleme Havuzlu olanları tesisimizde toplam 2 adettir. İkonik üçgen mimarisi ve sıcak ahşap dokularıyla doğanın içinde benzersiz bir atmosfer sunar. Bungalov içi özel havuz ısıtmasızdır ve serinleme amaçlıdır; yaz aylarında serinleme keyfi için idealdir. Jakuzi ve sauna ise her mevsim kullanıma açıktır. Havuz başı şezlong ve çift kişilik yataklı salıncak ile bahçe keyfi yaşarsınız. Asma katta çift kişilik yatak + ortak alanda çift kişilik çekyat ve tek kişilik çekyat ile maksimum 5 kişi konaklayabilir. Çiftler ve küçük aileler için avantajlı fiyatlı bir seçim.",
       "bedConfig": [
         "🛏️ Asma katta çift kişilik yatak",
         "🛋️ Ortak alanda çift kişilik çekyat",
@@ -571,8 +591,19 @@
       ]
     },
     "ucgen-2-1": {
-      "description": "95 m² genişliğinde üçgen mimari 2+1 — özel ısıtmalı havuz, sauna ve geniş aileye rahat yaşam alanı. Tesisimizde 3 adet bulunur.",
-      "longDescription": "Hat Naturel Resort Sapanca'da 2+1 Üçgen Bungalov'larımız geniş aile yapısı için tasarlanmıştır ve tesiste toplam 3 adet bulunur. 95 m² büyüklüğünde tam bir aileye rahatça yaşam alanı sunan bungalovlarımız doğa manzaralıdır. Bungalov içi özel ısıtmalı havuz, jakuzi, sauna, havuz başı şezlong ve çift kişilik yataklı salıncak ile her mevsim spa keyfi yaşanır. İkonik üçgen mimarisi ile fotoğraflık bir atmosfer yaratır; her biri benzer iç tasarım ve donanıma sahiptir.",
+      "description": "95 m² genişliğinde üçgen mimari 2+1 — özel ısıtmalı havuz, sauna ve geniş aileye rahat yaşam alanı. Tesisimizde 2 adet bulunur.",
+      "longDescription": "Hat Naturel Resort Sapanca'da 2+1 Üçgen Bungalov'larımız geniş aile yapısı için tasarlanmıştır ve tesiste toplam 2 adet bulunur. 95 m² büyüklüğünde tam bir aileye rahatça yaşam alanı sunan bungalovlarımız doğa manzaralıdır. Bungalov içi özel ısıtmalı havuz, jakuzi, sauna, havuz başı şezlong ve çift kişilik yataklı salıncak ile her mevsim spa keyfi yaşanır. İkonik üçgen mimarisi ile fotoğraflık bir atmosfer yaratır; her biri benzer iç tasarım ve donanıma sahiptir.",
+      "bedConfig": [
+        "🛏️ Ebeveyn odasında 1 adet çift kişilik yatak",
+        "🛏️ Asma katta 2 adet tek kişilik yatak",
+        "🛋️ Ortak alanda çift kişilik çekyat",
+        "🛋️ Ortak alanda tek kişilik çekyat",
+        "👪 Maksimum 7 kişi konaklayabilir"
+      ]
+    },
+    "ucgen-2-1-serinleme": {
+      "description": "95 m² genişliğinde üçgen mimari 2+1 — özel serinleme havuzu (ısıtmasız), jakuzi, sauna ve geniş aileye rahat yaşam alanı. Tesisimizde 1 adet bulunur.",
+      "longDescription": "Hat Naturel Resort Sapanca'da 2+1 Üçgen Bungalov'umuzun Serinleme Havuzlu versiyonu geniş aile yapısı için tasarlanmıştır ve tesiste 1 adet bulunur. 95 m² büyüklüğünde tam bir aileye rahatça yaşam alanı sunan bungalovumuz doğa manzaralıdır. Bungalov içi özel havuz ısıtmasızdır ve serinleme amaçlıdır; sıcak günlerde ailecek serinleme keyfi için idealdir. Jakuzi ve sauna her mevsim kullanıma açıktır. İkonik üçgen mimarisi ile fotoğraflık bir atmosfer yaratır.",
       "bedConfig": [
         "🛏️ Ebeveyn odasında 1 adet çift kişilik yatak",
         "🛏️ Asma katta 2 adet tek kişilik yatak",
