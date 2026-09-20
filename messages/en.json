@@ -413,7 +413,7 @@
   },
   "amenities": {
     "pool": "Pool (summer)",
-    "heatedPool": "Heated Pool",
+    "heatedPool": "Heated Pool (30-32°C)",
     "coolingPool": "Cooling Pool",
     "sauna": "Sauna",
     "jacuzzi": "Jacuzzi",
@@ -549,8 +549,8 @@
       ]
     },
     "ucgen-1-1": {
-      "description": "One of the most popular structures — private heated pool, sauna and iconic triangular design. 4 units available.",
-      "longDescription": "Our 1+1 Triangle Bungalows are among the most preferred structures on the resort, with 4 units in total. The iconic triangular architecture and warm wooden textures offer a unique atmosphere right in nature. Inside each bungalow you will find a private heated pool, jacuzzi, sauna and poolside loungers plus a double-seat swing — for year-round spa enjoyment. With a double bed in the mezzanine and a double sofa-bed plus single sofa-bed in the living area, up to 5 people can stay. Ideal for couples and small families, advantageous in both price and comfort.",
+      "description": "One of the most popular structures — private heated pool (30-32°C), sauna and iconic triangular design. 4 units available.",
+      "longDescription": "Our 1+1 Triangle Bungalows are among the most preferred structures on the resort, with 4 units in total. The iconic triangular architecture and warm wooden textures offer a unique atmosphere right in nature. Inside each bungalow you will find a private heated pool (water maintained at 30-32°C year-round), jacuzzi, sauna and poolside loungers plus a double-seat swing — for year-round spa enjoyment. With a double bed in the mezzanine and a double sofa-bed plus single sofa-bed in the living area, up to 5 people can stay. Ideal for couples and small families, advantageous in both price and comfort.",
       "bedConfig": [
         "🛏️ Double bed in the mezzanine",
         "🛋️ Double sofa-bed in the living area",
@@ -591,8 +591,8 @@
       ]
     },
     "ucgen-2-1": {
-      "description": "Triangular 2+1 of 95 m² — private heated pool, sauna and comfortable living for large families. 2 units available.",
-      "longDescription": "At Hat Naturel Resort Sapanca our 2+1 Triangle Bungalows were designed for larger families, with 2 units in total. Spanning 95 m², they offer comfortable space for a whole family and overlook nature. Each bungalow includes a private heated pool, jacuzzi, sauna, poolside loungers and a double-seat swing — spa enjoyment in every season. The iconic triangular architecture creates a picture-perfect atmosphere; each unit shares the same interior design and equipment.",
+      "description": "Triangular 2+1 of 95 m² — private heated pool (30-32°C), sauna and comfortable living for large families. 2 units available.",
+      "longDescription": "At Hat Naturel Resort Sapanca our 2+1 Triangle Bungalows were designed for larger families, with 2 units in total. Spanning 95 m², they offer comfortable space for a whole family and overlook nature. Each bungalow includes a private heated pool (water kept at a constant 30-32°C year-round), jacuzzi, sauna, poolside loungers and a double-seat swing — spa enjoyment in every season. The iconic triangular architecture creates a picture-perfect atmosphere; each unit shares the same interior design and equipment.",
       "bedConfig": [
         "🛏️ 1 double bed in the master bedroom",
         "🛏️ 2 single beds in the mezzanine",
