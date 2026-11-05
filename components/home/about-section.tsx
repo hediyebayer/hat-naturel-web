@@ -37,7 +37,7 @@ export function AboutSection() {
 
           {/* Başlık */}
           <h2 className="mx-auto mt-6 max-w-3xl font-serif text-4xl font-bold leading-tight tracking-tight text-neutral-900 md:text-5xl lg:text-6xl">
-            <span className="italic font-light text-accent-dark">{t('aboutTitleLight')}</span>{' '}
+            <span className="font-light text-accent-dark">{t('aboutTitleLight')}</span>{' '}
             {t('aboutTitleAfter')}{' '}
             <span className="block md:inline">{t('aboutTitleEnd')}</span>
           </h2>
@@ -97,7 +97,7 @@ export function AboutSection() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 1, delay: 0.8 }}
-          className="mx-auto mt-20 max-w-xl text-center font-serif text-2xl italic leading-snug text-neutral-800 md:text-3xl"
+          className="mx-auto mt-20 max-w-xl text-center font-serif text-2xl leading-snug text-neutral-800 md:text-3xl"
         >
           &ldquo;{t('ctaQuoteOpen')}{' '}
           <span className="text-accent-dark">

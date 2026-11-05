@@ -38,7 +38,7 @@ export function MapExploreSection() {
           </span>
           <h2 className="mt-6 font-serif text-4xl font-bold leading-tight tracking-tight text-neutral-900 md:text-5xl">
             {t('mapTitle')}{' '}
-            <span className="italic font-light text-accent-dark">
+            <span className="font-light text-accent-dark">
               {t('mapTitleItalic')}
             </span>{' '}
             {t('mapTitleAfter')}
@@ -126,7 +126,7 @@ export function MapExploreSection() {
                             <Compass className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
                             {t('mapInteractive')}
                           </div>
-                          <p className="mt-2 font-serif text-base italic sm:mt-3 sm:text-xl md:mt-4 md:text-2xl lg:text-3xl">
+                          <p className="mt-2 font-serif text-base sm:mt-3 sm:text-xl md:mt-4 md:text-2xl lg:text-3xl">
                             {t('mapCta')}
                           </p>
                           <p className="mt-1 text-[10px] text-white/70 sm:mt-2 sm:text-xs md:text-sm">

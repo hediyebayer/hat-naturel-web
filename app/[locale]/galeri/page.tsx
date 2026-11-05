@@ -60,7 +60,7 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
  * Galeri sayfası — tesisten drone + yer çekimleri.
  *
  * Sayfa yapısı:
- *  1. Hero (lacivert, dot pattern + gold radial + altın pulse badge + 2 satır italic başlık)
+ *  1. Hero (lacivert, dot pattern + gold radial + altın pulse badge + 2 satır başlık)
  *  2. GalleryGrid (client) — filtre chip'leri + masonry + lightbox
  */
 export default async function GalleriPage(props: PageProps): Promise<React.ReactElement> {
@@ -128,10 +128,10 @@ function GaleriHero(): React.ReactElement {
             {t('badge')}
           </span>
 
-          {/* Başlık — 2 satır italic stili */}
+          {/* Başlık — 2 satır stili */}
           <h1 className="mt-10 font-serif text-4xl leading-[1.2] tracking-tight text-white drop-shadow-[0_4px_30px_rgba(0,0,0,0.5)] md:text-6xl lg:text-[5.5rem]">
             <span className="block pb-2 font-light">{t('heroTitle')}</span>
-            <span className="mt-2 block pb-2 font-medium italic">
+            <span className="mt-2 block pb-2 font-medium">
               {t('heroTitleItalic')}
             </span>
           </h1>

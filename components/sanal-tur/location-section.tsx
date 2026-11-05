@@ -40,7 +40,7 @@ export function LocationSection() {
             {t('locationBadge')}
           </span>
           <h2 className="mt-6 font-serif text-4xl font-bold leading-tight tracking-tight text-neutral-900 md:text-5xl">
-            <span className="italic font-light text-accent-dark">
+            <span className="font-light text-accent-dark">
               {t('locationTitleItalic')}
             </span>{' '}
             {t('locationTitleAfter')}
