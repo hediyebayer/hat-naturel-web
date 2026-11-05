@@ -35,7 +35,7 @@ export function SanalTurHero() {
           transition={{ duration: 0.9, delay: 0.15, ease: [0.25, 1, 0.5, 1] }}
           className="mt-8 font-serif text-4xl font-bold leading-[1.2] tracking-tight text-neutral-900 md:text-6xl lg:text-7xl"
         >
-          <span className="block pb-2 font-light italic text-accent-dark">
+          <span className="block pb-2 font-light text-accent-dark">
             {t('heroTitleLight')}
           </span>
           <span className="block bg-gradient-to-r from-primary-700 via-primary-900 to-primary-700 bg-clip-text pb-2 font-bold text-transparent">

@@ -114,7 +114,7 @@ function KurallarContent(): React.ReactElement {
           </span>
           <h1 className="mt-6 font-serif text-4xl font-bold leading-tight md:text-5xl lg:text-6xl">
             <span className="block">{t('heroTitle')}</span>
-            <span className="mt-2 block italic font-light text-accent">
+            <span className="mt-2 block font-light text-accent">
               {t('heroTitleItalic')}
             </span>
           </h1>
@@ -169,7 +169,7 @@ function KurallarContent(): React.ReactElement {
       <section className="bg-gradient-to-b from-neutral-50 to-white pb-20 md:pb-28">
         <Container size="sm">
           <div className="text-center">
-            <p className="font-serif text-xl italic text-primary-700 md:text-2xl">
+            <p className="font-serif text-xl text-primary-700 md:text-2xl">
               {t('thanksNote')}
             </p>
           </div>

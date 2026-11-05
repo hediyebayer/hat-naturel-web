@@ -80,8 +80,8 @@ export function SocialCard({
           </p>
         </div>
 
-        {/* Handle — Playfair italic premium */}
-        <p className="mt-3 font-serif text-xl italic text-white/95">
+        {/* Handle — Playfair premium */}
+        <p className="mt-3 font-serif text-xl text-white/95">
           {handle}
         </p>
 

@@ -287,7 +287,7 @@ function RestoranHero(): React.ReactElement {
 
           <h1 className="mt-10 font-serif text-4xl leading-[1.2] tracking-tight text-white drop-shadow-[0_4px_30px_rgba(0,0,0,0.5)] md:text-6xl lg:text-[5.5rem]">
             <span className="block pb-2 font-light">{t('heroTitle')}</span>
-            <span className="mt-2 block pb-2 font-medium italic">
+            <span className="mt-2 block pb-2 font-medium">
               {t('heroTitleItalic')}
             </span>
           </h1>

@@ -39,7 +39,7 @@ export function GuestPhotosSection() {
             {t('guestBadge')}
           </span>
           <h2 className="mt-6 font-serif text-4xl font-bold leading-tight tracking-tight text-neutral-900 md:text-5xl">
-            <span className="italic font-light text-accent-dark">
+            <span className="font-light text-accent-dark">
               {t('guestTitleItalic')}
             </span>{' '}
             {t('guestTitleAfter')}
@@ -139,7 +139,7 @@ export function GuestPhotosSection() {
                 </div>
                 <h3 className="mt-3 font-serif text-2xl font-bold text-neutral-900 md:text-3xl">
                   {t('guestShareTitle')}{' '}
-                  <span className="italic font-light text-accent-dark">
+                  <span className="font-light text-accent-dark">
                     {t('guestShareTitleItalic')}
                   </span>
                 </h3>

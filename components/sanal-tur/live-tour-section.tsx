@@ -76,7 +76,7 @@ export function LiveTourSection() {
             {t('liveBadge')}
           </span>
           <h2 className="mt-7 font-serif text-4xl leading-[1.15] tracking-tight text-neutral-900 md:text-5xl lg:text-[3.5rem]">
-            <span className="font-light italic text-accent-dark">
+            <span className="font-light text-accent-dark">
               {t('liveTitle')}
             </span>{' '}
             <span className="font-semibold">{t('liveTitleItalic')}</span>

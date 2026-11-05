@@ -40,7 +40,7 @@ export function VirtualTourSection({
               </span>
               <h2
                 id="virtual-tour-heading"
-                className="mt-6 font-serif text-4xl italic tracking-tight text-white drop-shadow-sm md:text-5xl"
+                className="mt-6 font-serif text-4xl tracking-tight text-white drop-shadow-sm md:text-5xl"
               >
                 {t('title')}
               </h2>
@@ -163,7 +163,7 @@ export function VirtualTourSection({
               </span>
               <h1
                 id="virtual-tour-heading"
-                className="font-serif text-4xl italic tracking-tight text-white md:text-6xl"
+                className="font-serif text-4xl tracking-tight text-white md:text-6xl"
               >
                 {t('title')}
               </h1>

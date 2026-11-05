@@ -144,7 +144,7 @@ export function TeaHighlight(): React.ReactElement {
 
         <h3 className="mt-8 font-serif text-4xl font-light leading-tight md:text-5xl lg:text-6xl">
           <span className="block">{t('teaTitle')}</span>
-          <span className="mt-2 block italic font-medium text-accent">
+          <span className="mt-2 block font-medium text-accent">
             {t('teaTitleItalic')}
           </span>
         </h3>
